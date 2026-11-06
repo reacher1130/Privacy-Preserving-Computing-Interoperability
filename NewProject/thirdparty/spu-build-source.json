@@ -1,0 +1,7 @@
+{
+  "repository": "https://github.com/secretflow/spu",
+  "commit": "74c6d54e5bff9e5d35ab5a73dda98cd9ccf0bfc8",
+  "sha256": "e35e93abe1eceb368702d4d92a95465311fe5119f68ea482d8123dac8e5f4ba1",
+  "source_only": true,
+  "runtime_data_included": false
+}

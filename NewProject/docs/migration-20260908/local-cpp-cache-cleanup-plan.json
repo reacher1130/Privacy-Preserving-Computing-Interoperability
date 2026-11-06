@@ -1,0 +1,17 @@
+{
+  "pendingUntilRemoteBuildAndTestsPass": true,
+  "targets": [
+    "/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/secretflow/interconnection-impl/.cache/bazel-home",
+    "/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/secretflow/interconnection-impl/.cache/bazelisk",
+    "/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/secretflow/interconnection-impl/.cache/deps",
+    "/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/secretflow/interconnection-impl/bazel-bin",
+    "/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/secretflow/interconnection-impl/bazel-out",
+    "/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/secretflow/interconnection-impl/bazel-testlogs",
+    "/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/secretflow/interconnection-impl/bazel-interconnection-impl"
+  ],
+  "preserve": [
+    "/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/secretflow/interconnection-impl/.cache/overridden",
+    "all hand-written .cache scripts and patches"
+  ],
+  "trackedFilesWithinTargets": []
+}

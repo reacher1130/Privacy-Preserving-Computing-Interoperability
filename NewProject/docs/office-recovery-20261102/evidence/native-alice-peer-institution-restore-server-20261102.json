@@ -1,0 +1,51 @@
+{
+  "startedAt": "20261102T113807067029Z",
+  "success": true,
+  "committed": true,
+  "target": "/opt/ppci/NewProject/secretpad/db_secretflow/secretpad.sqlite",
+  "source": "/opt/ppci/NewProject/secretpad-kimi-upstream/db/secretpad.sqlite",
+  "aliceUserContextBefore": {
+    "ownerId": "rqzvglmu",
+    "ownerType": "P2P",
+    "platformType": "AUTONOMY",
+    "platformNodeId": "alice",
+    "deployMode": "MPC"
+  },
+  "authoritativeInstitution": {
+    "inst_id": "gqxzwemm",
+    "name": "kimi",
+    "is_deleted": 0,
+    "gmt_create": "2026-07-18 03:11:03",
+    "gmt_modified": "2026-07-18 03:11:03"
+  },
+  "plannedAction": "insert",
+  "backup": {
+    "path": "/var/backups/ppci/office-recovery-20261102/alice-peer-institution/20261102T113807067029Z.sqlite",
+    "sha256": "cdbfed350ce76bb21855f388451cb2ebd9d181d28bb589ae5cc7efe07c87f962",
+    "mode": "0o600"
+  },
+  "comparedBusinessTables": 48,
+  "action": "insert",
+  "localRowId": 2,
+  "otherInstitutionRecordsUnchanged": true,
+  "nodeAndRouteRecordsUnchanged": true,
+  "allOtherBusinessRecordSetsUnchanged": true,
+  "aliceUserContextAfter": {
+    "ownerId": "rqzvglmu",
+    "ownerType": "P2P",
+    "platformType": "AUTONOMY",
+    "platformNodeId": "alice",
+    "deployMode": "MPC"
+  },
+  "protocolUnchanged": true,
+  "activeProtocol": "paddledtx",
+  "nativePage": {
+    "total": 1,
+    "route": {
+      "routeId": "r_kimi_alice",
+      "srcNodeId": "kimi",
+      "dstNodeId": "alice",
+      "status": "Succeeded"
+    }
+  }
+}

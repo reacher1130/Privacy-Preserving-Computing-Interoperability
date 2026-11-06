@@ -1,0 +1,272 @@
+{
+  "checked_at": "2026-11-02T09:23:07.736716+00:00",
+  "protocols": {
+    "bfia": {
+      "exit_code": 0,
+      "evidence": "/var/log/ppci/acceptance-bfia-20261102172533",
+      "log": "/var/log/ppci/regression-20261102/bfia-smoke-retry.log",
+      "runner_note": "Existing Python 3.6 PyYAML reused; text alias mapped to universal_newlines in memory only.",
+      "job_id": "home-bfia-psi-20261102172533",
+      "phase": "Succeeded",
+      "parties": {
+        "alice": {
+          "artifact_exists": true,
+          "rows": 2,
+          "expected_intersection_match": true
+        },
+        "bob": {
+          "artifact_exists": true,
+          "rows": 2,
+          "expected_intersection_match": true
+        }
+      }
+    },
+    "secretflow": {
+      "exit_code": 0,
+      "log": "/var/log/ppci/regression-20261102/secretflow-smoke.log",
+      "evidence": "/var/log/ppci/acceptance-secretflow-20261102172307",
+      "selected_events": [
+        "EVIDENCE=/var/log/ppci/acceptance-secretflow-20261102172307",
+        "OUTPUT_CHECK=PASS intersection=2,3"
+      ],
+      "job_id": "home-native-psi-20261102172307",
+      "phase": "Succeeded",
+      "parties": {
+        "alice": {
+          "artifact_exists": true,
+          "rows": 2,
+          "expected_intersection_match": true
+        },
+        "kimi": {
+          "artifact_exists": true,
+          "rows": 2,
+          "expected_intersection_match": true
+        }
+      }
+    },
+    "native": {
+      "exit_code": 0,
+      "evidence": "/var/log/ppci/acceptance-20261102093042",
+      "log": "/var/log/ppci/regression-20261102/native-smoke-1core.log",
+      "events": [
+        "SUBMIT psi 202611020931129210230",
+        "PASS psi 202611020931129210230",
+        "SUBMIT lr 202611020931335824180",
+        "PASS lr 202611020931335824180",
+        "EVIDENCE /var/log/ppci/acceptance-20261102093042"
+      ],
+      "runner_note": "Native upload DAG and task requests explicitly bounded to one core; service resource configuration unchanged.",
+      "native_summary": {
+        "namespace": "ppci_home_20261102093042",
+        "jobs": {
+          "psi": "202611020931129210230",
+          "lr": "202611020931335824180"
+        }
+      },
+      "verified_artifacts": {
+        "psi": {
+          "job_id": "202611020931129210230",
+          "parties": {
+            "guest": {
+              "jobs": [
+                {
+                  "role": "guest",
+                  "party_id": "JG0100001100000010",
+                  "status": "success",
+                  "progress": 100
+                }
+              ],
+              "tasks": [
+                {
+                  "task_name": "reader_0",
+                  "role": "guest",
+                  "status": "success"
+                },
+                {
+                  "task_name": "psi_0",
+                  "role": "guest",
+                  "status": "success"
+                }
+              ],
+              "tables": [
+                {
+                  "code": 0,
+                  "metadata_keys": [
+                    "count",
+                    "data_type",
+                    "engine",
+                    "meta",
+                    "name",
+                    "namespace",
+                    "path",
+                    "source"
+                  ],
+                  "count": 569,
+                  "engine": "standalone",
+                  "name": "2af52cdad6a011f1966e02420af00002",
+                  "namespace": "202611020931129210230_psi_0"
+                }
+              ]
+            },
+            "host": {
+              "jobs": [
+                {
+                  "role": "host",
+                  "party_id": "JG0100001100000000",
+                  "status": "success",
+                  "progress": 100
+                }
+              ],
+              "tasks": [
+                {
+                  "task_name": "reader_0",
+                  "role": "host",
+                  "status": "success"
+                },
+                {
+                  "task_name": "psi_0",
+                  "role": "host",
+                  "status": "success"
+                }
+              ],
+              "tables": [
+                {
+                  "code": 0,
+                  "metadata_keys": [
+                    "count",
+                    "data_type",
+                    "engine",
+                    "meta",
+                    "name",
+                    "namespace",
+                    "path",
+                    "source"
+                  ],
+                  "count": 569,
+                  "engine": "standalone",
+                  "name": "2b3973b8d6a011f1982e02420af00007",
+                  "namespace": "202611020931129210230_psi_0"
+                }
+              ]
+            }
+          }
+        },
+        "lr": {
+          "job_id": "202611020931335824180",
+          "parties": {
+            "guest": {
+              "jobs": [
+                {
+                  "role": "guest",
+                  "party_id": "JG0100001100000010",
+                  "status": "success",
+                  "progress": 100
+                }
+              ],
+              "tasks": [
+                {
+                  "task_name": "reader_0",
+                  "role": "guest",
+                  "status": "success"
+                },
+                {
+                  "task_name": "psi_0",
+                  "role": "guest",
+                  "status": "success"
+                },
+                {
+                  "task_name": "lr_0",
+                  "role": "guest",
+                  "status": "success"
+                }
+              ],
+              "model": {
+                "code": 0,
+                "nonempty": true,
+                "keys": [
+                  "output_model"
+                ],
+                "epochs": 2,
+                "end_epoch": 2,
+                "is_converged": false
+              },
+              "training": [
+                {
+                  "role": "guest",
+                  "epochs": 2
+                }
+              ]
+            },
+            "host": {
+              "jobs": [
+                {
+                  "role": "host",
+                  "party_id": "JG0100001100000000",
+                  "status": "success",
+                  "progress": 100
+                },
+                {
+                  "role": "arbiter",
+                  "party_id": "JG0100001100000000",
+                  "status": "success",
+                  "progress": 100
+                }
+              ],
+              "tasks": [
+                {
+                  "task_name": "reader_0",
+                  "role": "host",
+                  "status": "success"
+                },
+                {
+                  "task_name": "psi_0",
+                  "role": "host",
+                  "status": "success"
+                },
+                {
+                  "task_name": "lr_0",
+                  "role": "host",
+                  "status": "success"
+                },
+                {
+                  "task_name": "lr_0",
+                  "role": "arbiter",
+                  "status": "success"
+                }
+              ],
+              "model": {
+                "code": 0,
+                "nonempty": true,
+                "keys": [
+                  "output_model"
+                ],
+                "epochs": 2,
+                "end_epoch": 2,
+                "is_converged": false
+              },
+              "training": [
+                {
+                  "role": "host",
+                  "epochs": 2
+                },
+                {
+                  "role": "arbiter",
+                  "epochs": 2
+                }
+              ]
+            }
+          }
+        }
+      },
+      "initial_failed_upload_job": "202611020923245235270",
+      "initial_failure_reason": "Default upload 4-core request exceeded current registered engine total; fixed smoke DAG to one core, no service configuration change."
+    }
+  },
+  "completed_at": "2026-11-02T09:35:03.941732+00:00",
+  "pass": true,
+  "notes": [
+    "BFIA initially could not import PyYAML under Python 3.11; retried using installed Python 3.6 PyYAML with in-memory subprocess text compatibility, no package install or source change.",
+    "Native FATE first upload 202611020923245235270 failed before task execution because the default four-core upload request exceeded registered resources; evidence retained, smoke script fixed to explicit one-core upload DAG.",
+    "LR used public breast cancer demo tables and exactly two epochs; end_epoch=2 does not establish convergence or generalization accuracy."
+  ]
+}

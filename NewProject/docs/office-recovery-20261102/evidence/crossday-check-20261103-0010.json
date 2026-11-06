@@ -1,0 +1,23 @@
+{
+  "triggeredAt": "2026-11-03T00:10:27.611+08:00",
+  "host": "192.168.45.101",
+  "ssh": {
+    "port": 2222,
+    "exitCode": 255,
+    "result": "Operation timed out"
+  },
+  "aliceHttp": {
+    "port": 18101,
+    "curlExitCode": 28,
+    "httpCode": "000",
+    "result": "Connection timed out"
+  },
+  "previouslyUserConfirmedShutdown": true,
+  "storageReadiness": "not checked; host unreachable",
+  "newTasksPublished": 0,
+  "remoteWritesPerformed": false,
+  "acceptanceCompleted": false,
+  "specStatus": "in-progress",
+  "oneShotAutomation": "automation-2 removed after this scheduled attempt; no replacement schedule created",
+  "remainingWork": "Reconnect after power-on, verify storage readiness and preserved state, then complete authorized training/model/prediction acceptance."
+}

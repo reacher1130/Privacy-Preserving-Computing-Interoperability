@@ -1,0 +1,10 @@
+{
+  "name": "office",
+  "host": "192.168.45.101",
+  "ssh_port": 2222,
+  "ssh_user": "root",
+  "source_root": "/opt/ppci-source",
+  "build_root": "/opt/ppci-build",
+  "runtime_root": "/opt/ppci",
+  "lan_cidr": "192.168.45.0/24"
+}

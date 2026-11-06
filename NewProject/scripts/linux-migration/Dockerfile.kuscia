@@ -1,0 +1,4 @@
+FROM secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/kuscia:1.2.0b0
+COPY --chown=kuscia:kuscia build/linux/amd64/apps/kuscia/kuscia-migration /home/kuscia/bin/kuscia
+COPY --chown=kuscia:kuscia crds/v1alpha1 /home/kuscia/crds/v1alpha1
+COPY --chown=kuscia:kuscia scripts /home/kuscia/scripts

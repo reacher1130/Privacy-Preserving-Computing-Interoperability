@@ -1,0 +1,323 @@
+{
+  "containers": [
+    {
+      "name": "gaofeng-kuscia-autonomy-alice",
+      "running": true,
+      "image": "secretflow/kuscia:local-fix"
+    },
+    {
+      "name": "gaofeng-kuscia-autonomy-bob",
+      "running": true,
+      "image": "secretflow/kuscia:local-fix"
+    },
+    {
+      "name": "gaofeng-kuscia-autonomy-kimi",
+      "running": true,
+      "image": "secretflow/kuscia:local-fix"
+    },
+    {
+      "name": "kusciaapi-alice-proxy",
+      "running": true,
+      "image": "alpine/socat"
+    },
+    {
+      "name": "kusciaapi-bob-proxy",
+      "running": true,
+      "image": "alpine/socat"
+    },
+    {
+      "name": "kusciaapi-kimi-proxy",
+      "running": true,
+      "image": "alpine/socat"
+    },
+    {
+      "name": "bfia-alice-proxy",
+      "running": true,
+      "image": "alpine/socat"
+    },
+    {
+      "name": "bfia-bob-proxy",
+      "running": true,
+      "image": "alpine/socat"
+    },
+    {
+      "name": "xchain1.node.com",
+      "running": true,
+      "image": "registry.baidubce.com/paddledtx/xchain:v3.9"
+    },
+    {
+      "name": "xchain2.node.com",
+      "running": true,
+      "image": "registry.baidubce.com/paddledtx/xchain:v3.9"
+    },
+    {
+      "name": "xchain3.node.com",
+      "running": true,
+      "image": "registry.baidubce.com/paddledtx/xchain:v3.9"
+    },
+    {
+      "name": "dataowner1.node.com",
+      "running": true,
+      "image": "registry.baidubce.com/paddledtx/xdb-dataowner:2.1"
+    },
+    {
+      "name": "dataowner2.node.com",
+      "running": true,
+      "image": "registry.baidubce.com/paddledtx/xdb-dataowner:2.1"
+    },
+    {
+      "name": "dataowner3.node.com",
+      "running": true,
+      "image": "registry.baidubce.com/paddledtx/xdb-dataowner:2.1"
+    },
+    {
+      "name": "storage1.node.com",
+      "running": true,
+      "image": "registry.baidubce.com/paddledtx/xdb-storage:2.1"
+    },
+    {
+      "name": "storage2.node.com",
+      "running": true,
+      "image": "registry.baidubce.com/paddledtx/xdb-storage:2.1"
+    },
+    {
+      "name": "storage3.node.com",
+      "running": true,
+      "image": "registry.baidubce.com/paddledtx/xdb-storage:2.1"
+    },
+    {
+      "name": "executor1.node.com",
+      "running": true,
+      "image": "paddledtx-dai:2.1-local-20260906-demo"
+    },
+    {
+      "name": "executor2.node.com",
+      "running": true,
+      "image": "paddledtx-dai:2.1-local-20260906-demo"
+    },
+    {
+      "name": "fate2-flow-e2e",
+      "running": true,
+      "image": "federatedai/standalone_fate:2.2.0"
+    },
+    {
+      "name": "fate2-flow-guest-e2e",
+      "running": true,
+      "image": "federatedai/standalone_fate:2.2.0"
+    },
+    {
+      "name": "fate2-flow-host-e2e",
+      "running": true,
+      "image": "federatedai/standalone_fate:2.2.0"
+    },
+    {
+      "name": "secretpad-frontend-multiparty-e2e",
+      "running": true,
+      "image": "arm64v8/nginx:1.27"
+    },
+    {
+      "name": "secretpad-frontend-e2e",
+      "running": true,
+      "image": "arm64v8/nginx:1.27"
+    },
+    {
+      "name": "secretpad-native-e2e",
+      "running": true,
+      "image": "arm64v8/nginx:1.27"
+    },
+    {
+      "name": "secretpad-native-kimi-e2e",
+      "running": true,
+      "image": "arm64v8/nginx:1.27"
+    },
+    {
+      "name": "fateboard-native-e2e",
+      "running": true,
+      "image": "federatedai/standalone_fate:2.2.0"
+    },
+    {
+      "name": "paddledtx-native-e2e",
+      "running": true,
+      "image": "arm64v8/nginx:1.27"
+    }
+  ],
+  "backends": {
+    "alice": {
+      "defaultProtocol": "secretflow",
+      "canSwitch": true,
+      "activeProtocol": "bfia",
+      "supportedProtocols": [
+        "secretflow",
+        "bfia",
+        "fate",
+        "paddledtx"
+      ],
+      "engineByProtocol": {
+        "secretflow": "SecretFlow / Kuscia",
+        "fate": "FATE-Flow / fate2-adapter",
+        "bfia": "BFIA interconnect adapter",
+        "paddledtx": "PaddleDTX / paddlempc"
+      }
+    },
+    "bob": {
+      "defaultProtocol": "bfia",
+      "canSwitch": false,
+      "activeProtocol": "bfia",
+      "supportedProtocols": [
+        "bfia"
+      ],
+      "engineByProtocol": {
+        "paddledtx": "PaddleDTX / paddlempc",
+        "secretflow": "SecretFlow / Kuscia",
+        "fate": "FATE-Flow / fate2-adapter",
+        "bfia": "BFIA interconnect adapter"
+      }
+    },
+    "kimi": [
+      {
+        "nodeId": "alice",
+        "nodeName": "alice",
+        "instId": "owszmazx",
+        "instName": null,
+        "controlNodeId": "alice",
+        "masterNodeId": "alice",
+        "description": null,
+        "netAddress": "http://192.168.117.2:80",
+        "cert": null,
+        "certText": null,
+        "nodeAuthenticationCode": "eyJkc3ROZXRBZGRyZXNzIjoiaHR0cDovLzE5Mi4xNjguMTE3LjI6ODAiLCJkc3ROb2RlSWQiOiJhbGljZSIsIm1hc3Rlck5vZGVJZCI6ImFsaWNlIiwibmFtZSI6ImFsaWNlIn0=",
+        "token": null,
+        "tokenStatus": null,
+        "nodeRole": null,
+        "nodeStatus": null,
+        "type": "normal",
+        "mode": 1,
+        "gmtCreate": "2026-07-18T03:46:16+08:00",
+        "gmtModified": "2026-07-18T03:46:16+08:00",
+        "nodeInstances": null,
+        "datatables": null,
+        "nodeRoutes": null,
+        "resultCount": null,
+        "protocol": null,
+        "instToken": null,
+        "allowDeletion": false,
+        "isMainNode": false
+      },
+      {
+        "nodeId": "kimi",
+        "nodeName": "kimi",
+        "instId": "gqxzwemm",
+        "instName": null,
+        "controlNodeId": "kimi",
+        "masterNodeId": "kimi",
+        "description": "kimi",
+        "netAddress": "http://192.168.117.4:80",
+        "cert": null,
+        "certText": null,
+        "nodeAuthenticationCode": "eyJkc3ROZXRBZGRyZXNzIjoiaHR0cDovLzE5Mi4xNjguMTE3LjQ6ODAiLCJkc3ROb2RlSWQiOiJraW1pIiwibWFzdGVyTm9kZUlkIjoia2ltaSIsIm5hbWUiOiJraW1pIn0=",
+        "token": null,
+        "tokenStatus": null,
+        "nodeRole": null,
+        "nodeStatus": "Ready",
+        "type": "primary",
+        "mode": 1,
+        "gmtCreate": "2026-09-08T01:56:51+08:00",
+        "gmtModified": "2026-09-08T01:56:51+08:00",
+        "nodeInstances": null,
+        "datatables": null,
+        "nodeRoutes": null,
+        "resultCount": null,
+        "protocol": "tls",
+        "instToken": null,
+        "allowDeletion": false,
+        "isMainNode": false
+      }
+    ]
+  },
+  "chain": [
+    {
+      "node": 1,
+      "rootBlockid": "474ee4112925b6a1bd7053e4d33d50dcd3e9c7f2760b8b229d32617a56562632",
+      "tipBlockid": "c082b5fa5dd387c0a392a36fc6fdf313b5d05d3a6c167c37c42c4edd508bf551",
+      "trunkHeight": 26287
+    },
+    {
+      "node": 2,
+      "rootBlockid": "474ee4112925b6a1bd7053e4d33d50dcd3e9c7f2760b8b229d32617a56562632",
+      "tipBlockid": "c082b5fa5dd387c0a392a36fc6fdf313b5d05d3a6c167c37c42c4edd508bf551",
+      "trunkHeight": 26287
+    },
+    {
+      "node": 3,
+      "rootBlockid": "474ee4112925b6a1bd7053e4d33d50dcd3e9c7f2760b8b229d32617a56562632",
+      "tipBlockid": "c082b5fa5dd387c0a392a36fc6fdf313b5d05d3a6c167c37c42c4edd508bf551",
+      "trunkHeight": 26287
+    }
+  ],
+  "errors": [],
+  "paddledtx": {
+    "engine": "paddlempc",
+    "healthAddress": "http://127.0.0.1:8511/v1/task/list",
+    "requesterConfigured": true,
+    "executors": [
+      {
+        "address": "http://127.0.0.1:8511/v1/task/list",
+        "httpStatus": 200,
+        "ready": true
+      },
+      {
+        "address": "http://127.0.0.1:8512/v1/task/list",
+        "httpStatus": 200,
+        "ready": true
+      }
+    ],
+    "httpStatus": 200,
+    "ready": true
+  },
+  "topology": {
+    "routes": [
+      {
+        "node": "alice",
+        "route": "alice-bob",
+        "protocol": "bfia",
+        "ready": true
+      },
+      {
+        "node": "bob",
+        "route": "bob-alice",
+        "protocol": "bfia",
+        "ready": true
+      },
+      {
+        "node": "alice",
+        "route": "alice-kimi",
+        "protocol": "kuscia",
+        "ready": true
+      },
+      {
+        "node": "kimi",
+        "route": "kimi-alice",
+        "protocol": "kuscia",
+        "ready": true
+      }
+    ],
+    "fate": [
+      {
+        "role": "guest",
+        "port": 19381,
+        "ready": true
+      },
+      {
+        "role": "host",
+        "port": 19382,
+        "ready": true
+      }
+    ],
+    "platformNodes": 3,
+    "independentNativePlatforms": [
+      "FATE",
+      "PaddleDTX"
+    ]
+  },
+  "healthy": true
+}

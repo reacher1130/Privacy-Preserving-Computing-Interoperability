@@ -1,0 +1,350 @@
+--- a/controllers/base.go
++++ b/controllers/base.go
+@@ -20,7 +20,7 @@
+ )
+ 
+ const PathPrefix = "/dtx/v1/"
+-const ExpireSecond = 6000000 // 接口时间戳过期时间, 为了debug方便暂时设大, 上线前修改
++const ExpireSecond = 300
+ 
+ const (
+ 	ErrorCode           = 400
+@@ -85,7 +85,7 @@
+ 	// set requestId,new requestId if empty and set response header
+ 	c.RequestID = c.getRequestID()
+ 
+-	logger.Infof("Request: %v", c.Ctx.Request)
++	logger.Infof("Request: %s %s", c.Ctx.Request.Method, c.Ctx.Request.URL.Path)
+ 
+ 	// prepare response
+ 	c.Ret = &ControllerRet{
+@@ -103,11 +103,8 @@
+ 	if err == nil {
+ 		address, _ := xcc.GetAddressFromPublicKey(pubKey)
+ 		c.UserAddress = address
+-		// 有address的用户 必须要校验签名正确性 下载相关接口暂不验证
+-		if !strings.Contains(c.Ctx.Request.URL.Path, "download") {
+-			if err := c.CheckSign(); err != nil {
+-				c.ServeJSONWithError(err)
+-			}
++		if err := c.CheckSign(); err != nil {
++			c.ServeJSONWithError(err)
+ 		}
+ 	}
+ 
+@@ -115,11 +112,9 @@
+ 	c.Ctx.Output.Header(RequestIDHeader, c.RequestID) // 设置返回requestID 用于请求链路追踪
+ 	c.Ctx.Output.SetStatus(SuccessCode)               // 返回的状态码统一用200，应用内部的错误在返回参数code中显示
+ 
+-	// 权限校验
+-	if !strings.Contains(c.Ctx.Request.URL.Path, "download") {
+-		if err := c.CheckAuthority(); err != nil {
+-			c.ServeJSONWithError(err)
+-		}
++	// Downloads use the same signature and role checks as other resources.
++	if err := c.CheckAuthority(); err != nil {
++		c.ServeJSONWithError(err)
+ 	}
+ 
+ 	// call custom controller NestPreparer if current is not BaseController
+@@ -131,11 +126,14 @@
+ func (c *BaseController) CheckAuthority() error {
+ 
+ 	// 查询接口需要的权限
+-	path := strings.TrimPrefix(c.Ctx.Request.URL.Path, PathPrefix)
++	path := strings.Trim(strings.TrimPrefix(c.Ctx.Request.URL.Path, PathPrefix), "/")
++	switch path {
++	case "user/login", "user/register":
++		return nil
++	}
+ 	needAuth := models.GetAuthByPath(path)
+-	// 不需要权限
+ 	if needAuth == "" {
+-		return nil
++		return codeerror.NewErrorByCode(codeerror.ErrNoAuthority)
+ 	}
+ 
+ 	// 需要权限的接口也都需要登陆验签
+@@ -188,14 +186,12 @@
+ 			message := auth.GeneratePostFormBody(c.Ctx.Request)
+ 			err := auth.VerifyAuthorization(pubKey, string(message), authorization, ExpireSecond)
+ 			if err != nil {
+-				logger.Debugf("sign message: $%s$", message)
+ 				return codeerror.NewErrorByCode(codeerror.ErrSign)
+ 			}
+ 		case "application/json":
+ 			message, _ := ioutil.ReadAll(c.Ctx.Request.Body)
+ 			err := auth.VerifyAuthorization(pubKey, string(message), authorization, ExpireSecond)
+ 			if err != nil {
+-				logger.Debugf("sign message: $%s$", message)
+ 				return codeerror.NewErrorByCode(codeerror.ErrSign)
+ 			}
+ 		default:
+@@ -205,7 +201,6 @@
+ 		message := auth.GenerateGetRequestBody(c.Ctx.Request)
+ 		err := auth.VerifyAuthorization(pubKey, string(message), authorization, ExpireSecond)
+ 		if err != nil {
+-			logger.Debugf("sign message: $%s$", message)
+ 			return codeerror.NewErrorByCode(codeerror.ErrSign)
+ 		}
+ 	}
+@@ -368,8 +363,7 @@
+ // Finish runs after request function execution
+ func (c *BaseController) Finish() {
+ 	c.Data["json"] = c.Ret
+-	retStr, _ := json.Marshal(c.Ret)
+-	logger.Debug("Response:", string(retStr), "RetCode:", c.Ctx.Output.Status)
++	logger.Debug("Response code:", c.Ret.Code, "RetCode:", c.Ctx.Output.Status)
+ 	c.ServeJSON()
+ }
+ 
+@@ -384,8 +378,7 @@
+ 	c.Ret.Code = codeErr.Code
+ 	c.Ret.Message = codeErr.Message
+ 	c.Data["json"] = c.Ret
+-	retStr, _ := json.Marshal(c.Ret)
+-	logger.Debug("Response:", string(retStr), "RetCode:", c.Ctx.Output.Status)
++	logger.Debug("Response code:", c.Ret.Code, "RetCode:", c.Ctx.Output.Status)
+ 	c.ServeJSON()
+ 	// abort
+ 	c.StopRun()
+--- a/models/authority.go
++++ b/models/authority.go
+@@ -22,16 +22,15 @@
+ 	"permission/role/modify": AuthAll,
+ 	"permission/role/create": AuthAll,
+ 	"permission/role/bind":   AuthAll,
+-	// "permission/role/list":   AuthAll,
+-	// "permission/role/get":    AuthAll,
++	"permission/role/list":   AuthRead,
++	"permission/role/get":    AuthRead,
++	"permission/role/delete": AuthAll,
+ 	"permission/bind/list": AuthAll,
+ 
+ 	// user
+-	// "user/login":    AuthAll,
+-	// "user/register": AuthAll,
+-	// "user/clearpwd": AuthAll,
+-	// "user/resetpwd": AuthAll,
+-	// "user/info":     AuthAll,
++	"user/clearpwd": AuthAll,
++	"user/resetpwd": AuthRead,
++	"user/info":     AuthRead,
+ 
+ 	// op
+ 	"op/blockchain/netInfo": AuthRead,
+@@ -40,7 +39,18 @@
+ 	"op/dai/taskInfo":       AuthRead,
+ 	"op/dai/netInfo":        AuthRead,
+ 
++	"op/dai/newStorageNode":      AuthAll,
++	"op/dai/modifyStorageNode":   AuthAll,
++	"op/dai/deleteStorageNode":   AuthAll,
++	"op/dai/newDataownerNode":    AuthAll,
++	"op/dai/modifyDataownerNode": AuthAll,
++	"op/dai/deleteDataownerNode": AuthAll,
++	"op/dai/newExecutorNode":     AuthAll,
++	"op/dai/modifyExecutorNode":  AuthAll,
++	"op/dai/deleteExecutorNode":  AuthAll,
++
+ 	// data
++	"data/download":       AuthRead,
+ 	"data/fileupload":     AuthAll,
+ 	"data/create":         AuthAll,
+ 	"data/list":           AuthRead,
+@@ -68,7 +78,9 @@
+ 	"model/list/approved":  AuthRead,
+ 
+ 	// namespace resource
+-	"data/ns/add":              AuthAll,
++	"data/ns/replicaLimit":  AuthRead,
++	"model/ns/replicaLimit": AuthRead,
++	"data/ns/add":              AuthAll,
+ 	"data/ns/list":             AuthRead,
+ 	"data/ns/simplelist":       AuthRead,
+ 	"data/ns/resource/detail":  AuthRead,
+@@ -90,6 +102,7 @@
+ 	"model/auth/detail":  AuthRead,
+ 
+ 	// task
++	"task/log":             AuthRead,
+ 	"task/create":          AuthAll,
+ 	"task/clone":           AuthAll,
+ 	"task/delete":          AuthAll,
+@@ -114,4 +127,4 @@
+ }
+ 
+ var adminAuth = `{"permission":"11","data":"11","service":"11","task":"11","algorithm":"11","op":"11","user":"11"}`
+-var defaultAuth = `{"permission":"00","data":"00","service":"00","task":"00","algorithm":"00","op":"00"}`
++var defaultAuth = `{"permission":"00","data":"00","service":"00","task":"00","algorithm":"00","op":"00","user":"01"}`
+--- a/controllers/user.go
++++ b/controllers/user.go
+@@ -9,6 +9,7 @@
+ 	"github.com/xuperchain/xuper-sdk-go/crypto"
+ 
+ 	"baidu/blockchain/dtx-manager/handlers/user"
++	"baidu/blockchain/dtx-manager/models"
+ 	"baidu/blockchain/dtx-manager/pkg/codeerror"
+ 	"baidu/blockchain/dtx-manager/pkg/logger"
+ )
+@@ -131,17 +132,13 @@
+ 	var req UserReq
+ 	u.bindAndCheck(&req)
+ 
+-	//校验当前账户是admin
+-	// middlewares.Auth()
+-	// address := u.Ctx.Request.Header.Get("X-User-Address")
+-	// if address != models.GetMyBaaS().Address {
+-	// 	err := codeerror.NewError(user.ErrNotAdmin, "user is not admin")
+-	// 	logger.Error("RequestId: %s, clear user's password failed, error: %s", u.RequestID, err.Error())
+-	// 	u.ServeJsonWithError(err)
+-	// }
+-
+-	handler := user.NewHandler(u.RequestID)
+-	_, err := handler.ClearUserPwd(req.Username)
++	actor, err := models.QueryUserByAddress(u.UserAddress)
++	if err != nil || actor == nil || actor.RoleName != "admin" {
++		u.ServeJSONWithError(codeerror.NewErrorByCode(codeerror.ErrNotAdmin))
++	}
++
++	handler := user.NewHandler(u.RequestID)
++	_, err = handler.ClearUserPwd(req.Username)
+ 	if err != nil {
+ 		logger.Error("RequestID: %s, clear user's password failed, error: %s", u.RequestID, err.Error())
+ 		u.ServeJSONWithError(err)
+--- a/pkg/auth/auth.go
++++ b/pkg/auth/auth.go
+@@ -12,8 +12,6 @@
+ 	"strings"
+ 	"time"
+ 
+-	"baidu/blockchain/dtx-manager/pkg/logger"
+-
+ 	new_ecdsa "github.com/PaddlePaddle/PaddleDTX/crypto/core/ecdsa"
+ 	"github.com/pkg/errors"
+ 	"github.com/xuperchain/crypto/client/service/xchain"
+@@ -27,7 +25,6 @@
+ 	timestamp := time.Now().Unix()
+ 	h := sha256.New()
+ 	h.Write([]byte(message + strconv.FormatInt(timestamp, 10)))
+-	fmt.Println(message + strconv.FormatInt(timestamp, 10))
+ 	hashResult := h.Sum(nil)
+ 	sign, err := Sign(privateKey, hashResult)
+ 	if err != nil {
+@@ -40,14 +37,14 @@
+ // VerifyAuthorization verifies authorization.
+ func VerifyAuthorization(publicKey *ecdsa.PublicKey, message, authorization string, expireSecond int64) error {
+ 	timeStamp, sign, err := SplitAuthorization(authorization)
+-	logger.Debugf("authorization(%s), message(%s), err(%v)", authorization, message, err)
+ 	if err != nil {
+ 		return err
+ 	}
+ 
+ 	// 校验过期时间
+ 	if expireSecond > 0 {
+-		if time.Now().Unix()-timeStamp > expireSecond {
++		now := time.Now().Unix()
++		if now-timeStamp > expireSecond || timeStamp-now > 30 {
+ 			return errors.New("request expired")
+ 		}
+ 	}
+@@ -63,7 +60,6 @@
+ 
+ 	newPublicKey := new_ecdsa.MarshalPublicKey(publicKey)
+ 	err = new_ecdsa.Verify(newPublicKey, []byte(hashResult), signBytes)
+-	logger.Debugf("hashResult(%v), err(%v)", hashResult, err)
+ 	if err != nil {
+ 		return err
+ 	}
+--- /dev/null
++++ b/pkg/auth/authorization_boundary_test.go
+@@ -0,0 +1,48 @@
++package auth
++
++import (
++	"crypto/ecdsa"
++	"crypto/elliptic"
++	"crypto/rand"
++	"crypto/sha256"
++	"encoding/hex"
++	"fmt"
++	"testing"
++	"time"
++)
++
++func TestAuthorizationRecoveryBoundary(t *testing.T) {
++	key, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
++	if err != nil {
++		t.Fatal(err)
++	}
++	message := "pageNo=1pageSize=20"
++	for _, tc := range []struct {
++		name string
++		offset int64
++		message string
++		want bool
++	}{
++		{"fresh", 0, message, true},
++		{"tampered", 0, message + "x", false},
++		{"expired", -301, message, false},
++		{"future", 60, message, false},
++	} {
++		t.Run(tc.name, func(t *testing.T) {
++			stamp := time.Now().Unix() + tc.offset
++			digest := sha256.Sum256([]byte(fmt.Sprintf("%s%d", message, stamp)))
++			r, s, err := ecdsa.Sign(rand.Reader, key, digest[:])
++			if err != nil {
++				t.Fatal(err)
++			}
++			signature := make([]byte, 64)
++			r.FillBytes(signature[:32])
++			s.FillBytes(signature[32:])
++			token := fmt.Sprintf("auth-v1/%d/%s", stamp, hex.EncodeToString(signature))
++			err = VerifyAuthorization(&key.PublicKey, tc.message, token, 300)
++			if (err == nil) != tc.want {
++				t.Fatalf("signature acceptance = %v, want %v", err == nil, tc.want)
++			}
++		})
++	}
++}
+--- /dev/null
++++ b/controllers/recovery_authority_test.go
+@@ -0,0 +1,38 @@
++package controllers
++
++import (
++	"net/http/httptest"
++	"testing"
++
++	"github.com/beego/beego/v2/server/web/context"
++)
++
++func TestRecoveryAuthorityPolicy(t *testing.T) {
++	for _, tc := range []struct {
++		path string
++		public bool
++	}{
++		{"user/login", true},
++		{"user/register", true},
++		{"data/list", false},
++		{"data/list/", false},
++		{"data/download", false},
++		{"task/result/download", false},
++		{"algo/download", false},
++		{"user/clearpwd", false},
++		{"permission/role/delete", false},
++		{"unknown/download", false},
++		{"unknown", false},
++	} {
++		t.Run(tc.path, func(t *testing.T) {
++			ctx := context.NewContext()
++			ctx.Request = httptest.NewRequest("GET", PathPrefix + tc.path, nil)
++			controller := BaseController{}
++			controller.Ctx = ctx
++			err := controller.CheckAuthority()
++			if (err == nil) != tc.public {
++				t.Fatalf("anonymous acceptance = %v, want %v", err == nil, tc.public)
++			}
++		})
++	}
++}

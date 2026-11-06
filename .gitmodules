@@ -1,0 +1,30 @@
+[submodule "NewProject/secretflow"]
+	path = NewProject/secretflow
+	url = https://github.com/reacher1130/secretflow-ppc.git
+[submodule "NewProject/secretpad"]
+	path = NewProject/secretpad
+	url = https://github.com/reacher1130/secretpad-ppc.git
+[submodule "NewProject/secretpad-frontend"]
+	path = NewProject/secretpad-frontend
+	url = https://github.com/reacher1130/secretpad-frontend-ppc.git
+[submodule "NewProject/kuscia"]
+	path = NewProject/kuscia
+	url = https://github.com/reacher1130/kuscia-ppc.git
+[submodule "NewProject/yacl"]
+	path = NewProject/yacl
+	url = https://github.com/reacher1130/yacl-ppc.git
+[submodule "NewProject/spu"]
+	path = NewProject/spu
+	url = https://github.com/reacher1130/spu-ppc.git
+[submodule "NewProject/secretpad-kimi-upstream"]
+	path = NewProject/secretpad-kimi-upstream
+	url = https://github.com/reacher1130/secretpad-kimi-upstream.git
+[submodule "NewProject/InterOp"]
+	path = NewProject/InterOp
+	url = https://github.com/secretflow/InterOp.git
+[submodule "NewProject/fate"]
+	path = NewProject/fate
+	url = https://github.com/FederatedAI/FATE.git
+[submodule "PaddleDTX"]
+	path = PaddleDTX
+	url = https://github.com/PaddlePaddle/PaddleDTX.git

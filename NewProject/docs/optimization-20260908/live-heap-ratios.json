@@ -1,0 +1,38 @@
+[
+  {
+    "pid": 8318,
+    "flag": "MinHeapFreeRatio",
+    "value": "20",
+    "result": "8318:\nCommand executed successfully\n"
+  },
+  {
+    "pid": 8318,
+    "flag": "MaxHeapFreeRatio",
+    "value": "40",
+    "result": "8318:\nCommand executed successfully\n"
+  },
+  {
+    "pid": 5975,
+    "flag": "MinHeapFreeRatio",
+    "value": "20",
+    "result": "5975:\nCommand executed successfully\n"
+  },
+  {
+    "pid": 5975,
+    "flag": "MaxHeapFreeRatio",
+    "value": "40",
+    "result": "5975:\nCommand executed successfully\n"
+  },
+  {
+    "pid": 5979,
+    "flag": "MinHeapFreeRatio",
+    "value": "20",
+    "result": "5979:\nCommand executed successfully\n"
+  },
+  {
+    "pid": 5979,
+    "flag": "MaxHeapFreeRatio",
+    "value": "40",
+    "result": "5979:\nCommand executed successfully\n"
+  }
+]

@@ -1,0 +1,510 @@
+{
+  "code": 0,
+  "data": [
+    {
+      "apply_resource_time": 1788864391765,
+      "cores": 2,
+      "create_time": 1788864390114,
+      "dag": {
+        "dag": {
+          "conf": {
+            "auto_retries": 0,
+            "computing_partitions": 1,
+            "cores": 2,
+            "extra": null,
+            "inheritance": null,
+            "initiator_party_id": "JG0100001100000010",
+            "model_id": "202609081046293133280",
+            "model_version": "0",
+            "model_warehouse": null,
+            "priority": null,
+            "scheduler_party_id": "JG0100001100000010",
+            "sync_type": "callback",
+            "task": {
+              "engine_run": {
+                "cores": 1
+              },
+              "launcher_name": "default",
+              "provider": null,
+              "timeout": null
+            }
+          },
+          "parties": [
+            {
+              "party_id": [
+                "JG0100001100000010"
+              ],
+              "role": "guest"
+            },
+            {
+              "party_id": [
+                "JG0100001100000000"
+              ],
+              "role": "host"
+            },
+            {
+              "party_id": [
+                "JG0100001100000000"
+              ],
+              "role": "arbiter"
+            }
+          ],
+          "party_tasks": {
+            "guest_JG0100001100000010": {
+              "conf": {},
+              "parties": [
+                {
+                  "party_id": [
+                    "JG0100001100000010"
+                  ],
+                  "role": "guest"
+                }
+              ],
+              "tasks": {
+                "reader_psi_0": {
+                  "conf": null,
+                  "parameters": {
+                    "name": "breast_hetero_guest",
+                    "namespace": "experiment"
+                  }
+                }
+              }
+            },
+            "host_JG0100001100000000": {
+              "conf": {},
+              "parties": [
+                {
+                  "party_id": [
+                    "JG0100001100000000"
+                  ],
+                  "role": "host"
+                }
+              ],
+              "tasks": {
+                "reader_psi_0": {
+                  "conf": null,
+                  "parameters": {
+                    "name": "breast_hetero_host",
+                    "namespace": "experiment"
+                  }
+                }
+              }
+            }
+          },
+          "stage": "train",
+          "tasks": {
+            "coordinated_lr_1": {
+              "component_ref": "coordinated_lr",
+              "conf": null,
+              "dependent_tasks": [
+                "psi_0"
+              ],
+              "inputs": {
+                "data": {
+                  "train_data": {
+                    "task_output_artifact": {
+                      "output_artifact_key": "output_data",
+                      "output_artifact_type_alias": null,
+                      "parties": null,
+                      "producer_task": "psi_0"
+                    }
+                  }
+                },
+                "model": null
+              },
+              "outputs": null,
+              "parameters": {
+                "epochs": 2
+              },
+              "parties": [
+                {
+                  "party_id": [
+                    "JG0100001100000010"
+                  ],
+                  "role": "guest"
+                },
+                {
+                  "party_id": [
+                    "JG0100001100000000"
+                  ],
+                  "role": "host"
+                },
+                {
+                  "party_id": [
+                    "JG0100001100000000"
+                  ],
+                  "role": "arbiter"
+                }
+              ],
+              "stage": "train"
+            },
+            "psi_0": {
+              "component_ref": "psi",
+              "conf": null,
+              "dependent_tasks": [
+                "reader_psi_0"
+              ],
+              "inputs": {
+                "data": {
+                  "input_data": {
+                    "task_output_artifact": {
+                      "output_artifact_key": "output_data",
+                      "output_artifact_type_alias": null,
+                      "parties": null,
+                      "producer_task": "reader_psi_0"
+                    }
+                  }
+                },
+                "model": null
+              },
+              "outputs": null,
+              "parameters": {
+                "curve_type": "curve25519",
+                "protocol": "ecdh_psi"
+              },
+              "parties": [
+                {
+                  "party_id": [
+                    "JG0100001100000010"
+                  ],
+                  "role": "guest"
+                },
+                {
+                  "party_id": [
+                    "JG0100001100000000"
+                  ],
+                  "role": "host"
+                }
+              ],
+              "stage": "default"
+            },
+            "reader_psi_0": {
+              "component_ref": "reader",
+              "conf": null,
+              "dependent_tasks": null,
+              "inputs": null,
+              "outputs": null,
+              "parameters": null,
+              "parties": [
+                {
+                  "party_id": [
+                    "JG0100001100000010"
+                  ],
+                  "role": "guest"
+                },
+                {
+                  "party_id": [
+                    "JG0100001100000000"
+                  ],
+                  "role": "host"
+                }
+              ],
+              "stage": "default"
+            }
+          }
+        },
+        "kind": "fate",
+        "schema_version": "2.0.0"
+      },
+      "description": "",
+      "elapsed": 125168,
+      "end_time": 1788864517172,
+      "engine_name": "standalone",
+      "flow_id": "",
+      "inheritance": {},
+      "initiator_party_id": "JG0100001100000010",
+      "job_id": "202609081046293133280",
+      "memory": 0,
+      "model_id": "202609081046293133280",
+      "model_version": "0",
+      "parties": [
+        {
+          "party_id": [
+            "JG0100001100000010"
+          ],
+          "role": "guest"
+        },
+        {
+          "party_id": [
+            "JG0100001100000000"
+          ],
+          "role": "host"
+        },
+        {
+          "party_id": [
+            "JG0100001100000000"
+          ],
+          "role": "arbiter"
+        }
+      ],
+      "party_id": "JG0100001100000000",
+      "progress": 100,
+      "protocol": "fate",
+      "remaining_cores": 2,
+      "remaining_memory": 0,
+      "resource_in_use": false,
+      "return_resource_time": 1788864516796,
+      "role": "host",
+      "scheduler_party_id": "JG0100001100000010",
+      "start_time": 1788864392004,
+      "status": "success",
+      "status_code": null,
+      "tag": "job_end",
+      "update_time": 1788864517172,
+      "user_name": ""
+    },
+    {
+      "apply_resource_time": 1788864391832,
+      "cores": 0,
+      "create_time": 1788864390287,
+      "dag": {
+        "dag": {
+          "conf": {
+            "auto_retries": 0,
+            "computing_partitions": 1,
+            "cores": 2,
+            "extra": null,
+            "inheritance": null,
+            "initiator_party_id": "JG0100001100000010",
+            "model_id": "202609081046293133280",
+            "model_version": "0",
+            "model_warehouse": null,
+            "priority": null,
+            "scheduler_party_id": "JG0100001100000010",
+            "sync_type": "callback",
+            "task": {
+              "engine_run": {
+                "cores": 1
+              },
+              "launcher_name": "default",
+              "provider": null,
+              "timeout": null
+            }
+          },
+          "parties": [
+            {
+              "party_id": [
+                "JG0100001100000010"
+              ],
+              "role": "guest"
+            },
+            {
+              "party_id": [
+                "JG0100001100000000"
+              ],
+              "role": "host"
+            },
+            {
+              "party_id": [
+                "JG0100001100000000"
+              ],
+              "role": "arbiter"
+            }
+          ],
+          "party_tasks": {
+            "guest_JG0100001100000010": {
+              "conf": {},
+              "parties": [
+                {
+                  "party_id": [
+                    "JG0100001100000010"
+                  ],
+                  "role": "guest"
+                }
+              ],
+              "tasks": {
+                "reader_psi_0": {
+                  "conf": null,
+                  "parameters": {
+                    "name": "breast_hetero_guest",
+                    "namespace": "experiment"
+                  }
+                }
+              }
+            },
+            "host_JG0100001100000000": {
+              "conf": {},
+              "parties": [
+                {
+                  "party_id": [
+                    "JG0100001100000000"
+                  ],
+                  "role": "host"
+                }
+              ],
+              "tasks": {
+                "reader_psi_0": {
+                  "conf": null,
+                  "parameters": {
+                    "name": "breast_hetero_host",
+                    "namespace": "experiment"
+                  }
+                }
+              }
+            }
+          },
+          "stage": "train",
+          "tasks": {
+            "coordinated_lr_1": {
+              "component_ref": "coordinated_lr",
+              "conf": null,
+              "dependent_tasks": [
+                "psi_0"
+              ],
+              "inputs": {
+                "data": {
+                  "train_data": {
+                    "task_output_artifact": {
+                      "output_artifact_key": "output_data",
+                      "output_artifact_type_alias": null,
+                      "parties": null,
+                      "producer_task": "psi_0"
+                    }
+                  }
+                },
+                "model": null
+              },
+              "outputs": null,
+              "parameters": {
+                "epochs": 2
+              },
+              "parties": [
+                {
+                  "party_id": [
+                    "JG0100001100000010"
+                  ],
+                  "role": "guest"
+                },
+                {
+                  "party_id": [
+                    "JG0100001100000000"
+                  ],
+                  "role": "host"
+                },
+                {
+                  "party_id": [
+                    "JG0100001100000000"
+                  ],
+                  "role": "arbiter"
+                }
+              ],
+              "stage": "train"
+            },
+            "psi_0": {
+              "component_ref": "psi",
+              "conf": null,
+              "dependent_tasks": [
+                "reader_psi_0"
+              ],
+              "inputs": {
+                "data": {
+                  "input_data": {
+                    "task_output_artifact": {
+                      "output_artifact_key": "output_data",
+                      "output_artifact_type_alias": null,
+                      "parties": null,
+                      "producer_task": "reader_psi_0"
+                    }
+                  }
+                },
+                "model": null
+              },
+              "outputs": null,
+              "parameters": {
+                "curve_type": "curve25519",
+                "protocol": "ecdh_psi"
+              },
+              "parties": [
+                {
+                  "party_id": [
+                    "JG0100001100000010"
+                  ],
+                  "role": "guest"
+                },
+                {
+                  "party_id": [
+                    "JG0100001100000000"
+                  ],
+                  "role": "host"
+                }
+              ],
+              "stage": "default"
+            },
+            "reader_psi_0": {
+              "component_ref": "reader",
+              "conf": null,
+              "dependent_tasks": null,
+              "inputs": null,
+              "outputs": null,
+              "parameters": null,
+              "parties": [
+                {
+                  "party_id": [
+                    "JG0100001100000010"
+                  ],
+                  "role": "guest"
+                },
+                {
+                  "party_id": [
+                    "JG0100001100000000"
+                  ],
+                  "role": "host"
+                }
+              ],
+              "stage": "default"
+            }
+          }
+        },
+        "kind": "fate",
+        "schema_version": "2.0.0"
+      },
+      "description": "",
+      "elapsed": 125185,
+      "end_time": 1788864517281,
+      "engine_name": "standalone",
+      "flow_id": "",
+      "inheritance": {},
+      "initiator_party_id": "JG0100001100000010",
+      "job_id": "202609081046293133280",
+      "memory": 0,
+      "model_id": "202609081046293133280",
+      "model_version": "0",
+      "parties": [
+        {
+          "party_id": [
+            "JG0100001100000010"
+          ],
+          "role": "guest"
+        },
+        {
+          "party_id": [
+            "JG0100001100000000"
+          ],
+          "role": "host"
+        },
+        {
+          "party_id": [
+            "JG0100001100000000"
+          ],
+          "role": "arbiter"
+        }
+      ],
+      "party_id": "JG0100001100000000",
+      "progress": 100,
+      "protocol": "fate",
+      "remaining_cores": 0,
+      "remaining_memory": 0,
+      "resource_in_use": false,
+      "return_resource_time": 1788864516921,
+      "role": "arbiter",
+      "scheduler_party_id": "JG0100001100000010",
+      "start_time": 1788864392096,
+      "status": "success",
+      "status_code": null,
+      "tag": "job_end",
+      "update_time": 1788864517281,
+      "user_name": ""
+    }
+  ],
+  "message": "success"
+}

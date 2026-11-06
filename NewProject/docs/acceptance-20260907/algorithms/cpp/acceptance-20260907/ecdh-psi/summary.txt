@@ -1,0 +1,40 @@
+algorithm=ecdh-psi
+status=PASS
+runtime=docker
+bfia_protocol=BFIA
+platform=linux/amd64
+alice_endpoint=172.31.240.2:29972
+bob_endpoint=172.31.240.3:29973
+通信协议=BFIA互联互通协议
+真实通信端点=Alice(172.31.240.2:29972) <-> Bob(172.31.240.3:29973)
+network_evidence=1
+alice_exit=0
+bob_exit=0
+timed_out=0
+early_exit=0
+alice_output=/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/output/alice/result.csv
+alice_output_lines=501
+bob_output=/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/output/bob/result.csv
+bob_output_lines=501
+alice_log=/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/alice.log
+bob_log=/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/bob.log
+metrics:
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/bob.log:[2026-09-07 01:43:55.214] [info] [psi_context_v2.cc:153] **********ECDH-PSI output file name: //results/output/bob/result.csv**********
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/bob.log:[2026-09-07 01:43:55.523] [info] [ic_main.cc:72] BFIA协议双方通信完成：本方=bob，对端=alice，端点=172.31.240.3:29973 <-> 172.31.240.2:29972
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/bob.log:[2026-09-07 01:43:55.523] [info] [ic_main.cc:80] Timing summary: total=3936ms, link_connect=3563ms, dataset=105ms, handshake=26ms, algo=219ms
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/alice.log:[2026-09-07 01:43:51.028] [info] [ic_main.cc:52] BFIA协议启动：协议=BFIA，算法=ecdh_psi，本方=alice，对端=bob，本端=172.31.240.2:29972，对端端点=172.31.240.3:29973，双方真实IPv4端点=172.31.240.2:29972 <-> 172.31.240.3:29973，运行时=docker，平台=linux/amd64，协议族=ecc
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/alice.log:[2026-09-07 01:43:51.028] [info] [ic_main.cc:59] BFIA协议上下文创建开始：准备监听本端并连接对端端点
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/alice.log:[2026-09-07 01:43:55.159] [info] [ic_main.cc:63] BFIA协议上下文创建成功：真实网络链路上下文已建立，本端=172.31.240.2:29972，对端=172.31.240.3:29973，链路准备耗时=4124ms
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/alice.log:[2026-09-07 01:43:55.159] [info] [ic_main.cc:68] BFIA协议开始握手和算法执行：本方=alice，算法=ecdh_psi
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/alice.log:[2026-09-07 01:43:55.160] [info] [party.cc:31] BFIA协议Party开始：本方rank=1，握手方向=主动发起
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/alice.log:[2026-09-07 01:43:55.160] [info] [party.cc:54] BFIA协议算法开始：ECDH-PSI（隐私求交）
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/alice.log:[2026-09-07 01:43:55.208] [info] [psi_context_v2.cc:153] **********ECDH-PSI output file name: //results/output/alice/result.csv**********
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/alice.log:[2026-09-07 01:43:55.522] [info] [ic_main.cc:72] BFIA协议双方通信完成：本方=alice，对端=bob，端点=172.31.240.2:29972 <-> 172.31.240.3:29973
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/alice.log:[2026-09-07 01:43:55.522] [info] [ic_main.cc:80] Timing summary: total=4494ms, link_connect=4124ms, dataset=107ms, handshake=27ms, algo=194ms
+diagnostics:
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/alice.log:[2026-09-07 01:43:51.275] [info] [blackbox_dummy_service_impl.cc:93] Rpc failed, error_code: 112, error_info: [E111]Fail to connect Socket{id=279 addr=172.31.240.3:29973} (0x0x7fffdc02f000): Connection refused [R1][E112]Not connected to 172.31.240.3:29973 yet, server_id=0 [R2][E112]Not connected to 172.31.240.3:29973 yet, server_id=0 [R3][E112]Not connected to 172.31.240.3:29973 yet, server_id=0, uri: bob:172.31.240.3:29973/v1/interconn/chan/invoke
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/alice.log:[2026-09-07 01:43:52.275] [info] [blackbox_dummy_service_impl.cc:93] Rpc failed, error_code: 112, error_info: [E112]Not connected to 172.31.240.3:29973 yet, server_id=0 [R1][E112]Not connected to 172.31.240.3:29973 yet, server_id=0 [R2][E112]Not connected to 172.31.240.3:29973 yet, server_id=0 [R3][E112]Not connected to 172.31.240.3:29973 yet, server_id=0, uri: bob:172.31.240.3:29973/v1/interconn/chan/invoke
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/alice.log:[2026-09-07 01:43:53.149] [debug] [channel.cc:359] send request failed and retry, retry_count=1, max_retry=3, interval_ms=1000, message=[external/yacl/yacl/link/transport/interconnection_link.cc:56] cntl ErrorCode '1008', http status code '0', response header '', response body '', error msg '[E1008]Reached timeout=2000ms @0.0.0.0:29972'
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/alice.log:[2026-09-07 01:43:53.276] [info] [blackbox_dummy_service_impl.cc:93] Rpc failed, error_code: 112, error_info: [E112]Not connected to 172.31.240.3:29973 yet, server_id=0 [R1][E112]Not connected to 172.31.240.3:29973 yet, server_id=0 [R2][E112]Not connected to 172.31.240.3:29973 yet, server_id=0 [R3][E112]Not connected to 172.31.240.3:29973 yet, server_id=0, uri: bob:172.31.240.3:29973/v1/interconn/chan/invoke
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/alice.log:[2026-09-07 01:43:54.155] [info] [blackbox_dummy_service_impl.cc:93] Rpc failed, error_code: 112, error_info: [E112]Not connected to 172.31.240.3:29973 yet, server_id=0 [R1][E112]Not connected to 172.31.240.3:29973 yet, server_id=0 [R2][E112]Not connected to 172.31.240.3:29973 yet, server_id=0 [R3][E112]Not connected to 172.31.240.3:29973 yet, server_id=0, uri: bob:172.31.240.3:29973/v1/interconn/chan/invoke
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ecdh-psi/alice.log:[2026-09-07 01:43:54.278] [info] [blackbox_dummy_service_impl.cc:93] Rpc failed, error_code: 112, error_info: [E112]Not connected to 172.31.240.3:29973 yet, server_id=0 [R1][E112]Not connected to 172.31.240.3:29973 yet, server_id=0 [R2][E112]Not connected to 172.31.240.3:29973 yet, server_id=0 [R3][E112]Not connected to 172.31.240.3:29973 yet, server_id=0, uri: bob:172.31.240.3:29973/v1/interconn/chan/invoke

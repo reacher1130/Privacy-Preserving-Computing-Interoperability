@@ -1,0 +1,321 @@
+--- a/controllers/data.go
++++ b/controllers/data.go
+@@ -7,12 +7,13 @@
+ 	"baidu/blockchain/dtx-manager/models"
+ 	"baidu/blockchain/dtx-manager/pkg/cache"
+ 	"baidu/blockchain/dtx-manager/pkg/codeerror"
++	"baidu/blockchain/dtx-manager/pkg/filesafe"
+ 	"crypto/md5"
+ 	"encoding/hex"
+ 	"encoding/json"
+-	"fmt"
+ 	"io"
+ 	"os"
++	"path/filepath"
+ 	"time"
+ )
+ 
+@@ -94,6 +95,18 @@
+ func (d *DataController) Create() {
+ 	var req DataReq
+ 	d.bindAndCheck(&req)
++	if !filesafe.Component(req.Namespace) {
++		d.ServeJSONWithError(codeerror.NewErrorByCode(codeerror.ErrParam, "namespace"))
++	}
++	var err error
++	req.FilePath, err = filesafe.Uploaded(d.UserAddress, req.FilePath)
++	if err != nil {
++		d.ServeJSONWithError(codeerror.NewErrorByCode(codeerror.ErrParam, "filePath"))
++	}
++	req.MetaPath, err = filesafe.Uploaded(d.UserAddress, req.MetaPath)
++	if err != nil {
++		d.ServeJSONWithError(codeerror.NewErrorByCode(codeerror.ErrParam, "metaPath"))
++	}
+ 
+ 	if req.ExpireTime != 0 && req.ExpireTime < time.Now().Unix() {
+ 		d.ServeJSONWithError(codeerror.NewErrorByCode(codeerror.ErrParam, "expireTime"))
+@@ -194,7 +207,7 @@
+ // @router fileupload [post]
+ func (d *DataController) FileUpload() {
+ 	fileName := d.Ctx.Request.Form.Get("fileName")
+-	if fileName == "" {
++	if !filesafe.Component(fileName) {
+ 		d.ServeJSONWithError(codeerror.NewErrorByCode(codeerror.ErrParam, "fileName"))
+ 	}
+ 	file, _, err := d.Ctx.Request.FormFile("file")
+@@ -204,29 +217,26 @@
+ 	}
+ 	defer file.Close()
+ 
+-	// 创建文件夹
+-	filePath := "./upload/" + d.UserAddress + "/"
+-	err = os.MkdirAll(filePath, 0777)
++	filePath, err := filesafe.UploadDir(d.UserAddress)
++	if err != nil {
++		d.ServeJSONWithError(codeerror.NewErrorByCode(codeerror.ErrParam, "upload directory"))
++	}
++	tf, err := os.CreateTemp(filePath, filepath.Base(fileName)+".*")
+ 	if err != nil {
+ 		d.Ctx.Output.SetStatus(InternalServerError)
+ 		d.ServeJSONWithError(err)
+ 	}
+-
+-	fileName = fmt.Sprintf("%s.%d", fileName, time.Now().Unix())
+-	fName := filePath + fileName
+-	// 写临时文件
+-	f, err := os.OpenFile(fName, os.O_WRONLY|os.O_CREATE, 0666) // test目录放在 GOPATH 目录下
+-	if err != nil {
++	fName := tf.Name()
++	defer tf.Close()
++	if _, err = io.Copy(tf, file); err != nil {
++		os.Remove(fName)
+ 		d.Ctx.Output.SetStatus(InternalServerError)
+ 		d.ServeJSONWithError(err)
+-		return
+-	}
+-	defer f.Close()
+-	_, err = io.Copy(f, file)
+-	if err != nil {
++	}
++	if err = tf.Close(); err != nil {
++		os.Remove(fName)
+ 		d.Ctx.Output.SetStatus(InternalServerError)
+ 		d.ServeJSONWithError(err)
+-		return
+ 	}
+ 
+ 	d.ServeData(map[string]string{
+@@ -317,6 +327,15 @@
+ func (d *DataController) Update() {
+ 	var req DataUpdateReq
+ 	d.bindAndCheck(&req)
++	var err error
++	req.FilePath, err = filesafe.Uploaded(d.UserAddress, req.FilePath)
++	if err != nil {
++		d.ServeJSONWithError(codeerror.NewErrorByCode(codeerror.ErrParam, "filePath"))
++	}
++	req.MetaPath, err = filesafe.Uploaded(d.UserAddress, req.MetaPath)
++	if err != nil {
++		d.ServeJSONWithError(codeerror.NewErrorByCode(codeerror.ErrParam, "metaPath"))
++	}
+ 
+ 	if req.ExpireTime != 0 && req.ExpireTime < time.Now().Unix() {
+ 		d.ServeJSONWithError(codeerror.NewErrorByCode(codeerror.ErrParam, "expireTime"))
+@@ -332,7 +351,7 @@
+ 	cache.GetCache().SetEx(md5Key, true, 5)
+ 
+ 	h := data.NewHandler(d.RequestID)
+-	err := h.Update(req.ID, req.ExpireTime, req.FilePath, req.FileVersion, req.MetaPath)
++	err = h.Update(req.ID, req.ExpireTime, req.FilePath, req.FileVersion, req.MetaPath)
+ 	if err != nil {
+ 		d.ServeJSONWithError(err)
+ 	}
+--- a/controllers/ns.go
++++ b/controllers/ns.go
+@@ -5,6 +5,7 @@
+ 	"baidu/blockchain/dtx-manager/handlers/catalog"
+ 	"baidu/blockchain/dtx-manager/handlers/op"
+ 	"baidu/blockchain/dtx-manager/pkg/codeerror"
++	"baidu/blockchain/dtx-manager/pkg/filesafe"
+ )
+ 
+ // NameSpaceController
+@@ -23,7 +24,7 @@
+ 
+ 	var req catalog.CreateRequest
+ 	ns.bindAndCheck(&req)
+-	if len(req.Name) == 0 {
++	if !filesafe.Component(req.Name) {
+ 		ns.ServeJSONWithError(codeerror.NewErrorByCode(codeerror.ErrParam, "name"))
+ 	}
+ 
+--- a/handlers/data/data.go
++++ b/handlers/data/data.go
+@@ -10,6 +10,7 @@
+ 	"baidu/blockchain/dtx-manager/pkg/codeerror"
+ 	"baidu/blockchain/dtx-manager/pkg/common"
+ 	"baidu/blockchain/dtx-manager/pkg/format"
++	"baidu/blockchain/dtx-manager/pkg/filesafe"
+ 	"baidu/blockchain/dtx-manager/pkg/logger"
+ 	"baidu/blockchain/dtx-manager/pkg/uuid"
+ 	"baidu/blockchain/dtx-manager/pkg/xdb"
+@@ -368,6 +369,9 @@
+ 
+ // saveToLocal
+ func (h *Handler) saveToLocal(dataResource *models.DataResource) error {
++	if !filesafe.Component(dataResource.Namespace) || !filesafe.Component(dataResource.ResourceID) {
++		return codeerror.NewErrorByCode(codeerror.ErrParam, "local resource path")
++	}
+ 	file, err := ioutil.ReadFile(dataResource.FileTempPath)
+ 	if err != nil {
+ 		return err
+@@ -742,8 +746,12 @@
+ 		respName = data.ResourceName + ".meta"
+ 	}
+ 
+-	// 2.read file and return bytes
+-	fileData, err := ioutil.ReadFile(filePath)
++	// Stored paths must stay inside this manager's upload volume.
++	safePath, err := filesafe.Uploaded("", filePath)
++	if err != nil {
++		return nil, "", codeerror.NewErrorByCode(codeerror.ErrResourceNotExisted)
++	}
++	fileData, err := ioutil.ReadFile(safePath)
+ 	if err != nil {
+ 		logger.Errorf("read file failed, err: %v", err)
+ 		return []byte{}, "", codeerror.NewErrorByCode(codeerror.ErrResourceNotExisted)
+@@ -761,6 +769,9 @@
+ 	}
+ 
+ 	// 从local读
++	if !filesafe.Component(data.Namespace) || !filesafe.Component(data.ResourceID) {
++		return nil, codeerror.NewErrorByCode(codeerror.ErrParam, "local resource path")
++	}
+ 	filePath := filepath.Join(config.DataLocalPath, data.Namespace, data.ResourceID)
+ 	return ioutil.ReadFile(filePath)
+ }
+--- /dev/null
++++ b/pkg/filesafe/path.go
+@@ -0,0 +1,80 @@
++package filesafe
++
++import (
++	"errors"
++	"os"
++	"path/filepath"
++	"strings"
++)
++
++func Component(value string) bool {
++	return value != "" && value != "." && value != ".." &&
++		!filepath.IsAbs(value) && filepath.Base(value) == value &&
++		!strings.ContainsAny(value, "/\\\x00")
++}
++
++func UploadDir(owner string) (string, error) {
++	if !Component(owner) {
++		return "", errors.New("invalid upload owner")
++	}
++	if err := os.MkdirAll("upload", 0700); err != nil {
++		return "", err
++	}
++	root, err := filepath.Abs("upload")
++	if err != nil {
++		return "", err
++	}
++	realRoot, err := filepath.EvalSymlinks(root)
++	if err != nil || realRoot != root {
++		return "", errors.New("symlinked upload root")
++	}
++	dir := filepath.Join("upload", owner)
++	if err := os.MkdirAll(dir, 0700); err != nil {
++		return "", err
++	}
++	absolute, err := filepath.Abs(dir)
++	if err != nil {
++		return "", err
++	}
++	real, err := filepath.EvalSymlinks(absolute)
++	if err != nil || real != absolute {
++		return "", errors.New("symlinked upload owner")
++	}
++	return dir, nil
++}
++
++// An empty owner permits authenticated resource reads across this manager's uploads.
++func Uploaded(owner, name string) (string, error) {
++	if name == "" || (owner != "" && !Component(owner)) {
++		return "", errors.New("invalid upload path")
++	}
++	root := "upload"
++	if owner != "" {
++		root = filepath.Join(root, owner)
++	}
++	root, err := filepath.Abs(root)
++	if err != nil {
++		return "", err
++	}
++	realRoot, err := filepath.EvalSymlinks(root)
++	if err != nil || realRoot != root {
++		return "", errors.New("symlinked upload directory")
++	}
++	absolute, err := filepath.Abs(name)
++	if err != nil {
++		return "", err
++	}
++	relative, err := filepath.Rel(root, absolute)
++	if err != nil || relative == "." || relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
++		return "", errors.New("path outside uploads")
++	}
++	info, err := os.Lstat(absolute)
++	if err != nil || !info.Mode().IsRegular() {
++		return "", errors.New("upload is not a regular file")
++	}
++	real, err := filepath.EvalSymlinks(absolute)
++	if err != nil || real != absolute {
++		return "", errors.New("symlinked upload file")
++	}
++	return absolute, nil
++}
+--- /dev/null
++++ b/pkg/filesafe/path_test.go
+@@ -0,0 +1,59 @@
++package filesafe
++
++import (
++	"os"
++	"path/filepath"
++	"testing"
++)
++
++func TestUploadRecoveryBoundary(t *testing.T) {
++	for _, value := range []string{"", ".", "..", "../escape", "/tmp/escape", "a/b", "a\\b", "a\x00b"} {
++		if Component(value) {
++			t.Fatalf("accepted unsafe component %q", value)
++		}
++	}
++	if !Component("样例-data.csv") {
++		t.Fatal("rejected a normal filename")
++	}
++	original, err := os.Getwd()
++	if err != nil {
++		t.Fatal(err)
++	}
++	root := t.TempDir()
++	if err := os.Chdir(root); err != nil {
++		t.Fatal(err)
++	}
++	defer os.Chdir(original)
++	for _, owner := range []string{"alice", "bob"} {
++		dir, err := UploadDir(owner)
++		if err != nil {
++			t.Fatal(err)
++		}
++		if err := os.WriteFile(filepath.Join(dir, "data.csv"), []byte("id\n1\n"), 0600); err != nil {
++			t.Fatal(err)
++		}
++	}
++	if _, err := Uploaded("alice", "upload/alice/data.csv"); err != nil {
++		t.Fatal(err)
++	}
++	if _, err := Uploaded("", "upload/bob/data.csv"); err != nil {
++		t.Fatal(err)
++	}
++	if err := os.WriteFile("outside.csv", []byte("private"), 0600); err != nil {
++		t.Fatal(err)
++	}
++	if err := os.Symlink(filepath.Join(root, "outside.csv"), "upload/alice/link.csv"); err != nil {
++		t.Fatal(err)
++	}
++	for _, path := range []string{"outside.csv", "upload/bob/data.csv", "upload/alice/link.csv", "upload/alice", "upload/alice/../../../outside.csv"} {
++		if _, err := Uploaded("alice", path); err == nil {
++			t.Fatalf("accepted unsafe upload %q", path)
++		}
++	}
++	if err := os.Symlink(filepath.Join(root, "upload", "bob"), "upload/mallory"); err != nil {
++		t.Fatal(err)
++	}
++	if _, err := UploadDir("mallory"); err == nil {
++		t.Fatal("accepted a symlinked owner directory")
++	}
++}

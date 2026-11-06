@@ -1,0 +1,18 @@
+{
+  "status": {
+    "code": 0,
+    "msg": "success"
+  },
+  "data": {
+    "jobId": "fj-75e4d362751e4e5a",
+    "clusterId": "fc-4ed3f690c2cc409f",
+    "projectId": "",
+    "graphId": "",
+    "name": "linux-migration-native-fate-20260908",
+    "initiatorNodeId": "alice",
+    "status": "RUNNING",
+    "errMsg": "",
+    "gmtCreate": 1788835586000,
+    "gmtModified": 1788835586000
+  }
+}

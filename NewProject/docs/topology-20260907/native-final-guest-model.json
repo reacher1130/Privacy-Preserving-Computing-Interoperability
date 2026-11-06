@@ -1,0 +1,184 @@
+{
+  "code": 0,
+  "data": {
+    "output_model": {
+      "data": {
+        "estimator": {
+          "end_epoch": 2,
+          "fit_intercept": true,
+          "header": [
+            "x0",
+            "x1",
+            "x2",
+            "x3",
+            "x4",
+            "x5",
+            "x6",
+            "x7",
+            "x8",
+            "x9"
+          ],
+          "is_converged": false,
+          "lr_scheduler": {
+            "lr_params": {
+              "start_factor": 1.0
+            },
+            "lr_scheduler": {
+              "_get_lr_called_within_step": false,
+              "_last_lr": [
+                0.01
+              ],
+              "_step_count": 2,
+              "base_lrs": [
+                0.01
+              ],
+              "end_factor": 1.0,
+              "last_epoch": 1,
+              "start_factor": 1.0,
+              "total_iters": 5,
+              "verbose": false
+            },
+            "method": "linear"
+          },
+          "optimizer": {
+            "alpha": 1.0,
+            "l1_penalty": false,
+            "l2_penalty": true,
+            "method": "sgd",
+            "model_parameter": [
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ]
+            ],
+            "model_parameter_dtype": "float32",
+            "optim_param": {
+              "lr": 0.01,
+              "weight_decay": 0
+            },
+            "optimizer": {
+              "param_groups": [
+                {
+                  "dampening": 0,
+                  "differentiable": false,
+                  "foreach": null,
+                  "fused": null,
+                  "initial_lr": 0.01,
+                  "lr": 0.01,
+                  "maximize": false,
+                  "momentum": 0,
+                  "nesterov": false,
+                  "params": [
+                    0
+                  ],
+                  "weight_decay": 0
+                }
+              ],
+              "state": {}
+            }
+          },
+          "param": {
+            "coef_": [
+              [
+                0.5549601118893214
+              ],
+              [
+                0.5949280928636826
+              ],
+              [
+                0.29860181409485453
+              ],
+              [
+                0.02105152679586696
+              ],
+              [
+                0.5338465595536405
+              ],
+              [
+                0.12427843940798865
+              ],
+              [
+                0.1988065153090698
+              ],
+              [
+                0.5529820371347101
+              ],
+              [
+                0.6949003264390138
+              ],
+              [
+                0.7992466100711219
+              ]
+            ],
+            "dtype": "float64",
+            "intercept_": [
+              0.4356029182773189
+            ]
+          }
+        }
+      },
+      "meta": {
+        "batch_size": null,
+        "epochs": 2,
+        "floating_point_precision": 23,
+        "init_param": {
+          "fill_val": 0.0,
+          "fit_intercept": true,
+          "method": "random_uniform",
+          "random_state": null
+        },
+        "labels": [
+          0,
+          1
+        ],
+        "learning_rate_param": {
+          "method": "linear",
+          "scheduler_params": {
+            "start_factor": 1.0
+          }
+        },
+        "optimizer_param": {
+          "alpha": 1.0,
+          "method": "sgd",
+          "optimizer_params": {
+            "lr": 0.01,
+            "weight_decay": 0
+          },
+          "penalty": "l2"
+        },
+        "ovr": false,
+        "threshold": 0.5
+      }
+    }
+  },
+  "message": "success"
+}

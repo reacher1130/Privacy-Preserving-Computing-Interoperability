@@ -1,0 +1,17 @@
+[
+  "NewProject/.local-backups",
+  "NewProject/secretpad-frontend-dist-e2e",
+  "NewProject/secretpad-native-frontend-dist",
+  "NewProject/secretpad/data_bfia",
+  "NewProject/secretpad/data_secretflow",
+  "NewProject/secretpad/db",
+  "NewProject/secretpad/db-test",
+  "NewProject/secretpad/db_bfia",
+  "NewProject/secretpad/db_secretflow",
+  "NewProject/secretpad/logs",
+  "NewProject/secretpad/log",
+  "NewProject/secretpad-bob/data_bfia",
+  "NewProject/secretpad-bob/db",
+  "NewProject/secretpad-kimi-upstream/data",
+  "NewProject/secretpad-kimi-upstream/db"
+]

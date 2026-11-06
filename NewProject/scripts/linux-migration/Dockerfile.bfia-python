@@ -1,0 +1,12 @@
+FROM secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/secretflow-lite-anolis8:1.11.0b1
+# The workspace source is mounted at execution time. Its dependency versions
+# supersede the older secretflow-lite distribution bundled in the base image.
+RUN pip install --no-cache-dir \
+    secretflow-spec==1.1.0b0 \
+    spu==0.9.4.dev20250618 \
+    sf-heu==0.6.0.dev20250514 \
+    sf-sml==0.1.0.dev20250623 \
+    secretflow-dataproxy==0.5.0b0 \
+    secretflow-serving-lib==0.10.0.dev20250414 \
+    pytest==8.4.1
+ENTRYPOINT ["bash"]

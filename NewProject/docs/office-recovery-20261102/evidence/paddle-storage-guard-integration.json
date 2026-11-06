@@ -1,0 +1,230 @@
+{
+  "startedAt": "2026-11-02T19:14:37.581374+08:00",
+  "baseAddress": "http://127.0.0.1:18080/api/v1alpha1/paddledtx",
+  "integrationCompleted": false,
+  "readOnlyChecksPassed": true,
+  "approvalBlocked": true,
+  "approvalReason": "Automatic approval rejected a live training submission because a defective guard could create a real task; explicit authorization for that possible creation was not established. No retry or indirect submission was made.",
+  "liveSubmissionExecuted": false,
+  "liveStartExecuted": false,
+  "scope": "Read-only deployed status, task-list queries and preserved Failed task snapshots. This does not prove live submission rejection or live start idempotency.",
+  "readiness": {
+    "engine": "paddlempc",
+    "healthAddress": "http://127.0.0.1:8511/v1/task/list",
+    "requesterConfigured": true,
+    "executors": [
+      {
+        "address": "http://127.0.0.1:8511/v1/task/list",
+        "httpStatus": 200,
+        "ready": true
+      },
+      {
+        "address": "http://127.0.0.1:8512/v1/task/list",
+        "httpStatus": 200,
+        "ready": true
+      }
+    ],
+    "httpStatus": 200,
+    "modelStorageType": "XuperDB",
+    "storage": [
+      {
+        "address": "http://127.0.0.1:8441/v1/file/getns?name=paddlempc",
+        "namespace": "paddlempc",
+        "replica": 2,
+        "eligibleNodes": 0,
+        "totalNodes": 3,
+        "checked": true,
+        "ready": false,
+        "error": "模型存储暂不可写：命名空间 paddlempc 需要 2 个在线健康节点，当前 0 个，请等待节点健康恢复"
+      },
+      {
+        "address": "http://127.0.0.1:8442/v1/file/getns?name=paddlempc",
+        "namespace": "paddlempc",
+        "replica": 2,
+        "eligibleNodes": 0,
+        "totalNodes": 3,
+        "checked": true,
+        "ready": false,
+        "error": "模型存储暂不可写：命名空间 paddlempc 需要 2 个在线健康节点，当前 0 个，请等待节点健康恢复"
+      }
+    ],
+    "storageReady": false,
+    "ready": false,
+    "error": "模型存储暂不可写：命名空间 paddlempc 需要 2 个在线健康节点，当前 0 个，请等待节点健康恢复"
+  },
+  "readinessElapsedSeconds": 0.144,
+  "listBefore": {
+    "taskIds": [
+      "055205ef-0877-431e-9a4e-d6b471217733",
+      "06b7555e-b49e-46c8-bce2-244e47bb74dc",
+      "0e24f936-bc02-43a4-9520-5ed0db342b43",
+      "1346e6e8-1f1a-435e-ac47-80ecc0180060",
+      "17a612b6-8799-4ecd-9901-bb46556c4745",
+      "27586ca5-997e-44e3-8ab8-e5a6eb182f30",
+      "2a223376-5d84-4661-9ae9-54f6eeca3bc3",
+      "2d7a2ff4-b0e4-4912-9050-470480f5ac51",
+      "4d1b0479-ce9e-4e28-b601-824fc83c81c7",
+      "6a6636a6-9ad7-4fd8-9230-2f622d6b3155",
+      "7109ac57-fdaf-4a2e-a98a-5c09a97542b1",
+      "76c5149a-3620-4b81-9ceb-58b7cb65a802",
+      "79e26c54-5d79-4fc5-8f69-509563a9aa5b",
+      "7c9f47bd-65f3-4a61-874d-c5dc8ba7c5ac",
+      "85fea31b-98d5-48fa-94b3-9dea1d6c12d1",
+      "88cb092a-8a9f-40c4-ba1c-a75fc68cb099",
+      "977f0939-eafa-49de-8973-938c8b0f594f",
+      "9ac8acc5-7abb-4b86-8b1e-e01c28c17549",
+      "bdfb8f3c-90b2-472a-aecb-df5b8f3388c9",
+      "be2c50da-e5b7-408d-ae72-18219b7d4bfa",
+      "ce17fd1b-5d69-4238-9a69-6e6238c6e387",
+      "e7939a70-354f-4ea9-9160-d12e3219afef"
+    ],
+    "count": 22,
+    "elapsedSeconds": 0.067
+  },
+  "failedTaskBefore": {
+    "taskId": "7c9f47bd-65f3-4a61-874d-c5dc8ba7c5ac",
+    "task": {
+      "taskId": "7c9f47bd-65f3-4a61-874d-c5dc8ba7c5ac",
+      "status": "Failed",
+      "type": "train",
+      "name": "办公回归-审批恢复-20261102",
+      "algorithm": "linear-vl",
+      "publishTime": "2026-11-02 17:51:33",
+      "startTime": "2026-11-02 17:57:36",
+      "endTime": "",
+      "errorMessage": "{\"code\":\"10001\",\"message\":\"failed to save task model: {\\\"code\\\":\\\"10001\\\",\\\"message\\\":\\\"empty healthy nodes\\\"}\"}",
+      "result": "map[]"
+    },
+    "hasStartResult": false,
+    "error": null
+  },
+  "listRepeated": {
+    "taskIds": [
+      "055205ef-0877-431e-9a4e-d6b471217733",
+      "06b7555e-b49e-46c8-bce2-244e47bb74dc",
+      "0e24f936-bc02-43a4-9520-5ed0db342b43",
+      "1346e6e8-1f1a-435e-ac47-80ecc0180060",
+      "17a612b6-8799-4ecd-9901-bb46556c4745",
+      "27586ca5-997e-44e3-8ab8-e5a6eb182f30",
+      "2a223376-5d84-4661-9ae9-54f6eeca3bc3",
+      "2d7a2ff4-b0e4-4912-9050-470480f5ac51",
+      "4d1b0479-ce9e-4e28-b601-824fc83c81c7",
+      "6a6636a6-9ad7-4fd8-9230-2f622d6b3155",
+      "7109ac57-fdaf-4a2e-a98a-5c09a97542b1",
+      "76c5149a-3620-4b81-9ceb-58b7cb65a802",
+      "79e26c54-5d79-4fc5-8f69-509563a9aa5b",
+      "7c9f47bd-65f3-4a61-874d-c5dc8ba7c5ac",
+      "85fea31b-98d5-48fa-94b3-9dea1d6c12d1",
+      "88cb092a-8a9f-40c4-ba1c-a75fc68cb099",
+      "977f0939-eafa-49de-8973-938c8b0f594f",
+      "9ac8acc5-7abb-4b86-8b1e-e01c28c17549",
+      "bdfb8f3c-90b2-472a-aecb-df5b8f3388c9",
+      "be2c50da-e5b7-408d-ae72-18219b7d4bfa",
+      "ce17fd1b-5d69-4238-9a69-6e6238c6e387",
+      "e7939a70-354f-4ea9-9160-d12e3219afef"
+    ],
+    "count": 22,
+    "elapsedSeconds": 0.065
+  },
+  "failedTaskRepeated": {
+    "taskId": "7c9f47bd-65f3-4a61-874d-c5dc8ba7c5ac",
+    "task": {
+      "taskId": "7c9f47bd-65f3-4a61-874d-c5dc8ba7c5ac",
+      "status": "Failed",
+      "type": "train",
+      "name": "办公回归-审批恢复-20261102",
+      "algorithm": "linear-vl",
+      "publishTime": "2026-11-02 17:51:33",
+      "startTime": "2026-11-02 17:57:36",
+      "endTime": "",
+      "errorMessage": "{\"code\":\"10001\",\"message\":\"failed to save task model: {\\\"code\\\":\\\"10001\\\",\\\"message\\\":\\\"empty healthy nodes\\\"}\"}",
+      "result": "map[]"
+    },
+    "hasStartResult": false,
+    "error": null
+  },
+  "listAfter": {
+    "taskIds": [
+      "055205ef-0877-431e-9a4e-d6b471217733",
+      "06b7555e-b49e-46c8-bce2-244e47bb74dc",
+      "0e24f936-bc02-43a4-9520-5ed0db342b43",
+      "1346e6e8-1f1a-435e-ac47-80ecc0180060",
+      "17a612b6-8799-4ecd-9901-bb46556c4745",
+      "27586ca5-997e-44e3-8ab8-e5a6eb182f30",
+      "2a223376-5d84-4661-9ae9-54f6eeca3bc3",
+      "2d7a2ff4-b0e4-4912-9050-470480f5ac51",
+      "4d1b0479-ce9e-4e28-b601-824fc83c81c7",
+      "6a6636a6-9ad7-4fd8-9230-2f622d6b3155",
+      "7109ac57-fdaf-4a2e-a98a-5c09a97542b1",
+      "76c5149a-3620-4b81-9ceb-58b7cb65a802",
+      "79e26c54-5d79-4fc5-8f69-509563a9aa5b",
+      "7c9f47bd-65f3-4a61-874d-c5dc8ba7c5ac",
+      "85fea31b-98d5-48fa-94b3-9dea1d6c12d1",
+      "88cb092a-8a9f-40c4-ba1c-a75fc68cb099",
+      "977f0939-eafa-49de-8973-938c8b0f594f",
+      "9ac8acc5-7abb-4b86-8b1e-e01c28c17549",
+      "bdfb8f3c-90b2-472a-aecb-df5b8f3388c9",
+      "be2c50da-e5b7-408d-ae72-18219b7d4bfa",
+      "ce17fd1b-5d69-4238-9a69-6e6238c6e387",
+      "e7939a70-354f-4ea9-9160-d12e3219afef"
+    ],
+    "count": 22,
+    "elapsedSeconds": 0.068
+  },
+  "failedTaskAfter": {
+    "taskId": "7c9f47bd-65f3-4a61-874d-c5dc8ba7c5ac",
+    "task": {
+      "taskId": "7c9f47bd-65f3-4a61-874d-c5dc8ba7c5ac",
+      "status": "Failed",
+      "type": "train",
+      "name": "办公回归-审批恢复-20261102",
+      "algorithm": "linear-vl",
+      "publishTime": "2026-11-02 17:51:33",
+      "startTime": "2026-11-02 17:57:36",
+      "endTime": "",
+      "errorMessage": "{\"code\":\"10001\",\"message\":\"failed to save task model: {\\\"code\\\":\\\"10001\\\",\\\"message\\\":\\\"empty healthy nodes\\\"}\"}",
+      "result": "map[]"
+    },
+    "hasStartResult": false,
+    "error": null
+  },
+  "allTaskIdSetsUnchanged": true,
+  "failedTaskSnapshotsUnchanged": true,
+  "failedTaskPreserved": true,
+  "endedAt": "2026-11-02T19:14:38.117691+08:00",
+  "existingTestCoverage": {
+    "priorFullSuite": {
+      "commit": "92bcfc1670db944304fab71425b34a23509791cd",
+      "tests": 528,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "summary": "/opt/ppci-build/office-recovery-20261102-storage-readiness-full-test-summary.json"
+    },
+    "currentTargetedSuite": {
+      "commit": "a54796d5694499fc9901b81b7dd5eb69803454e6",
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "verification": "/opt/ppci-build/office-recovery-20261102-storage-checked-verification.json",
+      "reports": [
+        {
+          "name": "org.secretflow.secretpad.service.paddledtx.PaddleDtxClientTest",
+          "tests": "17",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        },
+        {
+          "name": "org.secretflow.secretpad.web.controller.fate.ProtocolBoundaryTest",
+          "tests": "2",
+          "failures": "0",
+          "errors": "0",
+          "skipped": "0"
+        }
+      ]
+    },
+    "scope": "Isolated Java tests using HTTP fixtures and a mocked CLI verify blocked publish, Ready start retaining taskId, and Failed/Processing idempotency. These are separate from live deployed API observations."
+  }
+}

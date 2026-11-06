@@ -1,0 +1,8 @@
+--- a/vendor/github.com/xuperchain/xuper-sdk-go/config/config.go
++++ b/vendor/github.com/xuperchain/xuper-sdk-go/config/config.go
+@@ -68,4 +68,4 @@
+ 
+-	log.Printf("GetConfig: %v\n", commConfig)
++	log.Print("SDK configuration loaded")
+ 	return commConfig
+ }

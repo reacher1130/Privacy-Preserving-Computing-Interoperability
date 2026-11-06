@@ -1,0 +1,745 @@
+{
+  "appimages": {
+    "apiVersion": "v1",
+    "items": [
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "AppImage",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"AppImage\",\"metadata\":{\"annotations\":{},\"name\":\"secretflow-image\"},\"spec\":{\"configTemplates\":{\"task-config.conf\":\"{\\n  \\\"task_id\\\": \\\"{{.TASK_ID}}\\\",\\n  \\\"task_input_config\\\": \\\"{{.TASK_INPUT_CONFIG}}\\\",\\n  \\\"task_cluster_def\\\": \\\"{{.TASK_CLUSTER_DEFINE}}\\\",\\n  \\\"task_progress_url\\\":\\\"http://reporter.master.svc/report/progress?task_id={{.TASK_ID}}\\\",\\n  \\\"allocated_ports\\\": \\\"{{.ALLOCATED_PORTS}}\\\"\\n}\\n\"},\"deployTemplates\":[{\"name\":\"secretflow\",\"replicas\":1,\"spec\":{\"containers\":[{\"args\":[\"-c\",\"python -m secretflow.kuscia.entry ./kuscia/task-config.conf\"],\"command\":[\"sh\"],\"configVolumeMounts\":[{\"mountPath\":\"/work/kuscia/task-config.conf\",\"subPath\":\"task-config.conf\"}],\"name\":\"secretflow\",\"ports\":[{\"name\":\"spu\",\"protocol\":\"GRPC\",\"scope\":\"Cluster\"},{\"name\":\"fed\",\"protocol\":\"GRPC\",\"scope\":\"Cluster\"},{\"name\":\"global\",\"protocol\":\"GRPC\",\"scope\":\"Domain\"},{\"name\":\"node-manager\",\"protocol\":\"GRPC\",\"scope\":\"Local\"},{\"name\":\"object-manager\",\"protocol\":\"GRPC\",\"scope\":\"Local\"},{\"name\":\"client-server\",\"protocol\":\"GRPC\",\"scope\":\"Local\"},{\"name\":\"inference\",\"protocol\":\"HTTP\",\"scope\":\"Cluster\"}],\"workingDir\":\"/work\"}],\"restartPolicy\":\"Never\"}}],\"image\":{\"name\":\"secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/secretflow-lite-anolis8\",\"tag\":\"1.11.0b1\"}}}\n"
+          },
+          "creationTimestamp": "2026-07-24T18:54:39Z",
+          "generation": 1,
+          "name": "secretflow-image",
+          "resourceVersion": "353",
+          "uid": "7f0bcb73-1dd1-4681-8752-724ffe5a3096"
+        },
+        "spec": {
+          "configTemplates": {
+            "task-config.conf": "{\n  \"task_id\": \"{{.TASK_ID}}\",\n  \"task_input_config\": \"{{.TASK_INPUT_CONFIG}}\",\n  \"task_cluster_def\": \"{{.TASK_CLUSTER_DEFINE}}\",\n  \"task_progress_url\":\"http://reporter.master.svc/report/progress?task_id={{.TASK_ID}}\",\n  \"allocated_ports\": \"{{.ALLOCATED_PORTS}}\"\n}\n"
+          },
+          "deployTemplates": [
+            {
+              "name": "secretflow",
+              "replicas": 1,
+              "spec": {
+                "containers": [
+                  {
+                    "args": [
+                      "-c",
+                      "python -m secretflow.kuscia.entry ./kuscia/task-config.conf"
+                    ],
+                    "command": [
+                      "sh"
+                    ],
+                    "configVolumeMounts": [
+                      {
+                        "mountPath": "/work/kuscia/task-config.conf",
+                        "subPath": "task-config.conf"
+                      }
+                    ],
+                    "name": "secretflow",
+                    "ports": [
+                      {
+                        "name": "spu",
+                        "protocol": "GRPC",
+                        "scope": "Cluster"
+                      },
+                      {
+                        "name": "fed",
+                        "protocol": "GRPC",
+                        "scope": "Cluster"
+                      },
+                      {
+                        "name": "global",
+                        "protocol": "GRPC",
+                        "scope": "Domain"
+                      },
+                      {
+                        "name": "node-manager",
+                        "protocol": "GRPC",
+                        "scope": "Local"
+                      },
+                      {
+                        "name": "object-manager",
+                        "protocol": "GRPC",
+                        "scope": "Local"
+                      },
+                      {
+                        "name": "client-server",
+                        "protocol": "GRPC",
+                        "scope": "Local"
+                      },
+                      {
+                        "name": "inference",
+                        "protocol": "HTTP",
+                        "scope": "Cluster"
+                      }
+                    ],
+                    "workingDir": "/work"
+                  }
+                ],
+                "restartPolicy": "Never"
+              }
+            }
+          ],
+          "image": {
+            "name": "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/secretflow-lite-anolis8",
+            "tag": "1.11.0b1"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "AppImage",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"AppImage\",\"metadata\":{\"annotations\":{},\"name\":\"secretflow-nsjail-image\"},\"spec\":{\"configTemplates\":{\"task-config.conf\":\"{\\n  \\\"task_id\\\": \\\"{{.TASK_ID}}\\\",\\n  \\\"task_input_config\\\": \\\"{{.TASK_INPUT_CONFIG}}\\\",\\n  \\\"task_cluster_def\\\": \\\"{{.TASK_CLUSTER_DEFINE}}\\\",\\n  \\\"task_progress_url\\\":\\\"http://reporter.master.svc/report/progress?task_id={{.TASK_ID}}\\\",\\n  \\\"allocated_ports\\\": \\\"{{.ALLOCATED_PORTS}}\\\"\\n}\\n\"},\"deployTemplates\":[{\"name\":\"secretflow\",\"replicas\":1,\"spec\":{\"containers\":[{\"args\":[\"-c\",\"sh .nsjail/run.sh\"],\"command\":[\"sh\"],\"configVolumeMounts\":[{\"mountPath\":\"/work/kuscia/task-config.conf\",\"subPath\":\"task-config.conf\"}],\"name\":\"secretflow\",\"ports\":[{\"name\":\"spu\",\"protocol\":\"GRPC\",\"scope\":\"Cluster\"},{\"name\":\"fed\",\"protocol\":\"GRPC\",\"scope\":\"Cluster\"},{\"name\":\"global\",\"protocol\":\"GRPC\",\"scope\":\"Domain\"},{\"name\":\"node-manager\",\"protocol\":\"GRPC\",\"scope\":\"Local\"},{\"name\":\"object-manager\",\"protocol\":\"GRPC\",\"scope\":\"Local\"},{\"name\":\"client-server\",\"protocol\":\"GRPC\",\"scope\":\"Local\"}],\"securityContext\":{\"privileged\":true},\"workingDir\":\"/work\"}],\"restartPolicy\":\"Never\"}}],\"image\":{\"name\":\"secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/secretflow-lite-anolis8\",\"tag\":\"1.11.0b1\"}}}\n"
+          },
+          "creationTimestamp": "2026-07-24T18:54:39Z",
+          "generation": 1,
+          "name": "secretflow-nsjail-image",
+          "resourceVersion": "354",
+          "uid": "95d7a986-efee-47f8-a439-9e94bba5d65f"
+        },
+        "spec": {
+          "configTemplates": {
+            "task-config.conf": "{\n  \"task_id\": \"{{.TASK_ID}}\",\n  \"task_input_config\": \"{{.TASK_INPUT_CONFIG}}\",\n  \"task_cluster_def\": \"{{.TASK_CLUSTER_DEFINE}}\",\n  \"task_progress_url\":\"http://reporter.master.svc/report/progress?task_id={{.TASK_ID}}\",\n  \"allocated_ports\": \"{{.ALLOCATED_PORTS}}\"\n}\n"
+          },
+          "deployTemplates": [
+            {
+              "name": "secretflow",
+              "replicas": 1,
+              "spec": {
+                "containers": [
+                  {
+                    "args": [
+                      "-c",
+                      "sh .nsjail/run.sh"
+                    ],
+                    "command": [
+                      "sh"
+                    ],
+                    "configVolumeMounts": [
+                      {
+                        "mountPath": "/work/kuscia/task-config.conf",
+                        "subPath": "task-config.conf"
+                      }
+                    ],
+                    "name": "secretflow",
+                    "ports": [
+                      {
+                        "name": "spu",
+                        "protocol": "GRPC",
+                        "scope": "Cluster"
+                      },
+                      {
+                        "name": "fed",
+                        "protocol": "GRPC",
+                        "scope": "Cluster"
+                      },
+                      {
+                        "name": "global",
+                        "protocol": "GRPC",
+                        "scope": "Domain"
+                      },
+                      {
+                        "name": "node-manager",
+                        "protocol": "GRPC",
+                        "scope": "Local"
+                      },
+                      {
+                        "name": "object-manager",
+                        "protocol": "GRPC",
+                        "scope": "Local"
+                      },
+                      {
+                        "name": "client-server",
+                        "protocol": "GRPC",
+                        "scope": "Local"
+                      }
+                    ],
+                    "securityContext": {
+                      "privileged": true
+                    },
+                    "workingDir": "/work"
+                  }
+                ],
+                "restartPolicy": "Never"
+              }
+            }
+          ],
+          "image": {
+            "name": "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/secretflow-lite-anolis8",
+            "tag": "1.11.0b1"
+          }
+        }
+      }
+    ],
+    "kind": "List",
+    "metadata": {
+      "resourceVersion": ""
+    }
+  },
+  "clusterdomainroutes": {
+    "apiVersion": "v1",
+    "items": [
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "ClusterDomainRoute",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"ClusterDomainRoute\",\"metadata\":{\"annotations\":{},\"name\":\"alice-kimi\"},\"spec\":{\"authenticationType\":\"Token\",\"destination\":\"kimi\",\"endpoint\":{\"host\":\"192.168.117.4\",\"ports\":[{\"isTLS\":true,\"name\":\"http\",\"port\":1080,\"protocol\":\"HTTP\"}]},\"interConnProtocol\":\"kuscia\",\"source\":\"alice\",\"tokenConfig\":{\"rollingUpdatePeriod\":86400,\"tokenGenMethod\":\"RSA-GEN\"}}}\n"
+          },
+          "creationTimestamp": "2026-09-07T04:27:58Z",
+          "generation": 3,
+          "labels": {
+            "kuscia.secertflow/domainroute-partner": "alice",
+            "kuscia.secretflow/clusterdomainroute-destination": "kimi",
+            "kuscia.secretflow/clusterdomainroute-source": "alice"
+          },
+          "name": "alice-kimi",
+          "resourceVersion": "231413",
+          "uid": "70dda5d7-3b32-4d63-a26b-4b31a44b22f0"
+        },
+        "spec": {
+          "authenticationType": "Token",
+          "destination": "kimi",
+          "endpoint": {
+            "host": "192.168.117.4",
+            "ports": [
+              {
+                "isTLS": true,
+                "name": "http",
+                "port": 1080,
+                "protocol": "HTTP"
+              }
+            ]
+          },
+          "interConnProtocol": "kuscia",
+          "requestHeadersToAdd": {
+            "Authorization": "[REDACTED]"
+          },
+          "source": "alice",
+          "tokenConfig": {
+            "destinationPublicKey": "LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JSUJDZ0tDQVFFQW40WEZjYUUvWjRiZXZCTlRQOHlRMGV2UzhtNDVVSDVCTGpPUDJ5d2VDSjdqKzNnUEJoQ3gKZWR3TDMrdGJmL0tnWDJJaXJReVZRbU0xK2ExN2Jwbm9ZazB1UWVybld4ZzNOOHhZaTBpVk9BdURLTG9GNFUvUAo4TTdKMk9LR25nbFFPWG00TFpLc0xNV1JXNWVQUUtBUS9UM3g0alBqaGlOYU9JYVVNWEZwOGsyMTN4dk5heDBmClYwNW5SY3UycXpSaXFYZWVBMGppK1ozb29oek56WUNaakRZYVJzZlQrMWJ5WDVkcEk1QUFUMEhzcVl4aXpDbnYKUE9OZEJwMFp1ZnhUMnFoell4bWhDdHovdGRvNXZLNG9NbDlKR2Y2RVVJbTRyanU2Mk9XeWpsTmljM1g3UjVyYwpPU2F6d04xTVdvdnV2MnBVM1BWTHJlK09uSWhFc2Vlb1F3SURBUUFCCi0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0K",
+            "rollingUpdatePeriod": 86400,
+            "sourcePublicKey": "LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JSUJDZ0tDQVFFQXZWZUQ0VjBIYThmVWhCYU5jSE43eExLSnBEWHE1RExUZGNKd3ZKaEp3VTdQQkZZRzNoclEKdXQvTEV0bVNnaWVvRnlDYWtlZHlSdUlHTjNkakhCN0Q4QUJBbTVKbi9OS1M4eCtzYkpFdGJEMGJRSG8xTTJSLwpncVN4U3FLZlp3NEV3Q2tYZzh2Vy9uL1pyOE9pQUpIb2t2cHZab3FlS2c5cm1GVjhZNTVndDA5VW1EOEVYb0h4CnI2SFB0Z3FBQVVreVcyYUlzZlIwQkVQUTZ4N3RPc2dKSng2TmpZclVXbkw4L2hubUVCc3FvbHBXTnFreTBmOHIKWUxZYTloWTl4V0F0ZFJnRHpoUG9FSG9OcWR1NkhKaEdBbWVDWDRtRmJUN21nU2pPcUdrN0V1TWxpTG0yODVubApIZ1ZGbG42UitvV3h5cVQ5TUF0RDFpbHU5clFNaDc1NVN3SURBUUFCCi0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0K",
+            "tokenGenMethod": "RSA-GEN"
+          }
+        },
+        "status": {
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-07T04:27:59Z",
+              "lastUpdateTime": "2026-09-07T04:27:59Z",
+              "message": "Success",
+              "status": "True",
+              "type": "Ready"
+            }
+          ],
+          "tokenStatus": {
+            "destinationTokens": [
+              {
+                "effectiveInstances": [
+                  "gaofeng-kuscia-autonomy-kimi-eliauk-local"
+                ],
+                "expirationTime": "2026-09-09T04:27:59Z",
+                "heartBeatTime": "2026-09-07T04:32:20Z",
+                "isReady": true,
+                "revision": 1,
+                "revisionTime": "2026-09-07T04:27:59Z",
+                "token": "[REDACTED]"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "ClusterDomainRoute",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"ClusterDomainRoute\",\"metadata\":{\"annotations\":{},\"name\":\"kimi-alice\"},\"spec\":{\"authenticationType\":\"Token\",\"destination\":\"alice\",\"endpoint\":{\"host\":\"192.168.117.2\",\"ports\":[{\"isTLS\":true,\"name\":\"http\",\"port\":1080,\"protocol\":\"HTTP\"}]},\"interConnProtocol\":\"kuscia\",\"source\":\"kimi\",\"tokenConfig\":{\"rollingUpdatePeriod\":86400,\"tokenGenMethod\":\"RSA-GEN\"}}}\n"
+          },
+          "creationTimestamp": "2026-09-07T04:27:58Z",
+          "generation": 3,
+          "labels": {
+            "kuscia.secertflow/domainroute-partner": "alice",
+            "kuscia.secretflow/clusterdomainroute-destination": "alice",
+            "kuscia.secretflow/clusterdomainroute-source": "kimi"
+          },
+          "name": "kimi-alice",
+          "resourceVersion": "231132",
+          "uid": "9a4ddd68-c7e9-4a21-b8ed-f0089662f0fa"
+        },
+        "spec": {
+          "authenticationType": "Token",
+          "destination": "alice",
+          "endpoint": {
+            "host": "192.168.117.2",
+            "ports": [
+              {
+                "isTLS": true,
+                "name": "http",
+                "port": 1080,
+                "protocol": "HTTP"
+              }
+            ]
+          },
+          "interConnProtocol": "kuscia",
+          "requestHeadersToAdd": {
+            "Authorization": "[REDACTED]"
+          },
+          "source": "kimi",
+          "tokenConfig": {
+            "destinationPublicKey": "LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JSUJDZ0tDQVFFQXZWZUQ0VjBIYThmVWhCYU5jSE43eExLSnBEWHE1RExUZGNKd3ZKaEp3VTdQQkZZRzNoclEKdXQvTEV0bVNnaWVvRnlDYWtlZHlSdUlHTjNkakhCN0Q4QUJBbTVKbi9OS1M4eCtzYkpFdGJEMGJRSG8xTTJSLwpncVN4U3FLZlp3NEV3Q2tYZzh2Vy9uL1pyOE9pQUpIb2t2cHZab3FlS2c5cm1GVjhZNTVndDA5VW1EOEVYb0h4CnI2SFB0Z3FBQVVreVcyYUlzZlIwQkVQUTZ4N3RPc2dKSng2TmpZclVXbkw4L2hubUVCc3FvbHBXTnFreTBmOHIKWUxZYTloWTl4V0F0ZFJnRHpoUG9FSG9OcWR1NkhKaEdBbWVDWDRtRmJUN21nU2pPcUdrN0V1TWxpTG0yODVubApIZ1ZGbG42UitvV3h5cVQ5TUF0RDFpbHU5clFNaDc1NVN3SURBUUFCCi0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0K",
+            "rollingUpdatePeriod": 86400,
+            "sourcePublicKey": "LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JSUJDZ0tDQVFFQW40WEZjYUUvWjRiZXZCTlRQOHlRMGV2UzhtNDVVSDVCTGpPUDJ5d2VDSjdqKzNnUEJoQ3gKZWR3TDMrdGJmL0tnWDJJaXJReVZRbU0xK2ExN2Jwbm9ZazB1UWVybld4ZzNOOHhZaTBpVk9BdURLTG9GNFUvUAo4TTdKMk9LR25nbFFPWG00TFpLc0xNV1JXNWVQUUtBUS9UM3g0alBqaGlOYU9JYVVNWEZwOGsyMTN4dk5heDBmClYwNW5SY3UycXpSaXFYZWVBMGppK1ozb29oek56WUNaakRZYVJzZlQrMWJ5WDVkcEk1QUFUMEhzcVl4aXpDbnYKUE9OZEJwMFp1ZnhUMnFoell4bWhDdHovdGRvNXZLNG9NbDlKR2Y2RVVJbTRyanU2Mk9XeWpsTmljM1g3UjVyYwpPU2F6d04xTVdvdnV2MnBVM1BWTHJlK09uSWhFc2Vlb1F3SURBUUFCCi0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0K",
+            "tokenGenMethod": "RSA-GEN"
+          }
+        },
+        "status": {
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-07T04:28:00Z",
+              "lastUpdateTime": "2026-09-07T04:28:00Z",
+              "message": "Success",
+              "status": "True",
+              "type": "Ready"
+            }
+          ],
+          "endpointStatuses": {
+            "gaofeng-kuscia-autonomy-kimi-eliauk-local-http": {
+              "endpointHealthy": true
+            }
+          },
+          "tokenStatus": {
+            "sourceTokens": [
+              {
+                "effectiveInstances": [
+                  "gaofeng-kuscia-autonomy-kimi-eliauk-local"
+                ],
+                "expirationTime": "2026-09-09T04:27:59Z",
+                "isReady": true,
+                "revision": 1,
+                "revisionTime": "2026-09-07T04:28:00Z",
+                "token": "[REDACTED]"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "kind": "List",
+    "metadata": {
+      "resourceVersion": ""
+    }
+  },
+  "kusciajobs": {
+    "apiVersion": "v1",
+    "items": [
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/initiator-master-domain": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi",
+            "kuscia.secretflow/interconn-self-parties": "kimi",
+            "kuscia.secretflow/party-master-domain": "kimi",
+            "kuscia.secretflow/self-cluster-as-initiator": "false"
+          },
+          "creationTimestamp": "2026-09-07T01:32:53Z",
+          "generation": 2,
+          "name": "buhf",
+          "namespace": "cross-domain",
+          "resourceVersion": "221362",
+          "uid": "8d299b9a-2b60-4448-a6d3-7fa8acaefc4d"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "buhf-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskID": "buhf-new-n3",
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"1.0.0\",\n    \"attr_paths\": [\"input/input_ds1/keys\", \"input/input_ds2/keys\", \"protocol\", \"sort_result\", \"receiver_parties\", \"allow_empty_result\", \"join_type\", \"input_ds1_keys_duplicated\", \"input_ds2_keys_duplicated\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"inner_join\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"ckbuhf-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"buhf_new_n3_output_0\", \"buhf_new_n3_output_1\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"buhf-new-n3-output-0\", \"buhf-new-n3-output-1\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "kimi": "JobAccepted"
+          },
+          "completionTime": "2026-09-07T01:33:13Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-07T01:32:53Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-07T01:33:13Z",
+          "phase": "Succeeded",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "kimi": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-07T01:32:53Z",
+          "taskStatus": {
+            "buhf-new-n3": "Succeeded"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/initiator-master-domain": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi",
+            "kuscia.secretflow/interconn-self-parties": "kimi",
+            "kuscia.secretflow/party-master-domain": "kimi",
+            "kuscia.secretflow/self-cluster-as-initiator": "false"
+          },
+          "creationTimestamp": "2026-09-05T22:50:34Z",
+          "generation": 2,
+          "name": "ftjz",
+          "namespace": "cross-domain",
+          "resourceVersion": "165650",
+          "uid": "fab82c08-3b4f-4321-85ee-347e1b5c9e0b"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "ftjz-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskID": "ftjz-new-n3",
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"1.0.0\",\n    \"attr_paths\": [\"input/input_table_1/key\", \"input/input_table_2/key\", \"protocol\", \"sort_result\", \"allow_duplicate_keys\", \"allow_duplicate_keys/no/skip_duplicates_check\", \"ecdh_curve\", \"allow_duplicate_keys/no/receiver_parties\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"s\": \"no\"\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"CURVE_FOURQ\"\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"ckftjz-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"ftjz_new_n3_output_0\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"ftjz-new-n3-output-0\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "kimi": "JobAccepted"
+          },
+          "completionTime": "2026-09-05T22:50:46Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T22:50:34Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T22:50:46Z",
+          "phase": "Failed",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "kimi": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-05T22:50:34Z",
+          "taskStatus": {
+            "ftjz-new-n3": "Failed"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/initiator-master-domain": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi",
+            "kuscia.secretflow/interconn-self-parties": "kimi",
+            "kuscia.secretflow/party-master-domain": "kimi",
+            "kuscia.secretflow/self-cluster-as-initiator": "false"
+          },
+          "creationTimestamp": "2026-09-05T22:46:40Z",
+          "generation": 2,
+          "name": "hblw",
+          "namespace": "cross-domain",
+          "resourceVersion": "165228",
+          "uid": "fd2901b1-8495-4f5b-9922-91e18d286053"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "hblw-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskID": "hblw-new-n3",
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"0.0.7\",\n    \"attr_paths\": [\"input/input_table_1/key\", \"input/input_table_2/key\", \"protocol\", \"sort_result\", \"allow_duplicate_keys\", \"allow_duplicate_keys/no/skip_duplicates_check\", \"ecdh_curve\", \"allow_duplicate_keys/no/receiver_parties\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"s\": \"no\"\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"CURVE_FOURQ\"\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"ckhblw-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"hblw_new_n3_output_0\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"hblw-new-n3-output-0\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "kimi": "JobAccepted"
+          },
+          "completionTime": "2026-09-05T22:47:10Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T22:46:40Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T22:47:10Z",
+          "phase": "Failed",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "kimi": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-05T22:46:40Z",
+          "taskStatus": {
+            "hblw-new-n3": "Failed"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/initiator-master-domain": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi",
+            "kuscia.secretflow/interconn-self-parties": "kimi",
+            "kuscia.secretflow/party-master-domain": "kimi",
+            "kuscia.secretflow/self-cluster-as-initiator": "false"
+          },
+          "creationTimestamp": "2026-09-06T03:40:49Z",
+          "generation": 2,
+          "name": "qgxp",
+          "namespace": "cross-domain",
+          "resourceVersion": "188411",
+          "uid": "dbb70f78-0b64-4fed-9544-4e97d36b8479"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "qgxp-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskID": "qgxp-new-n3",
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"1.0.0\",\n    \"attr_paths\": [\"input/input_ds1/keys\", \"input/input_ds2/keys\", \"protocol\", \"sort_result\", \"receiver_parties\", \"allow_empty_result\", \"join_type\", \"input_ds1_keys_duplicated\", \"input_ds2_keys_duplicated\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"inner_join\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"ckqgxp-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"qgxp_new_n3_output_0\", \"qgxp_new_n3_output_1\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"qgxp-new-n3-output-0\", \"qgxp-new-n3-output-1\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "kimi": "JobAccepted"
+          },
+          "completionTime": "2026-09-06T03:41:00Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-06T03:40:49Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-06T03:41:00Z",
+          "phase": "Succeeded",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "kimi": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-06T03:40:49Z",
+          "taskStatus": {
+            "qgxp-new-n3": "Succeeded"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/initiator-master-domain": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi",
+            "kuscia.secretflow/interconn-self-parties": "kimi",
+            "kuscia.secretflow/party-master-domain": "kimi",
+            "kuscia.secretflow/self-cluster-as-initiator": "false"
+          },
+          "creationTimestamp": "2026-09-05T22:52:15Z",
+          "generation": 2,
+          "name": "tnka",
+          "namespace": "cross-domain",
+          "resourceVersion": "165897",
+          "uid": "aa8de45c-a474-41fd-a198-8a3e1229fcd0"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "tnka-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskID": "tnka-new-n3",
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"1.0.0\",\n    \"attr_paths\": [\"input/input_ds1/keys\", \"input/input_ds2/keys\", \"protocol\", \"sort_result\", \"receiver_parties\", \"allow_empty_result\", \"join_type\", \"input_ds1_keys_duplicated\", \"input_ds2_keys_duplicated\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"inner_join\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"cktnka-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"tnka_new_n3_output_0\", \"tnka_new_n3_output_1\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"tnka-new-n3-output-0\", \"tnka-new-n3-output-1\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "kimi": "JobAccepted"
+          },
+          "completionTime": "2026-09-05T22:52:30Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T22:52:15Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T22:52:30Z",
+          "phase": "Succeeded",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "kimi": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-05T22:52:15Z",
+          "taskStatus": {
+            "tnka-new-n3": "Succeeded"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/initiator-master-domain": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi",
+            "kuscia.secretflow/interconn-self-parties": "kimi",
+            "kuscia.secretflow/party-master-domain": "kimi",
+            "kuscia.secretflow/self-cluster-as-initiator": "false"
+          },
+          "creationTimestamp": "2026-09-05T22:45:33Z",
+          "generation": 2,
+          "name": "zyxd",
+          "namespace": "cross-domain",
+          "resourceVersion": "165041",
+          "uid": "e5a5dd1a-724b-4ba5-9afa-16f1d21e44e5"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "zyxd-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskID": "zyxd-new-n3",
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"0.0.7\",\n    \"attr_paths\": [\"input/input_table_1/key\", \"input/input_table_2/key\", \"protocol\", \"sort_result\", \"allow_duplicate_keys\", \"allow_duplicate_keys/no/skip_duplicates_check\", \"ecdh_curve\", \"allow_duplicate_keys/no/receiver_parties\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"s\": \"no\"\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"CURVE_FOURQ\"\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"ckzyxd-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"zyxd_new_n3_output_0\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"zyxd-new-n3-output-0\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "kimi": "JobAccepted"
+          },
+          "completionTime": "2026-09-05T22:45:56Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T22:45:33Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T22:45:56Z",
+          "phase": "Failed",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "kimi": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-05T22:45:33Z",
+          "taskStatus": {
+            "zyxd-new-n3": "Failed"
+          }
+        }
+      }
+    ],
+    "kind": "List",
+    "metadata": {
+      "resourceVersion": ""
+    }
+  }
+}

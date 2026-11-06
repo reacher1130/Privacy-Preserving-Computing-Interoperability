@@ -1,0 +1,12 @@
+{
+  "runtime": "Node 18.20.8 darwin-arm64, official archive checksum verified",
+  "typescript": "passed",
+  "jest": {
+    "passed": 4,
+    "failed": 0
+  },
+  "umiBuild": "passed",
+  "exitCode": 0,
+  "webpackMinutes": 8.22,
+  "deployed": "NewProject/secretpad-frontend-dist-e2e"
+}

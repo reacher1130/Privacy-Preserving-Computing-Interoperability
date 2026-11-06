@@ -1,0 +1,248 @@
+{
+  "checked_at": "2026-11-02T10:17:23.109948+00:00",
+  "pass": true,
+  "jobs": {
+    "fj-ad8ad22aead149a1": {
+      "platform_job_id": "fj-ad8ad22aead149a1",
+      "platform_name": "办公完整回归-PSI-20261102",
+      "platform_status": "SUCCESS",
+      "mapping": {
+        "platform_job_id": "fj-ad8ad22aead149a1",
+        "kuscia_job_id": "fj-ad8ad22aead149a1",
+        "kuscia_phase": "Succeeded",
+        "task_ids": [
+          "fate2-task-fj-ad8ad22aead149a1"
+        ],
+        "pods": [],
+        "native_job_ids": [
+          "202611020938484364900"
+        ],
+        "retained_log_sources": [
+          {
+            "path": "/srv/ppci/kuscia/alice/root/home/kuscia/var/stdout/pods/alice_fate2-task-fj-ad8ad22aead149a1-0_d6edba65-d2e7-401e-ae3f-3665bfe4bff5/fate2-adapter/0.log",
+            "native_job_ids": [
+              "202611020938484364900"
+            ],
+            "adapter_finished_successfully": true
+          }
+        ]
+      },
+      "native_job_id": "202611020938484364900",
+      "parties": {
+        "guest": {
+          "jobs": [
+            {
+              "role": "guest",
+              "party_id": "JG0100001100000010",
+              "status": "success",
+              "progress": 100
+            }
+          ],
+          "tasks": [
+            {
+              "task_name": "reader_psi_0",
+              "component": "reader",
+              "role": "guest",
+              "status": "success"
+            },
+            {
+              "task_name": "psi_0",
+              "component": "psi",
+              "role": "guest",
+              "status": "success"
+            }
+          ],
+          "psi_outputs": [
+            {
+              "task_name": "psi_0",
+              "exists": true,
+              "count": 569,
+              "engine": "standalone",
+              "table": {
+                "name": "38d75070d6a111f1a87902420af00002",
+                "namespace": "202611020938484364900_psi_0"
+              }
+            }
+          ]
+        },
+        "host": {
+          "jobs": [
+            {
+              "role": "host",
+              "party_id": "JG0100001100000000",
+              "status": "success",
+              "progress": 100
+            }
+          ],
+          "tasks": [
+            {
+              "task_name": "reader_psi_0",
+              "component": "reader",
+              "role": "host",
+              "status": "success"
+            },
+            {
+              "task_name": "psi_0",
+              "component": "psi",
+              "role": "host",
+              "status": "success"
+            }
+          ],
+          "psi_outputs": [
+            {
+              "task_name": "psi_0",
+              "exists": true,
+              "count": 569,
+              "engine": "standalone",
+              "table": {
+                "name": "38e121c2d6a111f19cb402420af00007",
+                "namespace": "202611020938484364900_psi_0"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "fj-971563559ab84ded": {
+      "platform_job_id": "fj-971563559ab84ded",
+      "platform_name": "办公完整回归-画布LR-20261102",
+      "platform_status": "SUCCESS",
+      "mapping": {
+        "platform_job_id": "fj-971563559ab84ded",
+        "kuscia_job_id": "fj-971563559ab84ded",
+        "kuscia_phase": "Succeeded",
+        "task_ids": [
+          "fate2-task-fj-971563559ab84ded"
+        ],
+        "pods": [],
+        "native_job_ids": [
+          "202611020945328298380"
+        ],
+        "retained_log_sources": [
+          {
+            "path": "/srv/ppci/kuscia/alice/root/home/kuscia/var/stdout/pods/alice_fate2-task-fj-971563559ab84ded-0_cdd8095c-a317-49f8-86ce-0c0e1ba85fb0/fate2-adapter/0.log",
+            "native_job_ids": [
+              "202611020945328298380"
+            ],
+            "adapter_finished_successfully": true
+          }
+        ]
+      },
+      "native_job_id": "202611020945328298380",
+      "parties": {
+        "guest": {
+          "jobs": [
+            {
+              "role": "guest",
+              "party_id": "JG0100001100000010",
+              "status": "success",
+              "progress": 100
+            }
+          ],
+          "tasks": [
+            {
+              "task_name": "reader_psi_0",
+              "component": "reader",
+              "role": "guest",
+              "status": "success"
+            },
+            {
+              "task_name": "psi_0",
+              "component": "psi",
+              "role": "guest",
+              "status": "success"
+            },
+            {
+              "task_name": "coordinated_lr_1",
+              "component": "coordinated_lr",
+              "role": "guest",
+              "status": "success"
+            }
+          ],
+          "psi_outputs": [
+            {
+              "task_name": "psi_0",
+              "exists": true,
+              "count": 569,
+              "engine": "standalone",
+              "table": {
+                "name": "29f33b9ad6a211f1a25b02420af00002",
+                "namespace": "202611020945328298380_psi_0"
+              }
+            }
+          ],
+          "lr_model": {
+            "task_name": "coordinated_lr_1",
+            "exists": true,
+            "epochs": 2,
+            "end_epoch": 2,
+            "is_converged": false,
+            "task_epochs": 2
+          }
+        },
+        "host": {
+          "jobs": [
+            {
+              "role": "host",
+              "party_id": "JG0100001100000000",
+              "status": "success",
+              "progress": 100
+            },
+            {
+              "role": "arbiter",
+              "party_id": "JG0100001100000000",
+              "status": "success",
+              "progress": 100
+            }
+          ],
+          "tasks": [
+            {
+              "task_name": "reader_psi_0",
+              "component": "reader",
+              "role": "host",
+              "status": "success"
+            },
+            {
+              "task_name": "psi_0",
+              "component": "psi",
+              "role": "host",
+              "status": "success"
+            },
+            {
+              "task_name": "coordinated_lr_1",
+              "component": "coordinated_lr",
+              "role": "host",
+              "status": "success"
+            },
+            {
+              "task_name": "coordinated_lr_1",
+              "component": "coordinated_lr",
+              "role": "arbiter",
+              "status": "success"
+            }
+          ],
+          "psi_outputs": [
+            {
+              "task_name": "psi_0",
+              "exists": true,
+              "count": 569,
+              "engine": "standalone",
+              "table": {
+                "name": "29ff0a60d6a211f189c102420af00007",
+                "namespace": "202611020945328298380_psi_0"
+              }
+            }
+          ],
+          "lr_model": {
+            "task_name": "coordinated_lr_1",
+            "exists": true,
+            "epochs": 2,
+            "end_epoch": 2,
+            "is_converged": false,
+            "task_epochs": 2
+          }
+        }
+      }
+    }
+  }
+}

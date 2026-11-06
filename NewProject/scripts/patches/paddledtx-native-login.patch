@@ -1,0 +1,12 @@
+--- a/src/public/index.html
++++ b/src/public/index.html
+@@ -34,7 +34,5 @@
+-      // The local interoperability demo intentionally has no login wall. The
+-      // native DTX layout and routes remain unchanged; only the demo auth gate
+-      // and request signature are disabled when no user profile exists.
+-      window.__DTX_DEMO_AUTH_DISABLED__ = true;
++      // The restored manager requires normal login and signed requests.
++      window.__DTX_DEMO_AUTH_DISABLED__ = false;
+     </script>
+   </body>
+ </html>

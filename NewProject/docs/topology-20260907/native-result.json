@@ -1,0 +1,211 @@
+{
+  "status": {
+    "code": 0,
+    "msg": "success"
+  },
+  "data": {
+    "jobId": "qwwh",
+    "status": "SUCCEED",
+    "errMsg": "",
+    "gmtCreate": "2026-09-07T04:47:25+08:00",
+    "gmtModified": "2026-09-07T04:47:25+08:00",
+    "gmtFinished": "2026-09-07T04:47:49+08:00",
+    "finished": true,
+    "graph": {
+      "projectId": "gzbnqqso",
+      "graphId": "thrxhlxi",
+      "name": "psi-flow-1784920082",
+      "nodes": [
+        {
+          "codeName": "data_prep/psi",
+          "graphNodeId": "new-n3",
+          "label": "\u9690\u79c1\u6c42\u4ea4",
+          "x": -260,
+          "y": -100,
+          "inputs": [
+            "new-n1-output-0",
+            "new-n2-output-0"
+          ],
+          "outputs": [
+            "new-n3-output-0",
+            "new-n3-output-1"
+          ],
+          "nodeDef": {
+            "attrPaths": [
+              "input/input_ds1/keys",
+              "input/input_ds2/keys",
+              "protocol",
+              "sort_result",
+              "receiver_parties",
+              "allow_empty_result",
+              "join_type",
+              "input_ds1_keys_duplicated",
+              "input_ds2_keys_duplicated"
+            ],
+            "attrs": [
+              {
+                "is_na": false,
+                "ss": [
+                  "id"
+                ]
+              },
+              {
+                "is_na": false,
+                "ss": [
+                  "id"
+                ]
+              },
+              {
+                "is_na": false,
+                "s": "PROTOCOL_RR22"
+              },
+              {
+                "b": true,
+                "is_na": false
+              },
+              {
+                "is_na": false,
+                "ss": [
+                  "alice",
+                  "kimi"
+                ]
+              },
+              {
+                "is_na": true
+              },
+              {
+                "is_na": false,
+                "s": "inner_join"
+              },
+              {
+                "b": true,
+                "is_na": false
+              },
+              {
+                "b": true,
+                "is_na": false
+              }
+            ],
+            "domain": "data_prep",
+            "name": "psi",
+            "version": "1.0.0"
+          },
+          "status": "SUCCEED",
+          "jobId": "qwwh",
+          "taskId": "qwwh-new-n3",
+          "results": [
+            {
+              "kind": "Report",
+              "refId": "qwwh-new-n3-output-1"
+            },
+            {
+              "kind": "FedTable",
+              "refId": "qwwh-new-n3-output-0"
+            }
+          ],
+          "parties": [
+            {
+              "nodeId": "alice",
+              "nodeName": "alice"
+            },
+            {
+              "nodeId": "kimi",
+              "nodeName": "kimi"
+            }
+          ],
+          "progress": 1.0
+        },
+        {
+          "codeName": "read_data/datatable",
+          "graphNodeId": "new-n2",
+          "label": "kimi\u6837\u672c\u8868",
+          "x": -150,
+          "y": -210,
+          "inputs": [],
+          "outputs": [
+            "new-n2-output-0"
+          ],
+          "nodeDef": {
+            "attrPaths": [
+              "datatable_selected"
+            ],
+            "attrs": [
+              {
+                "is_na": false,
+                "s": "wocqofoj"
+              }
+            ],
+            "domain": "read_data",
+            "name": "datatable",
+            "version": "0.0.1"
+          },
+          "status": "SUCCEED",
+          "jobId": "qwwh",
+          "taskId": "qwwh-new-n2",
+          "results": null,
+          "parties": [
+            {
+              "nodeId": "kimi",
+              "nodeName": "kimi"
+            }
+          ],
+          "progress": null
+        },
+        {
+          "codeName": "read_data/datatable",
+          "graphNodeId": "new-n1",
+          "label": "alice\u6837\u672c\u8868",
+          "x": -390,
+          "y": -210,
+          "inputs": [],
+          "outputs": [
+            "new-n1-output-0"
+          ],
+          "nodeDef": {
+            "attrPaths": [
+              "datatable_selected"
+            ],
+            "attrs": [
+              {
+                "is_na": false,
+                "s": "cavosnpl"
+              }
+            ],
+            "domain": "read_data",
+            "name": "datatable",
+            "version": "0.0.1"
+          },
+          "status": "SUCCEED",
+          "jobId": "qwwh",
+          "taskId": "qwwh-new-n1",
+          "results": null,
+          "parties": [
+            {
+              "nodeId": "alice",
+              "nodeName": "alice"
+            }
+          ],
+          "progress": null
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "new-n1-output-0__new-n3-input-0",
+          "source": "new-n1",
+          "sourceAnchor": "new-n1-output-0",
+          "target": "new-n3",
+          "targetAnchor": "new-n3-input-0"
+        },
+        {
+          "edgeId": "new-n2-output-0__new-n3-input-1",
+          "source": "new-n2",
+          "sourceAnchor": "new-n2-output-0",
+          "target": "new-n3",
+          "targetAnchor": "new-n3-input-1"
+        }
+      ],
+      "maxParallelism": null,
+      "dataSourceConfig": null
+    }
+  }
+}

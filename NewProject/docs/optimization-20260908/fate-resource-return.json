@@ -1,0 +1,9 @@
+[
+  {
+    "role": "guest",
+    "result": {
+      "code": 1005,
+      "message": "Job resource exception: job_id[202609080143419597050],role[guest],party_id[JG0100001100000010],operation_type[return]"
+    }
+  }
+]

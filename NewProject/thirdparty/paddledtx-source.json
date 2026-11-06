@@ -1,0 +1,12 @@
+{
+  "format": 1,
+  "sha256": "a24b7857940e00b31fafd0bfe9bcf58f0c3aaaaa8e939c1a801e4a36a08b93f6",
+  "source_commits": {
+    "dtx-manager": "872fc4da9dcf64d9e9e5f379c06e160a6dff36d1",
+    "dtx-fe": "3fdcf287f8bb07f920f1d423370137627fc2b92e",
+    "PaddleDTX": "086cb1a62c16798988b58ed98a26a77bb86a7b24"
+  },
+  "files": 13516,
+  "source_bytes": 148102874,
+  "note": "Build source snapshot includes local source changes. No original Git metadata, runtime configuration, identities, databases, logs or compiled artifacts. Historical identity tests and credential-bearing BaaS deployment comments omitted; obsolete external BaaS jump disabled and dev proxy targets localhost. Original licenses remain with source; the native frontend declares UNLICENSED."
+}

@@ -1,0 +1,121 @@
+{
+  "checked_at": "2026-11-02T10:44:04.783241+00:00",
+  "configured_flow": "http://localhost:9380",
+  "checks": {
+    "board_local": {
+      "site": {
+        "reachable": true,
+        "code": 3000
+      },
+      "job": {
+        "reachable": true,
+        "code": 1001,
+        "jobs": []
+      }
+    },
+    "native_guest": {
+      "site": {
+        "reachable": true,
+        "code": 0,
+        "party_id": "JG0100001100000010"
+      },
+      "job": {
+        "reachable": true,
+        "code": 0,
+        "jobs": [
+          {
+            "job_id": "202611020945328298380",
+            "role": "guest",
+            "status": "success",
+            "progress": 100
+          }
+        ]
+      }
+    }
+  },
+  "fix": {
+    "fateflow_url": "http://fate2-flow-guest-e2e:9380",
+    "config_backup": "fateboard-native-e2e:/data/projects/fate/fateboard/conf/application.properties.before-native-guest-20261102",
+    "changed_only": "Board application.properties fateflow.url; Board JVM restarted",
+    "completed_at": "2026-11-02T10:45:08.361652+00:00"
+  },
+  "after": {
+    "board_http_status": 200,
+    "list_query_code": 0,
+    "list_count": 1,
+    "job_rows": [
+      {
+        "job_id": "202611020945328298380",
+        "role": "guest",
+        "status": "success",
+        "progress": 100
+      }
+    ],
+    "board_expected_shape": true
+  },
+  "detail_diagnosis": {
+    "party_id": "JG0100001100000010",
+    "cause": "Board WebSocket/controller forces partyId into Integer although this FATE deployment uses string party IDs.",
+    "selected_errors": [
+      {
+        "file": "/data/projects/fate/fateboard/logs/warn.log",
+        "error": "javax.websocket.DecodeException: Failed to decode path parameter value [JG0100001100000010] to expected type [class java.lang.Integer]"
+      },
+      {
+        "file": "/data/projects/fate/fateboard/logs/warn.log",
+        "error": "Caused by: java.lang.NumberFormatException: For input string: \"JG0100001100000010\""
+      },
+      {
+        "file": "/data/projects/fate/fateboard/logs/warn.log",
+        "error": "\tat java.lang.NumberFormatException.forInputString(NumberFormatException.java:65) ~[?:1.8.0_345]"
+      },
+      {
+        "file": "/data/projects/fate/fateboard/logs/warn.log",
+        "error": "javax.websocket.DecodeException: Failed to decode path parameter value [JG0100001100000010] to expected type [class java.lang.Integer]"
+      },
+      {
+        "file": "/data/projects/fate/fateboard/logs/warn.log",
+        "error": "Caused by: java.lang.NumberFormatException: For input string: \"JG0100001100000010\""
+      },
+      {
+        "file": "/data/projects/fate/fateboard/logs/warn.log",
+        "error": "\tat java.lang.NumberFormatException.forInputString(NumberFormatException.java:65) ~[?:1.8.0_345]"
+      },
+      {
+        "file": "/data/projects/fate/fateboard/logs/warn.log",
+        "error": "javax.websocket.DecodeException: Failed to decode path parameter value [JG0100001100000010] to expected type [class java.lang.Integer]"
+      },
+      {
+        "file": "/data/projects/fate/fateboard/logs/warn.log",
+        "error": "Caused by: java.lang.NumberFormatException: For input string: \"JG0100001100000010\""
+      },
+      {
+        "file": "/data/projects/fate/fateboard/logs/warn.log",
+        "error": "\tat java.lang.NumberFormatException.forInputString(NumberFormatException.java:65) ~[?:1.8.0_345]"
+      },
+      {
+        "file": "/data/projects/fate/fateboard/logs/warn.log",
+        "error": "javax.websocket.DecodeException: Failed to decode path parameter value [JG0100001100000010] to expected type [class java.lang.Integer]"
+      },
+      {
+        "file": "/data/projects/fate/fateboard/logs/warn.log",
+        "error": "Caused by: java.lang.NumberFormatException: For input string: \"JG0100001100000010\""
+      },
+      {
+        "file": "/data/projects/fate/fateboard/logs/warn.log",
+        "error": "\tat java.lang.NumberFormatException.forInputString(NumberFormatException.java:65) ~[?:1.8.0_345]"
+      }
+    ]
+  },
+  "detail_after": {
+    "component_parameters_epochs": 2,
+    "ws_status": "success",
+    "ws_dag_components": 3,
+    "ws_summary": true,
+    "pass": true,
+    "http_summary": true,
+    "job_id": "202611020945328298380",
+    "party_id": "JG0100001100000010",
+    "http_dag_components": 3
+  }
+}

@@ -1,0 +1,66 @@
+{
+    "apiVersion": "kuscia.secretflow/v1alpha1",
+    "kind": "KusciaJob",
+    "metadata": {
+        "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+        },
+        "creationTimestamp": "2026-09-07T02:44:33Z",
+        "generation": 1,
+        "name": "fj-df9d0daa7f5d4e92",
+        "namespace": "cross-domain",
+        "resourceVersion": "6976195",
+        "uid": "725c9a47-f899-43bf-ad39-69cd0c140b1f"
+    },
+    "spec": {
+        "initiator": "alice",
+        "maxParallelism": 1,
+        "scheduleMode": "BestEffort",
+        "tasks": [
+            {
+                "alias": "fate2-task-fj-df9d0daa7f5d4e92",
+                "appImage": "fate2-adapter",
+                "parties": [
+                    {
+                        "domainID": "alice",
+                        "role": "guest"
+                    },
+                    {
+                        "domainID": "bob",
+                        "role": "host"
+                    }
+                ],
+                "taskID": "fate2-task-fj-df9d0daa7f5d4e92",
+                "taskInputConfig": "{\"config\":{\"initiator\":{\"node_id\":\"alice\",\"party_id\":\"10000\",\"role\":\"guest\"},\"job_params\":{\"common\":{\"sync_type\":\"poll\"}},\"role\":{\"arbiter\":[],\"guest\":[\"alice\"],\"host\":[\"bob\"]},\"task_params\":{\"common\":{\"coordinated_lr_1\":{\"epochs\":20},\"psi_0\":{\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"}},\"guest\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_guest\"}}},\"host\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_host\"}}}},\"version\":\"2.0\"},\"dag\":{\"components\":[{\"componentName\":\"psi\",\"input\":[],\"name\":\"psi_0\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"__guestDatasetId\":\"fd-ca0126808eba4d50\",\"__guestDatasetRef\":\"experiment#breast_hetero_guest\",\"__hostDatasetId\":\"fd-660b51f067024173\",\"__hostDatasetRef\":\"experiment#breast_hetero_host\",\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"coordinated_lr\",\"input\":[{\"key\":\"psi_0.data\",\"type\":\"dataset\"}],\"name\":\"coordinated_lr_1\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"epochs\":20},\"provider\":\"fate\",\"version\":\"2.0.0\"}],\"version\":\"2.0\"},\"fate_flow_address\":\"http://host.docker.internal:19381\",\"flow_id\":\"fj-df9d0daa7f5d4e92\",\"job_id\":\"fj-df9d0daa7f5d4e92\",\"old_job_id\":\"\"}",
+                "tolerable": false
+            }
+        ]
+    },
+    "status": {
+        "approveStatus": {
+            "alice": "JobAccepted",
+            "bob": "JobAccepted"
+        },
+        "completionTime": "2026-09-07T02:45:33Z",
+        "conditions": [
+            {
+                "lastTransitionTime": "2026-09-07T02:44:33Z",
+                "status": "True",
+                "type": "JobValidated"
+            }
+        ],
+        "lastReconcileTime": "2026-09-07T02:45:33Z",
+        "phase": "Succeeded",
+        "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "bob": "JobCreateStageSucceeded"
+        },
+        "startTime": "2026-09-07T02:44:33Z",
+        "taskStatus": {
+            "fate2-task-fj-df9d0daa7f5d4e92": "Succeeded"
+        }
+    }
+}

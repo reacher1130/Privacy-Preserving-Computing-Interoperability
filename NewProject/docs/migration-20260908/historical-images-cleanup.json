@@ -1,0 +1,30 @@
+{
+  "removedTags": [
+    "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/dataproxy:0.3.0b0",
+    "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/kuscia:1.2.0b0",
+    "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/morse-ecdh-header:20251113-bfia",
+    "secretflow/fate2-adapter:0.1.0",
+    "secretflow/fate2-adapter:0.1.1-e2e",
+    "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/kuscia:latest",
+    "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/secretpad:0.12.0b0",
+    "secretflow/kuscia:local-fix-demo-20260906",
+    "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ecdh-psi:demo-slim-20260906",
+    "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ecdh:demo-slim-20260906",
+    "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-compare:demo-slim-20260906",
+    "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-lr:demo-slim-20260906",
+    "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-pearson:demo-slim-20260906",
+    "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-vif:demo-slim-20260906",
+    "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-xgb:demo-slim-20260906",
+    "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/serving-anolis8:0.8.0b0",
+    "secretflow/kuscia:v1.2.0b0-20260725014322",
+    "secretflow/fate2-adapter:0.2.0-native",
+    "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/secretflow-lite-anolis8:1.11.0b1"
+  ],
+  "removedUniqueImages": 13,
+  "otherContainersRetained": [
+    "/renew-note-postgres",
+    "/sub2api",
+    "/sub2api-redis",
+    "/sub2api-postgres"
+  ]
+}

@@ -1,0 +1,493 @@
+--- a/src/libs/request.ts
++++ b/src/libs/request.ts
+@@ -5,6 +5,7 @@
+ import dayjs from 'dayjs';
+ import {generateUUID} from '@/utils';
+ import store from '@/store';
++import {saveDownload} from './download';
+ 
+ export function sign(privkey: string, msg: string) {
+   // const D = new BN(privkey, 'hex');
+@@ -94,6 +95,23 @@
+ };
+ 
+ export default {
++  download: async (
++    url: string,
++    payload: Record<string, any>,
++    filename: string
++  ) => {
++    const response = await request<Blob>({
++      url,
++      method: Method.GET,
++      params: {_: Date.now(), ...payload},
++      responseType: 'blob',
++    });
++    await saveDownload(
++      response.data,
++      filename,
++      response.headers['content-disposition']
++    );
++  },
+   post: <T>(
+     url: string,
+     payload?: Record<string, any> | FormData,
+--- a/src/views/Dataset/Detail/index.tsx
++++ b/src/views/Dataset/Detail/index.tsx
+@@ -18,6 +18,7 @@
+ import {useForm} from 'antd/es/form/Form';
+ import ErrorCode from '@/libs/errorCode';
+ import TextCopy from '@/components/TextCopy';
++import request from '@/libs/request';
+ import Pw, {PwD} from '../PermissonWrap';
+ import {PermissionValue} from '@/pages/Account/PermissionCreator';
+ 
+@@ -49,10 +50,20 @@
+ };
+ 
+ const DetailInfo: React.FC<Partial<Dataset>> = props => {
++  const {message} = App.useApp();
+   if (!props) {
+     return '';
+   }
+-  console.log(props);
++  const download = (type: 'data' | 'meta') =>
++    request
++      .download(
++        'data/download',
++        {id: props.id, type},
++        `${props.resourceName}.${type === 'data' ? 'csv' : 'meta'}`
++      )
++      .catch(error =>
++        message.error(error instanceof Error ? error.message : '下载失败')
++      );
+   return (
+     <>
+       <Row className={styles.row}>
+@@ -64,8 +75,11 @@
+         <Col flex={'300px'}>{`${props.resourceName}.csv`}</Col>
+         <Col flex={'auto'}>
+           <a
+-            href={`/dtx/v1/data/download?id=${props.id}&type=data`}
+-            download={`${props.resourceName}.csv`}
++            href="#"
++            onClick={event => {
++              event.preventDefault();
++              void download('data');
++            }}
+           >
+             下载
+           </a>
+@@ -76,8 +90,11 @@
+         <Col flex={'300px'}>{`${props.resourceName}.meta`}</Col>
+         <Col flex={'auto'}>
+           <a
+-            href={`/dtx/v1/data/download?id=${props.id}&type=meta`}
+-            download={`${props.resourceName}.meta`}
++            href="#"
++            onClick={event => {
++              event.preventDefault();
++              void download('meta');
++            }}
+           >
+             下载
+           </a>
+--- a/src/views/Task/List/index.tsx
++++ b/src/views/Task/List/index.tsx
+@@ -29,6 +29,7 @@
+ import {PwD} from '../PermissonWrap';
+ import styles from './index.less';
+ import DotStatus from '@/components/DotStatus';
++import request from '@/libs/request';
+ export const taskStatusCN = {
+   [TaskStatus.Edit]: '编辑中',
+   [TaskStatus.Ready]: '待启动',
+@@ -427,8 +428,21 @@
+                 </PwD>
+                 {record.type === 'predict' || record.type === 'psi' ? (
+                   <a
+-                    download={`${record.name}.csv`}
+-                    href={`/dtx/v1/task/result/download?id=${id}`}
++                    href="#"
++                    onClick={event => {
++                      event.preventDefault();
++                      void request
++                        .download(
++                          'task/result/download',
++                          {id},
++                          `${record.name}.csv`
++                        )
++                        .catch(error =>
++                          message.error(
++                            error instanceof Error ? error.message : '下载失败'
++                          )
++                        );
++                    }}
+                     className={styles.operate}
+                   >
+                     下载结果
+--- a/src/views/Task/Detail/index.tsx
++++ b/src/views/Task/Detail/index.tsx
+@@ -1,4 +1,4 @@
+-import {Col, Row, Tabs, Typography} from 'antd';
++import {App, Col, Row, Tabs, Typography} from 'antd';
+ import React, {ReactNode, useEffect, useState} from 'react';
+ import {useParams} from 'react-router-dom';
+ import dayjs from 'dayjs';
+@@ -16,6 +16,7 @@
+ import styles from './index.less';
+ import {taskStatusCN} from '../List';
+ import TextCopy from '@/components/TextCopy';
++import request from '@/libs/request';
+ 
+ export interface DetailInfoItemProps {
+   label: ReactNode;
+@@ -36,6 +37,7 @@
+ const DetailInfo: React.FC<
+   Partial<TaskDetailResponse['data']> & {log: Partial<TaskLogResponse['data']>}
+ > = props => {
++  const {message} = App.useApp();
+   if (!props) {
+     return '';
+   }
+@@ -54,14 +56,12 @@
+       <span className={styles.warning}>{taskStatusText}</span>
+     );
+   }
+-  const copyInstallCode =() => {
+-    console.log('111')
+-    const fileUrl = '/static/unicom-dtx/public/predict.csv'; // 文件的URL地址
+-    const link = document.createElement('a');
+-    link.href = fileUrl;
+-    link.setAttribute('download', 'predict');
+-    link.click();
+-  }
++  const downloadResult = () =>
++    request
++      .download('task/result/download', {id: props.id}, `${props.name}.csv`)
++      .catch(error =>
++        message.error(error instanceof Error ? error.message : '下载失败')
++      );
+   return (
+     <>
+       <DetailInfoItem label="任务名称" content={props.name} />
+@@ -81,12 +81,22 @@
+         }
+       />
+       <DetailInfoItem label="任务类型" content={taskStatusComponent} />
+-      {
+-        props.status === TaskStatus.Finished ? <div>下载文件:<span className={styles.downBtn}  onClick={() => copyInstallCode()}>立即下载</span></div> : ''
+-      }
+-      {
+-        props.status === TaskStatus.Finished ? <div>下载文件:<span className={styles.downBtn}  onClick={() => copyInstallCode()}>立即下载2</span></div> : ''
+-      }
++      {props.status === TaskStatus.Finished &&
++      (props.type === 'predict' || props.type === 'psi') ? (
++        <div>
++          结果文件：
++          <a
++            href="#"
++            className={styles.downBtn}
++            onClick={event => {
++              event.preventDefault();
++              void downloadResult();
++            }}
++          >
++            下载结果
++          </a>
++        </div>
++      ) : null}
+       {props.errMsg ? (
+         <DetailInfoItem
+           label="失败原因"
+--- a/src/views/Algorithm/Detail/index.tsx
++++ b/src/views/Algorithm/Detail/index.tsx
+@@ -2,7 +2,8 @@
+ import styles from './index.less';
+ import {useNavigate, useSearchParams} from 'react-router-dom';
+ import {NavKeys, useCurrentNav} from '@/slice/sider';
+-import {Row, Col} from 'antd';
++import {App, Row, Col} from 'antd';
++import {saveDownload} from '@/libs/download';
+ import Content from '@/components/Content';
+ import TextCopy from '@/components/TextCopy';
+ 
+@@ -20,6 +21,7 @@
+ type StorageType = typeof STORAGE_METHOD | {[key: string]: string};
+ 
+ export default function Computing() {
++  const {message} = App.useApp();
+   useCurrentNav(NavKeys.algorithmList);
+   const paths = [
+     {url: '/algorithm/list', name: '算法列表'},
+@@ -45,35 +47,12 @@
+     getDetail();
+   }, []);
+ 
+-  const downLoad: () => void = () => {
+-    downLoadAlgorithm(
+-      {
+-        name,
+-        version,
+-      },
+-      {
+-        headers: {
+-          'Content-Type': 'application/octet-stream',
+-        },
+-        responseType: 'blob',
+-      }
+-    )
+-      .then(resp => {
+-        const blob = new Blob([resp], {type: 'application/octet-stream'});
+-        const URL = window.URL || window.webkitURL;
+-        const url = URL.createObjectURL(blob);
+-        const a = document.createElement('a');
+-        a.style.display = 'none';
+-        a.href = url;
+-        a.download = `${name}.zip`;
+-        document.body.appendChild(a);
+-        a.click();
+-        document.body.removeChild(a);
+-        URL.revokeObjectURL(url);
+-      })
+-      .catch(err => {
+-        console.error(err);
+-      });
++  const downLoad = () => {
++    downLoadAlgorithm({name, version}, {responseType: 'blob'})
++      .then(blob => saveDownload(blob, `${name}.zip`))
++      .catch(error =>
++        message.error(error instanceof Error ? error.message : '下载失败')
++      );
+   };
+ 
+   return (
+--- a/src/views/Algorithm/List/index.tsx
++++ b/src/views/Algorithm/List/index.tsx
+@@ -3,6 +3,8 @@
+ import {useNavigate} from 'react-router-dom';
+ import {NavKeys, useCurrentNav} from '@/slice/sider';
+ import type {TablePaginationConfig} from 'antd/es/table';
++import {App} from 'antd';
++import {saveDownload} from '@/libs/download';
+ import Content from '@/components/Content';
+ import {tdRender} from '@/components/Table/ToolTip';
+ import Empty from '@components/Empty';
+@@ -19,6 +21,7 @@
+ const {Column} = Table;
+ 
+ const AlgorithmTable: React.FC = () => {
++  const {message} = App.useApp();
+   const pageSize = 10;
+   const [loading, setLoading] = useState(false);
+   const [pagination, setPagination] = useState<TablePaginationConfig>({
+@@ -46,36 +49,16 @@
+ 
+   const [currentItem, setCurrentItem] = useState<Algorithm>();
+   const [resps, setResps] = useState<AlgorithmDownloadResponse>();
+-  const downLoad: (record: Algorithm) => void = record => {
++  const downLoad = (record: Algorithm) => {
+     setCurrentItem(record);
+     downLoadAlgorithm(
+-      {
+-        name: record.name,
+-        version: record.version,
+-      },
+-      {
+-        headers: {
+-          'Content-Type': 'application/octet-stream',
+-        },
+-        responseType: 'blob',
+-      }
++      {name: record.name, version: record.version},
++      {responseType: 'blob'}
+     )
+-      .then(resp => {
+-        const blob = new Blob([resp], {type: 'application/octet-stream'});
+-        const URL = window.URL || window.webkitURL;
+-        const url = URL.createObjectURL(blob);
+-        const a = document.createElement('a');
+-        a.style.display = 'none';
+-        a.href = url;
+-        a.download = `${record.file}`;
+-        document.body.appendChild(a);
+-        a.click();
+-        document.body.removeChild(a);
+-        URL.revokeObjectURL(url);
+-      })
+-      .catch(err => {
+-        console.error(err);
+-      });
++      .then(blob => saveDownload(blob, `${record.file}`))
++      .catch(error =>
++        message.error(error instanceof Error ? error.message : '下载失败')
++      );
+   };
+ 
+   useEffect(() => {
+--- a/src/libs/api.ts
++++ b/src/libs/api.ts
+@@ -801,7 +801,7 @@
+   version: string;
+ }
+ 
+-export type AlgorithmDownloadResponse = BlobPart;
++export type AlgorithmDownloadResponse = Blob;
+ 
+ export const downLoadAlgorithm = (
+   params: AlgorithmDownloadRequest,
+--- /dev/null
++++ b/src/libs/download.ts
+@@ -0,0 +1,40 @@
++/** Save a successful download; API errors must never become downloaded files. */
++export async function saveDownload(
++  blob: Blob,
++  filename: string,
++  contentDisposition?: unknown
++): Promise<void> {
++  const attachment =
++    typeof contentDisposition === 'string' &&
++    /\battachment\b/i.test(contentDisposition);
++  if (!attachment && /(?:\/|\+)json(?:;|$)/i.test(blob.type)) {
++    let payload: any;
++    try {
++      payload = JSON.parse(await blob.text());
++    } catch {
++      // A file's declared MIME type does not make its contents an API response.
++    }
++    if (
++      payload &&
++      !Array.isArray(payload) &&
++      Object.prototype.hasOwnProperty.call(payload, 'data') &&
++      (typeof payload.code === 'string' || typeof payload.code === 'number') &&
++      String(payload.code) !== '0' &&
++      (typeof payload.msg === 'string' || typeof payload.message === 'string')
++    ) {
++      throw new Error(payload.msg || payload.message || '下载失败');
++    }
++  }
++  const link = document.createElement('a');
++  const url = URL.createObjectURL(blob);
++  try {
++    link.href = url;
++    link.download = filename;
++    link.style.display = 'none';
++    document.body.appendChild(link);
++    link.click();
++  } finally {
++    link.remove();
++    URL.revokeObjectURL(url);
++  }
++}
+--- /dev/null
++++ b/scripts/check-download.cjs
+@@ -0,0 +1,109 @@
++// Exercise the production helper with Node's Blob and a minimal browser DOM.
++const assert = require('node:assert/strict');
++const fs = require('node:fs');
++const path = require('node:path');
++const vm = require('node:vm');
++const test = require('node:test');
++const ts = require('typescript');
++
++function browser(clickError = false) {
++  const counts = {created: 0, clicked: 0, removed: 0, revoked: 0};
++  const link = {
++    style: {},
++    click() {
++      counts.clicked++;
++      if (clickError) throw new Error('browser click failed');
++    },
++    remove() {
++      counts.removed++;
++    },
++  };
++  const module = {exports: {}};
++  const context = {
++    module,
++    exports: module.exports,
++    Blob,
++    document: {createElement: () => link, body: {appendChild: () => {}}},
++    URL: {
++      createObjectURL() {
++        counts.created++;
++        return 'blob:public-test';
++      },
++      revokeObjectURL(value) {
++        assert.equal(value, 'blob:public-test');
++        counts.revoked++;
++      },
++    },
++  };
++  const source = fs.readFileSync(
++    path.join(__dirname, '../src/libs/download.ts'),
++    'utf8'
++  );
++  const compiled = ts.transpileModule(source, {
++    compilerOptions: {
++      module: ts.ModuleKind.CommonJS,
++      target: ts.ScriptTarget.ES2020,
++    },
++  }).outputText;
++  vm.runInNewContext(compiled, context);
++  return {save: module.exports.saveDownload, counts, link};
++}
++
++test('preserves filenames and cleans object URLs after a CSV download', async () => {
++  const b = browser();
++  await b.save(new Blob(['id,x\n1,2\n'], {type: 'text/csv'}), 'public.csv');
++  assert.equal(b.link.download, 'public.csv');
++  assert.equal(b.link.href, 'blob:public-test');
++  assert.deepEqual(b.counts, {created: 1, clicked: 1, removed: 1, revoked: 1});
++});
++
++test('HTTP 200 JSON business errors do not create or save files', async () => {
++  for (const error of [
++    {code: 'SignErr', msg: '签名错误', data: null},
++    {code: 4, message: 'no result', data: null},
++  ]) {
++    const b = browser();
++    await assert.rejects(
++      b.save(
++        new Blob([JSON.stringify(error)], {type: 'application/json'}),
++        'result.csv'
++      )
++    );
++    assert.deepEqual(b.counts, {
++      created: 0,
++      clicked: 0,
++      removed: 0,
++      revoked: 0,
++    });
++  }
++});
++
++test('real JSON files remain valid, including attachment bodies resembling API envelopes', async () => {
++  for (const [body, disposition] of [
++    ['{"columns":["id","x"]}', undefined],
++    ['{"code":"field-name","description":"metadata"}', undefined],
++    [
++      '{"code":"SignErr","msg":"literal dataset value","data":null}',
++      'attachment; filename=metadata.json',
++    ],
++  ]) {
++    const b = browser();
++    await b.save(
++      new Blob([body], {type: 'application/json'}),
++      'metadata.json',
++      disposition
++    );
++    assert.equal(b.counts.clicked, 1);
++    assert.equal(b.counts.revoked, 1);
++  }
++});
++
++test('failed browser saves still remove the link and revoke the object URL', async () => {
++  const b = browser(true);
++  await assert.rejects(
++    b.save(new Blob(['public']), 'public.meta'),
++    /browser click failed/
++  );
++  assert.equal(b.counts.removed, 1);
++  assert.equal(b.counts.revoked, 1);
++});

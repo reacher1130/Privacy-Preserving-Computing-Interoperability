@@ -1,0 +1,93 @@
+{
+  "provenance": "Aggregated from successful tool responses observed in this session; this is not a byte-for-byte copy of the full remote evidence JSON.",
+  "fullRemoteJsonCopied": false,
+  "lastSuccessfulObservationWindowCst": "2026-11-02 19:38-19:39 UTC+08:00 (approximate)",
+  "serverEvidence": "/var/log/ppci/regression-20261102/native-alice-peer-institution-restore-20261102T113807067029Z.json",
+  "observedRestore": {
+    "startedAtUtc": "2026-11-02T11:38:07.067029Z",
+    "success": true,
+    "committed": true,
+    "action": "insert",
+    "target": "/opt/ppci/NewProject/secretpad/db_secretflow/secretpad.sqlite",
+    "authoritativeSource": "/opt/ppci/NewProject/secretpad-kimi-upstream/db/secretpad.sqlite",
+    "authoritativeInstitution": {
+      "inst_id": "gqxzwemm",
+      "name": "kimi",
+      "is_deleted": 0,
+      "gmt_create": "2026-07-18 03:11:03",
+      "gmt_modified": "2026-07-18 03:11:03"
+    },
+    "localRowId": 2,
+    "sourceLocalPrimaryKeyImported": false,
+    "backup": {
+      "path": "/var/backups/ppci/office-recovery-20261102/alice-peer-institution/20261102T113807067029Z.sqlite",
+      "sha256": "cdbfed350ce76bb21855f388451cb2ebd9d181d28bb589ae5cc7efe07c87f962",
+      "mode": "0600",
+      "onlineBackup": true
+    },
+    "comparedBusinessTables": 48,
+    "otherInstitutionRecordsUnchanged": true,
+    "nodeAndRouteRecordsUnchanged": true,
+    "allOtherBusinessRecordSetsUnchanged": true,
+    "comparisonMethod": "Inside the insert transaction and immediately after commit, bidirectional SQLite EXCEPT with GROUP BY/COUNT compared record multisets against the online backup; other business rows were not returned or logged.",
+    "aliceUserContextBeforeAndAfter": {
+      "ownerId": "rqzvglmu",
+      "ownerType": "P2P",
+      "platformType": "AUTONOMY",
+      "platformNodeId": "alice",
+      "deployMode": "MPC"
+    },
+    "protocolUnchanged": true,
+    "activeProtocol": "paddledtx",
+    "nativePage": {
+      "businessCode": 0,
+      "total": 1,
+      "route": {
+        "routeId": "r_kimi_alice",
+        "srcNodeId": "kimi",
+        "dstNodeId": "alice",
+        "status": "Succeeded"
+      }
+    }
+  },
+  "verification": {
+    "script": "NewProject/scripts/restore_alice_peer_institution.py",
+    "scriptSha256": "054aa8961a6b4722bcd957ebcebad88f078796df5eccb8898b7e7c01cb12eeff",
+    "localAndServerSelfTestsPassed": true,
+    "selfTestCases": [
+      "WAL fixture single insert",
+      "repeat noop",
+      "concurrent record change rejection and rollback",
+      "different metadata rejection",
+      "soft-deleted identity rejection",
+      "same name with different identity rejection"
+    ],
+    "repeatRealReadOnlyPreflight": "passed: plannedAction=noop",
+    "browserVerification": {
+      "provenance": "Parent agent independently reported a real Ego Lite page refresh after the restore.",
+      "result": "Alice native partner page showed kimi, r_kimi_alice, available, total 1.",
+      "screenshotName": "p6-partner-restored.png"
+    }
+  },
+  "addressComparison": {
+    "completed": false,
+    "addressesModified": false,
+    "parentReportedKimiUiObservation": {
+      "partnerAlice": "192.168.117.4",
+      "localKimi": "192.168.117.2"
+    },
+    "earlierParentAssumedDockerAddresses": {
+      "alice": "192.168.117.2",
+      "kimi": "192.168.117.4"
+    },
+    "boundary": "The final read-only address/API/Docker comparison lost SSH connectivity before its output was received. Neither an actual current Docker mismatch nor a DTO-direction defect is established by this aggregate. Any remote additions remain unread."
+  },
+  "finalReachability": {
+    "currentHostHealthAccepted": false,
+    "lastAgentReadbackError": "SSH 2222: Host is down",
+    "parentIndependentObservation": "SSH 2222 and HTTP 18101 both failed.",
+    "furtherNetworkRetriesStopped": true,
+    "resumeInstruction": "At 2026-11-03 00:10 CST, first verify host connectivity, then read back full remote evidence and recheck native API/storage readiness. Do not repeat an insert when the authoritative institution already matches."
+  },
+  "scope": "One existing peer institution metadata reference restored and one native cooperation-list display verified at the recorded time. This does not establish current host health, corrected addresses, all web business acceptance, or successful PaddleDTX model storage."
+}

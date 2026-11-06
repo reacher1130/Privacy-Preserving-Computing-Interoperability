@@ -1,0 +1,12 @@
+{
+  "jobId": "fj-ef242e6d29d04b8e",
+  "clusterId": "fc-4ed3f690c2cc409f",
+  "projectId": "",
+  "graphId": "",
+  "name": "topology-independent-fate-20260907",
+  "initiatorNodeId": "alice",
+  "status": "RUNNING",
+  "errMsg": "",
+  "gmtCreate": 1788727436000,
+  "gmtModified": 1788727436000
+}

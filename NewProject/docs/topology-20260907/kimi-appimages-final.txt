@@ -1,0 +1,2 @@
+appimage.kuscia.secretflow/secretflow-image
+appimage.kuscia.secretflow/secretflow-nsjail-image

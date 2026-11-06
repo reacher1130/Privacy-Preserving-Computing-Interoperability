@@ -1,0 +1,10 @@
+{
+  "status": {
+    "code": 0,
+    "msg": "success"
+  },
+  "data": {
+    "exitCode": 0,
+    "output": "2026/09/08 17:43:01.179 \u001b[1;33m[W]\u001b[0m  init global config instance failed. If you donot use this, just ignore it.  open conf/app.conf: no such file or directory\n\nTaskID: 9ac8acc5-7abb-4b86-8b1e-e01c28c17549\nRequester: b826561293479b01b194c1ac271331d7f9e22a365c82faeb9922a348e56492f644fd4b357ed581af677ce5ac05b6c8713f88d8a26279f761ea52317cb1180f71\nTaskType: predict\nTaskName: linux-migration-predict-20260908\nDescription: \nAlgorithm: linear-vl\nModelTaskID: 7109ac57-fdaf-4a2e-a98a-5c09a97542b1\nStatus: Finished\nPublishTime: 2026-09-08 17:14:32\n\nTask data sets: \nDataID: 5fa408b8-ff1a-458e-93b4-0fa60f97aff8\nOwner: b7e08dd6f6bc4bffb60f9665acdc2aa32335e80673a1caa0eb19f521b70ff78c290e2fa1443b3d1c7adb4e9f1bc673b67c3f163cbd8b3eeedbc43e464c88a89b\nExecutor: 6a5ba56bccf843c591a3a32baa5aa76deebffe2695d48521799b77fb0a32e286ae493143560d1f548dd494bf266d4df39375f755f6008e8db7444cd8a96258c6\nAddress: executor1.node.com:38301\nPSILabel: id\nConfirmedAt: 2026-09-08 17:14:33\nRejectedAt: \n\nDataID: e093c830-3a7b-4e9c-a557-572336fcb4f5\nOwner: a4c9dc0ebc13cf151ae5908ac1e5358afc12d8d1d90104e12cf82f6a7baa0efec7a9cee1692b71cd338ddc1122cf9294910a3c2b3e85e9ceb6ec88c4ab80c1d0\nExecutor: 71c516458ef075609be6a7ebaeca23dc42a3ff3aa0597d0abd3843253da09ee5bcdc292d517617bb7eb610a5351ae92240a803cc5769346d81def574adbfdd1d\nAddress: executor2.node.com:38303\nPSILabel: id\nConfirmedAt: 2026-09-08 17:14:34\nRejectedAt: \n\nStartTime: 2026-09-08 17:14:36\nEndTime: 2026-09-08 17:14:37\nErrMessage: \nResult: map[71c516458ef075609be6a7ebaeca23dc42a3ff3aa0597d0abd3843253da09ee5bcdc292d517617bb7eb610a5351ae92240a803cc5769346d81def574adbfdd1d:]\n\n"
+  }
+}

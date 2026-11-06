@@ -1,0 +1,7 @@
+{
+  "pid": 7238,
+  "service": "project CodeGraph MCP index server",
+  "action": "SIGTERM",
+  "reason": "Not used by this acceptance run; about 2.4 GB footprint amid swap pressure",
+  "indexFilesRetained": true
+}

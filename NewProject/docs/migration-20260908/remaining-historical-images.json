@@ -1,0 +1,99 @@
+[
+  {
+    "id": "sha256:d271f3053d2c83d4f363782706795a6dcf46041480b5e3ea57ea2048f650654c",
+    "tags": [
+      "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/dataproxy:0.3.0b0"
+    ],
+    "bytes": 851598177
+  },
+  {
+    "id": "sha256:1cd5e5aecd5309edb960e60c0dbce464b703b2e10bb892809699952eda3991a8",
+    "tags": [
+      "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/kuscia:1.2.0b0"
+    ],
+    "bytes": 1231982848
+  },
+  {
+    "id": "sha256:c95dcee783d0c4a319cfbac7da5aebf33d0481278dc4034a508fd76375e7d5fb",
+    "tags": [
+      "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/morse-ecdh-header:20251113-bfia"
+    ],
+    "bytes": 1821061032
+  },
+  {
+    "id": "sha256:cc060cd04db5698bceaa035dc4d2b373a3d06dc8643d68306e850c5d7686f0c1",
+    "tags": [
+      "secretflow/fate2-adapter:0.1.0"
+    ],
+    "bytes": 14971273
+  },
+  {
+    "id": "sha256:692982fb485efd18e63c6dc818d9a2e5ba5f874d4eaaa8f4e4a1b3ebcf23b66c",
+    "tags": [
+      "secretflow/fate2-adapter:0.1.1-e2e"
+    ],
+    "bytes": 14841295
+  },
+  {
+    "id": "sha256:dbe7334c171d09b89b3eabffb299b6bcdf54c9340e3e117eb654f2af3392c31b",
+    "tags": [
+      "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/kuscia:latest"
+    ],
+    "bytes": 1139075935
+  },
+  {
+    "id": "sha256:c64c9e10c307a75a7c289c25a3a72b4dfbd1cfb9641adcc704fc62cacf9909af",
+    "tags": [
+      "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/secretpad:0.12.0b0"
+    ],
+    "bytes": 1017013679
+  },
+  {
+    "id": "sha256:2499a40b6a551d97762e6601863eca708121bb051f977e58242d50859fd5f227",
+    "tags": [
+      "secretflow/kuscia:local-fix-demo-20260906"
+    ],
+    "bytes": 1426519979
+  },
+  {
+    "id": "sha256:0aff6e9a51bf8b2c6dc994786ee833c941d8e47a24ab6d3aca5b236cd4159df7",
+    "tags": [
+      "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ecdh-psi:demo-slim-20260906",
+      "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ecdh:demo-slim-20260906",
+      "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-compare:demo-slim-20260906",
+      "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-lr:demo-slim-20260906",
+      "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-pearson:demo-slim-20260906",
+      "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-vif:demo-slim-20260906",
+      "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-xgb:demo-slim-20260906"
+    ],
+    "bytes": 181085340
+  },
+  {
+    "id": "sha256:6a74e61000dd358f44c42a82ee177d8e808349bdfb9b39ba67364f819938c0c2",
+    "tags": [
+      "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/serving-anolis8:0.8.0b0"
+    ],
+    "bytes": 460737480
+  },
+  {
+    "id": "sha256:2e093d9f35eed275305b7a6af7d47ef761de432f55035d1e326f7566b661f621",
+    "tags": [
+      "secretflow/kuscia:v1.2.0b0-20260725014322"
+    ],
+    "bytes": 1165448763
+  },
+  {
+    "id": "sha256:f6ac3e9915ddd960e56dc9b30c01a20170ce893c900d0768d757e63015b35cd9",
+    "tags": [
+      "secretflow/fate2-adapter:0.2.0-native"
+    ],
+    "bytes": 23012999
+  },
+  {
+    "id": "sha256:844e672017c3c5c1881cd7e8cb0e6312a97753ea74c21ec2617452276b5258b6",
+    "tags": [
+      "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/secretflow-lite-anolis8:1.11.0b1"
+    ],
+    "bytes": 1499729158
+  }
+]

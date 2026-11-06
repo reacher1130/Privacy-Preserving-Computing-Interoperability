@@ -1,0 +1,14 @@
+{
+  "resources-after": {
+    "sampleTime": "2026-09-08T10:27:26.776485",
+    "containerCount": 28,
+    "containersMiB": 8175.9,
+    "jvmFootprintMiB": 2612.8
+  },
+  "resources-after-reclaim": {
+    "sampleTime": "2026-09-08T10:35:48.645197",
+    "containerCount": 28,
+    "containersMiB": 6594.0,
+    "jvmFootprintMiB": 2067.5
+  }
+}

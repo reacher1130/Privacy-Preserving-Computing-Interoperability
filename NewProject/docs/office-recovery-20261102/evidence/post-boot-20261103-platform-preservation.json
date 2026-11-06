@@ -1,0 +1,698 @@
+{
+  "scope": "Post-boot read-only observations. Confirms platform probes, historical task preservation, Alice metadata/backup retention, and storage eligibility at the recorded times. Does not claim a new training, model write, prediction, or browser workflow.",
+  "host": "192.168.45.101",
+  "strictSshHostKeyVerification": true,
+  "serverDataOrRuntimeMutated": false,
+  "taskPreservation": {
+    "earlyBaseline": {
+      "startedAt": "2026-11-03T09:21:14.446682+08:00",
+      "endedAt": "2026-11-03T09:21:14.585726+08:00",
+      "historicalEvidence": "/var/log/ppci/regression-20261102/paddle-storage-guard-integration.json",
+      "historicalIds": [
+        "055205ef-0877-431e-9a4e-d6b471217733",
+        "06b7555e-b49e-46c8-bce2-244e47bb74dc",
+        "0e24f936-bc02-43a4-9520-5ed0db342b43",
+        "1346e6e8-1f1a-435e-ac47-80ecc0180060",
+        "17a612b6-8799-4ecd-9901-bb46556c4745",
+        "27586ca5-997e-44e3-8ab8-e5a6eb182f30",
+        "2a223376-5d84-4661-9ae9-54f6eeca3bc3",
+        "2d7a2ff4-b0e4-4912-9050-470480f5ac51",
+        "4d1b0479-ce9e-4e28-b601-824fc83c81c7",
+        "6a6636a6-9ad7-4fd8-9230-2f622d6b3155",
+        "7109ac57-fdaf-4a2e-a98a-5c09a97542b1",
+        "76c5149a-3620-4b81-9ceb-58b7cb65a802",
+        "79e26c54-5d79-4fc5-8f69-509563a9aa5b",
+        "7c9f47bd-65f3-4a61-874d-c5dc8ba7c5ac",
+        "85fea31b-98d5-48fa-94b3-9dea1d6c12d1",
+        "88cb092a-8a9f-40c4-ba1c-a75fc68cb099",
+        "977f0939-eafa-49de-8973-938c8b0f594f",
+        "9ac8acc5-7abb-4b86-8b1e-e01c28c17549",
+        "bdfb8f3c-90b2-472a-aecb-df5b8f3388c9",
+        "be2c50da-e5b7-408d-ae72-18219b7d4bfa",
+        "ce17fd1b-5d69-4238-9a69-6e6238c6e387",
+        "e7939a70-354f-4ea9-9160-d12e3219afef"
+      ],
+      "historicalCount": 22,
+      "observedIds": [
+        "055205ef-0877-431e-9a4e-d6b471217733",
+        "06b7555e-b49e-46c8-bce2-244e47bb74dc",
+        "0e24f936-bc02-43a4-9520-5ed0db342b43",
+        "1346e6e8-1f1a-435e-ac47-80ecc0180060",
+        "17a612b6-8799-4ecd-9901-bb46556c4745",
+        "27586ca5-997e-44e3-8ab8-e5a6eb182f30",
+        "2a223376-5d84-4661-9ae9-54f6eeca3bc3",
+        "2d7a2ff4-b0e4-4912-9050-470480f5ac51",
+        "4d1b0479-ce9e-4e28-b601-824fc83c81c7",
+        "6a6636a6-9ad7-4fd8-9230-2f622d6b3155",
+        "7109ac57-fdaf-4a2e-a98a-5c09a97542b1",
+        "76c5149a-3620-4b81-9ceb-58b7cb65a802",
+        "79e26c54-5d79-4fc5-8f69-509563a9aa5b",
+        "7c9f47bd-65f3-4a61-874d-c5dc8ba7c5ac",
+        "85fea31b-98d5-48fa-94b3-9dea1d6c12d1",
+        "88cb092a-8a9f-40c4-ba1c-a75fc68cb099",
+        "977f0939-eafa-49de-8973-938c8b0f594f",
+        "9ac8acc5-7abb-4b86-8b1e-e01c28c17549",
+        "bdfb8f3c-90b2-472a-aecb-df5b8f3388c9",
+        "be2c50da-e5b7-408d-ae72-18219b7d4bfa",
+        "ce17fd1b-5d69-4238-9a69-6e6238c6e387",
+        "e7939a70-354f-4ea9-9160-d12e3219afef"
+      ],
+      "observedCount": 22,
+      "missingHistoricalIds": [],
+      "additionalIds": [],
+      "oldFailedTask": {
+        "taskId": "7c9f47bd-65f3-4a61-874d-c5dc8ba7c5ac",
+        "status": "Failed",
+        "errorMessage": "{\"code\":\"10001\",\"message\":\"failed to save task model: {\\\"code\\\":\\\"10001\\\",\\\"message\\\":\\\"empty healthy nodes\\\"}\"}",
+        "publishTime": "2026-11-02 17:51:33",
+        "startTime": "2026-11-02 17:57:36",
+        "endTime": ""
+      },
+      "oldFailedSnapshotUnchanged": true
+    },
+    "readOnlyRecheck": {
+      "observedAt": "2026-11-03T09:23:52.957142+08:00",
+      "historicalCount": 22,
+      "observedCount": 22,
+      "missingHistoricalIds": [],
+      "additionalIds": [],
+      "oldFailedSnapshotUnchanged": true,
+      "oldTaskStatus": "Failed"
+    }
+  },
+  "platform": {
+    "startedAt": "2026-11-03T09:22:49.564298+08:00",
+    "endedAt": "2026-11-03T09:22:50.340230+08:00",
+    "command": "ppci-platform status",
+    "exitCode": 0,
+    "statusJsonReadable": true,
+    "healthy": true,
+    "runtimeHealthy": true,
+    "statusErrorCount": 0,
+    "taskReadinessErrorCount": 0,
+    "containerCount": 29,
+    "runningContainerCount": 29,
+    "containers": [
+      {
+        "name": "gaofeng-kuscia-autonomy-alice",
+        "running": true
+      },
+      {
+        "name": "gaofeng-kuscia-autonomy-bob",
+        "running": true
+      },
+      {
+        "name": "gaofeng-kuscia-autonomy-kimi",
+        "running": true
+      },
+      {
+        "name": "kusciaapi-alice-proxy",
+        "running": true
+      },
+      {
+        "name": "kusciaapi-bob-proxy",
+        "running": true
+      },
+      {
+        "name": "kusciaapi-kimi-proxy",
+        "running": true
+      },
+      {
+        "name": "bfia-alice-proxy",
+        "running": true
+      },
+      {
+        "name": "bfia-bob-proxy",
+        "running": true
+      },
+      {
+        "name": "xchain1.node.com",
+        "running": true
+      },
+      {
+        "name": "xchain2.node.com",
+        "running": true
+      },
+      {
+        "name": "xchain3.node.com",
+        "running": true
+      },
+      {
+        "name": "dataowner1.node.com",
+        "running": true
+      },
+      {
+        "name": "dataowner2.node.com",
+        "running": true
+      },
+      {
+        "name": "dataowner3.node.com",
+        "running": true
+      },
+      {
+        "name": "storage1.node.com",
+        "running": true
+      },
+      {
+        "name": "storage2.node.com",
+        "running": true
+      },
+      {
+        "name": "storage3.node.com",
+        "running": true
+      },
+      {
+        "name": "executor1.node.com",
+        "running": true
+      },
+      {
+        "name": "executor2.node.com",
+        "running": true
+      },
+      {
+        "name": "fate2-flow-e2e",
+        "running": true
+      },
+      {
+        "name": "fate2-flow-guest-e2e",
+        "running": true
+      },
+      {
+        "name": "fate2-flow-host-e2e",
+        "running": true
+      },
+      {
+        "name": "secretpad-frontend-multiparty-e2e",
+        "running": true
+      },
+      {
+        "name": "secretpad-frontend-e2e",
+        "running": true
+      },
+      {
+        "name": "secretpad-native-e2e",
+        "running": true
+      },
+      {
+        "name": "secretpad-native-kimi-e2e",
+        "running": true
+      },
+      {
+        "name": "fateboard-native-e2e",
+        "running": true
+      },
+      {
+        "name": "paddledtx-native-e2e",
+        "running": true
+      },
+      {
+        "name": "ppci-dtx-manager",
+        "running": true
+      }
+    ],
+    "backends": {
+      "alice": {
+        "apiPort": 18080,
+        "apiResponded": true,
+        "activeProtocol": "paddledtx",
+        "supportedProtocols": [
+          "secretflow",
+          "bfia",
+          "fate",
+          "paddledtx"
+        ],
+        "canSwitch": true,
+        "systemd": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running"
+        }
+      },
+      "bob": {
+        "apiPort": 28090,
+        "apiResponded": true,
+        "activeProtocol": "bfia",
+        "supportedProtocols": [
+          "bfia"
+        ],
+        "canSwitch": false,
+        "systemd": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running"
+        }
+      },
+      "kimi": {
+        "apiPort": 38090,
+        "apiResponded": true,
+        "systemd": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running"
+        }
+      }
+    },
+    "manager": {
+      "apiResponsive": true,
+      "anonymousRejected": true,
+      "anonymousHttpStatus": 200,
+      "anonymousBusinessCode": "SignErr"
+    },
+    "chain": [
+      {
+        "node": 1,
+        "trunkHeight": 83534
+      },
+      {
+        "node": 2,
+        "trunkHeight": 83534
+      },
+      {
+        "node": 3,
+        "trunkHeight": 83534
+      }
+    ],
+    "protocolRoutes": [
+      {
+        "node": "alice",
+        "route": "alice-bob",
+        "protocol": "bfia",
+        "ready": true
+      },
+      {
+        "node": "bob",
+        "route": "bob-alice",
+        "protocol": "bfia",
+        "ready": true
+      },
+      {
+        "node": "alice",
+        "route": "alice-kimi",
+        "protocol": "kuscia",
+        "ready": true
+      },
+      {
+        "node": "kimi",
+        "route": "kimi-alice",
+        "protocol": "kuscia",
+        "ready": true
+      }
+    ],
+    "fate": [
+      {
+        "role": "guest",
+        "port": 19381,
+        "ready": true
+      },
+      {
+        "role": "host",
+        "port": 19382,
+        "ready": true
+      }
+    ],
+    "paddle": {
+      "requesterConfigured": true,
+      "modelStorageType": "XuperDB",
+      "ready": true,
+      "storageReady": true,
+      "executors": [
+        {
+          "address": "http://127.0.0.1:8511/v1/task/list",
+          "httpStatus": 200,
+          "ready": true
+        },
+        {
+          "address": "http://127.0.0.1:8512/v1/task/list",
+          "httpStatus": 200,
+          "ready": true
+        }
+      ],
+      "storage": [
+        {
+          "address": "http://127.0.0.1:8441/v1/file/getns?name=paddlempc",
+          "namespace": "paddlempc",
+          "replica": 2,
+          "eligibleNodes": 2,
+          "totalNodes": 3,
+          "checked": true,
+          "ready": true
+        },
+        {
+          "address": "http://127.0.0.1:8442/v1/file/getns?name=paddlempc",
+          "namespace": "paddlempc",
+          "replica": 2,
+          "eligibleNodes": 2,
+          "totalNodes": 3,
+          "checked": true,
+          "ready": true
+        }
+      ]
+    }
+  },
+  "aliceRestoration": {
+    "startedAt": "2026-11-03T09:22:51.318557+08:00",
+    "endedAt": "2026-11-03T09:22:51.426774+08:00",
+    "remoteEvidence": "/var/log/ppci/regression-20261102/native-alice-peer-institution-restore-20261102T113807067029Z.json",
+    "remoteEvidenceSha256": "10a78eb8afb1ac5c2e83e4944322c780289ec920cbebba365026b56450dad3ba",
+    "remoteEvidenceBytes": 1477,
+    "backup": {
+      "path": "/var/backups/ppci/office-recovery-20261102/alice-peer-institution/20261102T113807067029Z.sqlite",
+      "sha256": "cdbfed350ce76bb21855f388451cb2ebd9d181d28bb589ae5cc7efe07c87f962",
+      "matchesRecordedSha256": true,
+      "mode": "0o600",
+      "integrityCheckPassed": true,
+      "preRestoreInstitutionMissingInBackup": true
+    },
+    "aliceUserContext": {
+      "ownerId": "rqzvglmu",
+      "ownerType": "P2P",
+      "platformType": "AUTONOMY",
+      "platformNodeId": "alice",
+      "deployMode": "MPC"
+    },
+    "aliceUserContextUnchanged": true,
+    "aliceInstitutionUnchanged": true,
+    "docker": {
+      "alice": {
+        "container": "gaofeng-kuscia-autonomy-alice",
+        "networks": {
+          "ppci-kuscia-exchange": "192.168.117.2"
+        }
+      },
+      "kimi": {
+        "container": "gaofeng-kuscia-autonomy-kimi",
+        "networks": {
+          "ppci-kuscia-exchange": "192.168.117.4"
+        }
+      }
+    },
+    "platformDatabases": {
+      "alice": {
+        "nodes": [
+          {
+            "node_id": "alice",
+            "inst_id": "rqzvglmu",
+            "net_address": "127.0.0.1:28080",
+            "is_deleted": 0
+          },
+          {
+            "node_id": "kimi",
+            "inst_id": "gqxzwemm",
+            "net_address": "http://192.168.117.4:80",
+            "is_deleted": 0
+          }
+        ],
+        "storedRoutes": [
+          {
+            "route_id": "r_alice_kimi",
+            "src_node_id": "alice",
+            "dst_node_id": "kimi",
+            "src_net_address": "http://192.168.117.2:80",
+            "dst_net_address": "http://192.168.117.4:80",
+            "is_deleted": 0
+          },
+          {
+            "route_id": "r_kimi_alice",
+            "src_node_id": "kimi",
+            "dst_node_id": "alice",
+            "src_net_address": "http://192.168.117.4:80",
+            "dst_net_address": "http://192.168.117.2:80",
+            "is_deleted": 0
+          }
+        ],
+        "nativePage": {
+          "httpStatus": 200,
+          "businessCode": 0,
+          "total": 1,
+          "routes": [
+            {
+              "routeId": "r_kimi_alice",
+              "srcNodeId": "kimi",
+              "dstNodeId": "alice",
+              "srcNetAddress": "http://192.168.117.4:80",
+              "dstNetAddress": "http://192.168.117.2:80",
+              "status": "Succeeded",
+              "dtoDirectionMatchesStoredRoute": true,
+              "srcNode": {
+                "nodeId": "kimi",
+                "nodeName": "kimi",
+                "instId": "gqxzwemm",
+                "netAddress": "http://192.168.117.4:80",
+                "matchesStoredNodeAddress": true
+              },
+              "dstNode": {
+                "nodeId": "alice",
+                "nodeName": "alice",
+                "instId": "rqzvglmu",
+                "netAddress": "127.0.0.1:28080",
+                "matchesStoredNodeAddress": true
+              }
+            }
+          ]
+        },
+        "nodeAddressComparison": [
+          {
+            "nodeId": "alice",
+            "storedAddress": "127.0.0.1:28080",
+            "storedHost": "127.0.0.1",
+            "currentDockerExchangeIp": "192.168.117.2",
+            "matchesCurrentDockerExchangeIp": false
+          },
+          {
+            "nodeId": "kimi",
+            "storedAddress": "http://192.168.117.4:80",
+            "storedHost": "192.168.117.4",
+            "currentDockerExchangeIp": "192.168.117.4",
+            "matchesCurrentDockerExchangeIp": true
+          }
+        ],
+        "kimiInstitution": [
+          {
+            "inst_id": "gqxzwemm",
+            "name": "kimi",
+            "is_deleted": 0,
+            "gmt_create": "2026-07-18 03:11:03",
+            "gmt_modified": "2026-07-18 03:11:03"
+          }
+        ]
+      },
+      "kimi": {
+        "nodes": [
+          {
+            "node_id": "alice",
+            "inst_id": "owszmazx",
+            "net_address": "http://192.168.117.2:80",
+            "is_deleted": 0
+          },
+          {
+            "node_id": "kimi",
+            "inst_id": "gqxzwemm",
+            "net_address": "http://192.168.117.4:80",
+            "is_deleted": 0
+          }
+        ],
+        "storedRoutes": [
+          {
+            "route_id": "alice__kimi",
+            "src_node_id": "alice",
+            "dst_node_id": "kimi",
+            "src_net_address": "http://192.168.117.4:80",
+            "dst_net_address": "http://192.168.117.2:80",
+            "is_deleted": 0
+          },
+          {
+            "route_id": "kimi__alice",
+            "src_node_id": "kimi",
+            "dst_node_id": "alice",
+            "src_net_address": "http://192.168.117.4:80",
+            "dst_net_address": "http://192.168.117.2:80",
+            "is_deleted": 0
+          }
+        ],
+        "nativePage": {
+          "httpStatus": 200,
+          "businessCode": 0,
+          "total": 1,
+          "routes": [
+            {
+              "routeId": "alice__kimi",
+              "srcNodeId": "alice",
+              "dstNodeId": "kimi",
+              "srcNetAddress": "http://192.168.117.4:80",
+              "dstNetAddress": "http://192.168.117.2:80",
+              "status": "Succeeded",
+              "dtoDirectionMatchesStoredRoute": true,
+              "srcNode": {
+                "nodeId": "alice",
+                "nodeName": "alice",
+                "instId": "owszmazx",
+                "netAddress": "http://192.168.117.2:80",
+                "matchesStoredNodeAddress": true
+              },
+              "dstNode": {
+                "nodeId": "kimi",
+                "nodeName": "kimi",
+                "instId": "gqxzwemm",
+                "netAddress": "http://192.168.117.4:80",
+                "matchesStoredNodeAddress": true
+              }
+            }
+          ]
+        },
+        "nodeAddressComparison": [
+          {
+            "nodeId": "alice",
+            "storedAddress": "http://192.168.117.2:80",
+            "storedHost": "192.168.117.2",
+            "currentDockerExchangeIp": "192.168.117.2",
+            "matchesCurrentDockerExchangeIp": true
+          },
+          {
+            "nodeId": "kimi",
+            "storedAddress": "http://192.168.117.4:80",
+            "storedHost": "192.168.117.4",
+            "currentDockerExchangeIp": "192.168.117.4",
+            "matchesCurrentDockerExchangeIp": true
+          }
+        ],
+        "kimiInstitution": [
+          {
+            "inst_id": "gqxzwemm",
+            "name": "kimi",
+            "is_deleted": 0,
+            "gmt_create": "2026-07-18 03:11:03",
+            "gmt_modified": "2026-07-18 03:11:03"
+          }
+        ]
+      }
+    },
+    "fullRemotePublicJsonCopied": true,
+    "localExactCopy": "native-alice-peer-institution-restore-server-20261102.json",
+    "backupDatabaseNotCopied": true,
+    "addressConclusion": "Current Docker exchange IPs are Alice 192.168.117.2 and Kimi 192.168.117.4. Kimi's node rows match those IPs, but its alice__kimi route row stores src .4 and dst .2. Its native API DTO uses the same values as the stored route, so the difference is persisted route metadata, not a DTO address swap. Alice's route rows match the Docker directions; its own node record uses 127.0.0.1:28080. Both native lists report one Succeeded row. No address or route was changed."
+  },
+  "directDataOwnerHealth": {
+    "startedAt": "2026-11-03T09:22:48.213343+08:00",
+    "endedAt": "2026-11-03T09:22:48.369062+08:00",
+    "allStorageSidesReady": true,
+    "dataOwners": [
+      {
+        "dataOwnerPort": 8441,
+        "namespace": "paddlempc",
+        "replica": 2,
+        "nodes": [
+          {
+            "address": "storage1.node.com:80",
+            "nodeIdSha256": "f577823074c043a696ded62c5b997cb76bf2e3c6eaa56f977fe8700368f907cc",
+            "online": true,
+            "health": "Yellow",
+            "eligible": true,
+            "updateAt": 1793668926746422500,
+            "history": {
+              "heartBeatTotal": 189,
+              "heartBeatMax": 10080
+            },
+            "todayDiagnosticOnly": {
+              "heartBeatTotal": 28,
+              "heartBeatMax": 562
+            }
+          },
+          {
+            "address": "storage2.node.com:80",
+            "nodeIdSha256": "9c197ee86b7f1c29bb01b9b2f55f9c6ede46479db80cda191953187826fcbc21",
+            "online": true,
+            "health": "Yellow",
+            "eligible": true,
+            "updateAt": 1793668926575283700,
+            "history": {
+              "heartBeatTotal": 189,
+              "heartBeatMax": 10080
+            },
+            "todayDiagnosticOnly": {
+              "heartBeatTotal": 28,
+              "heartBeatMax": 562
+            }
+          },
+          {
+            "address": "storage3.node.com:80",
+            "nodeIdSha256": "571b4d096ec1d683857d7285756b41a3c862a47ba50064a23a26682f6c22ca3c",
+            "online": true,
+            "health": "Red",
+            "eligible": false,
+            "updateAt": 1793668926477342000,
+            "history": {
+              "heartBeatTotal": 147,
+              "heartBeatMax": 10080
+            },
+            "todayDiagnosticOnly": {
+              "heartBeatTotal": 27,
+              "heartBeatMax": 562
+            }
+          }
+        ],
+        "totalNodes": 3,
+        "eligibleNodes": 2,
+        "ready": true
+      },
+      {
+        "dataOwnerPort": 8442,
+        "namespace": "paddlempc",
+        "replica": 2,
+        "nodes": [
+          {
+            "address": "storage1.node.com:80",
+            "nodeIdSha256": "f577823074c043a696ded62c5b997cb76bf2e3c6eaa56f977fe8700368f907cc",
+            "online": true,
+            "health": "Yellow",
+            "eligible": true,
+            "updateAt": 1793668926746422500,
+            "history": {
+              "heartBeatTotal": 189,
+              "heartBeatMax": 10080
+            },
+            "todayDiagnosticOnly": {
+              "heartBeatTotal": 28,
+              "heartBeatMax": 562
+            }
+          },
+          {
+            "address": "storage2.node.com:80",
+            "nodeIdSha256": "9c197ee86b7f1c29bb01b9b2f55f9c6ede46479db80cda191953187826fcbc21",
+            "online": true,
+            "health": "Yellow",
+            "eligible": true,
+            "updateAt": 1793668926575283700,
+            "history": {
+              "heartBeatTotal": 189,
+              "heartBeatMax": 10080
+            },
+            "todayDiagnosticOnly": {
+              "heartBeatTotal": 28,
+              "heartBeatMax": 562
+            }
+          },
+          {
+            "address": "storage3.node.com:80",
+            "nodeIdSha256": "571b4d096ec1d683857d7285756b41a3c862a47ba50064a23a26682f6c22ca3c",
+            "online": true,
+            "health": "Red",
+            "eligible": false,
+            "updateAt": 1793668926477342000,
+            "history": {
+              "heartBeatTotal": 147,
+              "heartBeatMax": 10080
+            },
+            "todayDiagnosticOnly": {
+              "heartBeatTotal": 27,
+              "heartBeatMax": 562
+            }
+          }
+        ],
+        "totalNodes": 3,
+        "eligibleNodes": 2,
+        "ready": true
+      }
+    ],
+    "scope": "Direct GET-only DataOwner observations; historical heartbeat window controls health; today is diagnostic only; does not prove model write or prediction."
+  }
+}

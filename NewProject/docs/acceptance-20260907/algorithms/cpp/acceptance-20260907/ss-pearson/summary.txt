@@ -1,0 +1,40 @@
+algorithm=ss-pearson
+status=PASS
+runtime=docker
+bfia_protocol=BFIA
+platform=linux/amd64
+alice_endpoint=172.31.240.2:30002
+bob_endpoint=172.31.240.3:30003
+通信协议=BFIA互联互通协议
+真实通信端点=Alice(172.31.240.2:30002) <-> Bob(172.31.240.3:30003)
+network_evidence=1
+alice_exit=0
+bob_exit=0
+timed_out=0
+early_exit=0
+alice_output=/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/output/alice/result.csv
+alice_output_lines=21
+bob_output=/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/output/bob/result.csv
+bob_output_lines=21
+alice_log=/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/alice.log
+bob_log=/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/bob.log
+metrics:
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/bob.log:[2026-09-07 01:44:18.545] [info] [ss_pearson_handler.cc:391] [SS-Pearson] correlation matrix saved to //results/output/bob/result.csv
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/bob.log:[2026-09-07 01:44:18.556] [info] [ic_main.cc:72] BFIA协议双方通信完成：本方=bob，对端=alice，端点=172.31.240.3:30003 <-> 172.31.240.2:30002
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/bob.log:[2026-09-07 01:44:18.557] [info] [ic_main.cc:80] Timing summary: total=3987ms, link_connect=3549ms, dataset=11ms, handshake=33ms, algo=372ms
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/alice.log:[2026-09-07 01:44:13.999] [info] [ic_main.cc:52] BFIA协议启动：协议=BFIA，算法=ss_pearsonr，本方=alice，对端=bob，本端=172.31.240.2:30002，对端端点=172.31.240.3:30003，双方真实IPv4端点=172.31.240.2:30002 <-> 172.31.240.3:30003，运行时=docker，平台=linux/amd64，协议族=ss
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/alice.log:[2026-09-07 01:44:13.999] [info] [ic_main.cc:59] BFIA协议上下文创建开始：准备监听本端并连接对端端点
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/alice.log:[2026-09-07 01:44:18.124] [info] [ic_main.cc:63] BFIA协议上下文创建成功：真实网络链路上下文已建立，本端=172.31.240.2:30002，对端=172.31.240.3:30003，链路准备耗时=4095ms
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/alice.log:[2026-09-07 01:44:18.124] [info] [ic_main.cc:68] BFIA协议开始握手和算法执行：本方=alice，算法=ss_pearsonr
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/alice.log:[2026-09-07 01:44:18.124] [info] [party.cc:31] BFIA协议Party开始：本方rank=1，握手方向=主动发起
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/alice.log:[2026-09-07 01:44:18.124] [info] [party.cc:72] BFIA协议算法开始：SS-Pearson（安全相关性分析）
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/alice.log:[2026-09-07 01:44:18.550] [info] [ss_pearson_handler.cc:391] [SS-Pearson] correlation matrix saved to //results/output/alice/result.csv
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/alice.log:[2026-09-07 01:44:18.557] [info] [ic_main.cc:72] BFIA协议双方通信完成：本方=alice，对端=bob，端点=172.31.240.2:30002 <-> 172.31.240.3:30003
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/alice.log:[2026-09-07 01:44:18.557] [info] [ic_main.cc:80] Timing summary: total=4558ms, link_connect=4095ms, dataset=7ms, handshake=46ms, algo=372ms
+diagnostics:
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/alice.log:[2026-09-07 01:44:14.336] [info] [blackbox_dummy_service_impl.cc:93] Rpc failed, error_code: 112, error_info: [E111]Fail to connect Socket{id=94 addr=172.31.240.3:30003} (0x0x7fffbc016cc0): Connection refused [R1][E112]Not connected to 172.31.240.3:30003 yet, server_id=0 [R2][E112]Not connected to 172.31.240.3:30003 yet, server_id=0 [R3][E112]Not connected to 172.31.240.3:30003 yet, server_id=0, uri: bob:172.31.240.3:30003/v1/interconn/chan/invoke
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/alice.log:[2026-09-07 01:44:15.336] [info] [blackbox_dummy_service_impl.cc:93] Rpc failed, error_code: 112, error_info: [E112]Not connected to 172.31.240.3:30003 yet, server_id=0 [R1][E112]Not connected to 172.31.240.3:30003 yet, server_id=0 [R2][E112]Not connected to 172.31.240.3:30003 yet, server_id=0 [R3][E112]Not connected to 172.31.240.3:30003 yet, server_id=0, uri: bob:172.31.240.3:30003/v1/interconn/chan/invoke
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/alice.log:[2026-09-07 01:44:16.119] [debug] [channel.cc:359] send request failed and retry, retry_count=1, max_retry=3, interval_ms=1000, message=[external/yacl/yacl/link/transport/interconnection_link.cc:56] cntl ErrorCode '1008', http status code '0', response header '', response body '', error msg '[E1008]Reached timeout=2000ms @0.0.0.0:30002'
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/alice.log:[2026-09-07 01:44:16.337] [info] [blackbox_dummy_service_impl.cc:93] Rpc failed, error_code: 112, error_info: [E112]Not connected to 172.31.240.3:30003 yet, server_id=0 [R1][E112]Not connected to 172.31.240.3:30003 yet, server_id=0 [R2][E112]Not connected to 172.31.240.3:30003 yet, server_id=0 [R3][E112]Not connected to 172.31.240.3:30003 yet, server_id=0, uri: bob:172.31.240.3:30003/v1/interconn/chan/invoke
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/alice.log:[2026-09-07 01:44:17.121] [info] [blackbox_dummy_service_impl.cc:93] Rpc failed, error_code: 112, error_info: [E112]Not connected to 172.31.240.3:30003 yet, server_id=0 [R1][E112]Not connected to 172.31.240.3:30003 yet, server_id=0 [R2][E112]Not connected to 172.31.240.3:30003 yet, server_id=0 [R3][E112]Not connected to 172.31.240.3:30003 yet, server_id=0, uri: bob:172.31.240.3:30003/v1/interconn/chan/invoke
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-pearson/alice.log:[2026-09-07 01:44:17.338] [info] [blackbox_dummy_service_impl.cc:93] Rpc failed, error_code: 112, error_info: [E112]Not connected to 172.31.240.3:30003 yet, server_id=0 [R1][E112]Not connected to 172.31.240.3:30003 yet, server_id=0 [R2][E112]Not connected to 172.31.240.3:30003 yet, server_id=0 [R3][E112]Not connected to 172.31.240.3:30003 yet, server_id=0, uri: bob:172.31.240.3:30003/v1/interconn/chan/invoke

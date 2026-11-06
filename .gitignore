@@ -1,0 +1,36 @@
+# Host runtime, identities and generated output
+/.codegraph/
+/.learnings/
+/gaofeng-kuscia-autonomy-*/
+/kuscia-node-bob/
+/privacy-computing-interconnectivity/
+**/.local-backups/
+**/.runtime/
+**/node_modules/
+**/target/
+**/__pycache__/
+**/.DS_Store
+*.log
+*.key
+*.pem
+*.p12
+*.pfx
+*.sqlite*
+*.mv.db
+*.trace.db
+# The legacy collection is retained locally; it is not published by this workspace.
+
+*.jar
+*.tar.gz
+*.tgz
+*.zip
+*.class
+
+*.tar
+/NewProject/thirdparty/fate2-adapter/adapter
+/NewProject/thirdparty/fate2-adapter/fate2-adapter-local
+
+# Reviewed build-source snapshots required by clean and offline checkouts.
+!/NewProject/thirdparty/paddledtx-source.tar.gz
+!/NewProject/thirdparty/spu-build-source.tar.gz
+/dist/

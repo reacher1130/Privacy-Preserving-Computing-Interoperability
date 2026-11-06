@@ -1,0 +1,46 @@
+{
+  "production_build_exit_code": 0,
+  "self_checks_passed": 4,
+  "served_index_sha256": "048fab6329ea112d4d390c85bc235c3c2cb9948a337eb69db1135853fb7b37ef",
+  "served_scripts": [
+    {
+      "path": "/static/unicom-dtx/js/runtime.f64e23e454ec977dfe9d.bundle.js",
+      "status": 200,
+      "bytes": 34583
+    },
+    {
+      "path": "/static/unicom-dtx/js/vendor.f64e23e454ec977dfe9d.bundle.js",
+      "status": 200,
+      "bytes": 18620343
+    },
+    {
+      "path": "/static/unicom-dtx/js/index.f64e23e454ec977dfe9d.bundle.js",
+      "status": 200,
+      "bytes": 1073145
+    }
+  ],
+  "normal_login_enabled": true,
+  "old_hashed_assets_retained": 26,
+  "browser_download_acceptance_pending": false,
+  "browser_acceptance": {
+    "reported_by": "root",
+    "context": "Ego p5 existing authenticated native manager",
+    "csv": {
+      "download_failure": null,
+      "bytes": 25,
+      "sha256": "bc2c9101b48d26cae3359863833f4dfac47d7ab73cc1f34dddf502c7976dd2ef",
+      "rows": 4,
+      "fixture_equal": true
+    },
+    "meta": {
+      "download_failure": null,
+      "bytes": 48,
+      "sha256": "494964f11e41ee05f92b77c18fada3f76dd3ef45cdf976c55d60cf9122ad8633",
+      "columns": [
+        "id/int",
+        "x/float"
+      ]
+    },
+    "task_and_algorithm_browser_download_checked": false
+  }
+}

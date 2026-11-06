@@ -1,0 +1,234 @@
+diff --git a/controllers/chain_task.go b/controllers/chain_task.go
+new file mode 100644
+index 0000000..fe8ae0d
+--- /dev/null
++++ b/controllers/chain_task.go
+@@ -0,0 +1,121 @@
++package controllers
++
++import (
++	"bytes"
++	"encoding/hex"
++	"fmt"
++	"net/url"
++	"os"
++	"regexp"
++	"strings"
++	"time"
++
++	"baidu/blockchain/dtx-manager/models"
++	"baidu/blockchain/dtx-manager/pkg/codeerror"
++	"baidu/blockchain/dtx-manager/pkg/dai"
++
++	chain "github.com/PaddlePaddle/PaddleDTX/dai/blockchain"
++	common "github.com/PaddlePaddle/PaddleDTX/dai/protos/common"
++)
++
++var chainTaskUUID = regexp.MustCompile(`^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$`)
++var chainTaskPublicKey = regexp.MustCompile(`^[0-9a-f]{128}$`)
++
++type chainTaskExecutor struct {
++	Name    string `json:"name"`
++	ModelID string `json:"modelId,omitempty"`
++}
++
++type chainTaskSummary struct {
++	TaskID      string              `json:"taskId"`
++	Name        string              `json:"name"`
++	Status      string              `json:"status"`
++	PublishTime int64               `json:"publishTime"`
++	StartTime   int64               `json:"startTime"`
++	EndTime     int64               `json:"endTime"`
++	Executors   []chainTaskExecutor `json:"executors"`
++}
++
++func chainTaskID(rawQuery string) (string, bool) {
++	q, err := url.ParseQuery(rawQuery)
++	if err != nil {
++		return "", false
++	}
++	for key, values := range q {
++		if len(values) != 1 || (key != "chainTaskId" && key != "_") {
++			return "", false
++		}
++	}
++	id := q.Get("chainTaskId")
++	return id, chainTaskUUID.MatchString(id)
++}
++
++func matchesChainTask(task chain.FLTask, id, requester string) bool {
++	if !chainTaskPublicKey.MatchString(requester) || task == nil || task.TaskID != id {
++		return false
++	}
++	allowed, err := hex.DecodeString(requester)
++	return err == nil && bytes.Equal(task.Requester, allowed)
++}
++
++func summarizeChainTask(task chain.FLTask, nodeNames map[string]string) chainTaskSummary {
++	result := chainTaskSummary{
++		TaskID: task.TaskID, Name: task.Name, Status: task.Status,
++		PublishTime: task.PublishTime / int64(time.Millisecond),
++		StartTime:   task.StartTime / int64(time.Millisecond),
++		EndTime:     task.EndTime / int64(time.Millisecond),
++		Executors:   make([]chainTaskExecutor, 0, len(task.DataSets)),
++	}
++	seen := make(map[string]bool)
++	for _, part := range task.DataSets {
++		if part == nil || len(part.Executor) == 0 || seen[string(part.Executor)] {
++			continue
++		}
++		key := string(part.Executor)
++		seen[key] = true
++		name := nodeNames[key]
++		if name == "" {
++			name = fmt.Sprintf("执行器 %d（名称不可用）", len(result.Executors)+1)
++		}
++		entry := chainTaskExecutor{Name: name}
++		if task.Status == "Finished" && task.AlgoParam != nil && task.AlgoParam.TaskType == common.TaskType_LEARN {
++			if modelID := task.Result[hex.EncodeToString(part.Executor)]; chainTaskUUID.MatchString(modelID) {
++				entry.ModelID = modelID
++			}
++		}
++		result.Executors = append(result.Executors, entry)
++	}
++	return result
++}
++
++// ChainDetail reads the task ledger without creating a management record.
++func (u *TaskController) ChainDetail() {
++	u.Ctx.Output.Header("Cache-Control", "no-store")
++	requester := strings.TrimSpace(os.Getenv("PPCI_CHAIN_TASK_REQUESTER"))
++	user, err := models.QueryUserByAddress(u.UserAddress)
++	if err != nil || user == nil || user.RoleName != "admin" || !chainTaskPublicKey.MatchString(requester) {
++		u.ServeJSONWithError(codeerror.NewErrorByCode(codeerror.ErrNoAuthority))
++		return
++	}
++	id, valid := chainTaskID(u.Ctx.Request.URL.RawQuery)
++	if !valid {
++		u.ServeJSONWithError(codeerror.NewErrorByCode(codeerror.ErrParam, "链上任务 ID 必须为 UUID"))
++		return
++	}
++	cli, err := dai.GetRequesterClient()
++	if err != nil {
++		u.ServeJSONWithError(codeerror.NewErrorByCode(codeerror.ErrInternalServer, "暂时无法连接计算链"))
++		return
++	}
++	task, err := cli.GetTaskById(id)
++	if err != nil || !matchesChainTask(task, id, requester) {
++		u.ServeJSONWithError(codeerror.NewErrorByCode(codeerror.ErrTaskNotExisted))
++		return
++	}
++	nodes, _ := cli.ListExecutorNodes()
++	names := make(map[string]string, len(nodes))
++	for _, node := range nodes {
++		names[string(node.ID)] = node.Name
++	}
++	u.ServeData(summarizeChainTask(task, names))
++}
+diff --git a/controllers/chain_task_test.go b/controllers/chain_task_test.go
+new file mode 100644
+index 0000000..e821b74
+--- /dev/null
++++ b/controllers/chain_task_test.go
+@@ -0,0 +1,58 @@
++package controllers
++
++import (
++	"encoding/hex"
++	"encoding/json"
++	"strings"
++	"testing"
++
++	common "github.com/PaddlePaddle/PaddleDTX/dai/protos/common"
++	taskpb "github.com/PaddlePaddle/PaddleDTX/dai/protos/task"
++)
++
++func TestChainTaskInputAndRequesterScope(t *testing.T) {
++	const id = "2aa0cee8-0f25-4ed6-9125-7363908f1079"
++	requester := strings.Repeat("a", 128)
++	for _, raw := range []string{"", "chainTaskId=not-a-uuid", "chainTaskId=" + id + "&chainTaskId=" + id, "chainTaskId=" + id + "&id=1"} {
++		if _, ok := chainTaskID(raw); ok {
++			t.Fatalf("unexpected accepted query %q", raw)
++		}
++	}
++	if got, ok := chainTaskID("_=1&chainTaskId=" + id); !ok || got != id {
++		t.Fatal("signed request query with timestamp should be accepted")
++	}
++	key, _ := hex.DecodeString(requester)
++	record := &taskpb.FLTask{TaskID: id, Requester: key}
++	if !matchesChainTask(record, id, requester) || matchesChainTask(record, id, strings.Repeat("b", 128)) ||
++		matchesChainTask(record, id, "") || matchesChainTask(nil, id, requester) || matchesChainTask(record, "", requester) {
++		t.Fatal("lookup must match a configured requester and the exact task ID")
++	}
++}
++
++func TestChainTaskSummaryOmitsPrivateFields(t *testing.T) {
++	const model = "636997e5-a389-47b3-ab2d-65b9412d7202"
++	record := &taskpb.FLTask{
++		Status: "Finished", ErrMessage: "private-error", Requester: []byte("private-requester"),
++		PublishTime: 1700000000123000000,
++		AlgoParam:   &common.TaskParams{TaskType: common.TaskType_LEARN},
++		DataSets: []*taskpb.DataForTask{
++			{Executor: []byte("node-key-one"), DataID: "private-data"},
++			{Executor: []byte("node-key-two")},
++		},
++		Result: map[string]string{hex.EncodeToString([]byte("node-key-one")): model, hex.EncodeToString([]byte("node-key-two")): "internal/path"},
++	}
++	names := map[string]string{"node-key-one": "executor1", "node-key-two": "executor2"}
++	got := summarizeChainTask(record, names)
++	if len(got.Executors) != 2 || got.Executors[0].Name != "executor1" ||
++		got.Executors[0].ModelID != model || got.Executors[1].ModelID != "" || got.PublishTime != 1700000000123 {
++		t.Fatalf("unexpected task summary: %#v", got)
++	}
++	body, err := json.Marshal(got)
++	if err != nil || strings.Contains(string(body), "private-") || strings.Contains(string(body), "node-key-") {
++		t.Fatal("summary exposed a private field")
++	}
++	record.AlgoParam.TaskType = common.TaskType_PREDICT
++	if summarizeChainTask(record, names).Executors[0].ModelID != "" {
++		t.Fatal("prediction result must not be labeled as a model")
++	}
++}
+diff --git a/models/authority.go b/models/authority.go
+index 13162e3..d31ddf7 100644
+--- a/models/authority.go
++++ b/models/authority.go
+@@ -108,6 +108,7 @@ var AuthGroupInverse map[string]string = map[string]string{
+ 	"task/delete":          AuthAll,
+ 	"task/update":          AuthAll,
+ 	"task/list":            AuthRead,
++	"task/chain-detail":    AuthAll,
+ 	"task/detail":          AuthRead,
+ 	"task/exists":          AuthRead,
+ 	"task/publish":         AuthAll,
+diff --git a/routers/router.go b/routers/router.go
+index e05490f..d8c129b 100644
+--- a/routers/router.go
++++ b/routers/router.go
+@@ -199,6 +199,7 @@ func init() {
+ 			web.NSRouter("update", &controllers.TaskController{}, "post:Update"),
+ 			// 任务列表
+ 			web.NSRouter("list", &controllers.TaskController{}, "get:List"),
++			web.NSRouter("chain-detail", &controllers.TaskController{}, "get:ChainDetail"),
+ 			// 任务详情
+ 			web.NSRouter("detail", &controllers.TaskController{}, "get:Detail"),
+ 			// 任务名称是否存在
+diff --git a/vendor/github.com/PaddlePaddle/PaddleDTX/dai/blockchain/xchain/task.go b/vendor/github.com/PaddlePaddle/PaddleDTX/dai/blockchain/xchain/task.go
+index 0c08f91..861ca29 100644
+--- a/vendor/github.com/PaddlePaddle/PaddleDTX/dai/blockchain/xchain/task.go
++++ b/vendor/github.com/PaddlePaddle/PaddleDTX/dai/blockchain/xchain/task.go
+@@ -80,7 +80,13 @@ func (x *XChain) GetTaskById(id string) (blockchain.FLTask, error) {
+ 		return &t, err
+ 	}
+ 
+-	if err = proto.Unmarshal(s, &t); err != nil {
++	// The office compute contract returns JSON; older deployments return protobuf.
++	if json.Valid(s) {
++		err = json.Unmarshal(s, &t)
++	} else {
++		err = proto.Unmarshal(s, &t)
++	}
++	if err != nil {
+ 		return &t, errorx.NewCode(err, errorx.ErrCodeInternal,
+ 			"fail to unmarshal FlTask")
+ 	}

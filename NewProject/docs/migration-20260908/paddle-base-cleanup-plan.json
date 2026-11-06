@@ -1,0 +1,5 @@
+{
+  "id": "sha256:888fede8f081fabb618ce6f155d3715c14daf560cf8d9577cf63ad6cad815765",
+  "tag": "registry.baidubce.com/paddledtx/paddledtx-dai:2.1",
+  "source": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/testdata/executor/docker-compose.yml"
+}

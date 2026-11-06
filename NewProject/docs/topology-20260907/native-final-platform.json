@@ -1,0 +1,18 @@
+{
+  "status": {
+    "code": 0,
+    "msg": "success"
+  },
+  "data": {
+    "jobId": "fj-077d3f4debcc4832",
+    "clusterId": "fc-4ed3f690c2cc409f",
+    "projectId": "",
+    "graphId": "",
+    "name": "native-fate-psi-lr-bob-offline-20260907",
+    "initiatorNodeId": "alice",
+    "status": "SUCCESS",
+    "errMsg": "",
+    "gmtCreate": 1788729760000,
+    "gmtModified": 1788729760000
+  }
+}

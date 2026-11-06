@@ -1,0 +1,42 @@
+algorithm=ss-xgb
+status=PASS
+runtime=docker
+bfia_protocol=BFIA
+platform=linux/amd64
+alice_endpoint=172.31.240.2:29992
+bob_endpoint=172.31.240.3:29993
+通信协议=BFIA互联互通协议
+真实通信端点=Alice(172.31.240.2:29992) <-> Bob(172.31.240.3:29993)
+network_evidence=1
+alice_exit=0
+bob_exit=0
+timed_out=0
+early_exit=0
+alice_output=/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/output/alice/result.csv
+alice_output_lines=257
+bob_output=/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/output/bob/result.csv
+bob_output_lines=257
+alice_log=/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log
+bob_log=/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/bob.log
+alice_model=/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/output/alice/ssxgb_model.bin
+bob_model=/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/output/bob/ssxgb_model.bin
+metrics:
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:05.603] [info] [ic_main.cc:52] BFIA协议启动：协议=BFIA，算法=ss_xgb，本方=alice，对端=bob，本端=172.31.240.2:29992，对端端点=172.31.240.3:29993，双方真实IPv4端点=172.31.240.2:29992 <-> 172.31.240.3:29993，运行时=docker，平台=linux/amd64，协议族=ss
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:05.603] [info] [ic_main.cc:59] BFIA协议上下文创建开始：准备监听本端并连接对端端点
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:09.705] [info] [ic_main.cc:63] BFIA协议上下文创建成功：真实网络链路上下文已建立，本端=172.31.240.2:29992，对端=172.31.240.3:29993，链路准备耗时=4093ms
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:09.705] [info] [ic_main.cc:68] BFIA协议开始握手和算法执行：本方=alice，算法=ss_xgb
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:09.706] [info] [party.cc:31] BFIA协议Party开始：本方rank=1，握手方向=主动发起
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:09.706] [info] [party.cc:66] BFIA协议算法开始：SS-XGB（安全多方梯度提升树）
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:10.943] [info] [ss_xgb_handler.cc:575] **********SS-XGB training finished**********
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:10.943] [info] [ss_xgb_handler.cc:588] [SS-XGB] Accuracy = 0.32421875
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:10.986] [info] [ss_xgb_handler.cc:599] [SS-XGB] Model saved to //results/output/alice/ssxgb_model.bin
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:11.020] [info] [ss_xgb_handler.cc:965] [SS-XGB] Predictions saved to //results/output/alice/result.csv
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:11.026] [info] [ic_main.cc:72] BFIA协议双方通信完成：本方=alice，对端=bob，端点=172.31.240.2:29992 <-> 172.31.240.3:29993
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:11.026] [info] [ic_main.cc:80] Timing summary: total=5422ms, link_connect=4093ms, dataset=9ms, handshake=32ms, algo=1273ms
+diagnostics:
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:05.911] [info] [blackbox_dummy_service_impl.cc:93] Rpc failed, error_code: 112, error_info: [E111]Fail to connect Socket{id=94 addr=172.31.240.3:29993} (0x0x7fffb8018940): Connection refused [R1][E112]Not connected to 172.31.240.3:29993 yet, server_id=0 [R2][E112]Not connected to 172.31.240.3:29993 yet, server_id=0 [R3][E112]Not connected to 172.31.240.3:29993 yet, server_id=0, uri: bob:172.31.240.3:29993/v1/interconn/chan/invoke
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:06.911] [info] [blackbox_dummy_service_impl.cc:93] Rpc failed, error_code: 112, error_info: [E112]Not connected to 172.31.240.3:29993 yet, server_id=0 [R1][E112]Not connected to 172.31.240.3:29993 yet, server_id=0 [R2][E112]Not connected to 172.31.240.3:29993 yet, server_id=0 [R3][E112]Not connected to 172.31.240.3:29993 yet, server_id=0, uri: bob:172.31.240.3:29993/v1/interconn/chan/invoke
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:07.699] [debug] [channel.cc:359] send request failed and retry, retry_count=1, max_retry=3, interval_ms=1000, message=[external/yacl/yacl/link/transport/interconnection_link.cc:56] cntl ErrorCode '1008', http status code '0', response header '', response body '', error msg '[E1008]Reached timeout=2000ms @0.0.0.0:29992'
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:07.912] [info] [blackbox_dummy_service_impl.cc:93] Rpc failed, error_code: 112, error_info: [E112]Not connected to 172.31.240.3:29993 yet, server_id=0 [R1][E112]Not connected to 172.31.240.3:29993 yet, server_id=0 [R2][E112]Not connected to 172.31.240.3:29993 yet, server_id=0 [R3][E112]Not connected to 172.31.240.3:29993 yet, server_id=0, uri: bob:172.31.240.3:29993/v1/interconn/chan/invoke
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:08.700] [info] [blackbox_dummy_service_impl.cc:93] Rpc failed, error_code: 112, error_info: [E112]Not connected to 172.31.240.3:29993 yet, server_id=0 [R1][E112]Not connected to 172.31.240.3:29993 yet, server_id=0 [R2][E112]Not connected to 172.31.240.3:29993 yet, server_id=0 [R3][E112]Not connected to 172.31.240.3:29993 yet, server_id=0, uri: bob:172.31.240.3:29993/v1/interconn/chan/invoke
+/Users/gaofeng/develop/project/Privacy-Preserving-Computing-Interoperability/NewProject/docs/acceptance-20260907/algorithms/cpp/acceptance-20260907/ss-xgb/alice.log:[2026-09-07 01:44:08.912] [info] [blackbox_dummy_service_impl.cc:93] Rpc failed, error_code: 112, error_info: [E112]Not connected to 172.31.240.3:29993 yet, server_id=0 [R1][E112]Not connected to 172.31.240.3:29993 yet, server_id=0 [R2][E112]Not connected to 172.31.240.3:29993 yet, server_id=0 [R3][E112]Not connected to 172.31.240.3:29993 yet, server_id=0, uri: bob:172.31.240.3:29993/v1/interconn/chan/invoke

@@ -1,0 +1,15 @@
+{
+  "recordedAt": "2026-11-02T19:43:47.948861+08:00",
+  "host": "192.168.45.101",
+  "sshPort": 2222,
+  "httpPort": 18101,
+  "sshResult": "Host is down",
+  "httpResult": "HTTP 000; could not connect",
+  "currentServerHealth": "unknown while unreachable",
+  "lastConfirmedChanges": [
+    "Native signed CSV/meta browser downloads passed",
+    "Alice missing peer institution restored; 48 business table record sets otherwise unchanged",
+    "Native Alice browser partner row available"
+  ],
+  "effect": "Final post-change live status and source-report sync pending; no retry of mutating operations"
+}

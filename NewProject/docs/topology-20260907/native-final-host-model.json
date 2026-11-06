@@ -1,0 +1,244 @@
+{
+  "code": 0,
+  "data": {
+    "output_model": {
+      "data": {
+        "estimator": {
+          "end_epoch": 2,
+          "header": [
+            "x0",
+            "x1",
+            "x2",
+            "x3",
+            "x4",
+            "x5",
+            "x6",
+            "x7",
+            "x8",
+            "x9",
+            "x10",
+            "x11",
+            "x12",
+            "x13",
+            "x14",
+            "x15",
+            "x16",
+            "x17",
+            "x18",
+            "x19"
+          ],
+          "is_converged": false,
+          "lr_scheduler": {
+            "lr_params": {
+              "start_factor": 1.0
+            },
+            "lr_scheduler": {
+              "_get_lr_called_within_step": false,
+              "_last_lr": [
+                0.01
+              ],
+              "_step_count": 2,
+              "base_lrs": [
+                0.01
+              ],
+              "end_factor": 1.0,
+              "last_epoch": 1,
+              "start_factor": 1.0,
+              "total_iters": 5,
+              "verbose": false
+            },
+            "method": "linear"
+          },
+          "optimizer": {
+            "alpha": 1.0,
+            "l1_penalty": false,
+            "l2_penalty": true,
+            "method": "sgd",
+            "model_parameter": [
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ],
+              [
+                0.0
+              ]
+            ],
+            "model_parameter_dtype": "float32",
+            "optim_param": {
+              "lr": 0.01,
+              "weight_decay": 0
+            },
+            "optimizer": {
+              "param_groups": [
+                {
+                  "dampening": 0,
+                  "differentiable": false,
+                  "foreach": null,
+                  "fused": null,
+                  "initial_lr": 0.01,
+                  "lr": 0.01,
+                  "maximize": false,
+                  "momentum": 0,
+                  "nesterov": false,
+                  "params": [
+                    0
+                  ],
+                  "weight_decay": 0
+                }
+              ],
+              "state": {}
+            }
+          },
+          "param": {
+            "coef_": [
+              [
+                0.10720450867164849
+              ],
+              [
+                0.07812057363799392
+              ],
+              [
+                0.5412919014327118
+              ],
+              [
+                0.32821516512828736
+              ],
+              [
+                0.11282317643325021
+              ],
+              [
+                0.06122281376729333
+              ],
+              [
+                -0.025502031160402366
+              ],
+              [
+                0.47764941413557765
+              ],
+              [
+                0.7086665615876161
+              ],
+              [
+                0.09560353062235669
+              ],
+              [
+                0.764174139865341
+              ],
+              [
+                0.28854343828363677
+              ],
+              [
+                0.12218667824297035
+              ],
+              [
+                0.8661581714848421
+              ],
+              [
+                0.6764846537401146
+              ],
+              [
+                0.6684460620615691
+              ],
+              [
+                0.7275081509129198
+              ],
+              [
+                0.3285323988720431
+              ],
+              [
+                0.7170768363989005
+              ],
+              [
+                0.01247178902280241
+              ]
+            ],
+            "dtype": "float64",
+            "intercept_": null
+          }
+        }
+      },
+      "meta": {
+        "batch_size": null,
+        "epochs": 2,
+        "floating_point_precision": 23,
+        "init_param": {
+          "fill_val": 0.0,
+          "fit_intercept": false,
+          "method": "random_uniform",
+          "random_state": null
+        },
+        "label_count": false,
+        "learning_rate_param": {
+          "method": "linear",
+          "scheduler_params": {
+            "start_factor": 1.0
+          }
+        },
+        "optimizer_param": {
+          "alpha": 1.0,
+          "method": "sgd",
+          "optimizer_params": {
+            "lr": 0.01,
+            "weight_decay": 0
+          },
+          "penalty": "l2"
+        },
+        "ovr": false
+      }
+    }
+  },
+  "message": "success"
+}

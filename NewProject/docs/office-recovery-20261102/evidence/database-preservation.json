@@ -1,0 +1,1946 @@
+{
+  "databases": [
+    {
+      "database": "/srv/ppci/secretpad-bob-runtime/secretpad.sqlite",
+      "tables": [
+        {
+          "table": "flyway_schema_history",
+          "identity_columns": [
+            "installed_rank"
+          ],
+          "before": 7,
+          "after": 7,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "inst",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 2,
+          "after": 2,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "node",
+          "identity_columns": [
+            "node_id"
+          ],
+          "before": 2,
+          "after": 2,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "node_route",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 2,
+          "after": 2,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_inst",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_node",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_datatable",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_fed_table",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_model",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_rule",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_report",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_read_data",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_result",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_job",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_job_task",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_graph",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_graph_node",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_job_task_log",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "user_accounts",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 1,
+          "after": 1,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "user_tokens",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "tee_node_datatable_management",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "edge_data_sync_log",
+          "identity_columns": [
+            "table_name"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_resource",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 79,
+          "after": 79,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_role",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 4,
+          "after": 4,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_role_resource_rel",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 63,
+          "after": 63,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_user_permission_rel",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_user_node_rel",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "vote_request",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "tee_download_approval_config",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "node_route_approval_config",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_approval_config",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "vote_invite",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_model_pack",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_model_serving",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "feature_table_backup",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_feature_table_backup",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_graph_node_kuscia_params",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_graph_domain_datasource",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "feature_table",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_feature_table",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_schedule",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_schedule_task",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_schedule_job",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "fate_cluster",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "fate_job",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "fate_dataset",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "fate_model",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        }
+      ]
+    },
+    {
+      "database": "/opt/ppci/NewProject/secretpad/db_secretflow/secretpad.sqlite",
+      "tables": [
+        {
+          "table": "flyway_schema_history",
+          "identity_columns": [
+            "installed_rank"
+          ],
+          "before": 7,
+          "after": 7,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "inst",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 1,
+          "after": 1,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "node",
+          "identity_columns": [
+            "node_id"
+          ],
+          "before": 2,
+          "after": 2,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "node_route",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 2,
+          "after": 2,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_inst",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_node",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_datatable",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_fed_table",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_model",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_rule",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_report",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_read_data",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_result",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_job",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_job_task",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_graph",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_graph_node",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_job_task_log",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "user_accounts",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 1,
+          "after": 1,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "user_tokens",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 46,
+          "after": 46,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "tee_node_datatable_management",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "edge_data_sync_log",
+          "identity_columns": [
+            "table_name"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_resource",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 75,
+          "after": 75,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_role",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 4,
+          "after": 4,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_role_resource_rel",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 59,
+          "after": 59,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_user_permission_rel",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_user_node_rel",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "vote_request",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "tee_download_approval_config",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "node_route_approval_config",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_approval_config",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "vote_invite",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_model_pack",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_model_serving",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "feature_table_backup",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_feature_table_backup",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_graph_node_kuscia_params",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_graph_domain_datasource",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "feature_table",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_feature_table",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_schedule",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_schedule_task",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_schedule_job",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "fate_cluster",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 3,
+          "after": 3,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "fate_job",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 7,
+          "after": 9,
+          "missing_original_ids": 0,
+          "new_ids": 2
+        },
+        {
+          "table": "fate_dataset",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 3,
+          "after": 3,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "fate_model",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 1,
+          "after": 1,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        }
+      ]
+    },
+    {
+      "database": "/opt/ppci/NewProject/secretpad/db_bfia/secretpad.sqlite",
+      "tables": [
+        {
+          "table": "flyway_schema_history",
+          "identity_columns": [
+            "installed_rank"
+          ],
+          "before": 7,
+          "after": 7,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "inst",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 1,
+          "after": 1,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "node",
+          "identity_columns": [
+            "node_id"
+          ],
+          "before": 1,
+          "after": 1,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "node_route",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_inst",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_node",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 2,
+          "after": 2,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_datatable",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_fed_table",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_model",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_rule",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_report",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_read_data",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_result",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_job",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_job_task",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_graph",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_graph_node",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_job_task_log",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "user_accounts",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 1,
+          "after": 1,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "user_tokens",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 13,
+          "after": 13,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "tee_node_datatable_management",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "edge_data_sync_log",
+          "identity_columns": [
+            "table_name"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_resource",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 75,
+          "after": 75,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_role",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 4,
+          "after": 4,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_role_resource_rel",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 59,
+          "after": 59,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_user_permission_rel",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_user_node_rel",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "vote_request",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "tee_download_approval_config",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "node_route_approval_config",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_approval_config",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "vote_invite",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_model_pack",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_model_serving",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "feature_table_backup",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_feature_table_backup",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_graph_node_kuscia_params",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_graph_domain_datasource",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "feature_table",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_feature_table",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_schedule",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_schedule_task",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_schedule_job",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "fate_cluster",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "fate_job",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "fate_dataset",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "fate_model",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        }
+      ]
+    },
+    {
+      "database": "/opt/ppci/NewProject/secretpad-bob/db/secretpad.sqlite",
+      "tables": [
+        {
+          "table": "flyway_schema_history",
+          "identity_columns": [
+            "installed_rank"
+          ],
+          "before": 7,
+          "after": 7,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "inst",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 2,
+          "after": 2,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "node",
+          "identity_columns": [
+            "node_id"
+          ],
+          "before": 2,
+          "after": 2,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "node_route",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 2,
+          "after": 2,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_inst",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_node",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 10,
+          "after": 10,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_datatable",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_fed_table",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_model",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_rule",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_report",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_read_data",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_result",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_job",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_job_task",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_graph",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 1,
+          "after": 1,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_graph_node",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 2,
+          "after": 2,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_job_task_log",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "user_accounts",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 1,
+          "after": 1,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "user_tokens",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 30,
+          "after": 30,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "tee_node_datatable_management",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "edge_data_sync_log",
+          "identity_columns": [
+            "table_name"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_resource",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 79,
+          "after": 79,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_role",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 4,
+          "after": 4,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_role_resource_rel",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 63,
+          "after": 63,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_user_permission_rel",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "sys_user_node_rel",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "vote_request",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "tee_download_approval_config",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "node_route_approval_config",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_approval_config",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "vote_invite",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_model_pack",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_model_serving",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "feature_table_backup",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_feature_table_backup",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_graph_node_kuscia_params",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_graph_domain_datasource",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 1,
+          "after": 1,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "feature_table",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_feature_table",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_schedule",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_schedule_task",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "project_schedule_job",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "fate_cluster",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "fate_job",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "fate_dataset",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        },
+        {
+          "table": "fate_model",
+          "identity_columns": [
+            "id"
+          ],
+          "before": 0,
+          "after": 0,
+          "missing_original_ids": 0,
+          "new_ids": 0
+        }
+      ]
+    }
+  ],
+  "note": "node uses stable node_id because restart rebuilds its cache row id",
+  "missing_original_ids": 0
+}

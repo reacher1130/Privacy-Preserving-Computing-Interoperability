@@ -1,0 +1,96 @@
+--- a/src/main/java/org/fedai/fate/board/websocket/JobWebSocketController.java
++++ b/src/main/java/org/fedai/fate/board/websocket/JobWebSocketController.java
+@@ -59,9 +59,9 @@
+      * call method when building connection
+      **/
+     @OnOpen
+-    public void onOpen(Session session, @PathParam("jobId") String jobId, @PathParam("role") String role, @PathParam("partyId") Integer partyId) {
++    public void onOpen(Session session, @PathParam("jobId") String jobId, @PathParam("role") String role, @PathParam("partyId") String partyId) {
+         //check parameters
+-        if (LogFileService.checkPathParameters(jobId, role, String.valueOf(partyId))) {
++        if (LogFileService.checkPathParameters(jobId, role, partyId)) {
+ //            logger.info("websocket job id {} open ,session {},session size{}", jobKey, session, jobSessionMap.size());
+             logger.warn("session to join:{}", session);
+ 
+--- a/src/main/java/org/fedai/fate/board/services/JobWebSocketService.java
++++ b/src/main/java/org/fedai/fate/board/services/JobWebSocketService.java
+@@ -42,7 +42,7 @@
+ 
+     private String role;
+ 
+-    private Integer partyId;
++    private String partyId;
+ 
+     private JobDetailController jobDetailController;
+ 
+@@ -55,7 +55,7 @@
+     private Boolean pushStatus;
+ 
+ 
+-    public JobWebSocketService(Session session, String jobId, String role, Integer partyId, JobDetailController jobDetailController, JobManagerController jobManagerController, JobManagerService jobManagerService, ThreadPoolTaskExecutor asyncServiceExecutor, Boolean pushStatus) {
++    public JobWebSocketService(Session session, String jobId, String role, String partyId, JobDetailController jobDetailController, JobManagerController jobManagerController, JobManagerService jobManagerService, ThreadPoolTaskExecutor asyncServiceExecutor, Boolean pushStatus) {
+         this.session = session;
+         this.jobId = jobId;
+         this.role = role;
+@@ -75,7 +75,7 @@
+             while (session.isOpen()) {
+ 
+                 //get job information
+-                JobDO job = jobManagerService.queryJobByConditions(jobId, role, String.valueOf(partyId));
++                JobDO job = jobManagerService.queryJobByConditions(jobId, role, partyId);
+                 if (job != null) {
+                     HashMap<String, Object> flushToWebData = new HashMap<>(16);
+                     //get process
+@@ -123,7 +123,7 @@
+ 
+ 
+                     //get job summary
+-                    ListenableFuture<ResponseResult<Map<String, Object>>> responseResultListenableFuture = asyncServiceExecutor.submitListenable(() -> jobManagerController.queryJobById(jobId, role, String.valueOf(partyId)));
++                    ListenableFuture<ResponseResult<Map<String, Object>>> responseResultListenableFuture = asyncServiceExecutor.submitListenable(() -> jobManagerController.queryJobById(jobId, role, partyId));
+                     ResponseResult<Map<String, Object>> mapResponseResult = responseResultListenableFuture.get();
+                     if (0 == mapResponseResult.getCode()) {
+                         flushToWebData.put(Dict.SUMMARY_DATA, mapResponseResult.getData());
+--- a/src/main/java/org/fedai/fate/board/controller/JobManagerController.java
++++ b/src/main/java/org/fedai/fate/board/controller/JobManagerController.java
+@@ -133,7 +133,7 @@
+         Map<String, Object> paramMap = Maps.newHashMap();
+         paramMap.put(Dict.JOBID, jobId);
+         paramMap.put(Dict.ROLE, role);
+-        paramMap.put(Dict.PARTY_ID, new Integer(partyId));
++        paramMap.put(Dict.PARTY_ID, partyId);
+ 
+         String result;
+         try {
+--- a/src/main/java/org/fedai/fate/board/services/JobDetailService.java
++++ b/src/main/java/org/fedai/fate/board/services/JobDetailService.java
+@@ -98,7 +98,7 @@
+                 Map<String, Object> reqMap = new HashMap<>();
+                 reqMap.put(Dict.JOBID, jobId);
+                 reqMap.put(Dict.ROLE, role);
+-                reqMap.put(Dict.PARTY_ID, new Integer(partyId));
++                reqMap.put(Dict.PARTY_ID, partyId);
+                 reqMap.put(Dict.COMPONENT_NAME, componentName);
+                 reqMap.put(Dict.METRIC_NAMESPACE, metricNameSpace);
+                 reqMap.put(Dict.METRIC_NAME, metric);
+--- a/src/main/java/org/fedai/fate/board/websocket/LogWebSocketController.java
++++ b/src/main/java/org/fedai/fate/board/websocket/LogWebSocketController.java
+@@ -193,7 +193,7 @@
+         reqMap.put(Dict.JOBID, jobId);
+         reqMap.put(Dict.LOG_TYPE, Dict.logTypeMap.get(logQuery.getType()));
+         reqMap.put(Dict.ROLE, role);
+-        reqMap.put(Dict.PARTY_ID, Integer.valueOf(partyId));
++        reqMap.put(Dict.PARTY_ID, partyId);
+         if (!Dict.DEFAULT.equals(componentId)){
+             reqMap.put(Dict.TASK_NAME, componentId);
+         }
+--- a/src/main/java/org/fedai/fate/board/controller/JobDetailController.java
++++ b/src/main/java/org/fedai/fate/board/controller/JobDetailController.java
+@@ -239,7 +239,7 @@
+         Map<String, Object> paramMap = new HashMap<>();
+         paramMap.put(Dict.JOBID, jobQueryDTO.getJob_id());
+         paramMap.put(Dict.ROLE, jobQueryDTO.getRole());
+-        paramMap.put(Dict.PARTY_ID, jobQueryDTO.getJob_id());
++        paramMap.put(Dict.PARTY_ID, jobQueryDTO.getParty_id());
+ 
+         String result;
+         try {

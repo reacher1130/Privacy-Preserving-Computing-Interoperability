@@ -1,0 +1,31 @@
+apiVersion: kuscia.secretflow/v1alpha1
+kind: AppImage
+metadata:
+  name: fate2-adapter
+spec:
+  configTemplates:
+    task-config.conf: |
+      {
+        "task_id": "{{.TASK_ID}}",
+        "task_input_config": "{{.TASK_INPUT_CONFIG}}"
+      }
+  deployTemplates:
+    - name: fate2-adapter
+      replicas: 1
+      spec:
+        containers:
+          - name: fate2-adapter
+            imagePullPolicy: IfNotPresent
+            env:
+              - name: FATE_FLOW_ADDRESS
+                value: "http://host.docker.internal:19381"
+              - name: TASK_CONFIG_PATH
+                value: /etc/kuscia/task-config.conf
+            configVolumeMounts:
+              - mountPath: /etc/kuscia/task-config.conf
+                subPath: task-config.conf
+            workingDir: /app
+        restartPolicy: Never
+  image:
+    name: secretflow/fate2-adapter
+    tag: 0.2.0-native

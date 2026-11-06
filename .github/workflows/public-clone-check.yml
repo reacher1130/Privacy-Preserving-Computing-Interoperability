@@ -1,0 +1,41 @@
+name: Public clone and Linux bootstrap
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-clone:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, ubuntu-24.04]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 35
+    env:
+      GIT_TERMINAL_PROMPT: '0'
+      GIT_CONFIG_NOSYSTEM: '1'
+      GIT_CONFIG_GLOBAL: /dev/null
+    steps:
+      - name: Clone main and all pinned submodules without credentials
+        run: >-
+          git -c credential.helper= -c http.extraHeader= -c core.askPass=
+          clone --recurse-submodules --jobs 4
+          "https://github.com/${{ github.repository }}.git" checkout
+      - name: Verify sources and tests
+        working-directory: checkout
+        run: |
+          python3 scripts/verify-source.py
+          python3 -m unittest discover -s scripts -p 'test_*.py'
+          python3 NewProject/scripts/test_platform_runtime.py
+          bash -n deploy.sh scripts/install-deps.sh
+      - name: Bootstrap an independent Linux runner
+        working-directory: checkout
+        run: sudo bash deploy.sh bootstrap --native
+      - name: Check deployment prerequisites
+        working-directory: checkout
+        run: sudo bash deploy.sh check --native

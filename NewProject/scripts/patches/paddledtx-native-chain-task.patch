@@ -1,0 +1,196 @@
+diff --git a/src/views/Task/List/ChainTaskQuery.tsx b/src/views/Task/List/ChainTaskQuery.tsx
+new file mode 100644
+index 0000000..b2cfb87
+--- /dev/null
++++ b/src/views/Task/List/ChainTaskQuery.tsx
+@@ -0,0 +1,170 @@
++import React, {useRef, useState} from 'react';
++import {Alert, Descriptions, Form, Input, Tag, Typography} from 'antd';
++import dayjs from 'dayjs';
++import Button from '@/components/Button';
++import ModalBox from '@/components/Modal';
++import request from '@/libs/request';
++import {PermissionValue} from '@/pages/Account/PermissionCreator';
++import {PwD} from '../PermissonWrap';
++
++interface ChainTask {
++  taskId: string;
++  name: string;
++  status: string;
++  publishTime: number;
++  startTime: number;
++  endTime: number;
++  executors: {name: string; modelId?: string}[];
++}
++
++const uuidPattern = /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i;
++const statuses: Record<string, string> = {
++  Publishing: '等待发布',
++  Confirming: '等待审批',
++  Ready: '等待执行',
++  ToProcess: '等待调度',
++  Processing: '执行中',
++  Finished: '已完成',
++  Failed: '执行失败',
++  Rejected: '审批拒绝',
++  Stopped: '已停止',
++};
++
++const formatTime = (value: number) =>
++  value > 0 ? dayjs(value).format('YYYY-MM-DD HH:mm:ss') : '—';
++
++export default function ChainTaskQuery() {
++  const [form] = Form.useForm<{chainTaskId: string}>();
++  const [open, setOpen] = useState(false);
++  const [loading, setLoading] = useState(false);
++  const [error, setError] = useState('');
++  const [task, setTask] = useState<ChainTask>();
++  const query = useRef(0);
++
++  const clear = () => {
++    setError('');
++    setTask(undefined);
++  };
++
++  const close = () => {
++    query.current += 1;
++    setOpen(false);
++    setLoading(false);
++    clear();
++  };
++
++  const lookup = async ({chainTaskId}: {chainTaskId: string}) => {
++    if (loading) return;
++    const id = chainTaskId.trim().toLowerCase();
++    const current = ++query.current;
++    clear();
++    setLoading(true);
++    try {
++      const response = await request.get<{code: string; data: ChainTask}>(
++        'task/chain-detail',
++        {chainTaskId: id}
++      );
++      if (current !== query.current) return;
++      if (response.code === '0' && response.data?.taskId === id) {
++        setTask(response.data);
++      } else {
++        setError('未找到可查看的链上任务，请检查任务 ID 或访问权限。');
++      }
++    } catch {
++      if (current === query.current) {
++        setError('暂时无法查询链上任务，请稍后重试。');
++      }
++    } finally {
++      if (current === query.current) setLoading(false);
++    }
++  };
++
++  return (
++    <>
++      <PwD rP={PermissionValue.Write}>
++        <Button style={{marginInlineEnd: 8}} onClick={() => setOpen(true)}>
++          查询链上任务
++        </Button>
++      </PwD>
++      <ModalBox
++        title="查询链上任务"
++        open={open}
++        width={580}
++        okText="查询"
++        cancelText="关闭"
++        okButtonProps={{loading}}
++        onOk={() => form.submit()}
++        onCancel={close}
++      >
++        <Typography.Paragraph type="secondary">
++          按 Alice 提交时返回的链上任务 ID 查询。结果只读，不会加入管理任务列表。
++        </Typography.Paragraph>
++        <Form
++          form={form}
++          layout="vertical"
++          preserve={false}
++          onFinish={lookup}
++          onValuesChange={clear}
++        >
++          <Form.Item
++            name="chainTaskId"
++            label="链上任务 ID"
++            rules={[
++              {
++                required: true,
++                transform: (value?: string) => value?.trim(),
++                pattern: uuidPattern,
++                message: '请输入完整的任务 UUID',
++              },
++            ]}
++          >
++            <Input
++              placeholder="粘贴完整任务 UUID"
++              disabled={loading}
++              maxLength={64}
++              autoComplete="off"
++            />
++          </Form.Item>
++        </Form>
++        {error && <Alert type="warning" showIcon message={error} />}
++        {task && (
++          <Descriptions column={1} size="small" bordered>
++            <Descriptions.Item label="来源">Alice · paddlempc</Descriptions.Item>
++            <Descriptions.Item label="任务名称">{task.name}</Descriptions.Item>
++            <Descriptions.Item label="任务 ID">
++              <Typography.Text code>{task.taskId}</Typography.Text>
++            </Descriptions.Item>
++            <Descriptions.Item label="任务状态">
++              <Tag color={task.status === 'Finished' ? 'success' : undefined}>
++                {statuses[task.status]
++                  ? `${statuses[task.status]}（${task.status}）`
++                  : task.status}
++              </Tag>
++            </Descriptions.Item>
++            <Descriptions.Item label="发布时间">
++              {formatTime(task.publishTime)}
++            </Descriptions.Item>
++            <Descriptions.Item label="开始时间">
++              {formatTime(task.startTime)}
++            </Descriptions.Item>
++            <Descriptions.Item label="结束时间">
++              {formatTime(task.endTime)}
++            </Descriptions.Item>
++            <Descriptions.Item label="执行器">
++              {task.executors?.length
++                ? task.executors.map(({name, modelId}) => (
++                    <div key={name}>
++                      {name}
++                      {modelId && (
++                        <> · 模型 <Typography.Text code>{modelId}</Typography.Text></>
++                      )}
++                    </div>
++                  ))
++                : '—'}
++            </Descriptions.Item>
++          </Descriptions>
++        )}
++      </ModalBox>
++    </>
++  );
++}
+diff --git a/src/views/Task/List/index.tsx b/src/views/Task/List/index.tsx
+index 1ec338c..035768f 100644
+--- a/src/views/Task/List/index.tsx
++++ b/src/views/Task/List/index.tsx
+@@ -26,6 +26,7 @@ import {PermissionValue} from '@/pages/Account/PermissionCreator';
+ import ErrorCode from '@/libs/errorCode';
+ import SelectStatus from '@/components/Select';
+ import EvalModal from '../Eval/Modal';
++import ChainTaskQuery from './ChainTaskQuery';
+ import {PwD} from '../PermissonWrap';
+ import styles from './index.less';
+ import DotStatus from '@/components/DotStatus';
+@@ -136,6 +137,7 @@ const ListHeader: React.FC<{onSearch: (keyword: string) => void}> = ({
+         />
+       </div>
+       <div className={styles.button_container}>
++        <ChainTaskQuery />
+         <PwD rP={PermissionValue.Write}>
+           <Button
+             type="primary"

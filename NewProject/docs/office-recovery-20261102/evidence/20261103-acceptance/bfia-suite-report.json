@@ -1,0 +1,362 @@
+{
+  "runId": "76c645a7-81cc-4a64-9470-e614762b5e1f",
+  "status": "PASSED",
+  "startedAt": "2026-11-03T07:19:03.642568446Z",
+  "finishedAt": "2026-11-03T07:20:47.455620171Z",
+  "algorithms": [
+    {
+      "id": "sgb",
+      "status": "PASSED",
+      "numerical": true,
+      "protocol": true,
+      "numericalDetails": {
+        "pass": true,
+        "samples": 569,
+        "auc_recomputed": 0.9942920564452196,
+        "scope": "training fixture; no generalization claim"
+      },
+      "protocolDetails": {
+        "pass": true,
+        "checks": {
+          "alice_handshake": true,
+          "alice_compute": true,
+          "alice_identity": true,
+          "alice_no_failure": true,
+          "alice_ordered": true,
+          "bob_handshake": true,
+          "bob_compute": true,
+          "bob_identity": true,
+          "bob_no_failure": true,
+          "bob_ordered": true,
+          "message_correlation": true
+        },
+        "event_count": 696,
+        "sent": 342,
+        "received": 342,
+        "log_sha256": {
+          "alice.stdout.log": "aa6dfba08cc05ab26276d3dcadfc24ee4a7f0c7f0e637e3a1f5eea47b7807fc3",
+          "bob.stdout.log": "44139471263a4c529d34cb3a2bfb492f1c818ac254f88b530d7c76b067061128"
+        }
+      }
+    },
+    {
+      "id": "he_woe",
+      "status": "PASSED",
+      "numerical": true,
+      "protocol": true,
+      "numericalDetails": {
+        "pass": true,
+        "features": 30,
+        "bins": 300,
+        "max_abs_error": 0,
+        "scope": "counts, WOE and IV recomputed from public fixture; privacy-suppressed rate NaNs are permitted"
+      },
+      "protocolDetails": {
+        "pass": true,
+        "checks": {
+          "alice_handshake": true,
+          "alice_compute": true,
+          "alice_identity": true,
+          "alice_no_failure": true,
+          "alice_ordered": true,
+          "bob_handshake": true,
+          "bob_compute": true,
+          "bob_identity": true,
+          "bob_no_failure": true,
+          "bob_ordered": true,
+          "message_correlation": true
+        },
+        "event_count": 34,
+        "sent": 11,
+        "received": 11,
+        "log_sha256": {
+          "alice.stdout.log": "78af3279956271c46195458d01d457a177500dcfc9ff03e8811e37e0b2971b5f",
+          "bob.stdout.log": "60a096c4111024bd91836c70be615a678d4aaf6dd6456f16ac94ce70b2e262a8"
+        }
+      }
+    },
+    {
+      "id": "ecdh-psi",
+      "status": "PASSED",
+      "numerical": true,
+      "protocol": true,
+      "numericalDetails": {
+        "pass": true,
+        "intersection_count": 128
+      },
+      "protocolDetails": {
+        "pass": true,
+        "checks": {
+          "alice_handshake": true,
+          "alice_compute": true,
+          "alice_identity": true,
+          "alice_lifecycle": true,
+          "alice_transport_drained": true,
+          "alice_no_failure": true,
+          "alice_ordered": true,
+          "bob_handshake": true,
+          "bob_compute": true,
+          "bob_identity": true,
+          "bob_lifecycle": true,
+          "bob_transport_drained": true,
+          "bob_no_failure": true,
+          "bob_ordered": true,
+          "request_sent": true,
+          "request_received": true,
+          "response_received": true,
+          "request_sent_correlation": true,
+          "response_queued_correlation": true,
+          "response_success": true
+        },
+        "event_count": 24,
+        "sent": 0,
+        "received": 0,
+        "log_sha256": {
+          "alice.log": "14d5ae7e6cb8d7f945602343941b37a67cfd785aee5a69e2a59f39ddf5f105eb",
+          "bob.log": "e8e140060df303a27520d9adef67dc0eb8562fb6d9f021eb3d67885db63e532f"
+        }
+      }
+    },
+    {
+      "id": "ss-lr",
+      "status": "PASSED",
+      "numerical": true,
+      "protocol": true,
+      "numericalDetails": {
+        "pass": true,
+        "max_abs_error": 0.000012174906315233991,
+        "tolerance": 0.00002,
+        "shape": [
+          16,
+          1
+        ],
+        "min": -0.000003814697265625,
+        "max": 0.000041961669921875
+      },
+      "protocolDetails": {
+        "pass": true,
+        "checks": {
+          "alice_handshake": true,
+          "alice_compute": true,
+          "alice_identity": true,
+          "alice_lifecycle": true,
+          "alice_transport_drained": true,
+          "alice_no_failure": true,
+          "alice_ordered": true,
+          "bob_handshake": true,
+          "bob_compute": true,
+          "bob_identity": true,
+          "bob_lifecycle": true,
+          "bob_transport_drained": true,
+          "bob_no_failure": true,
+          "bob_ordered": true,
+          "request_sent": true,
+          "request_received": true,
+          "response_received": true,
+          "request_sent_correlation": true,
+          "response_queued_correlation": true,
+          "response_success": true
+        },
+        "event_count": 30,
+        "sent": 0,
+        "received": 0,
+        "log_sha256": {
+          "alice.log": "a8f78fb715358a13e6b641b31a99211f2e85fe8c7507c9245f1b1b33dd554af8",
+          "bob.log": "6a0b26be31a805ea5f8eec2310f4fbe6aec1e2240a784a6d20476fdc3e12c3a6"
+        }
+      }
+    },
+    {
+      "id": "ss-xgb",
+      "status": "PASSED",
+      "numerical": true,
+      "protocol": true,
+      "numericalDetails": {
+        "pass": true,
+        "max_abs_error": 0.0006880794515053412,
+        "tolerance": 0.004,
+        "shape": [
+          256,
+          1
+        ],
+        "min": 0.4720878601074219,
+        "max": 0.5234565734863281,
+        "saved_model_prediction_error": 0.0007309501133384577
+      },
+      "protocolDetails": {
+        "pass": true,
+        "checks": {
+          "alice_handshake": true,
+          "alice_compute": true,
+          "alice_identity": true,
+          "alice_lifecycle": true,
+          "alice_transport_drained": true,
+          "alice_no_failure": true,
+          "alice_ordered": true,
+          "bob_handshake": true,
+          "bob_compute": true,
+          "bob_identity": true,
+          "bob_lifecycle": true,
+          "bob_transport_drained": true,
+          "bob_no_failure": true,
+          "bob_ordered": true,
+          "request_sent": true,
+          "request_received": true,
+          "response_received": true,
+          "request_sent_correlation": true,
+          "response_queued_correlation": true,
+          "response_success": true
+        },
+        "event_count": 30,
+        "sent": 0,
+        "received": 0,
+        "log_sha256": {
+          "alice.log": "011afdf4cea7ffe22c24f10bd34887fa4a16fb67e1091b69bd7576599e3c4721",
+          "bob.log": "d64520dc685e29848d6aaaf07a17075a7362943743bae33c2b1b84e6d5e2c6eb"
+        }
+      }
+    },
+    {
+      "id": "ss-pearson",
+      "status": "PASSED",
+      "numerical": true,
+      "protocol": true,
+      "numericalDetails": {
+        "pass": true,
+        "max_abs_error": 0.00043869018554665296,
+        "tolerance": 0.01,
+        "shape": [
+          15,
+          15
+        ],
+        "min": -0.135345458984375,
+        "max": 1.0000724792480469
+      },
+      "protocolDetails": {
+        "pass": true,
+        "checks": {
+          "alice_handshake": true,
+          "alice_compute": true,
+          "alice_identity": true,
+          "alice_lifecycle": true,
+          "alice_transport_drained": true,
+          "alice_no_failure": true,
+          "alice_ordered": true,
+          "bob_handshake": true,
+          "bob_compute": true,
+          "bob_identity": true,
+          "bob_lifecycle": true,
+          "bob_transport_drained": true,
+          "bob_no_failure": true,
+          "bob_ordered": true,
+          "request_sent": true,
+          "request_received": true,
+          "response_received": true,
+          "request_sent_correlation": true,
+          "response_queued_correlation": true,
+          "response_success": true
+        },
+        "event_count": 28,
+        "sent": 0,
+        "received": 0,
+        "log_sha256": {
+          "alice.log": "3b4a9e1da964d00ba41b28af2267fbea8673f91611699b787a2ec8a789c70600",
+          "bob.log": "5b26fd4f8ffd5aad5557c0b1800b7d00b3c8eadde8326fd938bfcd332e4eeb46"
+        }
+      }
+    },
+    {
+      "id": "ss-vif",
+      "status": "PASSED",
+      "numerical": true,
+      "protocol": true,
+      "numericalDetails": {
+        "pass": true,
+        "max_abs_error": 0.001626760271036476,
+        "tolerance": 0.03,
+        "shape": [
+          15,
+          1
+        ],
+        "min": 1.0234375,
+        "max": 1.080078125
+      },
+      "protocolDetails": {
+        "pass": true,
+        "checks": {
+          "alice_handshake": true,
+          "alice_compute": true,
+          "alice_identity": true,
+          "alice_lifecycle": true,
+          "alice_transport_drained": true,
+          "alice_no_failure": true,
+          "alice_ordered": true,
+          "bob_handshake": true,
+          "bob_compute": true,
+          "bob_identity": true,
+          "bob_lifecycle": true,
+          "bob_transport_drained": true,
+          "bob_no_failure": true,
+          "bob_ordered": true,
+          "request_sent": true,
+          "request_received": true,
+          "response_received": true,
+          "request_sent_correlation": true,
+          "response_queued_correlation": true,
+          "response_success": true
+        },
+        "event_count": 28,
+        "sent": 0,
+        "received": 0,
+        "log_sha256": {
+          "alice.log": "98e68cace99ae9bee78758acdf37a67cfa8ddad8e80f9b3ec6bc68ee6e2f3600",
+          "bob.log": "5af78740f410397c6aaaebdb8df46085ee3808cbae6614a0b7caadd54783232d"
+        }
+      }
+    },
+    {
+      "id": "ss-compare",
+      "status": "PASSED",
+      "numerical": true,
+      "protocol": true,
+      "numericalDetails": {
+        "pass": true,
+        "count": 256,
+        "mode": "two-column Alice x1 > Bob x11"
+      },
+      "protocolDetails": {
+        "pass": true,
+        "checks": {
+          "alice_handshake": true,
+          "alice_compute": true,
+          "alice_identity": true,
+          "alice_lifecycle": true,
+          "alice_transport_drained": true,
+          "alice_no_failure": true,
+          "alice_ordered": true,
+          "bob_handshake": true,
+          "bob_compute": true,
+          "bob_identity": true,
+          "bob_lifecycle": true,
+          "bob_transport_drained": true,
+          "bob_no_failure": true,
+          "bob_ordered": true,
+          "request_sent": true,
+          "request_received": true,
+          "response_received": true,
+          "request_sent_correlation": true,
+          "response_queued_correlation": true,
+          "response_success": true
+        },
+        "event_count": 26,
+        "sent": 0,
+        "received": 0,
+        "log_sha256": {
+          "alice.log": "7478af239e8920c3918c459fd72137bf6ebaf3ce4dd7a3902e07808108898d48",
+          "bob.log": "1f3f4f269e1c728660f343bc3b52b74e919af045da8802f4acbc455f4e40720d"
+        }
+      }
+    }
+  ],
+  "message": null
+}

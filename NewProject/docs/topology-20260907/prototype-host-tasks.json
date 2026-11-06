@@ -1,0 +1,1084 @@
+{
+  "code": 0,
+  "data": [
+    {
+      "cmd": [
+        "/data/projects/fate/env/python/venv/bin/python",
+        "/data/projects/fate/fate_flow/python/fate_flow/manager/worker/fate_flow_executor.py",
+        "component",
+        "entrypoint",
+        "--env-name",
+        "FATE_TASK_CONFIG"
+      ],
+      "component": "reader",
+      "component_parameters": {
+        "component": "reader",
+        "computing_partitions": 1,
+        "conf": {
+          "computing": {
+            "metadata": {
+              "computing_id": "202609070504245489180_reader_psi_0_0_host_JG0100001100000000",
+              "options": {
+                "data_dir": "/data/projects/fate/fate_flow/data"
+              }
+            },
+            "type": "standalone"
+          },
+          "device": {
+            "metadata": {},
+            "type": "CPU"
+          },
+          "federation": {
+            "metadata": {
+              "federation_id": "202609070504245489180_reader_psi_0_0",
+              "osx_config": {
+                "host": "127.0.0.1",
+                "max_message_size": null,
+                "port": 9370
+              },
+              "parties": {
+                "local": {
+                  "partyid": "JG0100001100000000",
+                  "role": "host"
+                },
+                "parties": [
+                  {
+                    "partyid": "JG0100001100000010",
+                    "role": "guest"
+                  },
+                  {
+                    "partyid": "JG0100001100000000",
+                    "role": "host"
+                  }
+                ]
+              }
+            },
+            "type": "osx"
+          },
+          "logger": {
+            "config": {
+              "disable_existing_loggers": false,
+              "filters": {
+                "component_profile_filter": {
+                  "()": "logging.Filter",
+                  "name": "fate.arch.computing._profile"
+                }
+              },
+              "formatters": {
+                "component": {
+                  "format": "[%(levelname)s][%(asctime)-8s][%(process)s][%(module)s.%(funcName)s][line:%(lineno)d]: %(message)s"
+                },
+                "root": {
+                  "format": "[%(levelname)s][%(asctime)-8s][%(process)s][%(module)s.%(funcName)s][line:%(lineno)d]: %(message)s"
+                }
+              },
+              "handlers": {
+                "component_error": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/reader_psi_0/component/ERROR",
+                  "filters": [],
+                  "formatter": "component",
+                  "level": "ERROR"
+                },
+                "component_info": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/reader_psi_0/component/INFO",
+                  "filters": [],
+                  "formatter": "component",
+                  "level": "INFO"
+                },
+                "component_profile": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/reader_psi_0/component/PROFILE",
+                  "filters": [
+                    "component_profile_filter"
+                  ],
+                  "formatter": "component",
+                  "level": "DEBUG"
+                },
+                "component_warning": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/reader_psi_0/component/WARNING",
+                  "filters": [],
+                  "formatter": "component",
+                  "level": "WARNING"
+                },
+                "global_error": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/ERROR",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "ERROR"
+                },
+                "root_error": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/reader_psi_0/root/ERROR",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "ERROR"
+                },
+                "root_info": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/reader_psi_0/root/INFO",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "INFO"
+                },
+                "root_party_error": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/ERROR",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "ERROR"
+                },
+                "root_party_info": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/INFO",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "INFO"
+                },
+                "root_party_warning": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/WARNING",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "WARNING"
+                },
+                "root_warning": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/reader_psi_0/root/WARNING",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "WARNING"
+                }
+              },
+              "loggers": {
+                "fate": {
+                  "handlers": [
+                    "component_info",
+                    "component_warning",
+                    "component_error",
+                    "component_profile"
+                  ],
+                  "level": "INFO"
+                }
+              },
+              "root": {
+                "handlers": [
+                  "root_info",
+                  "root_warning",
+                  "root_error",
+                  "root_party_info",
+                  "root_party_warning",
+                  "root_party_error",
+                  "global_error"
+                ],
+                "level": "INFO"
+              },
+              "version": 1
+            }
+          },
+          "storage": "standalone"
+        },
+        "engine_run": {
+          "cores": 1
+        },
+        "input_artifacts": {
+          "data": null,
+          "model": null
+        },
+        "job_id": "202609070504245489180",
+        "launcher_conf": {},
+        "launcher_name": "default",
+        "mlmd": {
+          "metadata": {
+            "api_version": "v2",
+            "host": "0.0.0.0",
+            "port": 9380,
+            "protocol": "http"
+          },
+          "type": "flow"
+        },
+        "model_id": "202609070504245489180",
+        "model_version": "0",
+        "parameters": {
+          "name": "breast_hetero_host",
+          "namespace": "experiment"
+        },
+        "party_id": "JG0100001100000000",
+        "party_task_id": "202609070504245489180_reader_psi_0_0_host_JG0100001100000000",
+        "provider_name": "fate",
+        "role": "host",
+        "stage": "default",
+        "task_id": "202609070504245489180_reader_psi_0",
+        "task_name": "reader_psi_0",
+        "task_version": "0"
+      },
+      "create_time": 1788757467685,
+      "elapsed": 18492,
+      "end_time": 1788757490561,
+      "engine_conf": {},
+      "error_report": "",
+      "execution_id": "202609070504245489180_reader_psi_0_0_host_JG0100001100000000",
+      "job_id": "202609070504245489180",
+      "kill_status": true,
+      "launcher_name": null,
+      "memory": 0,
+      "party_id": "JG0100001100000000",
+      "party_status": "success",
+      "protocol": "fate",
+      "provider_name": "fate:2.1.0@local",
+      "resource_in_use": false,
+      "role": "host",
+      "run_ip": "0.0.0.0",
+      "run_pid": 1229,
+      "run_port": 9380,
+      "scheduler_party_id": "JG0100001100000010",
+      "start_time": 1788757472069,
+      "status": "success",
+      "status_code": null,
+      "sync_type": "callback",
+      "task_cores": 1,
+      "task_id": "202609070504245489180_reader_psi_0",
+      "task_name": "reader_psi_0",
+      "task_parameters": {},
+      "task_run": {
+        "cores": 1
+      },
+      "task_version": 0,
+      "timeout": 259200,
+      "update_time": 1788757490808,
+      "worker_id": "9c8c1852aa7911f1ab17169980698c1f"
+    },
+    {
+      "cmd": [
+        "/data/projects/fate/env/python/venv/bin/python",
+        "/data/projects/fate/fate_flow/python/fate_flow/manager/worker/fate_flow_executor.py",
+        "component",
+        "entrypoint",
+        "--env-name",
+        "FATE_TASK_CONFIG"
+      ],
+      "component": "psi",
+      "component_parameters": {
+        "component": "psi",
+        "computing_partitions": 1,
+        "conf": {
+          "computing": {
+            "metadata": {
+              "computing_id": "202609070504245489180_psi_0_0_host_JG0100001100000000",
+              "options": {
+                "data_dir": "/data/projects/fate/fate_flow/data"
+              }
+            },
+            "type": "standalone"
+          },
+          "device": {
+            "metadata": {},
+            "type": "CPU"
+          },
+          "federation": {
+            "metadata": {
+              "federation_id": "202609070504245489180_psi_0_0",
+              "osx_config": {
+                "host": "127.0.0.1",
+                "max_message_size": null,
+                "port": 9370
+              },
+              "parties": {
+                "local": {
+                  "partyid": "JG0100001100000000",
+                  "role": "host"
+                },
+                "parties": [
+                  {
+                    "partyid": "JG0100001100000010",
+                    "role": "guest"
+                  },
+                  {
+                    "partyid": "JG0100001100000000",
+                    "role": "host"
+                  }
+                ]
+              }
+            },
+            "type": "osx"
+          },
+          "logger": {
+            "config": {
+              "disable_existing_loggers": false,
+              "filters": {
+                "component_profile_filter": {
+                  "()": "logging.Filter",
+                  "name": "fate.arch.computing._profile"
+                }
+              },
+              "formatters": {
+                "component": {
+                  "format": "[%(levelname)s][%(asctime)-8s][%(process)s][%(module)s.%(funcName)s][line:%(lineno)d]: %(message)s"
+                },
+                "root": {
+                  "format": "[%(levelname)s][%(asctime)-8s][%(process)s][%(module)s.%(funcName)s][line:%(lineno)d]: %(message)s"
+                }
+              },
+              "handlers": {
+                "component_error": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/psi_0/component/ERROR",
+                  "filters": [],
+                  "formatter": "component",
+                  "level": "ERROR"
+                },
+                "component_info": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/psi_0/component/INFO",
+                  "filters": [],
+                  "formatter": "component",
+                  "level": "INFO"
+                },
+                "component_profile": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/psi_0/component/PROFILE",
+                  "filters": [
+                    "component_profile_filter"
+                  ],
+                  "formatter": "component",
+                  "level": "DEBUG"
+                },
+                "component_warning": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/psi_0/component/WARNING",
+                  "filters": [],
+                  "formatter": "component",
+                  "level": "WARNING"
+                },
+                "global_error": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/ERROR",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "ERROR"
+                },
+                "root_error": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/psi_0/root/ERROR",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "ERROR"
+                },
+                "root_info": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/psi_0/root/INFO",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "INFO"
+                },
+                "root_party_error": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/ERROR",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "ERROR"
+                },
+                "root_party_info": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/INFO",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "INFO"
+                },
+                "root_party_warning": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/WARNING",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "WARNING"
+                },
+                "root_warning": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/psi_0/root/WARNING",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "WARNING"
+                }
+              },
+              "loggers": {
+                "fate": {
+                  "handlers": [
+                    "component_info",
+                    "component_warning",
+                    "component_error",
+                    "component_profile"
+                  ],
+                  "level": "INFO"
+                }
+              },
+              "root": {
+                "handlers": [
+                  "root_info",
+                  "root_warning",
+                  "root_error",
+                  "root_party_info",
+                  "root_party_warning",
+                  "root_party_error",
+                  "global_error"
+                ],
+                "level": "INFO"
+              },
+              "version": 1
+            }
+          },
+          "storage": "standalone"
+        },
+        "engine_run": {
+          "cores": 1
+        },
+        "input_artifacts": {
+          "data": {
+            "input_data": {
+              "output_artifact_key": "output_data",
+              "output_artifact_type_alias": null,
+              "parties": [
+                {
+                  "party_id": [
+                    "JG0100001100000000"
+                  ],
+                  "role": "host"
+                }
+              ],
+              "producer_task": "reader_psi_0"
+            }
+          },
+          "model": null
+        },
+        "job_id": "202609070504245489180",
+        "launcher_conf": {},
+        "launcher_name": "default",
+        "mlmd": {
+          "metadata": {
+            "api_version": "v2",
+            "host": "0.0.0.0",
+            "port": 9380,
+            "protocol": "http"
+          },
+          "type": "flow"
+        },
+        "model_id": "202609070504245489180",
+        "model_version": "0",
+        "parameters": {
+          "curve_type": "curve25519",
+          "protocol": "ecdh_psi"
+        },
+        "party_id": "JG0100001100000000",
+        "party_task_id": "202609070504245489180_psi_0_0_host_JG0100001100000000",
+        "provider_name": "fate",
+        "role": "host",
+        "stage": "default",
+        "task_id": "202609070504245489180_psi_0",
+        "task_name": "psi_0",
+        "task_version": "0"
+      },
+      "create_time": 1788757467715,
+      "elapsed": 151023,
+      "end_time": 1788757643581,
+      "engine_conf": {},
+      "error_report": "",
+      "execution_id": "202609070504245489180_psi_0_0_host_JG0100001100000000",
+      "job_id": "202609070504245489180",
+      "kill_status": true,
+      "launcher_name": null,
+      "memory": 0,
+      "party_id": "JG0100001100000000",
+      "party_status": "success",
+      "protocol": "fate",
+      "provider_name": "fate:2.1.0@local",
+      "resource_in_use": false,
+      "role": "host",
+      "run_ip": "0.0.0.0",
+      "run_pid": 1261,
+      "run_port": 9380,
+      "scheduler_party_id": "JG0100001100000010",
+      "start_time": 1788757492558,
+      "status": "success",
+      "status_code": null,
+      "sync_type": "callback",
+      "task_cores": 1,
+      "task_id": "202609070504245489180_psi_0",
+      "task_name": "psi_0",
+      "task_parameters": {},
+      "task_run": {
+        "cores": 1
+      },
+      "task_version": 0,
+      "timeout": 259200,
+      "update_time": 1788757643970,
+      "worker_id": "a8c1f36caa7911f1aa8d169980698c1f"
+    },
+    {
+      "cmd": [
+        "/data/projects/fate/env/python/venv/bin/python",
+        "/data/projects/fate/fate_flow/python/fate_flow/manager/worker/fate_flow_executor.py",
+        "component",
+        "entrypoint",
+        "--env-name",
+        "FATE_TASK_CONFIG"
+      ],
+      "component": "coordinated_lr",
+      "component_parameters": {
+        "component": "coordinated_lr",
+        "computing_partitions": 1,
+        "conf": {
+          "computing": {
+            "metadata": {
+              "computing_id": "202609070504245489180_coordinated_lr_1_0_host_JG0100001100000000",
+              "options": {
+                "data_dir": "/data/projects/fate/fate_flow/data"
+              }
+            },
+            "type": "standalone"
+          },
+          "device": {
+            "metadata": {},
+            "type": "CPU"
+          },
+          "federation": {
+            "metadata": {
+              "federation_id": "202609070504245489180_coordinated_lr_1_0",
+              "osx_config": {
+                "host": "127.0.0.1",
+                "max_message_size": null,
+                "port": 9370
+              },
+              "parties": {
+                "local": {
+                  "partyid": "JG0100001100000000",
+                  "role": "host"
+                },
+                "parties": [
+                  {
+                    "partyid": "JG0100001100000010",
+                    "role": "guest"
+                  },
+                  {
+                    "partyid": "JG0100001100000000",
+                    "role": "host"
+                  },
+                  {
+                    "partyid": "JG0100001100000000",
+                    "role": "arbiter"
+                  }
+                ]
+              }
+            },
+            "type": "osx"
+          },
+          "logger": {
+            "config": {
+              "disable_existing_loggers": false,
+              "filters": {
+                "component_profile_filter": {
+                  "()": "logging.Filter",
+                  "name": "fate.arch.computing._profile"
+                }
+              },
+              "formatters": {
+                "component": {
+                  "format": "[%(levelname)s][%(asctime)-8s][%(process)s][%(module)s.%(funcName)s][line:%(lineno)d]: %(message)s"
+                },
+                "root": {
+                  "format": "[%(levelname)s][%(asctime)-8s][%(process)s][%(module)s.%(funcName)s][line:%(lineno)d]: %(message)s"
+                }
+              },
+              "handlers": {
+                "component_error": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/coordinated_lr_1/component/ERROR",
+                  "filters": [],
+                  "formatter": "component",
+                  "level": "ERROR"
+                },
+                "component_info": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/coordinated_lr_1/component/INFO",
+                  "filters": [],
+                  "formatter": "component",
+                  "level": "INFO"
+                },
+                "component_profile": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/coordinated_lr_1/component/PROFILE",
+                  "filters": [
+                    "component_profile_filter"
+                  ],
+                  "formatter": "component",
+                  "level": "DEBUG"
+                },
+                "component_warning": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/coordinated_lr_1/component/WARNING",
+                  "filters": [],
+                  "formatter": "component",
+                  "level": "WARNING"
+                },
+                "global_error": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/ERROR",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "ERROR"
+                },
+                "root_error": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/coordinated_lr_1/root/ERROR",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "ERROR"
+                },
+                "root_info": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/coordinated_lr_1/root/INFO",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "INFO"
+                },
+                "root_party_error": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/ERROR",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "ERROR"
+                },
+                "root_party_info": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/INFO",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "INFO"
+                },
+                "root_party_warning": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/WARNING",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "WARNING"
+                },
+                "root_warning": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/host/JG0100001100000000/coordinated_lr_1/root/WARNING",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "WARNING"
+                }
+              },
+              "loggers": {
+                "fate": {
+                  "handlers": [
+                    "component_info",
+                    "component_warning",
+                    "component_error",
+                    "component_profile"
+                  ],
+                  "level": "INFO"
+                }
+              },
+              "root": {
+                "handlers": [
+                  "root_info",
+                  "root_warning",
+                  "root_error",
+                  "root_party_info",
+                  "root_party_warning",
+                  "root_party_error",
+                  "global_error"
+                ],
+                "level": "INFO"
+              },
+              "version": 1
+            }
+          },
+          "storage": "standalone"
+        },
+        "engine_run": {
+          "cores": 1
+        },
+        "input_artifacts": {
+          "data": {
+            "train_data": {
+              "output_artifact_key": "output_data",
+              "output_artifact_type_alias": null,
+              "parties": [
+                {
+                  "party_id": [
+                    "JG0100001100000000"
+                  ],
+                  "role": "host"
+                }
+              ],
+              "producer_task": "psi_0"
+            }
+          },
+          "model": null
+        },
+        "job_id": "202609070504245489180",
+        "launcher_conf": {},
+        "launcher_name": "default",
+        "mlmd": {
+          "metadata": {
+            "api_version": "v2",
+            "host": "0.0.0.0",
+            "port": 9380,
+            "protocol": "http"
+          },
+          "type": "flow"
+        },
+        "model_id": "202609070504245489180",
+        "model_version": "0",
+        "parameters": {
+          "epochs": 20
+        },
+        "party_id": "JG0100001100000000",
+        "party_task_id": "202609070504245489180_coordinated_lr_1_0_host_JG0100001100000000",
+        "provider_name": "fate",
+        "role": "host",
+        "stage": "train",
+        "task_id": "202609070504245489180_coordinated_lr_1",
+        "task_name": "coordinated_lr_1",
+        "task_version": "0"
+      },
+      "create_time": 1788757467743,
+      "elapsed": null,
+      "end_time": null,
+      "engine_conf": {},
+      "error_report": "",
+      "execution_id": "202609070504245489180_coordinated_lr_1_0_host_JG0100001100000000",
+      "job_id": "202609070504245489180",
+      "kill_status": false,
+      "launcher_name": null,
+      "memory": 0,
+      "party_id": "JG0100001100000000",
+      "party_status": "running",
+      "protocol": "fate",
+      "provider_name": "fate:2.1.0@local",
+      "resource_in_use": true,
+      "role": "host",
+      "run_ip": "0.0.0.0",
+      "run_pid": 2372,
+      "run_port": 9380,
+      "scheduler_party_id": "JG0100001100000010",
+      "start_time": 1788757646937,
+      "status": "running",
+      "status_code": null,
+      "sync_type": "callback",
+      "task_cores": 1,
+      "task_id": "202609070504245489180_coordinated_lr_1",
+      "task_name": "coordinated_lr_1",
+      "task_parameters": {},
+      "task_run": {
+        "cores": 1
+      },
+      "task_version": 0,
+      "timeout": 259200,
+      "update_time": 1788757646998,
+      "worker_id": "04b8b49eaa7a11f189c2169980698c1f"
+    },
+    {
+      "cmd": [
+        "/data/projects/fate/env/python/venv/bin/python",
+        "/data/projects/fate/fate_flow/python/fate_flow/manager/worker/fate_flow_executor.py",
+        "component",
+        "entrypoint",
+        "--env-name",
+        "FATE_TASK_CONFIG"
+      ],
+      "component": "coordinated_lr",
+      "component_parameters": {
+        "component": "coordinated_lr",
+        "computing_partitions": 1,
+        "conf": {
+          "computing": {
+            "metadata": {
+              "computing_id": "202609070504245489180_coordinated_lr_1_0_arbiter_JG0100001100000000",
+              "options": {
+                "data_dir": "/data/projects/fate/fate_flow/data"
+              }
+            },
+            "type": "standalone"
+          },
+          "device": {
+            "metadata": {},
+            "type": "CPU"
+          },
+          "federation": {
+            "metadata": {
+              "federation_id": "202609070504245489180_coordinated_lr_1_0",
+              "osx_config": {
+                "host": "127.0.0.1",
+                "max_message_size": null,
+                "port": 9370
+              },
+              "parties": {
+                "local": {
+                  "partyid": "JG0100001100000000",
+                  "role": "arbiter"
+                },
+                "parties": [
+                  {
+                    "partyid": "JG0100001100000010",
+                    "role": "guest"
+                  },
+                  {
+                    "partyid": "JG0100001100000000",
+                    "role": "host"
+                  },
+                  {
+                    "partyid": "JG0100001100000000",
+                    "role": "arbiter"
+                  }
+                ]
+              }
+            },
+            "type": "osx"
+          },
+          "logger": {
+            "config": {
+              "disable_existing_loggers": false,
+              "filters": {
+                "component_profile_filter": {
+                  "()": "logging.Filter",
+                  "name": "fate.arch.computing._profile"
+                }
+              },
+              "formatters": {
+                "component": {
+                  "format": "[%(levelname)s][%(asctime)-8s][%(process)s][%(module)s.%(funcName)s][line:%(lineno)d]: %(message)s"
+                },
+                "root": {
+                  "format": "[%(levelname)s][%(asctime)-8s][%(process)s][%(module)s.%(funcName)s][line:%(lineno)d]: %(message)s"
+                }
+              },
+              "handlers": {
+                "component_error": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/arbiter/JG0100001100000000/coordinated_lr_1/component/ERROR",
+                  "filters": [],
+                  "formatter": "component",
+                  "level": "ERROR"
+                },
+                "component_info": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/arbiter/JG0100001100000000/coordinated_lr_1/component/INFO",
+                  "filters": [],
+                  "formatter": "component",
+                  "level": "INFO"
+                },
+                "component_profile": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/arbiter/JG0100001100000000/coordinated_lr_1/component/PROFILE",
+                  "filters": [
+                    "component_profile_filter"
+                  ],
+                  "formatter": "component",
+                  "level": "DEBUG"
+                },
+                "component_warning": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/arbiter/JG0100001100000000/coordinated_lr_1/component/WARNING",
+                  "filters": [],
+                  "formatter": "component",
+                  "level": "WARNING"
+                },
+                "global_error": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/arbiter/JG0100001100000000/ERROR",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "ERROR"
+                },
+                "root_error": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/arbiter/JG0100001100000000/coordinated_lr_1/root/ERROR",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "ERROR"
+                },
+                "root_info": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/arbiter/JG0100001100000000/coordinated_lr_1/root/INFO",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "INFO"
+                },
+                "root_party_error": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/arbiter/JG0100001100000000/ERROR",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "ERROR"
+                },
+                "root_party_info": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/arbiter/JG0100001100000000/INFO",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "INFO"
+                },
+                "root_party_warning": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/arbiter/JG0100001100000000/WARNING",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "WARNING"
+                },
+                "root_warning": {
+                  "class": "logging.FileHandler",
+                  "delay": true,
+                  "filename": "/data/projects/fate/fate_flow/logs/202609070504245489180/arbiter/JG0100001100000000/coordinated_lr_1/root/WARNING",
+                  "filters": [],
+                  "formatter": "root",
+                  "level": "WARNING"
+                }
+              },
+              "loggers": {
+                "fate": {
+                  "handlers": [
+                    "component_info",
+                    "component_warning",
+                    "component_error",
+                    "component_profile"
+                  ],
+                  "level": "INFO"
+                }
+              },
+              "root": {
+                "handlers": [
+                  "root_info",
+                  "root_warning",
+                  "root_error",
+                  "root_party_info",
+                  "root_party_warning",
+                  "root_party_error",
+                  "global_error"
+                ],
+                "level": "INFO"
+              },
+              "version": 1
+            }
+          },
+          "storage": "standalone"
+        },
+        "engine_run": {
+          "cores": 1
+        },
+        "input_artifacts": {
+          "data": null,
+          "model": null
+        },
+        "job_id": "202609070504245489180",
+        "launcher_conf": {},
+        "launcher_name": "default",
+        "mlmd": {
+          "metadata": {
+            "api_version": "v2",
+            "host": "0.0.0.0",
+            "port": 9380,
+            "protocol": "http"
+          },
+          "type": "flow"
+        },
+        "model_id": "202609070504245489180",
+        "model_version": "0",
+        "parameters": {
+          "epochs": 20
+        },
+        "party_id": "JG0100001100000000",
+        "party_task_id": "202609070504245489180_coordinated_lr_1_0_arbiter_JG0100001100000000",
+        "provider_name": "fate",
+        "role": "arbiter",
+        "stage": "train",
+        "task_id": "202609070504245489180_coordinated_lr_1",
+        "task_name": "coordinated_lr_1",
+        "task_version": "0"
+      },
+      "create_time": 1788757468110,
+      "elapsed": null,
+      "end_time": null,
+      "engine_conf": {},
+      "error_report": "",
+      "execution_id": "202609070504245489180_coordinated_lr_1_0_arbiter_JG0100001100000000",
+      "job_id": "202609070504245489180",
+      "kill_status": false,
+      "launcher_name": null,
+      "memory": 0,
+      "party_id": "JG0100001100000000",
+      "party_status": "running",
+      "protocol": "fate",
+      "provider_name": "fate:2.1.0@local",
+      "resource_in_use": false,
+      "role": "arbiter",
+      "run_ip": "0.0.0.0",
+      "run_pid": 2375,
+      "run_port": 9380,
+      "scheduler_party_id": "JG0100001100000010",
+      "start_time": 1788757648038,
+      "status": "running",
+      "status_code": null,
+      "sync_type": "callback",
+      "task_cores": 0,
+      "task_id": "202609070504245489180_coordinated_lr_1",
+      "task_name": "coordinated_lr_1",
+      "task_parameters": {},
+      "task_run": {
+        "cores": 1
+      },
+      "task_version": 0,
+      "timeout": 259200,
+      "update_time": 1788757649053,
+      "worker_id": "054de35caa7a11f1b814169980698c1f"
+    }
+  ],
+  "message": "success"
+}

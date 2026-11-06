@@ -1,0 +1,3039 @@
+{
+  "appimages": {
+    "apiVersion": "v1",
+    "items": [
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "AppImage",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"AppImage\",\"metadata\":{\"annotations\":{},\"name\":\"fate2-adapter\"},\"spec\":{\"configTemplates\":{\"task-config.conf\":\"{\\n  \\\"task_id\\\": \\\"{{.TASK_ID}}\\\",\\n  \\\"task_input_config\\\": \\\"{{.TASK_INPUT_CONFIG}}\\\"\\n}\\n\"},\"deployTemplates\":[{\"name\":\"fate2-adapter\",\"replicas\":1,\"spec\":{\"containers\":[{\"configVolumeMounts\":[{\"mountPath\":\"/etc/kuscia/task-config.conf\",\"subPath\":\"task-config.conf\"}],\"env\":[{\"name\":\"FATE_FLOW_ADDRESS\",\"value\":\"http://host.docker.internal:19380\"},{\"name\":\"TASK_CONFIG_PATH\",\"value\":\"/etc/kuscia/task-config.conf\"}],\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"fate2-adapter\",\"workingDir\":\"/app\"}],\"restartPolicy\":\"Never\"}}],\"image\":{\"name\":\"docker.io/secretflow/fate2-adapter\",\"tag\":\"0.1.1-e2e\"}}}\n"
+          },
+          "creationTimestamp": "2026-09-05T12:25:46Z",
+          "generation": 2,
+          "name": "fate2-adapter",
+          "resourceVersion": "5252820",
+          "uid": "6a8c93d5-cea4-4bec-812b-0c6d1d46191a"
+        },
+        "spec": {
+          "configTemplates": {
+            "task-config.conf": "{\n  \"task_id\": \"{{.TASK_ID}}\",\n  \"task_input_config\": \"{{.TASK_INPUT_CONFIG}}\"\n}\n"
+          },
+          "deployTemplates": [
+            {
+              "name": "fate2-adapter",
+              "replicas": 1,
+              "spec": {
+                "containers": [
+                  {
+                    "configVolumeMounts": [
+                      {
+                        "mountPath": "/etc/kuscia/task-config.conf",
+                        "subPath": "task-config.conf"
+                      }
+                    ],
+                    "env": [
+                      {
+                        "name": "FATE_FLOW_ADDRESS",
+                        "value": "http://host.docker.internal:19380"
+                      },
+                      {
+                        "name": "TASK_CONFIG_PATH",
+                        "value": "/etc/kuscia/task-config.conf"
+                      }
+                    ],
+                    "imagePullPolicy": "IfNotPresent",
+                    "name": "fate2-adapter",
+                    "workingDir": "/app"
+                  }
+                ],
+                "restartPolicy": "Never"
+              }
+            }
+          ],
+          "image": {
+            "name": "docker.io/secretflow/fate2-adapter",
+            "tag": "0.1.1-e2e"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "AppImage",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"AppImage\",\"metadata\":{\"annotations\":{\"kuscia.secretflow/component-spec\":\"{\\\"component.1.description\\\":\\\"ecdh\\\",\\\"component.1.input.1.categories\\\":\\\"dataset\\\",\\\"component.1.input.1.description\\\":\\\"train data\\\",\\\"component.1.input.1.name\\\":\\\"train_data\\\",\\\"component.1.name\\\":\\\"ic-ecdh\\\",\\\"component.1.output.1.categories\\\":\\\"dataset\\\",\\\"component.1.output.1.description\\\":\\\"train data\\\",\\\"component.1.output.1.name\\\":\\\"train_data\\\",\\\"component.1.output.2.categories\\\":\\\"report\\\",\\\"component.1.output.2.description\\\":\\\"summary\\\",\\\"component.1.output.2.name\\\":\\\"summary\\\"}\"},\"name\":\"ic-ecdh\"},\"spec\":{\"deployTemplates\":[{\"name\":\"ic-ecdh\",\"replicas\":1,\"spec\":{\"containers\":[{\"name\":\"ic-ecdh\",\"workingDir\":\"/app\"}]}}],\"image\":{\"name\":\"secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ecdh\",\"tag\":\"latest\"}}}\n",
+            "kuscia.secretflow/component-spec": "{\"component.1.description\":\"ecdh\",\"component.1.input.1.categories\":\"dataset\",\"component.1.input.1.description\":\"train data\",\"component.1.input.1.name\":\"train_data\",\"component.1.name\":\"ic-ecdh\",\"component.1.output.1.categories\":\"dataset\",\"component.1.output.1.description\":\"train data\",\"component.1.output.1.name\":\"train_data\",\"component.1.output.2.categories\":\"report\",\"component.1.output.2.description\":\"summary\",\"component.1.output.2.name\":\"summary\"}"
+          },
+          "creationTimestamp": "2026-07-24T18:54:21Z",
+          "generation": 2,
+          "name": "ic-ecdh",
+          "resourceVersion": "6015597",
+          "uid": "932bc41b-97b8-44a1-9900-7d168a73b0a8"
+        },
+        "spec": {
+          "deployTemplates": [
+            {
+              "name": "ic-ecdh",
+              "replicas": 1,
+              "spec": {
+                "containers": [
+                  {
+                    "name": "ic-ecdh",
+                    "workingDir": "/app"
+                  }
+                ]
+              }
+            }
+          ],
+          "image": {
+            "name": "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ecdh",
+            "tag": "latest"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "AppImage",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"AppImage\",\"metadata\":{\"annotations\":{\"kuscia.secretflow/component-spec\":\"{\\\"component.1.description\\\":\\\"ecdh-psi\\\",\\\"component.1.input.1.categories\\\":\\\"dataset\\\",\\\"component.1.input.1.description\\\":\\\"train data\\\",\\\"component.1.input.1.name\\\":\\\"train_data\\\",\\\"component.1.name\\\":\\\"ecdh_psi\\\",\\\"component.1.output.1.categories\\\":\\\"dataset\\\",\\\"component.1.output.1.description\\\":\\\"train data\\\",\\\"component.1.output.1.name\\\":\\\"train_data\\\",\\\"component.1.output.2.categories\\\":\\\"report\\\",\\\"component.1.output.2.description\\\":\\\"summary\\\",\\\"component.1.output.2.name\\\":\\\"summary\\\"}\"},\"name\":\"ic-ecdh-psi\"},\"spec\":{\"deployTemplates\":[{\"name\":\"ic-ecdh-psi\",\"replicas\":1,\"spec\":{\"containers\":[{\"name\":\"ic-ecdh-psi\",\"workingDir\":\"/app\"}]}}],\"image\":{\"name\":\"secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ecdh-psi\",\"tag\":\"latest\"}}}\n",
+            "kuscia.secretflow/component-spec": "{\"component.1.description\":\"ecdh-psi\",\"component.1.input.1.categories\":\"dataset\",\"component.1.input.1.description\":\"train data\",\"component.1.input.1.name\":\"train_data\",\"component.1.name\":\"ecdh_psi\",\"component.1.output.1.categories\":\"dataset\",\"component.1.output.1.description\":\"train data\",\"component.1.output.1.name\":\"train_data\",\"component.1.output.2.categories\":\"report\",\"component.1.output.2.description\":\"summary\",\"component.1.output.2.name\":\"summary\"}"
+          },
+          "creationTimestamp": "2026-07-24T18:54:21Z",
+          "generation": 2,
+          "name": "ic-ecdh-psi",
+          "resourceVersion": "6015670",
+          "uid": "85b80a3f-abdf-4d7d-b2f8-a3cc15f8c7ce"
+        },
+        "spec": {
+          "deployTemplates": [
+            {
+              "name": "ic-ecdh-psi",
+              "replicas": 1,
+              "spec": {
+                "containers": [
+                  {
+                    "name": "ic-ecdh-psi",
+                    "workingDir": "/app"
+                  }
+                ]
+              }
+            }
+          ],
+          "image": {
+            "name": "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ecdh-psi",
+            "tag": "latest"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "AppImage",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"AppImage\",\"metadata\":{\"annotations\":{\"kuscia.secretflow/component-spec\":\"{\\\"component.1.description\\\":\\\"ss-compare\\\",\\\"component.1.input.1.categories\\\":\\\"dataset\\\",\\\"component.1.input.1.description\\\":\\\"train data\\\",\\\"component.1.input.1.name\\\":\\\"train_data\\\",\\\"component.1.name\\\":\\\"ss_compare\\\",\\\"component.1.output.1.categories\\\":\\\"dataset\\\",\\\"component.1.output.1.description\\\":\\\"train data\\\",\\\"component.1.output.1.name\\\":\\\"train_data\\\"}\"},\"name\":\"ic-ss-compare\"},\"spec\":{\"deployTemplates\":[{\"name\":\"ic-ss-compare\",\"replicas\":1,\"spec\":{\"containers\":[{\"name\":\"ic-ss-compare\",\"workingDir\":\"/app\"}]}}],\"image\":{\"name\":\"secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-compare\",\"tag\":\"latest\"}}}\n",
+            "kuscia.secretflow/component-spec": "{\"component.1.description\":\"ss-compare\",\"component.1.input.1.categories\":\"dataset\",\"component.1.input.1.description\":\"train data\",\"component.1.input.1.name\":\"train_data\",\"component.1.name\":\"ss_compare\",\"component.1.output.1.categories\":\"dataset\",\"component.1.output.1.description\":\"train data\",\"component.1.output.1.name\":\"train_data\"}"
+          },
+          "creationTimestamp": "2026-07-24T18:54:21Z",
+          "generation": 1,
+          "name": "ic-ss-compare",
+          "resourceVersion": "305",
+          "uid": "b28f8b46-b64e-45a7-8913-25b84a074a75"
+        },
+        "spec": {
+          "deployTemplates": [
+            {
+              "name": "ic-ss-compare",
+              "replicas": 1,
+              "spec": {
+                "containers": [
+                  {
+                    "name": "ic-ss-compare",
+                    "workingDir": "/app"
+                  }
+                ]
+              }
+            }
+          ],
+          "image": {
+            "name": "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-compare",
+            "tag": "latest"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "AppImage",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"AppImage\",\"metadata\":{\"annotations\":{\"kuscia.secretflow/component-spec\":\"{\\\"component.1.description\\\":\\\"ss-lr\\\",\\\"component.1.input.1.categories\\\":\\\"dataset\\\",\\\"component.1.input.1.description\\\":\\\"train data\\\",\\\"component.1.input.1.name\\\":\\\"train_data\\\",\\\"component.1.name\\\":\\\"ss_lr\\\",\\\"component.1.output.1.categories\\\":\\\"dataset\\\",\\\"component.1.output.1.description\\\":\\\"train data\\\",\\\"component.1.output.1.name\\\":\\\"train_data\\\"}\"},\"name\":\"ic-ss-lr\"},\"spec\":{\"deployTemplates\":[{\"name\":\"ic-ss-lr\",\"replicas\":1,\"spec\":{\"containers\":[{\"name\":\"ic-ss-lr\",\"workingDir\":\"/app\"}]}}],\"image\":{\"name\":\"secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-lr\",\"tag\":\"latest\"}}}\n",
+            "kuscia.secretflow/component-spec": "{\"component.1.description\":\"ss-lr\",\"component.1.input.1.categories\":\"dataset\",\"component.1.input.1.description\":\"train data\",\"component.1.input.1.name\":\"train_data\",\"component.1.name\":\"ss_lr\",\"component.1.output.1.categories\":\"dataset\",\"component.1.output.1.description\":\"train data\",\"component.1.output.1.name\":\"train_data\"}"
+          },
+          "creationTimestamp": "2026-07-24T18:54:21Z",
+          "generation": 1,
+          "name": "ic-ss-lr",
+          "resourceVersion": "307",
+          "uid": "d17d20d1-1d30-4fae-b752-2c70800c5acc"
+        },
+        "spec": {
+          "deployTemplates": [
+            {
+              "name": "ic-ss-lr",
+              "replicas": 1,
+              "spec": {
+                "containers": [
+                  {
+                    "name": "ic-ss-lr",
+                    "workingDir": "/app"
+                  }
+                ]
+              }
+            }
+          ],
+          "image": {
+            "name": "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-lr",
+            "tag": "latest"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "AppImage",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"AppImage\",\"metadata\":{\"annotations\":{\"kuscia.secretflow/component-spec\":\"{\\\"component.1.description\\\":\\\"ss-pearson\\\",\\\"component.1.input.1.categories\\\":\\\"dataset\\\",\\\"component.1.input.1.description\\\":\\\"train data\\\",\\\"component.1.input.1.name\\\":\\\"train_data\\\",\\\"component.1.name\\\":\\\"ss_pearsonr\\\",\\\"component.1.output.1.categories\\\":\\\"dataset\\\",\\\"component.1.output.1.description\\\":\\\"train data\\\",\\\"component.1.output.1.name\\\":\\\"train_data\\\"}\"},\"name\":\"ic-ss-pearson\"},\"spec\":{\"deployTemplates\":[{\"name\":\"ic-ss-pearson\",\"replicas\":1,\"spec\":{\"containers\":[{\"name\":\"ic-ss-pearson\",\"workingDir\":\"/app\"}]}}],\"image\":{\"name\":\"secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-pearson\",\"tag\":\"latest\"}}}\n",
+            "kuscia.secretflow/component-spec": "{\"component.1.description\":\"ss-pearson\",\"component.1.input.1.categories\":\"dataset\",\"component.1.input.1.description\":\"train data\",\"component.1.input.1.name\":\"train_data\",\"component.1.name\":\"ss_pearsonr\",\"component.1.output.1.categories\":\"dataset\",\"component.1.output.1.description\":\"train data\",\"component.1.output.1.name\":\"train_data\"}"
+          },
+          "creationTimestamp": "2026-07-24T18:54:21Z",
+          "generation": 1,
+          "name": "ic-ss-pearson",
+          "resourceVersion": "309",
+          "uid": "7930ef20-e43f-4881-905f-0052b3840cab"
+        },
+        "spec": {
+          "deployTemplates": [
+            {
+              "name": "ic-ss-pearson",
+              "replicas": 1,
+              "spec": {
+                "containers": [
+                  {
+                    "name": "ic-ss-pearson",
+                    "workingDir": "/app"
+                  }
+                ]
+              }
+            }
+          ],
+          "image": {
+            "name": "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-pearson",
+            "tag": "latest"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "AppImage",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"AppImage\",\"metadata\":{\"annotations\":{\"kuscia.secretflow/component-spec\":\"{\\\"component.1.description\\\":\\\"ss-vif\\\",\\\"component.1.input.1.categories\\\":\\\"dataset\\\",\\\"component.1.input.1.description\\\":\\\"train data\\\",\\\"component.1.input.1.name\\\":\\\"train_data\\\",\\\"component.1.name\\\":\\\"ss_vif\\\",\\\"component.1.output.1.categories\\\":\\\"dataset\\\",\\\"component.1.output.1.description\\\":\\\"train data\\\",\\\"component.1.output.1.name\\\":\\\"train_data\\\"}\"},\"name\":\"ic-ss-vif\"},\"spec\":{\"deployTemplates\":[{\"name\":\"ic-ss-vif\",\"replicas\":1,\"spec\":{\"containers\":[{\"name\":\"ic-ss-vif\",\"workingDir\":\"/app\"}]}}],\"image\":{\"name\":\"secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-vif\",\"tag\":\"latest\"}}}\n",
+            "kuscia.secretflow/component-spec": "{\"component.1.description\":\"ss-vif\",\"component.1.input.1.categories\":\"dataset\",\"component.1.input.1.description\":\"train data\",\"component.1.input.1.name\":\"train_data\",\"component.1.name\":\"ss_vif\",\"component.1.output.1.categories\":\"dataset\",\"component.1.output.1.description\":\"train data\",\"component.1.output.1.name\":\"train_data\"}"
+          },
+          "creationTimestamp": "2026-07-24T18:54:22Z",
+          "generation": 1,
+          "name": "ic-ss-vif",
+          "resourceVersion": "313",
+          "uid": "da07e5ad-7b9a-42e6-ab16-1f5c423e87d9"
+        },
+        "spec": {
+          "deployTemplates": [
+            {
+              "name": "ic-ss-vif",
+              "replicas": 1,
+              "spec": {
+                "containers": [
+                  {
+                    "name": "ic-ss-vif",
+                    "workingDir": "/app"
+                  }
+                ]
+              }
+            }
+          ],
+          "image": {
+            "name": "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-vif",
+            "tag": "latest"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "AppImage",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"AppImage\",\"metadata\":{\"annotations\":{\"kuscia.secretflow/component-spec\":\"{\\\"component.1.description\\\":\\\"ss-xgb\\\",\\\"component.1.input.1.categories\\\":\\\"dataset\\\",\\\"component.1.input.1.description\\\":\\\"train data\\\",\\\"component.1.input.1.name\\\":\\\"train_data\\\",\\\"component.1.name\\\":\\\"ss_xgb\\\",\\\"component.1.output.1.categories\\\":\\\"dataset\\\",\\\"component.1.output.1.description\\\":\\\"train data\\\",\\\"component.1.output.1.name\\\":\\\"train_data\\\"}\"},\"name\":\"ic-ss-xgb\"},\"spec\":{\"deployTemplates\":[{\"name\":\"ic-ss-xgb\",\"replicas\":1,\"spec\":{\"containers\":[{\"name\":\"ic-ss-xgb\",\"workingDir\":\"/app\"}]}}],\"image\":{\"name\":\"secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-xgb\",\"tag\":\"latest\"}}}\n",
+            "kuscia.secretflow/component-spec": "{\"component.1.description\":\"ss-xgb\",\"component.1.input.1.categories\":\"dataset\",\"component.1.input.1.description\":\"train data\",\"component.1.input.1.name\":\"train_data\",\"component.1.name\":\"ss_xgb\",\"component.1.output.1.categories\":\"dataset\",\"component.1.output.1.description\":\"train data\",\"component.1.output.1.name\":\"train_data\"}"
+          },
+          "creationTimestamp": "2026-07-24T18:54:22Z",
+          "generation": 1,
+          "name": "ic-ss-xgb",
+          "resourceVersion": "319",
+          "uid": "3789f89e-30ab-4345-ab4b-d3066ad3b8f7"
+        },
+        "spec": {
+          "deployTemplates": [
+            {
+              "name": "ic-ss-xgb",
+              "replicas": 1,
+              "spec": {
+                "containers": [
+                  {
+                    "name": "ic-ss-xgb",
+                    "workingDir": "/app"
+                  }
+                ]
+              }
+            }
+          ],
+          "image": {
+            "name": "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/ss-xgb",
+            "tag": "latest"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "AppImage",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"AppImage\",\"metadata\":{\"annotations\":{},\"name\":\"secretflow-image\"},\"spec\":{\"configTemplates\":{\"task-config.conf\":\"{\\n  \\\"task_id\\\": \\\"{{.TASK_ID}}\\\",\\n  \\\"task_input_config\\\": \\\"{{.TASK_INPUT_CONFIG}}\\\",\\n  \\\"task_cluster_def\\\": \\\"{{.TASK_CLUSTER_DEFINE}}\\\",\\n  \\\"task_progress_url\\\":\\\"http://reporter.master.svc/report/progress?task_id={{.TASK_ID}}\\\",\\n  \\\"allocated_ports\\\": \\\"{{.ALLOCATED_PORTS}}\\\"\\n}\\n\"},\"deployTemplates\":[{\"name\":\"secretflow\",\"replicas\":1,\"spec\":{\"containers\":[{\"args\":[\"-c\",\"python -m secretflow.kuscia.entry ./kuscia/task-config.conf\"],\"command\":[\"sh\"],\"configVolumeMounts\":[{\"mountPath\":\"/work/kuscia/task-config.conf\",\"subPath\":\"task-config.conf\"}],\"name\":\"secretflow\",\"ports\":[{\"name\":\"spu\",\"protocol\":\"GRPC\",\"scope\":\"Cluster\"},{\"name\":\"fed\",\"protocol\":\"GRPC\",\"scope\":\"Cluster\"},{\"name\":\"global\",\"protocol\":\"GRPC\",\"scope\":\"Domain\"},{\"name\":\"node-manager\",\"protocol\":\"GRPC\",\"scope\":\"Local\"},{\"name\":\"object-manager\",\"protocol\":\"GRPC\",\"scope\":\"Local\"},{\"name\":\"client-server\",\"protocol\":\"GRPC\",\"scope\":\"Local\"},{\"name\":\"inference\",\"protocol\":\"HTTP\",\"scope\":\"Cluster\"}],\"workingDir\":\"/work\"}],\"restartPolicy\":\"Never\"}}],\"image\":{\"name\":\"secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/secretflow-lite-anolis8\",\"tag\":\"1.11.0b1\"}}}\n"
+          },
+          "creationTimestamp": "2026-07-24T18:54:21Z",
+          "generation": 1,
+          "name": "secretflow-image",
+          "resourceVersion": "299",
+          "uid": "1d108725-d8ff-4106-aa33-61bd49ce05b2"
+        },
+        "spec": {
+          "configTemplates": {
+            "task-config.conf": "{\n  \"task_id\": \"{{.TASK_ID}}\",\n  \"task_input_config\": \"{{.TASK_INPUT_CONFIG}}\",\n  \"task_cluster_def\": \"{{.TASK_CLUSTER_DEFINE}}\",\n  \"task_progress_url\":\"http://reporter.master.svc/report/progress?task_id={{.TASK_ID}}\",\n  \"allocated_ports\": \"{{.ALLOCATED_PORTS}}\"\n}\n"
+          },
+          "deployTemplates": [
+            {
+              "name": "secretflow",
+              "replicas": 1,
+              "spec": {
+                "containers": [
+                  {
+                    "args": [
+                      "-c",
+                      "python -m secretflow.kuscia.entry ./kuscia/task-config.conf"
+                    ],
+                    "command": [
+                      "sh"
+                    ],
+                    "configVolumeMounts": [
+                      {
+                        "mountPath": "/work/kuscia/task-config.conf",
+                        "subPath": "task-config.conf"
+                      }
+                    ],
+                    "name": "secretflow",
+                    "ports": [
+                      {
+                        "name": "spu",
+                        "protocol": "GRPC",
+                        "scope": "Cluster"
+                      },
+                      {
+                        "name": "fed",
+                        "protocol": "GRPC",
+                        "scope": "Cluster"
+                      },
+                      {
+                        "name": "global",
+                        "protocol": "GRPC",
+                        "scope": "Domain"
+                      },
+                      {
+                        "name": "node-manager",
+                        "protocol": "GRPC",
+                        "scope": "Local"
+                      },
+                      {
+                        "name": "object-manager",
+                        "protocol": "GRPC",
+                        "scope": "Local"
+                      },
+                      {
+                        "name": "client-server",
+                        "protocol": "GRPC",
+                        "scope": "Local"
+                      },
+                      {
+                        "name": "inference",
+                        "protocol": "HTTP",
+                        "scope": "Cluster"
+                      }
+                    ],
+                    "workingDir": "/work"
+                  }
+                ],
+                "restartPolicy": "Never"
+              }
+            }
+          ],
+          "image": {
+            "name": "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/secretflow-lite-anolis8",
+            "tag": "1.11.0b1"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "AppImage",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"AppImage\",\"metadata\":{\"annotations\":{},\"name\":\"secretflow-nsjail-image\"},\"spec\":{\"configTemplates\":{\"task-config.conf\":\"{\\n  \\\"task_id\\\": \\\"{{.TASK_ID}}\\\",\\n  \\\"task_input_config\\\": \\\"{{.TASK_INPUT_CONFIG}}\\\",\\n  \\\"task_cluster_def\\\": \\\"{{.TASK_CLUSTER_DEFINE}}\\\",\\n  \\\"task_progress_url\\\":\\\"http://reporter.master.svc/report/progress?task_id={{.TASK_ID}}\\\",\\n  \\\"allocated_ports\\\": \\\"{{.ALLOCATED_PORTS}}\\\"\\n}\\n\"},\"deployTemplates\":[{\"name\":\"secretflow\",\"replicas\":1,\"spec\":{\"containers\":[{\"args\":[\"-c\",\"sh .nsjail/run.sh\"],\"command\":[\"sh\"],\"configVolumeMounts\":[{\"mountPath\":\"/work/kuscia/task-config.conf\",\"subPath\":\"task-config.conf\"}],\"name\":\"secretflow\",\"ports\":[{\"name\":\"spu\",\"protocol\":\"GRPC\",\"scope\":\"Cluster\"},{\"name\":\"fed\",\"protocol\":\"GRPC\",\"scope\":\"Cluster\"},{\"name\":\"global\",\"protocol\":\"GRPC\",\"scope\":\"Domain\"},{\"name\":\"node-manager\",\"protocol\":\"GRPC\",\"scope\":\"Local\"},{\"name\":\"object-manager\",\"protocol\":\"GRPC\",\"scope\":\"Local\"},{\"name\":\"client-server\",\"protocol\":\"GRPC\",\"scope\":\"Local\"}],\"securityContext\":{\"privileged\":true},\"workingDir\":\"/work\"}],\"restartPolicy\":\"Never\"}}],\"image\":{\"name\":\"secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/secretflow-lite-anolis8\",\"tag\":\"1.11.0b1\"}}}\n"
+          },
+          "creationTimestamp": "2026-07-24T18:54:21Z",
+          "generation": 1,
+          "name": "secretflow-nsjail-image",
+          "resourceVersion": "300",
+          "uid": "7c5781a4-a647-463b-a4c0-f3b7f293bd0b"
+        },
+        "spec": {
+          "configTemplates": {
+            "task-config.conf": "{\n  \"task_id\": \"{{.TASK_ID}}\",\n  \"task_input_config\": \"{{.TASK_INPUT_CONFIG}}\",\n  \"task_cluster_def\": \"{{.TASK_CLUSTER_DEFINE}}\",\n  \"task_progress_url\":\"http://reporter.master.svc/report/progress?task_id={{.TASK_ID}}\",\n  \"allocated_ports\": \"{{.ALLOCATED_PORTS}}\"\n}\n"
+          },
+          "deployTemplates": [
+            {
+              "name": "secretflow",
+              "replicas": 1,
+              "spec": {
+                "containers": [
+                  {
+                    "args": [
+                      "-c",
+                      "sh .nsjail/run.sh"
+                    ],
+                    "command": [
+                      "sh"
+                    ],
+                    "configVolumeMounts": [
+                      {
+                        "mountPath": "/work/kuscia/task-config.conf",
+                        "subPath": "task-config.conf"
+                      }
+                    ],
+                    "name": "secretflow",
+                    "ports": [
+                      {
+                        "name": "spu",
+                        "protocol": "GRPC",
+                        "scope": "Cluster"
+                      },
+                      {
+                        "name": "fed",
+                        "protocol": "GRPC",
+                        "scope": "Cluster"
+                      },
+                      {
+                        "name": "global",
+                        "protocol": "GRPC",
+                        "scope": "Domain"
+                      },
+                      {
+                        "name": "node-manager",
+                        "protocol": "GRPC",
+                        "scope": "Local"
+                      },
+                      {
+                        "name": "object-manager",
+                        "protocol": "GRPC",
+                        "scope": "Local"
+                      },
+                      {
+                        "name": "client-server",
+                        "protocol": "GRPC",
+                        "scope": "Local"
+                      }
+                    ],
+                    "securityContext": {
+                      "privileged": true
+                    },
+                    "workingDir": "/work"
+                  }
+                ],
+                "restartPolicy": "Never"
+              }
+            }
+          ],
+          "image": {
+            "name": "secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/secretflow-lite-anolis8",
+            "tag": "1.11.0b1"
+          }
+        }
+      }
+    ],
+    "kind": "List",
+    "metadata": {
+      "resourceVersion": ""
+    }
+  },
+  "clusterdomainroutes": {
+    "apiVersion": "v1",
+    "items": [
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "ClusterDomainRoute",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"ClusterDomainRoute\",\"metadata\":{\"annotations\":{},\"name\":\"alice-bob\"},\"spec\":{\"authenticationType\":\"Token\",\"destination\":\"bob\",\"endpoint\":{\"host\":\"192.168.117.3\",\"ports\":[{\"isTLS\":true,\"name\":\"http\",\"port\":1080,\"protocol\":\"HTTP\"}]},\"interConnProtocol\":\"bfia\",\"source\":\"alice\",\"tokenConfig\":{\"rollingUpdatePeriod\":86400,\"tokenGenMethod\":\"RSA-GEN\"}}}\n"
+          },
+          "creationTimestamp": "2026-09-07T04:27:35Z",
+          "generation": 2,
+          "labels": {
+            "kuscia.secertflow/domainroute-partner": "bob",
+            "kuscia.secretflow/clusterdomainroute-destination": "bob",
+            "kuscia.secretflow/clusterdomainroute-source": "alice"
+          },
+          "name": "alice-bob",
+          "resourceVersion": "6982463",
+          "uid": "c2ae6271-f2bb-4a71-a1eb-26f64a3eddfc"
+        },
+        "spec": {
+          "authenticationType": "Token",
+          "destination": "bob",
+          "endpoint": {
+            "host": "192.168.117.3",
+            "ports": [
+              {
+                "isTLS": true,
+                "name": "http",
+                "port": 1080,
+                "protocol": "HTTP"
+              }
+            ]
+          },
+          "interConnProtocol": "bfia",
+          "source": "alice",
+          "tokenConfig": {
+            "destinationPublicKey": "LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JSUJDZ0tDQVFFQXQ2YVpzdTBWN1NoejVPdnpuMFpzaW5mNTZtK2xLTENodWE0RGxQU1hTcU9CZjRiMzMzNmgKNEFUbWdBYndpWU9LeisveTZmUmtldkgxaDhsTlM5d1dnRnp1TG9qeS9mY3pKY2t6U2VvRklIVnB1dkR4ejViQgpCOWgrVTFmanNURVdqZnFObDhJa09hVGFHWmZDdGE4WGhaMTNsYWMranUxMW9ma0dhRWVoWFRlQ2JrZU9UYSt1CmRNdWJsRU0rZFhrcDU1d1pKamcyem9RRElqZWtWOHNSS2trVUszckN1MFBQbGM5bThlYTh6SVlGT1FBOGlIYXoKUG9wbGp2SDM2QlovSWJoMGUydUhUUDk4aDNIT2hOOHowQXBub1Q5aU5ScGwvT3hOdmFveUQ4WGMxM0JJencxMAorNzNpNjd2M3FMUXhTSnowQkJZdnFKMW0vMzRyZlI3VGd3SURBUUFCCi0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0K",
+            "rollingUpdatePeriod": 86400,
+            "sourcePublicKey": "LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JSUJDZ0tDQVFFQXZWZUQ0VjBIYThmVWhCYU5jSE43eExLSnBEWHE1RExUZGNKd3ZKaEp3VTdQQkZZRzNoclEKdXQvTEV0bVNnaWVvRnlDYWtlZHlSdUlHTjNkakhCN0Q4QUJBbTVKbi9OS1M4eCtzYkpFdGJEMGJRSG8xTTJSLwpncVN4U3FLZlp3NEV3Q2tYZzh2Vy9uL1pyOE9pQUpIb2t2cHZab3FlS2c5cm1GVjhZNTVndDA5VW1EOEVYb0h4CnI2SFB0Z3FBQVVreVcyYUlzZlIwQkVQUTZ4N3RPc2dKSng2TmpZclVXbkw4L2hubUVCc3FvbHBXTnFreTBmOHIKWUxZYTloWTl4V0F0ZFJnRHpoUG9FSG9OcWR1NkhKaEdBbWVDWDRtRmJUN21nU2pPcUdrN0V1TWxpTG0yODVubApIZ1ZGbG42UitvV3h5cVQ5TUF0RDFpbHU5clFNaDc1NVN3SURBUUFCCi0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0K",
+            "tokenGenMethod": "RSA-GEN"
+          }
+        },
+        "status": {
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-07T04:27:35Z",
+              "lastUpdateTime": "2026-09-07T04:27:35Z",
+              "message": "Success",
+              "status": "True",
+              "type": "Ready"
+            }
+          ],
+          "endpointStatuses": {
+            "gaofeng-kuscia-autonomy-alice-eliauk-local-http": {
+              "endpointHealthy": true
+            }
+          },
+          "tokenStatus": {
+            "sourceTokens": [
+              {
+                "effectiveInstances": [
+                  "gaofeng-kuscia-autonomy-alice-eliauk-local"
+                ],
+                "isReady": true,
+                "revision": 1,
+                "revisionTime": "2026-09-07T04:27:35Z",
+                "token": "[REDACTED]"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "ClusterDomainRoute",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"ClusterDomainRoute\",\"metadata\":{\"annotations\":{},\"name\":\"alice-kimi\"},\"spec\":{\"authenticationType\":\"Token\",\"destination\":\"kimi\",\"endpoint\":{\"host\":\"192.168.117.4\",\"ports\":[{\"isTLS\":true,\"name\":\"http\",\"port\":1080,\"protocol\":\"HTTP\"}]},\"interConnProtocol\":\"kuscia\",\"source\":\"alice\",\"tokenConfig\":{\"rollingUpdatePeriod\":86400,\"tokenGenMethod\":\"RSA-GEN\"}}}\n"
+          },
+          "creationTimestamp": "2026-09-07T04:27:57Z",
+          "generation": 3,
+          "labels": {
+            "kuscia.secertflow/domainroute-partner": "kimi",
+            "kuscia.secretflow/clusterdomainroute-destination": "kimi",
+            "kuscia.secretflow/clusterdomainroute-source": "alice"
+          },
+          "name": "alice-kimi",
+          "resourceVersion": "6984937",
+          "uid": "652fad24-53fa-4c1f-a36a-0bd16b2c5676"
+        },
+        "spec": {
+          "authenticationType": "Token",
+          "destination": "kimi",
+          "endpoint": {
+            "host": "192.168.117.4",
+            "ports": [
+              {
+                "isTLS": true,
+                "name": "http",
+                "port": 1080,
+                "protocol": "HTTP"
+              }
+            ]
+          },
+          "interConnProtocol": "kuscia",
+          "requestHeadersToAdd": {
+            "Authorization": "[REDACTED]"
+          },
+          "source": "alice",
+          "tokenConfig": {
+            "destinationPublicKey": "LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JSUJDZ0tDQVFFQW40WEZjYUUvWjRiZXZCTlRQOHlRMGV2UzhtNDVVSDVCTGpPUDJ5d2VDSjdqKzNnUEJoQ3gKZWR3TDMrdGJmL0tnWDJJaXJReVZRbU0xK2ExN2Jwbm9ZazB1UWVybld4ZzNOOHhZaTBpVk9BdURLTG9GNFUvUAo4TTdKMk9LR25nbFFPWG00TFpLc0xNV1JXNWVQUUtBUS9UM3g0alBqaGlOYU9JYVVNWEZwOGsyMTN4dk5heDBmClYwNW5SY3UycXpSaXFYZWVBMGppK1ozb29oek56WUNaakRZYVJzZlQrMWJ5WDVkcEk1QUFUMEhzcVl4aXpDbnYKUE9OZEJwMFp1ZnhUMnFoell4bWhDdHovdGRvNXZLNG9NbDlKR2Y2RVVJbTRyanU2Mk9XeWpsTmljM1g3UjVyYwpPU2F6d04xTVdvdnV2MnBVM1BWTHJlK09uSWhFc2Vlb1F3SURBUUFCCi0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0K",
+            "rollingUpdatePeriod": 86400,
+            "sourcePublicKey": "LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JSUJDZ0tDQVFFQXZWZUQ0VjBIYThmVWhCYU5jSE43eExLSnBEWHE1RExUZGNKd3ZKaEp3VTdQQkZZRzNoclEKdXQvTEV0bVNnaWVvRnlDYWtlZHlSdUlHTjNkakhCN0Q4QUJBbTVKbi9OS1M4eCtzYkpFdGJEMGJRSG8xTTJSLwpncVN4U3FLZlp3NEV3Q2tYZzh2Vy9uL1pyOE9pQUpIb2t2cHZab3FlS2c5cm1GVjhZNTVndDA5VW1EOEVYb0h4CnI2SFB0Z3FBQVVreVcyYUlzZlIwQkVQUTZ4N3RPc2dKSng2TmpZclVXbkw4L2hubUVCc3FvbHBXTnFreTBmOHIKWUxZYTloWTl4V0F0ZFJnRHpoUG9FSG9OcWR1NkhKaEdBbWVDWDRtRmJUN21nU2pPcUdrN0V1TWxpTG0yODVubApIZ1ZGbG42UitvV3h5cVQ5TUF0RDFpbHU5clFNaDc1NVN3SURBUUFCCi0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0K",
+            "tokenGenMethod": "RSA-GEN"
+          }
+        },
+        "status": {
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-07T04:28:00Z",
+              "lastUpdateTime": "2026-09-07T04:28:00Z",
+              "message": "Success",
+              "status": "True",
+              "type": "Ready"
+            }
+          ],
+          "endpointStatuses": {
+            "gaofeng-kuscia-autonomy-alice-eliauk-local-http": {
+              "endpointHealthy": true
+            }
+          },
+          "tokenStatus": {
+            "sourceTokens": [
+              {
+                "effectiveInstances": [
+                  "gaofeng-kuscia-autonomy-alice-eliauk-local"
+                ],
+                "expirationTime": "2026-09-09T04:27:59Z",
+                "isReady": true,
+                "revision": 1,
+                "revisionTime": "2026-09-07T04:28:00Z",
+                "token": "[REDACTED]"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "ClusterDomainRoute",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"ClusterDomainRoute\",\"metadata\":{\"annotations\":{},\"name\":\"bob-alice\"},\"spec\":{\"authenticationType\":\"Token\",\"destination\":\"alice\",\"endpoint\":{\"host\":\"192.168.117.2\",\"ports\":[{\"isTLS\":true,\"name\":\"http\",\"port\":1080,\"protocol\":\"HTTP\"}]},\"interConnProtocol\":\"bfia\",\"source\":\"bob\",\"tokenConfig\":{\"rollingUpdatePeriod\":86400,\"tokenGenMethod\":\"RSA-GEN\"}}}\n"
+          },
+          "creationTimestamp": "2026-09-07T04:27:35Z",
+          "generation": 2,
+          "labels": {
+            "kuscia.secertflow/domainroute-partner": "bob",
+            "kuscia.secretflow/clusterdomainroute-destination": "alice",
+            "kuscia.secretflow/clusterdomainroute-source": "bob"
+          },
+          "name": "bob-alice",
+          "resourceVersion": "6989818",
+          "uid": "c015c5a2-82be-49ca-87ed-3aff9274a02f"
+        },
+        "spec": {
+          "authenticationType": "Token",
+          "destination": "alice",
+          "endpoint": {
+            "host": "192.168.117.2",
+            "ports": [
+              {
+                "isTLS": true,
+                "name": "http",
+                "port": 1080,
+                "protocol": "HTTP"
+              }
+            ]
+          },
+          "interConnProtocol": "bfia",
+          "source": "bob",
+          "tokenConfig": {
+            "destinationPublicKey": "LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JSUJDZ0tDQVFFQXZWZUQ0VjBIYThmVWhCYU5jSE43eExLSnBEWHE1RExUZGNKd3ZKaEp3VTdQQkZZRzNoclEKdXQvTEV0bVNnaWVvRnlDYWtlZHlSdUlHTjNkakhCN0Q4QUJBbTVKbi9OS1M4eCtzYkpFdGJEMGJRSG8xTTJSLwpncVN4U3FLZlp3NEV3Q2tYZzh2Vy9uL1pyOE9pQUpIb2t2cHZab3FlS2c5cm1GVjhZNTVndDA5VW1EOEVYb0h4CnI2SFB0Z3FBQVVreVcyYUlzZlIwQkVQUTZ4N3RPc2dKSng2TmpZclVXbkw4L2hubUVCc3FvbHBXTnFreTBmOHIKWUxZYTloWTl4V0F0ZFJnRHpoUG9FSG9OcWR1NkhKaEdBbWVDWDRtRmJUN21nU2pPcUdrN0V1TWxpTG0yODVubApIZ1ZGbG42UitvV3h5cVQ5TUF0RDFpbHU5clFNaDc1NVN3SURBUUFCCi0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0K",
+            "rollingUpdatePeriod": 86400,
+            "sourcePublicKey": "LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JSUJDZ0tDQVFFQXQ2YVpzdTBWN1NoejVPdnpuMFpzaW5mNTZtK2xLTENodWE0RGxQU1hTcU9CZjRiMzMzNmgKNEFUbWdBYndpWU9LeisveTZmUmtldkgxaDhsTlM5d1dnRnp1TG9qeS9mY3pKY2t6U2VvRklIVnB1dkR4ejViQgpCOWgrVTFmanNURVdqZnFObDhJa09hVGFHWmZDdGE4WGhaMTNsYWMranUxMW9ma0dhRWVoWFRlQ2JrZU9UYSt1CmRNdWJsRU0rZFhrcDU1d1pKamcyem9RRElqZWtWOHNSS2trVUszckN1MFBQbGM5bThlYTh6SVlGT1FBOGlIYXoKUG9wbGp2SDM2QlovSWJoMGUydUhUUDk4aDNIT2hOOHowQXBub1Q5aU5ScGwvT3hOdmFveUQ4WGMxM0JJencxMAorNzNpNjd2M3FMUXhTSnowQkJZdnFKMW0vMzRyZlI3VGd3SURBUUFCCi0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0K",
+            "tokenGenMethod": "RSA-GEN"
+          }
+        },
+        "status": {
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-07T04:31:51Z",
+              "lastUpdateTime": "2026-09-07T04:31:51Z",
+              "message": "TokenNotGenerate",
+              "reason": "TokenNotGenerate",
+              "status": "False",
+              "type": "Ready"
+            }
+          ],
+          "tokenStatus": {}
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "ClusterDomainRoute",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"kuscia.secretflow/v1alpha1\",\"kind\":\"ClusterDomainRoute\",\"metadata\":{\"annotations\":{},\"name\":\"kimi-alice\"},\"spec\":{\"authenticationType\":\"Token\",\"destination\":\"alice\",\"endpoint\":{\"host\":\"192.168.117.2\",\"ports\":[{\"isTLS\":true,\"name\":\"http\",\"port\":1080,\"protocol\":\"HTTP\"}]},\"interConnProtocol\":\"kuscia\",\"source\":\"kimi\",\"tokenConfig\":{\"rollingUpdatePeriod\":86400,\"tokenGenMethod\":\"RSA-GEN\"}}}\n"
+          },
+          "creationTimestamp": "2026-09-07T04:27:57Z",
+          "generation": 3,
+          "labels": {
+            "kuscia.secertflow/domainroute-partner": "kimi",
+            "kuscia.secretflow/clusterdomainroute-destination": "alice",
+            "kuscia.secretflow/clusterdomainroute-source": "kimi"
+          },
+          "name": "kimi-alice",
+          "resourceVersion": "6989743",
+          "uid": "5aa28693-af6f-4064-9cba-8012d92bfa3b"
+        },
+        "spec": {
+          "authenticationType": "Token",
+          "destination": "alice",
+          "endpoint": {
+            "host": "192.168.117.2",
+            "ports": [
+              {
+                "isTLS": true,
+                "name": "http",
+                "port": 1080,
+                "protocol": "HTTP"
+              }
+            ]
+          },
+          "interConnProtocol": "kuscia",
+          "requestHeadersToAdd": {
+            "Authorization": "[REDACTED]"
+          },
+          "source": "kimi",
+          "tokenConfig": {
+            "destinationPublicKey": "LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JSUJDZ0tDQVFFQXZWZUQ0VjBIYThmVWhCYU5jSE43eExLSnBEWHE1RExUZGNKd3ZKaEp3VTdQQkZZRzNoclEKdXQvTEV0bVNnaWVvRnlDYWtlZHlSdUlHTjNkakhCN0Q4QUJBbTVKbi9OS1M4eCtzYkpFdGJEMGJRSG8xTTJSLwpncVN4U3FLZlp3NEV3Q2tYZzh2Vy9uL1pyOE9pQUpIb2t2cHZab3FlS2c5cm1GVjhZNTVndDA5VW1EOEVYb0h4CnI2SFB0Z3FBQVVreVcyYUlzZlIwQkVQUTZ4N3RPc2dKSng2TmpZclVXbkw4L2hubUVCc3FvbHBXTnFreTBmOHIKWUxZYTloWTl4V0F0ZFJnRHpoUG9FSG9OcWR1NkhKaEdBbWVDWDRtRmJUN21nU2pPcUdrN0V1TWxpTG0yODVubApIZ1ZGbG42UitvV3h5cVQ5TUF0RDFpbHU5clFNaDc1NVN3SURBUUFCCi0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0K",
+            "rollingUpdatePeriod": 86400,
+            "sourcePublicKey": "LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JSUJDZ0tDQVFFQW40WEZjYUUvWjRiZXZCTlRQOHlRMGV2UzhtNDVVSDVCTGpPUDJ5d2VDSjdqKzNnUEJoQ3gKZWR3TDMrdGJmL0tnWDJJaXJReVZRbU0xK2ExN2Jwbm9ZazB1UWVybld4ZzNOOHhZaTBpVk9BdURLTG9GNFUvUAo4TTdKMk9LR25nbFFPWG00TFpLc0xNV1JXNWVQUUtBUS9UM3g0alBqaGlOYU9JYVVNWEZwOGsyMTN4dk5heDBmClYwNW5SY3UycXpSaXFYZWVBMGppK1ozb29oek56WUNaakRZYVJzZlQrMWJ5WDVkcEk1QUFUMEhzcVl4aXpDbnYKUE9OZEJwMFp1ZnhUMnFoell4bWhDdHovdGRvNXZLNG9NbDlKR2Y2RVVJbTRyanU2Mk9XeWpsTmljM1g3UjVyYwpPU2F6d04xTVdvdnV2MnBVM1BWTHJlK09uSWhFc2Vlb1F3SURBUUFCCi0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0K",
+            "tokenGenMethod": "RSA-GEN"
+          }
+        },
+        "status": {
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-07T04:27:59Z",
+              "lastUpdateTime": "2026-09-07T04:27:59Z",
+              "message": "Success",
+              "status": "True",
+              "type": "Ready"
+            }
+          ],
+          "tokenStatus": {
+            "destinationTokens": [
+              {
+                "effectiveInstances": [
+                  "gaofeng-kuscia-autonomy-alice-eliauk-local"
+                ],
+                "expirationTime": "2026-09-09T04:27:59Z",
+                "heartBeatTime": "2026-09-07T04:31:37Z",
+                "isReady": true,
+                "revision": 1,
+                "revisionTime": "2026-09-07T04:27:59Z",
+                "token": "[REDACTED]"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "kind": "List",
+    "metadata": {
+      "resourceVersion": ""
+    }
+  },
+  "kusciajobs": {
+    "apiVersion": "v1",
+    "items": [
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "bob"
+          },
+          "creationTimestamp": "2026-09-05T14:41:41Z",
+          "generation": 1,
+          "name": "fj-276dce85b0274aa8",
+          "namespace": "bob",
+          "resourceVersion": "5341275",
+          "uid": "d324f9f5-e129-4eb4-ba36-509a722d164a"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "fate2-task-fj-276dce85b0274aa8",
+              "appImage": "fate2-adapter",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "guest"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "host"
+                }
+              ],
+              "taskInputConfig": "{\"config\":{\"initiator\":{\"node_id\":\"alice\",\"party_id\":\"10000\",\"role\":\"guest\"},\"job_params\":{\"common\":{\"sync_type\":\"poll\"}},\"role\":{\"arbiter\":[],\"guest\":[\"alice\"],\"host\":[\"bob\"]},\"task_params\":{\"common\":{\"coordinated_lr_1\":{\"epochs\":20},\"psi_0\":{\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"}},\"guest\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_guest\"}}},\"host\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_host\"}}}},\"version\":\"2.0\"},\"dag\":{\"components\":[{\"componentName\":\"psi\",\"input\":[],\"name\":\"psi_0\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"__guestDatasetId\":\"fd-ca0126808eba4d50\",\"__guestDatasetRef\":\"experiment#breast_hetero_guest\",\"__hostDatasetId\":\"fd-660b51f067024173\",\"__hostDatasetRef\":\"experiment#breast_hetero_host\",\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"coordinated_lr\",\"input\":[{\"key\":\"psi_0.data\",\"type\":\"dataset\"}],\"name\":\"coordinated_lr_1\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"epochs\":20},\"provider\":\"fate\",\"version\":\"2.0.0\"}],\"version\":\"2.0\"},\"fate_flow_address\":\"http://host.docker.internal:19381\",\"flow_id\":\"fj-276dce85b0274aa8\",\"job_id\":\"fj-276dce85b0274aa8\",\"old_job_id\":\"\"}",
+              "tolerable": false
+            }
+          ]
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "bob"
+          },
+          "creationTimestamp": "2026-09-05T13:58:09Z",
+          "generation": 1,
+          "name": "fj-2b7b93c32f8947a3",
+          "namespace": "bob",
+          "resourceVersion": "5337469",
+          "uid": "6f699802-8e09-43c6-b4d4-f65af1774936"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "fate2-task-fj-2b7b93c32f8947a3",
+              "appImage": "fate2-adapter",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "guest"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "host"
+                }
+              ],
+              "taskInputConfig": "{\"config\":{\"initiator\":{\"node_id\":\"alice\",\"party_id\":\"10000\",\"role\":\"guest\"},\"job_params\":{\"common\":{\"sync_type\":\"poll\"}},\"role\":{\"guest\":[\"alice\"],\"host\":[\"bob\"]},\"task_params\":{\"common\":{}},\"version\":\"2.0\"},\"dag\":{\"components\":[{\"componentName\":\"Reader\",\"input\":[],\"name\":\"reader_0\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"__datasetId\":\"fd-ca0126808eba4d50\",\"name\":\"breast_hetero_guest\",\"namespace\":\"experiment\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"Reader\",\"input\":[],\"name\":\"reader_1\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"__datasetId\":\"fd-660b51f067024173\",\"name\":\"breast_hetero_host\",\"namespace\":\"experiment\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"Intersection\",\"input\":[{\"key\":\"reader_0.data\",\"type\":\"dataset\"},{\"key\":\"reader_1.data\",\"type\":\"dataset\"}],\"name\":\"intersection_2\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"intersect_method\":\"rsa\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"HeteroLR\",\"input\":[{\"key\":\"intersection_2.data\",\"type\":\"dataset\"}],\"name\":\"hetero_lr_3\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"batch_size\":-1,\"learning_rate\":0.15,\"max_iter\":30},\"provider\":\"fate\",\"version\":\"2.0.0\"}],\"version\":\"2.0\"},\"fate_flow_address\":\"http://host.docker.internal:19380\",\"job_id\":\"fj-2b7b93c32f8947a3\"}",
+              "tolerable": false
+            }
+          ]
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "bob"
+          },
+          "creationTimestamp": "2026-09-05T14:39:51Z",
+          "generation": 1,
+          "name": "fj-49b1f5e642314efe",
+          "namespace": "bob",
+          "resourceVersion": "5341054",
+          "uid": "dcb17e46-79e2-4056-a648-ac3e9f931233"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "fate2-task-fj-49b1f5e642314efe",
+              "appImage": "fate2-adapter",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "guest"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "host"
+                }
+              ],
+              "taskInputConfig": "{\"config\":{\"initiator\":{\"node_id\":\"alice\",\"party_id\":\"10000\",\"role\":\"guest\"},\"job_params\":{\"common\":{\"sync_type\":\"poll\"}},\"role\":{\"arbiter\":[],\"guest\":[\"alice\"],\"host\":[\"bob\"]},\"task_params\":{\"common\":{\"coordinated_lr_1\":{\"epochs\":20},\"psi_0\":{\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"}},\"guest\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_guest\"}}},\"host\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_host\"}}}},\"version\":\"2.0\"},\"dag\":{\"components\":[{\"componentName\":\"psi\",\"input\":[],\"name\":\"psi_0\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"__guestDatasetId\":\"fd-ca0126808eba4d50\",\"__guestDatasetRef\":\"experiment#breast_hetero_guest\",\"__hostDatasetId\":\"fd-660b51f067024173\",\"__hostDatasetRef\":\"experiment#breast_hetero_host\",\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"coordinated_lr\",\"input\":[{\"key\":\"psi_0.data\",\"type\":\"dataset\"}],\"name\":\"coordinated_lr_1\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"epochs\":20},\"provider\":\"fate\",\"version\":\"2.0.0\"}],\"version\":\"2.0\"},\"fate_flow_address\":\"http://host.docker.internal:19381\",\"flow_id\":\"fj-49b1f5e642314efe\",\"job_id\":\"fj-49b1f5e642314efe\",\"old_job_id\":\"\"}",
+              "tolerable": false
+            }
+          ]
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "bob"
+          },
+          "creationTimestamp": "2026-09-05T13:27:23Z",
+          "generation": 1,
+          "name": "fj-a0f11d2d1eb04840",
+          "namespace": "bob",
+          "resourceVersion": "5334810",
+          "uid": "61f0ba06-38be-47b1-b6ff-521f5dc10898"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "fate2-task-fj-a0f11d2d1eb04840",
+              "appImage": "fate2-adapter",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "guest"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "host"
+                }
+              ],
+              "taskInputConfig": "{\"config\":{\"initiator\":{\"node_id\":\"alice\",\"party_id\":\"10000\",\"role\":\"guest\"},\"job_params\":{\"common\":{\"sync_type\":\"poll\"}},\"role\":{\"guest\":[\"alice\"],\"host\":[\"bob\"]},\"task_params\":{\"common\":{}},\"version\":\"2.0\"},\"dag\":{\"components\":[{\"componentName\":\"Reader\",\"input\":[],\"name\":\"reader_0\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"Intersection\",\"input\":[],\"name\":\"intersection_1\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"intersect_method\":\"rsa\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"HeteroLR\",\"input\":[],\"name\":\"hetero_lr_2\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"batch_size\":-1,\"learning_rate\":0.15,\"max_iter\":30},\"provider\":\"fate\",\"version\":\"2.0.0\"}],\"version\":\"2.0\"},\"fate_flow_address\":\"http://host.docker.internal:19380\",\"job_id\":\"fj-a0f11d2d1eb04840\"}",
+              "tolerable": false
+            }
+          ]
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "bob"
+          },
+          "creationTimestamp": "2026-09-05T14:34:09Z",
+          "generation": 1,
+          "name": "fj-b5b76cf090fa4263",
+          "namespace": "bob",
+          "resourceVersion": "5340505",
+          "uid": "e0a1075d-3239-4305-a718-eb4d166ba0af"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "fate2-task-fj-b5b76cf090fa4263",
+              "appImage": "fate2-adapter",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "guest"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "host"
+                }
+              ],
+              "taskInputConfig": "{\"config\":{\"initiator\":{\"node_id\":\"alice\",\"party_id\":\"10000\",\"role\":\"guest\"},\"job_params\":{\"common\":{\"sync_type\":\"poll\"}},\"role\":{\"arbiter\":[],\"guest\":[\"alice\"],\"host\":[\"bob\"]},\"task_params\":{\"common\":{\"coordinated_lr_1\":{\"epochs\":20},\"psi_0\":{\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"}},\"guest\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_guest\"}}},\"host\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_host\"}}}},\"version\":\"2.0\"},\"dag\":{\"components\":[{\"componentName\":\"psi\",\"input\":[],\"name\":\"psi_0\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"__guestDatasetId\":\"fd-ca0126808eba4d50\",\"__guestDatasetRef\":\"experiment#breast_hetero_guest\",\"__hostDatasetId\":\"fd-660b51f067024173\",\"__hostDatasetRef\":\"experiment#breast_hetero_host\",\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"coordinated_lr\",\"input\":[{\"key\":\"psi_0.data\",\"type\":\"dataset\"}],\"name\":\"coordinated_lr_1\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"epochs\":20},\"provider\":\"fate\",\"version\":\"2.0.0\"}],\"version\":\"2.0\"},\"fate_flow_address\":\"http://host.docker.internal:19381\",\"job_id\":\"fj-b5b76cf090fa4263\"}",
+              "tolerable": false
+            }
+          ]
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "bob"
+          },
+          "creationTimestamp": "2026-09-07T02:44:33Z",
+          "generation": 1,
+          "name": "fj-df9d0daa7f5d4e92",
+          "namespace": "bob",
+          "resourceVersion": "6976046",
+          "uid": "7d080eb5-b663-4b3d-9293-4fa32c44dc9f"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "fate2-task-fj-df9d0daa7f5d4e92",
+              "appImage": "fate2-adapter",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "guest"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "host"
+                }
+              ],
+              "taskInputConfig": "{\"config\":{\"initiator\":{\"node_id\":\"alice\",\"party_id\":\"10000\",\"role\":\"guest\"},\"job_params\":{\"common\":{\"sync_type\":\"poll\"}},\"role\":{\"arbiter\":[],\"guest\":[\"alice\"],\"host\":[\"bob\"]},\"task_params\":{\"common\":{\"coordinated_lr_1\":{\"epochs\":20},\"psi_0\":{\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"}},\"guest\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_guest\"}}},\"host\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_host\"}}}},\"version\":\"2.0\"},\"dag\":{\"components\":[{\"componentName\":\"psi\",\"input\":[],\"name\":\"psi_0\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"__guestDatasetId\":\"fd-ca0126808eba4d50\",\"__guestDatasetRef\":\"experiment#breast_hetero_guest\",\"__hostDatasetId\":\"fd-660b51f067024173\",\"__hostDatasetRef\":\"experiment#breast_hetero_host\",\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"coordinated_lr\",\"input\":[{\"key\":\"psi_0.data\",\"type\":\"dataset\"}],\"name\":\"coordinated_lr_1\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"epochs\":20},\"provider\":\"fate\",\"version\":\"2.0.0\"}],\"version\":\"2.0\"},\"fate_flow_address\":\"http://host.docker.internal:19381\",\"flow_id\":\"fj-df9d0daa7f5d4e92\",\"job_id\":\"fj-df9d0daa7f5d4e92\",\"old_job_id\":\"\"}",
+              "tolerable": false
+            }
+          ]
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-bfia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-07T01:46:01Z",
+          "generation": 2,
+          "labels": {
+            "kuscia.secretflow/interconn-protocol-type": "bfia",
+            "kuscia.secretflow/job-stage": "Start",
+            "kuscia.secretflow/job-stage-trigger": "alice",
+            "kuscia.secretflow/job-stage-version": "1"
+          },
+          "name": "bepi",
+          "namespace": "cross-domain",
+          "resourceVersion": "6968473",
+          "uid": "40561a39-8663-4c54-bcc0-79049017fd8e"
+        },
+        "spec": {
+          "flowID": "iqdcehaj",
+          "initiator": "alice",
+          "maxParallelism": 2,
+          "scheduleMode": "Strict",
+          "tasks": [
+            {
+              "alias": "ecdh-psi-iqdcehaj-node-psi",
+              "appImage": "ic-ecdh-psi",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "host"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "guest"
+                }
+              ],
+              "taskID": "bepi-71edd00b41b7",
+              "taskInputConfig": "{\"name\":\"ecdh-psi-iqdcehaj-node-psi\",\"module_name\":\"ecdh_psi\",\"output\":[{\"type\":\"dataset\",\"key\":\"result\"}],\"role\":{\"host\":[\"alice\"],\"guest\":[\"bob\"]},\"initiator\":{\"role\":\"host\",\"node_id\":\"alice\"},\"task_params\":{\"host\":{\"0\":{\"field_names\":\"id\",\"name\":\"alice_1419035158.csv\",\"namespace\":\"data\"}},\"guest\":{\"0\":{\"field_names\":\"id\",\"name\":\"bob_1458117460.csv\",\"namespace\":\"data\"}},\"common\":{\"algo\":\"ecdh_psi\",\"bit_length_after_truncated\":-1,\"curve_type\":\"curve25519\",\"hash2curve_strategy\":\"direct_hash_as_point_x\",\"hash_type\":\"sha_256\",\"point_octet_format\":\"uncompressed\",\"protocol_families\":\"ecc\",\"result_to_rank\":-1,\"start_transport\":false}},\"componentName\":\"ic-ecdh-psi\",\"version\":\"1.0.0\",\"provider\":\"secretflow\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "completionTime": "2026-09-07T01:46:12Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-07T01:46:01Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-07T01:46:12Z",
+          "phase": "Succeeded",
+          "stageStatus": {
+            "alice": "JobStartStageSucceeded",
+            "bob": "JobStartStageSucceeded"
+          },
+          "startTime": "2026-09-07T01:46:01Z",
+          "taskStatus": {
+            "bepi-71edd00b41b7": "Succeeded"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-bfia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T22:03:40Z",
+          "generation": 2,
+          "labels": {
+            "kuscia.secretflow/interconn-protocol-type": "bfia",
+            "kuscia.secretflow/job-stage": "Start",
+            "kuscia.secretflow/job-stage-trigger": "alice",
+            "kuscia.secretflow/job-stage-version": "1"
+          },
+          "name": "bpzl",
+          "namespace": "cross-domain",
+          "resourceVersion": "5784498",
+          "uid": "4eda658e-b807-4ddc-9904-6ddddf8ef1a3"
+        },
+        "spec": {
+          "flowID": "ultccyfx",
+          "initiator": "alice",
+          "maxParallelism": 2,
+          "scheduleMode": "Strict",
+          "tasks": [
+            {
+              "alias": "ss-lr-ultccyfx-node-33",
+              "appImage": "ic-ss-lr",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "host"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "guest"
+                }
+              ],
+              "taskID": "bpzl-998dcefd8e83",
+              "taskInputConfig": "{\"name\":\"ss-lr-ultccyfx-node-33\",\"module_name\":\"ss_lr\",\"output\":[{\"type\":\"dataset\",\"key\":\"result\"}],\"role\":{\"host\":[\"alice\"],\"guest\":[\"bob\"]},\"initiator\":{\"role\":\"host\",\"node_id\":\"alice\"},\"task_params\":{\"host\":{\"0\":{\"field_names\":\"x1,x2,x3,x4,x5,x6,x7,x8,x9,x10\",\"has_label\":true,\"name\":\"perfect_logit_a.csv\",\"namespace\":\"data\"}},\"guest\":{\"0\":{\"field_names\":\"x11,x12,x13,x14,x15,x16,x17,x18,x19,x20\",\"has_label\":false,\"name\":\"perfect_logit_b.csv\",\"namespace\":\"data\"}},\"common\":{\"algo\":\"ss_lr\",\"batch_size\":32,\"field\":64,\"fxp_bits\":18,\"l0_norm\":0,\"l1_norm\":0,\"l2_norm\":0.5,\"label_name\":\"y\",\"label_owner\":\"host.0\",\"last_batch_policy\":\"discard\",\"learning_rate\":0.0001,\"num_epoch\":10,\"optimizer\":\"sgd\",\"protocol\":\"semi2k\",\"protocol_families\":\"ss\",\"shard_serialize_format\":\"raw\",\"sigmoid_mode\":\"minimax_1\",\"skip_rows\":1,\"start_transport\":false,\"trunc_mode\":\"probabilistic\",\"use_ttp\":false}},\"componentName\":\"ic-ss-lr\",\"version\":\"1.0.0\",\"provider\":\"secretflow\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "completionTime": "2026-09-05T22:05:31Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T22:03:40Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T22:05:31Z",
+          "phase": "Succeeded",
+          "stageStatus": {
+            "alice": "JobStartStageSucceeded",
+            "bob": "JobStartStageSucceeded"
+          },
+          "startTime": "2026-09-05T22:03:40Z",
+          "taskStatus": {
+            "bpzl-998dcefd8e83": "Succeeded"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-07T01:32:53Z",
+          "generation": 1,
+          "name": "buhf",
+          "namespace": "cross-domain",
+          "resourceVersion": "6939527",
+          "uid": "0bf57c99-0d87-4c8a-b563-f889a355441c"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "buhf-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskID": "buhf-new-n3",
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"1.0.0\",\n    \"attr_paths\": [\"input/input_ds1/keys\", \"input/input_ds2/keys\", \"protocol\", \"sort_result\", \"receiver_parties\", \"allow_empty_result\", \"join_type\", \"input_ds1_keys_duplicated\", \"input_ds2_keys_duplicated\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"inner_join\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"ckbuhf-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"buhf_new_n3_output_0\", \"buhf_new_n3_output_1\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"buhf-new-n3-output-0\", \"buhf-new-n3-output-1\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "kimi": "JobAccepted"
+          },
+          "completionTime": "2026-09-07T01:33:13Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-07T01:32:53Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-07T01:33:13Z",
+          "phase": "Succeeded",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "kimi": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-07T01:32:53Z",
+          "taskStatus": {
+            "buhf-new-n3": "Succeeded"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T14:41:41Z",
+          "generation": 1,
+          "name": "fj-276dce85b0274aa8",
+          "namespace": "cross-domain",
+          "resourceVersion": "5341399",
+          "uid": "c975aa10-ff68-4051-91c8-24d5c111a600"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "fate2-task-fj-276dce85b0274aa8",
+              "appImage": "fate2-adapter",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "guest"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "host"
+                }
+              ],
+              "taskID": "fate2-task-fj-276dce85b0274aa8",
+              "taskInputConfig": "{\"config\":{\"initiator\":{\"node_id\":\"alice\",\"party_id\":\"10000\",\"role\":\"guest\"},\"job_params\":{\"common\":{\"sync_type\":\"poll\"}},\"role\":{\"arbiter\":[],\"guest\":[\"alice\"],\"host\":[\"bob\"]},\"task_params\":{\"common\":{\"coordinated_lr_1\":{\"epochs\":20},\"psi_0\":{\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"}},\"guest\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_guest\"}}},\"host\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_host\"}}}},\"version\":\"2.0\"},\"dag\":{\"components\":[{\"componentName\":\"psi\",\"input\":[],\"name\":\"psi_0\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"__guestDatasetId\":\"fd-ca0126808eba4d50\",\"__guestDatasetRef\":\"experiment#breast_hetero_guest\",\"__hostDatasetId\":\"fd-660b51f067024173\",\"__hostDatasetRef\":\"experiment#breast_hetero_host\",\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"coordinated_lr\",\"input\":[{\"key\":\"psi_0.data\",\"type\":\"dataset\"}],\"name\":\"coordinated_lr_1\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"epochs\":20},\"provider\":\"fate\",\"version\":\"2.0.0\"}],\"version\":\"2.0\"},\"fate_flow_address\":\"http://host.docker.internal:19381\",\"flow_id\":\"fj-276dce85b0274aa8\",\"job_id\":\"fj-276dce85b0274aa8\",\"old_job_id\":\"\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "bob": "JobAccepted"
+          },
+          "completionTime": "2026-09-05T14:42:15Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T14:41:41Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T14:42:15Z",
+          "phase": "Succeeded",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "bob": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-05T14:41:41Z",
+          "taskStatus": {
+            "fate2-task-fj-276dce85b0274aa8": "Succeeded"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T13:58:09Z",
+          "generation": 1,
+          "name": "fj-2b7b93c32f8947a3",
+          "namespace": "cross-domain",
+          "resourceVersion": "5337541",
+          "uid": "fb6ee081-2a50-4186-a331-74b3f35b7d39"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "fate2-task-fj-2b7b93c32f8947a3",
+              "appImage": "fate2-adapter",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "guest"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "host"
+                }
+              ],
+              "taskID": "fate2-task-fj-2b7b93c32f8947a3",
+              "taskInputConfig": "{\"config\":{\"initiator\":{\"node_id\":\"alice\",\"party_id\":\"10000\",\"role\":\"guest\"},\"job_params\":{\"common\":{\"sync_type\":\"poll\"}},\"role\":{\"guest\":[\"alice\"],\"host\":[\"bob\"]},\"task_params\":{\"common\":{}},\"version\":\"2.0\"},\"dag\":{\"components\":[{\"componentName\":\"Reader\",\"input\":[],\"name\":\"reader_0\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"__datasetId\":\"fd-ca0126808eba4d50\",\"name\":\"breast_hetero_guest\",\"namespace\":\"experiment\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"Reader\",\"input\":[],\"name\":\"reader_1\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"__datasetId\":\"fd-660b51f067024173\",\"name\":\"breast_hetero_host\",\"namespace\":\"experiment\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"Intersection\",\"input\":[{\"key\":\"reader_0.data\",\"type\":\"dataset\"},{\"key\":\"reader_1.data\",\"type\":\"dataset\"}],\"name\":\"intersection_2\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"intersect_method\":\"rsa\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"HeteroLR\",\"input\":[{\"key\":\"intersection_2.data\",\"type\":\"dataset\"}],\"name\":\"hetero_lr_3\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"batch_size\":-1,\"learning_rate\":0.15,\"max_iter\":30},\"provider\":\"fate\",\"version\":\"2.0.0\"}],\"version\":\"2.0\"},\"fate_flow_address\":\"http://host.docker.internal:19380\",\"job_id\":\"fj-2b7b93c32f8947a3\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "bob": "JobAccepted"
+          },
+          "completionTime": "2026-09-05T13:58:12Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T13:58:09Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T13:58:12Z",
+          "phase": "Failed",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "bob": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-05T13:58:09Z",
+          "taskStatus": {
+            "fate2-task-fj-2b7b93c32f8947a3": "Failed"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T14:39:51Z",
+          "generation": 1,
+          "name": "fj-49b1f5e642314efe",
+          "namespace": "cross-domain",
+          "resourceVersion": "5723546",
+          "uid": "edf6d3a2-ee5e-4551-9179-5fedd9c2cb80"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "fate2-task-fj-49b1f5e642314efe",
+              "appImage": "fate2-adapter",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "guest"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "host"
+                }
+              ],
+              "taskID": "fate2-task-fj-49b1f5e642314efe",
+              "taskInputConfig": "{\"config\":{\"initiator\":{\"node_id\":\"alice\",\"party_id\":\"10000\",\"role\":\"guest\"},\"job_params\":{\"common\":{\"sync_type\":\"poll\"}},\"role\":{\"arbiter\":[],\"guest\":[\"alice\"],\"host\":[\"bob\"]},\"task_params\":{\"common\":{\"coordinated_lr_1\":{\"epochs\":20},\"psi_0\":{\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"}},\"guest\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_guest\"}}},\"host\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_host\"}}}},\"version\":\"2.0\"},\"dag\":{\"components\":[{\"componentName\":\"psi\",\"input\":[],\"name\":\"psi_0\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"__guestDatasetId\":\"fd-ca0126808eba4d50\",\"__guestDatasetRef\":\"experiment#breast_hetero_guest\",\"__hostDatasetId\":\"fd-660b51f067024173\",\"__hostDatasetRef\":\"experiment#breast_hetero_host\",\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"coordinated_lr\",\"input\":[{\"key\":\"psi_0.data\",\"type\":\"dataset\"}],\"name\":\"coordinated_lr_1\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"epochs\":20},\"provider\":\"fate\",\"version\":\"2.0.0\"}],\"version\":\"2.0\"},\"fate_flow_address\":\"http://host.docker.internal:19381\",\"flow_id\":\"fj-49b1f5e642314efe\",\"job_id\":\"fj-49b1f5e642314efe\",\"old_job_id\":\"\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "bob": "JobAccepted"
+          },
+          "completionTime": "2026-09-05T21:50:45Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T14:39:51Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T21:50:45Z",
+          "phase": "Failed",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "bob": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-05T14:39:51Z",
+          "taskStatus": {
+            "fate2-task-fj-49b1f5e642314efe": "Failed"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T13:27:23Z",
+          "generation": 1,
+          "name": "fj-a0f11d2d1eb04840",
+          "namespace": "cross-domain",
+          "resourceVersion": "5335518",
+          "uid": "ff3b4619-9445-4e77-8e23-18b2d45d4484"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "fate2-task-fj-a0f11d2d1eb04840",
+              "appImage": "fate2-adapter",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "guest"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "host"
+                }
+              ],
+              "taskID": "fate2-task-fj-a0f11d2d1eb04840",
+              "taskInputConfig": "{\"config\":{\"initiator\":{\"node_id\":\"alice\",\"party_id\":\"10000\",\"role\":\"guest\"},\"job_params\":{\"common\":{\"sync_type\":\"poll\"}},\"role\":{\"guest\":[\"alice\"],\"host\":[\"bob\"]},\"task_params\":{\"common\":{}},\"version\":\"2.0\"},\"dag\":{\"components\":[{\"componentName\":\"Reader\",\"input\":[],\"name\":\"reader_0\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"Intersection\",\"input\":[],\"name\":\"intersection_1\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"intersect_method\":\"rsa\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"HeteroLR\",\"input\":[],\"name\":\"hetero_lr_2\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"batch_size\":-1,\"learning_rate\":0.15,\"max_iter\":30},\"provider\":\"fate\",\"version\":\"2.0.0\"}],\"version\":\"2.0\"},\"fate_flow_address\":\"http://host.docker.internal:19380\",\"job_id\":\"fj-a0f11d2d1eb04840\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "bob": "JobAccepted"
+          },
+          "completionTime": "2026-09-05T13:34:30Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T13:27:23Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T13:34:30Z",
+          "phase": "Failed",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "bob": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-05T13:27:23Z",
+          "taskStatus": {
+            "fate2-task-fj-a0f11d2d1eb04840": "Failed"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T14:34:09Z",
+          "generation": 1,
+          "name": "fj-b5b76cf090fa4263",
+          "namespace": "cross-domain",
+          "resourceVersion": "5340581",
+          "uid": "6deed44d-9173-497b-af3e-bdb11b9a0a9f"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "fate2-task-fj-b5b76cf090fa4263",
+              "appImage": "fate2-adapter",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "guest"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "host"
+                }
+              ],
+              "taskID": "fate2-task-fj-b5b76cf090fa4263",
+              "taskInputConfig": "{\"config\":{\"initiator\":{\"node_id\":\"alice\",\"party_id\":\"10000\",\"role\":\"guest\"},\"job_params\":{\"common\":{\"sync_type\":\"poll\"}},\"role\":{\"arbiter\":[],\"guest\":[\"alice\"],\"host\":[\"bob\"]},\"task_params\":{\"common\":{\"coordinated_lr_1\":{\"epochs\":20},\"psi_0\":{\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"}},\"guest\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_guest\"}}},\"host\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_host\"}}}},\"version\":\"2.0\"},\"dag\":{\"components\":[{\"componentName\":\"psi\",\"input\":[],\"name\":\"psi_0\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"__guestDatasetId\":\"fd-ca0126808eba4d50\",\"__guestDatasetRef\":\"experiment#breast_hetero_guest\",\"__hostDatasetId\":\"fd-660b51f067024173\",\"__hostDatasetRef\":\"experiment#breast_hetero_host\",\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"coordinated_lr\",\"input\":[{\"key\":\"psi_0.data\",\"type\":\"dataset\"}],\"name\":\"coordinated_lr_1\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"epochs\":20},\"provider\":\"fate\",\"version\":\"2.0.0\"}],\"version\":\"2.0\"},\"fate_flow_address\":\"http://host.docker.internal:19381\",\"job_id\":\"fj-b5b76cf090fa4263\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "bob": "JobAccepted"
+          },
+          "completionTime": "2026-09-05T14:34:13Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T14:34:09Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T14:34:13Z",
+          "phase": "Failed",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "bob": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-05T14:34:09Z",
+          "taskStatus": {
+            "fate2-task-fj-b5b76cf090fa4263": "Failed"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-bfia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T13:22:05Z",
+          "generation": 1,
+          "labels": {
+            "kuscia.secretflow/interconn-protocol-type": "bfia"
+          },
+          "name": "fj-d7ae8031fada4a32",
+          "namespace": "cross-domain",
+          "resourceVersion": "5316932",
+          "uid": "ef15e141-caa5-4995-9d44-f8d008306146"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "fate2-task-fj-d7ae8031fada4a32",
+              "appImage": "fate2-adapter",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "guest"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "host"
+                }
+              ],
+              "taskID": "fate2-task-fj-d7ae8031fada4a32",
+              "taskInputConfig": "{\"config\":{\"initiator\":{\"node_id\":\"alice\",\"party_id\":\"10000\",\"role\":\"guest\"},\"job_params\":{\"common\":{\"sync_type\":\"poll\"}},\"role\":{\"guest\":[\"alice\"],\"host\":[\"bob\"]},\"task_params\":{\"common\":{}},\"version\":\"2.0\"},\"dag\":{\"components\":[{\"componentName\":\"Reader\",\"input\":[],\"name\":\"reader_0\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"Intersection\",\"input\":[],\"name\":\"intersection_1\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"intersect_method\":\"rsa\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"HeteroLR\",\"input\":[],\"name\":\"hetero_lr_2\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"batch_size\":-1,\"learning_rate\":0.15,\"max_iter\":30},\"provider\":\"fate\",\"version\":\"2.0.0\"}],\"version\":\"2.0\"},\"fate_flow_address\":\"http://host.docker.internal:19380\",\"job_id\":\"fj-d7ae8031fada4a32\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "completionTime": "2026-09-05T13:22:05Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T13:22:05Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T13:22:05Z",
+          "phase": "Failed",
+          "reason": "Party: alice create failed.",
+          "stageStatus": {
+            "alice": "JobCreateStageFailed"
+          },
+          "startTime": "2026-09-05T13:22:05Z"
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-07T02:44:33Z",
+          "generation": 1,
+          "name": "fj-df9d0daa7f5d4e92",
+          "namespace": "cross-domain",
+          "resourceVersion": "6976195",
+          "uid": "725c9a47-f899-43bf-ad39-69cd0c140b1f"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "fate2-task-fj-df9d0daa7f5d4e92",
+              "appImage": "fate2-adapter",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "guest"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "host"
+                }
+              ],
+              "taskID": "fate2-task-fj-df9d0daa7f5d4e92",
+              "taskInputConfig": "{\"config\":{\"initiator\":{\"node_id\":\"alice\",\"party_id\":\"10000\",\"role\":\"guest\"},\"job_params\":{\"common\":{\"sync_type\":\"poll\"}},\"role\":{\"arbiter\":[],\"guest\":[\"alice\"],\"host\":[\"bob\"]},\"task_params\":{\"common\":{\"coordinated_lr_1\":{\"epochs\":20},\"psi_0\":{\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"}},\"guest\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_guest\"}}},\"host\":{\"0\":{\"psi_0\":{\"dataset_id\":\"experiment#breast_hetero_host\"}}}},\"version\":\"2.0\"},\"dag\":{\"components\":[{\"componentName\":\"psi\",\"input\":[],\"name\":\"psi_0\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"__guestDatasetId\":\"fd-ca0126808eba4d50\",\"__guestDatasetRef\":\"experiment#breast_hetero_guest\",\"__hostDatasetId\":\"fd-660b51f067024173\",\"__hostDatasetRef\":\"experiment#breast_hetero_host\",\"curve_type\":\"curve25519\",\"protocol\":\"ecdh_psi\"},\"provider\":\"fate\",\"version\":\"2.0.0\"},{\"componentName\":\"coordinated_lr\",\"input\":[{\"key\":\"psi_0.data\",\"type\":\"dataset\"}],\"name\":\"coordinated_lr_1\",\"output\":[{\"key\":\"data\",\"type\":\"dataset\"}],\"parameter\":{\"epochs\":20},\"provider\":\"fate\",\"version\":\"2.0.0\"}],\"version\":\"2.0\"},\"fate_flow_address\":\"http://host.docker.internal:19381\",\"flow_id\":\"fj-df9d0daa7f5d4e92\",\"job_id\":\"fj-df9d0daa7f5d4e92\",\"old_job_id\":\"\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "bob": "JobAccepted"
+          },
+          "completionTime": "2026-09-07T02:45:33Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-07T02:44:33Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-07T02:45:33Z",
+          "phase": "Succeeded",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "bob": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-07T02:44:33Z",
+          "taskStatus": {
+            "fate2-task-fj-df9d0daa7f5d4e92": "Succeeded"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T22:50:34Z",
+          "generation": 1,
+          "name": "ftjz",
+          "namespace": "cross-domain",
+          "resourceVersion": "5892606",
+          "uid": "dc0a93e4-55f6-4562-b6ac-7543ed2e8710"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "ftjz-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskID": "ftjz-new-n3",
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"1.0.0\",\n    \"attr_paths\": [\"input/input_table_1/key\", \"input/input_table_2/key\", \"protocol\", \"sort_result\", \"allow_duplicate_keys\", \"allow_duplicate_keys/no/skip_duplicates_check\", \"ecdh_curve\", \"allow_duplicate_keys/no/receiver_parties\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"s\": \"no\"\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"CURVE_FOURQ\"\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"ckftjz-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"ftjz_new_n3_output_0\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"ftjz-new-n3-output-0\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "kimi": "JobAccepted"
+          },
+          "completionTime": "2026-09-05T22:50:46Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T22:50:34Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T22:50:46Z",
+          "phase": "Failed",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "kimi": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-05T22:50:34Z",
+          "taskStatus": {
+            "ftjz-new-n3": "Failed"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T22:46:40Z",
+          "generation": 1,
+          "name": "hblw",
+          "namespace": "cross-domain",
+          "resourceVersion": "5892198",
+          "uid": "e2e8da2c-251c-48d6-9349-6fed25aef492"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "hblw-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskID": "hblw-new-n3",
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"0.0.7\",\n    \"attr_paths\": [\"input/input_table_1/key\", \"input/input_table_2/key\", \"protocol\", \"sort_result\", \"allow_duplicate_keys\", \"allow_duplicate_keys/no/skip_duplicates_check\", \"ecdh_curve\", \"allow_duplicate_keys/no/receiver_parties\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"s\": \"no\"\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"CURVE_FOURQ\"\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"ckhblw-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"hblw_new_n3_output_0\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"hblw-new-n3-output-0\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "kimi": "JobAccepted"
+          },
+          "completionTime": "2026-09-05T22:47:10Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T22:46:40Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T22:47:10Z",
+          "phase": "Failed",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "kimi": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-05T22:46:40Z",
+          "taskStatus": {
+            "hblw-new-n3": "Failed"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-bfia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T21:52:55Z",
+          "generation": 2,
+          "labels": {
+            "kuscia.secretflow/interconn-protocol-type": "bfia",
+            "kuscia.secretflow/job-stage": "Start",
+            "kuscia.secretflow/job-stage-trigger": "alice",
+            "kuscia.secretflow/job-stage-version": "1"
+          },
+          "name": "mxpp",
+          "namespace": "cross-domain",
+          "resourceVersion": "5742052",
+          "uid": "e7dd7509-81e0-4734-8991-142b5517d084"
+        },
+        "spec": {
+          "flowID": "ultccyfx",
+          "initiator": "alice",
+          "maxParallelism": 2,
+          "scheduleMode": "Strict",
+          "tasks": [
+            {
+              "alias": "ss-lr-ultccyfx-node-33",
+              "appImage": "ic-ss-lr",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "host"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "guest"
+                }
+              ],
+              "taskID": "mxpp-fb87c486b77f",
+              "taskInputConfig": "{\"name\":\"ss-lr-ultccyfx-node-33\",\"module_name\":\"ss_lr\",\"output\":[{\"type\":\"dataset\",\"key\":\"result\"}],\"role\":{\"host\":[\"alice\"],\"guest\":[\"bob\"]},\"initiator\":{\"role\":\"host\",\"node_id\":\"alice\"},\"task_params\":{\"host\":{\"0\":{\"field_names\":\"x1,x2,x3,x4,x5,x6,x7,x8,x9,x10\",\"has_label\":true,\"name\":\"perfect_logit_a.csv\",\"namespace\":\"data\"}},\"guest\":{\"0\":{\"field_names\":\"x11,x12,x13,x14,x15,x16,x17,x18,x19,x20\",\"has_label\":false,\"name\":\"perfect_logit_b.csv\",\"namespace\":\"data\"}},\"common\":{\"algo\":\"ss_lr\",\"batch_size\":32,\"field\":64,\"fxp_bits\":18,\"l0_norm\":0,\"l1_norm\":0,\"l2_norm\":0.5,\"label_name\":\"y\",\"label_owner\":\"host.0\",\"last_batch_policy\":\"discard\",\"learning_rate\":0.0001,\"num_epoch\":10,\"optimizer\":\"sgd\",\"protocol\":\"semi2k\",\"protocol_families\":\"ss\",\"shard_serialize_format\":\"raw\",\"sigmoid_mode\":\"minimax_1\",\"skip_rows\":1,\"start_transport\":false,\"trunc_mode\":\"probabilistic\",\"use_ttp\":false}},\"componentName\":\"ic-ss-lr\",\"version\":\"1.0.0\",\"provider\":\"secretflow\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "completionTime": "2026-09-05T21:54:40Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T21:52:55Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T21:54:40Z",
+          "phase": "Failed",
+          "stageStatus": {
+            "alice": "JobStartStageSucceeded",
+            "bob": "JobStartStageSucceeded"
+          },
+          "startTime": "2026-09-05T21:52:55Z",
+          "taskStatus": {
+            "mxpp-fb87c486b77f": "Failed"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-bfia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-06T00:03:47Z",
+          "generation": 2,
+          "labels": {
+            "kuscia.secretflow/interconn-protocol-type": "bfia",
+            "kuscia.secretflow/job-stage": "Start",
+            "kuscia.secretflow/job-stage-trigger": "alice",
+            "kuscia.secretflow/job-stage-version": "1"
+          },
+          "name": "njfy",
+          "namespace": "cross-domain",
+          "resourceVersion": "6118511",
+          "uid": "75b4964a-d780-4167-953b-b932f32360ed"
+        },
+        "spec": {
+          "flowID": "hdzwabpk",
+          "initiator": "alice",
+          "maxParallelism": 2,
+          "scheduleMode": "Strict",
+          "tasks": [
+            {
+              "alias": "ecdh-psi-hdzwabpk-node-37",
+              "appImage": "ic-ecdh-psi",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "host"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "guest"
+                }
+              ],
+              "taskID": "njfy-5c649cd43564",
+              "taskInputConfig": "{\"name\":\"ecdh-psi-hdzwabpk-node-37\",\"module_name\":\"ecdh_psi\",\"output\":[{\"type\":\"dataset\",\"key\":\"result\"}],\"role\":{\"host\":[\"alice\"],\"guest\":[\"bob\"]},\"initiator\":{\"role\":\"host\",\"node_id\":\"alice\"},\"task_params\":{\"host\":{\"0\":{\"field_names\":\"id\",\"has_label\":false,\"name\":\"codex_ui_20260905_alice.csv\",\"namespace\":\"data\"}},\"guest\":{\"0\":{\"field_names\":\"id\",\"has_label\":false,\"name\":\"codex_ui_20260905_bob.csv\",\"namespace\":\"data\"}},\"common\":{\"algo\":\"ecdh_psi\",\"bit_length_after_truncated\":-1,\"curve_type\":\"curve25519\",\"hash2curve_strategy\":\"direct_hash_as_point_x\",\"hash_type\":\"sha_256\",\"point_octet_format\":\"uncompressed\",\"protocol_families\":\"ecc\",\"result_to_rank\":-1,\"start_transport\":false}},\"componentName\":\"ic-ecdh-psi\",\"version\":\"1.0.0\",\"provider\":\"secretflow\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "completionTime": "2026-09-06T00:03:54Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-06T00:03:47Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-06T00:03:54Z",
+          "phase": "Failed",
+          "stageStatus": {
+            "alice": "JobStartStageSucceeded",
+            "bob": "JobStartStageSucceeded"
+          },
+          "startTime": "2026-09-06T00:03:47Z",
+          "taskStatus": {
+            "njfy-5c649cd43564": "Failed"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-bfia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T09:12:44Z",
+          "generation": 2,
+          "labels": {
+            "kuscia.secretflow/interconn-protocol-type": "bfia",
+            "kuscia.secretflow/job-stage": "Start",
+            "kuscia.secretflow/job-stage-trigger": "alice",
+            "kuscia.secretflow/job-stage-version": "1"
+          },
+          "name": "nkrl",
+          "namespace": "cross-domain",
+          "resourceVersion": "4326762",
+          "uid": "c171ceb5-74f4-47f6-9b07-95da3aab5fbf"
+        },
+        "spec": {
+          "flowID": "hdzwabpk",
+          "initiator": "alice",
+          "maxParallelism": 2,
+          "scheduleMode": "Strict",
+          "tasks": [
+            {
+              "alias": "ecdh-psi-hdzwabpk-node-37",
+              "appImage": "ic-ecdh-psi",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "host"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "guest"
+                }
+              ],
+              "taskID": "nkrl-50d964374ef3",
+              "taskInputConfig": "{\"name\":\"ecdh-psi-hdzwabpk-node-37\",\"module_name\":\"ecdh_psi\",\"output\":[{\"type\":\"dataset\",\"key\":\"result\"}],\"role\":{\"host\":[\"alice\"],\"guest\":[\"bob\"]},\"initiator\":{\"role\":\"host\",\"node_id\":\"alice\"},\"task_params\":{\"host\":{\"0\":{\"field_names\":\"id\",\"has_label\":false,\"name\":\"codex_ui_20260905_alice.csv\",\"namespace\":\"data\"}},\"guest\":{\"0\":{\"field_names\":\"id\",\"has_label\":false,\"name\":\"codex_ui_20260905_bob.csv\",\"namespace\":\"data\"}},\"common\":{\"algo\":\"ecdh_psi\",\"bit_length_after_truncated\":-1,\"curve_type\":\"curve25519\",\"hash2curve_strategy\":\"direct_hash_as_point_x\",\"hash_type\":\"sha_256\",\"point_octet_format\":\"uncompressed\",\"protocol_families\":\"ecc\",\"result_to_rank\":-1,\"start_transport\":false}},\"componentName\":\"ic-ecdh-psi\",\"version\":\"1.0.0\",\"provider\":\"secretflow\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "completionTime": "2026-09-05T09:12:55Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T09:12:45Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T09:12:55Z",
+          "phase": "Succeeded",
+          "stageStatus": {
+            "alice": "JobStartStageSucceeded",
+            "bob": "JobStartStageSucceeded"
+          },
+          "startTime": "2026-09-05T09:12:45Z",
+          "taskStatus": {
+            "nkrl-50d964374ef3": "Succeeded"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-bfia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-06T00:40:56Z",
+          "generation": 2,
+          "labels": {
+            "kuscia.secretflow/interconn-protocol-type": "bfia",
+            "kuscia.secretflow/job-stage": "Start",
+            "kuscia.secretflow/job-stage-trigger": "alice",
+            "kuscia.secretflow/job-stage-version": "1"
+          },
+          "name": "okmj",
+          "namespace": "cross-domain",
+          "resourceVersion": "6231286",
+          "uid": "c500ae13-862f-437e-a658-10a114bda2c6"
+        },
+        "spec": {
+          "flowID": "hdzwabpk",
+          "initiator": "alice",
+          "maxParallelism": 2,
+          "scheduleMode": "Strict",
+          "tasks": [
+            {
+              "alias": "ecdh-psi-hdzwabpk-node-37",
+              "appImage": "ic-ecdh-psi",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "host"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "guest"
+                }
+              ],
+              "taskID": "okmj-4c2347fa1748",
+              "taskInputConfig": "{\"name\":\"ecdh-psi-hdzwabpk-node-37\",\"module_name\":\"ecdh_psi\",\"output\":[{\"type\":\"dataset\",\"key\":\"result\"}],\"role\":{\"host\":[\"alice\"],\"guest\":[\"bob\"]},\"initiator\":{\"role\":\"host\",\"node_id\":\"alice\"},\"task_params\":{\"host\":{\"0\":{\"field_names\":\"id\",\"has_label\":false,\"name\":\"codex_ui_20260905_alice.csv\",\"namespace\":\"data\"}},\"guest\":{\"0\":{\"field_names\":\"id\",\"has_label\":false,\"name\":\"codex_ui_20260905_bob.csv\",\"namespace\":\"data\"}},\"common\":{\"algo\":\"ecdh_psi\",\"bit_length_after_truncated\":-1,\"curve_type\":\"curve25519\",\"hash2curve_strategy\":\"direct_hash_as_point_x\",\"hash_type\":\"sha_256\",\"point_octet_format\":\"uncompressed\",\"protocol_families\":\"ecc\",\"result_to_rank\":-1,\"start_transport\":false}},\"componentName\":\"ic-ecdh-psi\",\"version\":\"1.0.0\",\"provider\":\"secretflow\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "completionTime": "2026-09-06T00:41:19Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-06T00:40:56Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-06T00:41:19Z",
+          "phase": "Succeeded",
+          "stageStatus": {
+            "alice": "JobStartStageSucceeded",
+            "bob": "JobStartStageSucceeded"
+          },
+          "startTime": "2026-09-06T00:40:56Z",
+          "taskStatus": {
+            "okmj-4c2347fa1748": "Succeeded"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-bfia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T23:54:54Z",
+          "generation": 2,
+          "labels": {
+            "kuscia.secretflow/interconn-protocol-type": "bfia",
+            "kuscia.secretflow/job-stage": "Start",
+            "kuscia.secretflow/job-stage-trigger": "alice",
+            "kuscia.secretflow/job-stage-version": "1"
+          },
+          "name": "pjri",
+          "namespace": "cross-domain",
+          "resourceVersion": "6088110",
+          "uid": "5bb9c6f0-3394-4d6a-b9bf-b31bd446b4d4"
+        },
+        "spec": {
+          "flowID": "hdzwabpk",
+          "initiator": "alice",
+          "maxParallelism": 2,
+          "scheduleMode": "Strict",
+          "tasks": [
+            {
+              "alias": "ecdh-psi-hdzwabpk-node-37",
+              "appImage": "ic-ecdh-psi",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "host"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "guest"
+                }
+              ],
+              "taskID": "pjri-9788daea915b",
+              "taskInputConfig": "{\"name\":\"ecdh-psi-hdzwabpk-node-37\",\"module_name\":\"ecdh_psi\",\"output\":[{\"type\":\"dataset\",\"key\":\"result\"}],\"role\":{\"host\":[\"alice\"],\"guest\":[\"bob\"]},\"initiator\":{\"role\":\"host\",\"node_id\":\"alice\"},\"task_params\":{\"host\":{\"0\":{\"field_names\":\"id\",\"has_label\":false,\"name\":\"codex_ui_20260905_alice.csv\",\"namespace\":\"data\"}},\"guest\":{\"0\":{\"field_names\":\"id\",\"has_label\":false,\"name\":\"codex_ui_20260905_bob.csv\",\"namespace\":\"data\"}},\"common\":{\"algo\":\"ecdh_psi\",\"bit_length_after_truncated\":-1,\"curve_type\":\"curve25519\",\"hash2curve_strategy\":\"direct_hash_as_point_x\",\"hash_type\":\"sha_256\",\"point_octet_format\":\"uncompressed\",\"protocol_families\":\"ecc\",\"result_to_rank\":-1,\"start_transport\":false}},\"componentName\":\"ic-ecdh-psi\",\"version\":\"1.0.0\",\"provider\":\"secretflow\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "completionTime": "2026-09-05T23:56:39Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T23:54:54Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T23:56:39Z",
+          "phase": "Failed",
+          "stageStatus": {
+            "alice": "JobStartStageSucceeded",
+            "bob": "JobStartStageSucceeded"
+          },
+          "startTime": "2026-09-05T23:54:54Z",
+          "taskStatus": {
+            "pjri-9788daea915b": "Failed"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-06T03:40:49Z",
+          "generation": 1,
+          "name": "qgxp",
+          "namespace": "cross-domain",
+          "resourceVersion": "6798303",
+          "uid": "23cc99da-1208-4612-9794-c2ef516ae39e"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "qgxp-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskID": "qgxp-new-n3",
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"1.0.0\",\n    \"attr_paths\": [\"input/input_ds1/keys\", \"input/input_ds2/keys\", \"protocol\", \"sort_result\", \"receiver_parties\", \"allow_empty_result\", \"join_type\", \"input_ds1_keys_duplicated\", \"input_ds2_keys_duplicated\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"inner_join\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"ckqgxp-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"qgxp_new_n3_output_0\", \"qgxp_new_n3_output_1\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"qgxp-new-n3-output-0\", \"qgxp-new-n3-output-1\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "kimi": "JobAccepted"
+          },
+          "completionTime": "2026-09-06T03:41:00Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-06T03:40:49Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-06T03:41:00Z",
+          "phase": "Succeeded",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "kimi": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-06T03:40:49Z",
+          "taskStatus": {
+            "qgxp-new-n3": "Succeeded"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T22:52:15Z",
+          "generation": 1,
+          "name": "tnka",
+          "namespace": "cross-domain",
+          "resourceVersion": "5892903",
+          "uid": "c6e99874-cae7-4531-a54d-eed46de5ad5f"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "tnka-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskID": "tnka-new-n3",
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"1.0.0\",\n    \"attr_paths\": [\"input/input_ds1/keys\", \"input/input_ds2/keys\", \"protocol\", \"sort_result\", \"receiver_parties\", \"allow_empty_result\", \"join_type\", \"input_ds1_keys_duplicated\", \"input_ds2_keys_duplicated\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"inner_join\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"cktnka-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"tnka_new_n3_output_0\", \"tnka_new_n3_output_1\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"tnka-new-n3-output-0\", \"tnka-new-n3-output-1\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "kimi": "JobAccepted"
+          },
+          "completionTime": "2026-09-05T22:52:30Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T22:52:15Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T22:52:30Z",
+          "phase": "Succeeded",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "kimi": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-05T22:52:15Z",
+          "taskStatus": {
+            "tnka-new-n3": "Succeeded"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-bfia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T23:45:36Z",
+          "generation": 2,
+          "labels": {
+            "kuscia.secretflow/interconn-protocol-type": "bfia",
+            "kuscia.secretflow/job-stage": "Start",
+            "kuscia.secretflow/job-stage-trigger": "alice",
+            "kuscia.secretflow/job-stage-version": "1"
+          },
+          "name": "ualr",
+          "namespace": "cross-domain",
+          "resourceVersion": "6048025",
+          "uid": "bdb579fb-c27a-4251-b139-830d569d29f2"
+        },
+        "spec": {
+          "flowID": "hdzwabpk",
+          "initiator": "alice",
+          "maxParallelism": 2,
+          "scheduleMode": "Strict",
+          "tasks": [
+            {
+              "alias": "ecdh-psi-hdzwabpk-node-37",
+              "appImage": "ic-ecdh-psi",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "host"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "guest"
+                }
+              ],
+              "taskID": "ualr-a654ca765291",
+              "taskInputConfig": "{\"name\":\"ecdh-psi-hdzwabpk-node-37\",\"module_name\":\"ecdh_psi\",\"output\":[{\"type\":\"dataset\",\"key\":\"result\"}],\"role\":{\"host\":[\"alice\"],\"guest\":[\"bob\"]},\"initiator\":{\"role\":\"host\",\"node_id\":\"alice\"},\"task_params\":{\"host\":{\"0\":{\"field_names\":\"id\",\"has_label\":false,\"name\":\"codex_ui_20260905_alice.csv\",\"namespace\":\"data\"}},\"guest\":{\"0\":{\"field_names\":\"id\",\"has_label\":false,\"name\":\"codex_ui_20260905_bob.csv\",\"namespace\":\"data\"}},\"common\":{\"algo\":\"ecdh_psi\",\"bit_length_after_truncated\":-1,\"curve_type\":\"curve25519\",\"hash2curve_strategy\":\"direct_hash_as_point_x\",\"hash_type\":\"sha_256\",\"point_octet_format\":\"uncompressed\",\"protocol_families\":\"ecc\",\"result_to_rank\":-1,\"start_transport\":false}},\"componentName\":\"ic-ecdh-psi\",\"version\":\"1.0.0\",\"provider\":\"secretflow\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "completionTime": "2026-09-05T23:47:21Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T23:45:36Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T23:47:21Z",
+          "phase": "Failed",
+          "stageStatus": {
+            "alice": "JobStartStageSucceeded",
+            "bob": "JobStartStageSucceeded"
+          },
+          "startTime": "2026-09-05T23:45:36Z",
+          "taskStatus": {
+            "ualr-a654ca765291": "Failed"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-bfia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T21:19:38Z",
+          "generation": 2,
+          "labels": {
+            "kuscia.secretflow/interconn-protocol-type": "bfia",
+            "kuscia.secretflow/job-stage": "Start",
+            "kuscia.secretflow/job-stage-trigger": "alice",
+            "kuscia.secretflow/job-stage-version": "1"
+          },
+          "name": "uhpd",
+          "namespace": "cross-domain",
+          "resourceVersion": "5622724",
+          "uid": "5f19d331-dadc-465b-97e1-484ac2be438e"
+        },
+        "spec": {
+          "flowID": "ultccyfx",
+          "initiator": "alice",
+          "maxParallelism": 2,
+          "scheduleMode": "Strict",
+          "tasks": [
+            {
+              "alias": "ss-lr-ultccyfx-node-33",
+              "appImage": "ic-ss-lr",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "host"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "guest"
+                }
+              ],
+              "taskID": "uhpd-9f3c9880c4a0",
+              "taskInputConfig": "{\"name\":\"ss-lr-ultccyfx-node-33\",\"module_name\":\"ss_lr\",\"output\":[{\"type\":\"dataset\",\"key\":\"result\"}],\"role\":{\"host\":[\"alice\"],\"guest\":[\"bob\"]},\"initiator\":{\"role\":\"host\",\"node_id\":\"alice\"},\"task_params\":{\"host\":{\"0\":{\"field_names\":\"x1,x2,x3,x4,x5,x6,x7,x8,x9,x10\",\"has_label\":true,\"name\":\"perfect_logit_a.csv\",\"namespace\":\"data\"}},\"guest\":{\"0\":{\"field_names\":\"x11,x12,x13,x14,x15,x16,x17,x18,x19,x20\",\"has_label\":false,\"name\":\"perfect_logit_b.csv\",\"namespace\":\"data\"}},\"common\":{\"algo\":\"ss_lr\",\"batch_size\":32,\"field\":64,\"fxp_bits\":18,\"l0_norm\":0,\"l1_norm\":0,\"l2_norm\":0.5,\"label_name\":\"y\",\"label_owner\":\"host.0\",\"last_batch_policy\":\"discard\",\"learning_rate\":0.0001,\"num_epoch\":10,\"optimizer\":\"sgd\",\"protocol\":\"semi2k\",\"protocol_families\":\"ss\",\"shard_serialize_format\":\"raw\",\"sigmoid_mode\":\"minimax_1\",\"skip_rows\":1,\"start_transport\":false,\"trunc_mode\":\"probabilistic\",\"use_ttp\":false}},\"componentName\":\"ic-ss-lr\",\"version\":\"1.0.0\",\"provider\":\"secretflow\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "completionTime": "2026-09-05T21:21:23Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T21:19:38Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T21:21:23Z",
+          "phase": "Failed",
+          "stageStatus": {
+            "alice": "JobStartStageSucceeded",
+            "bob": "JobStartStageSucceeded"
+          },
+          "startTime": "2026-09-05T21:19:38Z",
+          "taskStatus": {
+            "uhpd-9f3c9880c4a0": "Failed"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-bfia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-06T03:17:59Z",
+          "generation": 2,
+          "labels": {
+            "kuscia.secretflow/interconn-protocol-type": "bfia",
+            "kuscia.secretflow/job-stage": "Start",
+            "kuscia.secretflow/job-stage-trigger": "alice",
+            "kuscia.secretflow/job-stage-version": "1"
+          },
+          "name": "voft",
+          "namespace": "cross-domain",
+          "resourceVersion": "6777144",
+          "uid": "493bc444-9f12-42e3-9337-eeb605ca40fa"
+        },
+        "spec": {
+          "flowID": "iqdcehaj",
+          "initiator": "alice",
+          "maxParallelism": 2,
+          "scheduleMode": "Strict",
+          "tasks": [
+            {
+              "alias": "ecdh-psi-iqdcehaj-node-psi",
+              "appImage": "ic-ecdh-psi",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "host"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "guest"
+                }
+              ],
+              "taskID": "voft-900cd401fd50",
+              "taskInputConfig": "{\"name\":\"ecdh-psi-iqdcehaj-node-psi\",\"module_name\":\"ecdh_psi\",\"output\":[{\"type\":\"dataset\",\"key\":\"result\"}],\"role\":{\"host\":[\"alice\"],\"guest\":[\"bob\"]},\"initiator\":{\"role\":\"host\",\"node_id\":\"alice\"},\"task_params\":{\"host\":{\"0\":{\"field_names\":\"id\",\"name\":\"alice_1419035158.csv\",\"namespace\":\"data\"}},\"guest\":{\"0\":{\"field_names\":\"id\",\"name\":\"bob_1458117460.csv\",\"namespace\":\"data\"}},\"common\":{\"algo\":\"ecdh_psi\",\"bit_length_after_truncated\":-1,\"curve_type\":\"curve25519\",\"hash2curve_strategy\":\"direct_hash_as_point_x\",\"hash_type\":\"sha_256\",\"point_octet_format\":\"uncompressed\",\"protocol_families\":\"ecc\",\"result_to_rank\":-1,\"start_transport\":false}},\"componentName\":\"ic-ecdh-psi\",\"version\":\"1.0.0\",\"provider\":\"secretflow\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "completionTime": "2026-09-06T03:18:10Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-06T03:17:59Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-06T03:18:10Z",
+          "phase": "Succeeded",
+          "stageStatus": {
+            "alice": "JobStartStageSucceeded",
+            "bob": "JobStartStageSucceeded"
+          },
+          "startTime": "2026-09-06T03:17:59Z",
+          "taskStatus": {
+            "voft-900cd401fd50": "Succeeded"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-bfia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-06T01:57:10Z",
+          "generation": 2,
+          "labels": {
+            "kuscia.secretflow/interconn-protocol-type": "bfia",
+            "kuscia.secretflow/job-stage": "Start",
+            "kuscia.secretflow/job-stage-trigger": "alice",
+            "kuscia.secretflow/job-stage-version": "1"
+          },
+          "name": "vyhd",
+          "namespace": "cross-domain",
+          "resourceVersion": "6517434",
+          "uid": "8c43b039-3182-4bf9-bc0f-0066a9f83638"
+        },
+        "spec": {
+          "flowID": "iqdcehaj",
+          "initiator": "alice",
+          "maxParallelism": 2,
+          "scheduleMode": "Strict",
+          "tasks": [
+            {
+              "alias": "ecdh-psi-iqdcehaj-node-psi",
+              "appImage": "ic-ecdh-psi",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "host"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "guest"
+                }
+              ],
+              "taskID": "vyhd-0f32e46386ce",
+              "taskInputConfig": "{\"name\":\"ecdh-psi-iqdcehaj-node-psi\",\"module_name\":\"ecdh_psi\",\"output\":[{\"type\":\"dataset\",\"key\":\"result\"}],\"role\":{\"host\":[\"alice\"],\"guest\":[\"bob\"]},\"initiator\":{\"role\":\"host\",\"node_id\":\"alice\"},\"task_params\":{\"host\":{\"0\":{\"field_names\":\"id\",\"name\":\"alice_1419035158.csv\",\"namespace\":\"data\"}},\"guest\":{\"0\":{\"field_names\":\"id\",\"name\":\"bob_1458117460.csv\",\"namespace\":\"data\"}},\"common\":{\"algo\":\"ecdh_psi\",\"bit_length_after_truncated\":-1,\"curve_type\":\"curve25519\",\"hash2curve_strategy\":\"direct_hash_as_point_x\",\"hash_type\":\"sha_256\",\"point_octet_format\":\"uncompressed\",\"protocol_families\":\"ecc\",\"result_to_rank\":-1,\"start_transport\":false}},\"componentName\":\"ic-ecdh-psi\",\"version\":\"1.0.0\",\"provider\":\"secretflow\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "completionTime": "2026-09-06T01:57:21Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-06T01:57:10Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-06T01:57:21Z",
+          "phase": "Succeeded",
+          "stageStatus": {
+            "alice": "JobStartStageSucceeded",
+            "bob": "JobStartStageSucceeded"
+          },
+          "startTime": "2026-09-06T01:57:10Z",
+          "taskStatus": {
+            "vyhd-0f32e46386ce": "Succeeded"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-bfia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-06T00:55:33Z",
+          "generation": 2,
+          "labels": {
+            "kuscia.secretflow/interconn-protocol-type": "bfia",
+            "kuscia.secretflow/job-stage": "Start",
+            "kuscia.secretflow/job-stage-trigger": "alice",
+            "kuscia.secretflow/job-stage-version": "1"
+          },
+          "name": "wlmf",
+          "namespace": "cross-domain",
+          "resourceVersion": "6269636",
+          "uid": "a3391a95-4bc1-4ab0-b57b-b26357d34832"
+        },
+        "spec": {
+          "flowID": "hdzwabpk",
+          "initiator": "alice",
+          "maxParallelism": 2,
+          "scheduleMode": "Strict",
+          "tasks": [
+            {
+              "alias": "ecdh-psi-hdzwabpk-node-37",
+              "appImage": "ic-ecdh-psi",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "host"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "guest"
+                }
+              ],
+              "taskID": "wlmf-ef6818310510",
+              "taskInputConfig": "{\"name\":\"ecdh-psi-hdzwabpk-node-37\",\"module_name\":\"ecdh_psi\",\"output\":[{\"type\":\"dataset\",\"key\":\"result\"}],\"role\":{\"host\":[\"alice\"],\"guest\":[\"bob\"]},\"initiator\":{\"role\":\"host\",\"node_id\":\"alice\"},\"task_params\":{\"host\":{\"0\":{\"field_names\":\"id\",\"has_label\":false,\"name\":\"codex_ui_20260905_alice.csv\",\"namespace\":\"data\"}},\"guest\":{\"0\":{\"field_names\":\"id\",\"has_label\":false,\"name\":\"codex_ui_20260905_bob.csv\",\"namespace\":\"data\"}},\"common\":{\"algo\":\"ecdh_psi\",\"bit_length_after_truncated\":-1,\"curve_type\":\"curve25519\",\"hash2curve_strategy\":\"direct_hash_as_point_x\",\"hash_type\":\"sha_256\",\"point_octet_format\":\"uncompressed\",\"protocol_families\":\"ecc\",\"result_to_rank\":-1,\"start_transport\":false}},\"componentName\":\"ic-ecdh-psi\",\"version\":\"1.0.0\",\"provider\":\"secretflow\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "completionTime": "2026-09-06T00:55:44Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-06T00:55:33Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-06T00:55:44Z",
+          "phase": "Succeeded",
+          "stageStatus": {
+            "alice": "JobStartStageSucceeded",
+            "bob": "JobStartStageSucceeded"
+          },
+          "startTime": "2026-09-06T00:55:33Z",
+          "taskStatus": {
+            "wlmf-ef6818310510": "Succeeded"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-bfia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T21:21:34Z",
+          "generation": 2,
+          "labels": {
+            "kuscia.secretflow/interconn-protocol-type": "bfia",
+            "kuscia.secretflow/job-stage": "Start",
+            "kuscia.secretflow/job-stage-trigger": "alice",
+            "kuscia.secretflow/job-stage-version": "1"
+          },
+          "name": "xqvg",
+          "namespace": "cross-domain",
+          "resourceVersion": "5629541",
+          "uid": "178a48c5-0dcd-428a-b21d-56757ea521b1"
+        },
+        "spec": {
+          "flowID": "ultccyfx",
+          "initiator": "alice",
+          "maxParallelism": 2,
+          "scheduleMode": "Strict",
+          "tasks": [
+            {
+              "alias": "ss-lr-ultccyfx-node-33",
+              "appImage": "ic-ss-lr",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "host"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "guest"
+                }
+              ],
+              "taskID": "xqvg-1b6e0da91aaf",
+              "taskInputConfig": "{\"name\":\"ss-lr-ultccyfx-node-33\",\"module_name\":\"ss_lr\",\"output\":[{\"type\":\"dataset\",\"key\":\"result\"}],\"role\":{\"host\":[\"alice\"],\"guest\":[\"bob\"]},\"initiator\":{\"role\":\"host\",\"node_id\":\"alice\"},\"task_params\":{\"host\":{\"0\":{\"field_names\":\"x1,x2,x3,x4,x5,x6,x7,x8,x9,x10\",\"has_label\":true,\"name\":\"perfect_logit_a.csv\",\"namespace\":\"data\"}},\"guest\":{\"0\":{\"field_names\":\"x11,x12,x13,x14,x15,x16,x17,x18,x19,x20\",\"has_label\":false,\"name\":\"perfect_logit_b.csv\",\"namespace\":\"data\"}},\"common\":{\"algo\":\"ss_lr\",\"batch_size\":32,\"field\":64,\"fxp_bits\":18,\"l0_norm\":0,\"l1_norm\":0,\"l2_norm\":0.5,\"label_name\":\"y\",\"label_owner\":\"host.0\",\"last_batch_policy\":\"discard\",\"learning_rate\":0.0001,\"num_epoch\":10,\"optimizer\":\"sgd\",\"protocol\":\"semi2k\",\"protocol_families\":\"ss\",\"shard_serialize_format\":\"raw\",\"sigmoid_mode\":\"minimax_1\",\"skip_rows\":1,\"start_transport\":false,\"trunc_mode\":\"probabilistic\",\"use_ttp\":false}},\"componentName\":\"ic-ss-lr\",\"version\":\"1.0.0\",\"provider\":\"secretflow\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "completionTime": "2026-09-05T21:23:19Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T21:21:35Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T21:23:19Z",
+          "phase": "Failed",
+          "stageStatus": {
+            "alice": "JobStartStageSucceeded",
+            "bob": "JobStartStageSucceeded"
+          },
+          "startTime": "2026-09-05T21:21:35Z",
+          "taskStatus": {
+            "xqvg-1b6e0da91aaf": "Failed"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-bfia-parties": "bob",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T23:41:59Z",
+          "generation": 2,
+          "labels": {
+            "kuscia.secretflow/interconn-protocol-type": "bfia",
+            "kuscia.secretflow/job-stage": "Start",
+            "kuscia.secretflow/job-stage-trigger": "alice",
+            "kuscia.secretflow/job-stage-version": "1"
+          },
+          "name": "yqzt",
+          "namespace": "cross-domain",
+          "resourceVersion": "6027044",
+          "uid": "229922fc-22d6-438d-8e49-475bf115fba8"
+        },
+        "spec": {
+          "flowID": "hdzwabpk",
+          "initiator": "alice",
+          "maxParallelism": 2,
+          "scheduleMode": "Strict",
+          "tasks": [
+            {
+              "alias": "ecdh-psi-hdzwabpk-node-37",
+              "appImage": "ic-ecdh-psi",
+              "parties": [
+                {
+                  "domainID": "alice",
+                  "role": "host"
+                },
+                {
+                  "domainID": "bob",
+                  "role": "guest"
+                }
+              ],
+              "taskID": "yqzt-7448769f21b2",
+              "taskInputConfig": "{\"name\":\"ecdh-psi-hdzwabpk-node-37\",\"module_name\":\"ecdh_psi\",\"output\":[{\"type\":\"dataset\",\"key\":\"result\"}],\"role\":{\"host\":[\"alice\"],\"guest\":[\"bob\"]},\"initiator\":{\"role\":\"host\",\"node_id\":\"alice\"},\"task_params\":{\"host\":{\"0\":{\"field_names\":\"id\",\"has_label\":false,\"name\":\"codex_ui_20260905_alice.csv\",\"namespace\":\"data\"}},\"guest\":{\"0\":{\"field_names\":\"id\",\"has_label\":false,\"name\":\"codex_ui_20260905_bob.csv\",\"namespace\":\"data\"}},\"common\":{\"algo\":\"ecdh_psi\",\"bit_length_after_truncated\":-1,\"curve_type\":\"curve25519\",\"hash2curve_strategy\":\"direct_hash_as_point_x\",\"hash_type\":\"sha_256\",\"point_octet_format\":\"uncompressed\",\"protocol_families\":\"ecc\",\"result_to_rank\":-1,\"start_transport\":false}},\"componentName\":\"ic-ecdh-psi\",\"version\":\"1.0.0\",\"provider\":\"secretflow\"}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "completionTime": "2026-09-05T23:42:31Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T23:41:59Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T23:42:31Z",
+          "phase": "Failed",
+          "stageStatus": {
+            "alice": "JobStartStageSucceeded",
+            "bob": "JobStartStageSucceeded"
+          },
+          "startTime": "2026-09-05T23:41:59Z",
+          "taskStatus": {
+            "yqzt-7448769f21b2": "Failed"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi",
+            "kuscia.secretflow/interconn-self-parties": "alice",
+            "kuscia.secretflow/self-cluster-as-initiator": "true"
+          },
+          "creationTimestamp": "2026-09-05T22:45:33Z",
+          "generation": 1,
+          "name": "zyxd",
+          "namespace": "cross-domain",
+          "resourceVersion": "5891948",
+          "uid": "6891edcb-98db-453e-b079-1e8533d41c4a"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "zyxd-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskID": "zyxd-new-n3",
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"0.0.7\",\n    \"attr_paths\": [\"input/input_table_1/key\", \"input/input_table_2/key\", \"protocol\", \"sort_result\", \"allow_duplicate_keys\", \"allow_duplicate_keys/no/skip_duplicates_check\", \"ecdh_curve\", \"allow_duplicate_keys/no/receiver_parties\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"s\": \"no\"\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"CURVE_FOURQ\"\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"ckzyxd-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"zyxd_new_n3_output_0\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"zyxd-new-n3-output-0\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        },
+        "status": {
+          "approveStatus": {
+            "alice": "JobAccepted",
+            "kimi": "JobAccepted"
+          },
+          "completionTime": "2026-09-05T22:45:56Z",
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-09-05T22:45:33Z",
+              "status": "True",
+              "type": "JobValidated"
+            }
+          ],
+          "lastReconcileTime": "2026-09-05T22:45:56Z",
+          "phase": "Failed",
+          "stageStatus": {
+            "alice": "JobCreateStageSucceeded",
+            "kimi": "JobCreateStageSucceeded"
+          },
+          "startTime": "2026-09-05T22:45:33Z",
+          "taskStatus": {
+            "zyxd-new-n3": "Failed"
+          }
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi"
+          },
+          "creationTimestamp": "2026-09-07T01:32:53Z",
+          "generation": 1,
+          "name": "buhf",
+          "namespace": "kimi",
+          "resourceVersion": "6939378",
+          "uid": "0d48abfc-7811-4188-8f25-e1c32d18eaad"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "buhf-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"1.0.0\",\n    \"attr_paths\": [\"input/input_ds1/keys\", \"input/input_ds2/keys\", \"protocol\", \"sort_result\", \"receiver_parties\", \"allow_empty_result\", \"join_type\", \"input_ds1_keys_duplicated\", \"input_ds2_keys_duplicated\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"inner_join\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"ckbuhf-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"buhf_new_n3_output_0\", \"buhf_new_n3_output_1\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"buhf-new-n3-output-0\", \"buhf-new-n3-output-1\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi"
+          },
+          "creationTimestamp": "2026-09-05T22:50:34Z",
+          "generation": 1,
+          "name": "ftjz",
+          "namespace": "kimi",
+          "resourceVersion": "5892485",
+          "uid": "156671f4-3d18-4b96-aefe-e807ff79d5e0"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "ftjz-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"1.0.0\",\n    \"attr_paths\": [\"input/input_table_1/key\", \"input/input_table_2/key\", \"protocol\", \"sort_result\", \"allow_duplicate_keys\", \"allow_duplicate_keys/no/skip_duplicates_check\", \"ecdh_curve\", \"allow_duplicate_keys/no/receiver_parties\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"s\": \"no\"\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"CURVE_FOURQ\"\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"ckftjz-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"ftjz_new_n3_output_0\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"ftjz-new-n3-output-0\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi"
+          },
+          "creationTimestamp": "2026-09-05T22:46:40Z",
+          "generation": 1,
+          "name": "hblw",
+          "namespace": "kimi",
+          "resourceVersion": "5892049",
+          "uid": "c4b03ac4-0661-4d5c-9743-26489801807f"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "hblw-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"0.0.7\",\n    \"attr_paths\": [\"input/input_table_1/key\", \"input/input_table_2/key\", \"protocol\", \"sort_result\", \"allow_duplicate_keys\", \"allow_duplicate_keys/no/skip_duplicates_check\", \"ecdh_curve\", \"allow_duplicate_keys/no/receiver_parties\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"s\": \"no\"\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"CURVE_FOURQ\"\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"ckhblw-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"hblw_new_n3_output_0\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"hblw-new-n3-output-0\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi"
+          },
+          "creationTimestamp": "2026-09-06T03:40:49Z",
+          "generation": 1,
+          "name": "qgxp",
+          "namespace": "kimi",
+          "resourceVersion": "6798167",
+          "uid": "38bc6f7e-fd40-4a5d-94ed-60a7606f072b"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "qgxp-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"1.0.0\",\n    \"attr_paths\": [\"input/input_ds1/keys\", \"input/input_ds2/keys\", \"protocol\", \"sort_result\", \"receiver_parties\", \"allow_empty_result\", \"join_type\", \"input_ds1_keys_duplicated\", \"input_ds2_keys_duplicated\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"inner_join\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"ckqgxp-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"qgxp_new_n3_output_0\", \"qgxp_new_n3_output_1\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"qgxp-new-n3-output-0\", \"qgxp-new-n3-output-1\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi"
+          },
+          "creationTimestamp": "2026-09-05T22:52:15Z",
+          "generation": 1,
+          "name": "tnka",
+          "namespace": "kimi",
+          "resourceVersion": "5892765",
+          "uid": "b016428d-1f20-40b3-a097-83bc710b3b5c"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "tnka-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"1.0.0\",\n    \"attr_paths\": [\"input/input_ds1/keys\", \"input/input_ds2/keys\", \"protocol\", \"sort_result\", \"receiver_parties\", \"allow_empty_result\", \"join_type\", \"input_ds1_keys_duplicated\", \"input_ds2_keys_duplicated\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"inner_join\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"cktnka-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"tnka_new_n3_output_0\", \"tnka_new_n3_output_1\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"tnka-new-n3-output-0\", \"tnka-new-n3-output-1\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        }
+      },
+      {
+        "apiVersion": "kuscia.secretflow/v1alpha1",
+        "kind": "KusciaJob",
+        "metadata": {
+          "annotations": {
+            "kuscia.secretflow/initiator": "alice",
+            "kuscia.secretflow/interconn-kuscia-parties": "kimi"
+          },
+          "creationTimestamp": "2026-09-05T22:45:33Z",
+          "generation": 1,
+          "name": "zyxd",
+          "namespace": "kimi",
+          "resourceVersion": "5891819",
+          "uid": "66759682-9f2e-4396-a582-c72e2e247605"
+        },
+        "spec": {
+          "initiator": "alice",
+          "maxParallelism": 1,
+          "scheduleMode": "BestEffort",
+          "tasks": [
+            {
+              "alias": "zyxd-new-n3",
+              "appImage": "secretflow-image",
+              "parties": [
+                {
+                  "domainID": "kimi"
+                },
+                {
+                  "domainID": "alice"
+                }
+              ],
+              "taskInputConfig": "{\n  \"sf_datasource_config\": {\n    \"kimi\": {\n      \"id\": \"default-data-source\"\n    },\n    \"alice\": {\n      \"id\": \"default-data-source\"\n    }\n  },\n  \"sf_cluster_desc\": {\n    \"parties\": [\"kimi\", \"alice\"],\n    \"devices\": [{\n      \"name\": \"spu\",\n      \"type\": \"spu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"runtime_config\\\":{\\\"protocol\\\":\\\"SEMI2K\\\",\\\"field\\\":\\\"FM128\\\"},\\\"link_desc\\\":{\\\"connect_retry_times\\\":60,\\\"connect_retry_interval_ms\\\":1000,\\\"brpc_channel_protocol\\\":\\\"http\\\",\\\"brpc_channel_connection_type\\\":\\\"pooled\\\",\\\"recv_timeout_ms\\\":1200000,\\\"http_timeout_ms\\\":1200000}}\"\n    }, {\n      \"name\": \"heu\",\n      \"type\": \"heu\",\n      \"parties\": [\"kimi\", \"alice\"],\n      \"config\": \"{\\\"mode\\\": \\\"PHEU\\\", \\\"schema\\\": \\\"paillier\\\", \\\"key_size\\\": 2048}\"\n    }],\n    \"ray_fed_config\": {\n      \"cross_silo_comm_backend\": \"brpc_link\"\n    }\n  },\n  \"sf_node_eval_param\": {\n    \"domain\": \"data_prep\",\n    \"name\": \"psi\",\n    \"version\": \"0.0.7\",\n    \"attr_paths\": [\"input/input_table_1/key\", \"input/input_table_2/key\", \"protocol\", \"sort_result\", \"allow_duplicate_keys\", \"allow_duplicate_keys/no/skip_duplicates_check\", \"ecdh_curve\", \"allow_duplicate_keys/no/receiver_parties\"],\n    \"attrs\": [{\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"id\"]\n    }, {\n      \"is_na\": false,\n      \"s\": \"PROTOCOL_RR22\"\n    }, {\n      \"b\": true,\n      \"is_na\": false\n    }, {\n      \"is_na\": false,\n      \"s\": \"no\"\n    }, {\n      \"is_na\": true\n    }, {\n      \"is_na\": false,\n      \"s\": \"CURVE_FOURQ\"\n    }, {\n      \"is_na\": false,\n      \"ss\": [\"alice\", \"kimi\"]\n    }],\n    \"inputs\": [{\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"alice_2054271181.csv\",\n        \"party\": \"alice\",\n        \"format\": \"csv\"\n      }]\n    }, {\n      \"type\": \"sf.table.individual\",\n      \"meta\": {\n        \"@type\": \"type.googleapis.com/secretflow.spec.v1.IndividualTable\",\n        \"line_count\": \"-1\"\n      },\n      \"data_refs\": [{\n        \"uri\": \"bob_942986142.csv\",\n        \"party\": \"kimi\",\n        \"format\": \"csv\"\n      }]\n    }],\n    \"checkpoint_uri\": \"ckzyxd-new-n3-output-0\"\n  },\n  \"sf_output_uris\": [\"zyxd_new_n3_output_0\"],\n  \"sf_input_ids\": [\"cavosnpl\", \"wocqofoj\"],\n  \"sf_input_partitions_spec\": [\"\", \"\"],\n  \"sf_output_ids\": [\"zyxd-new-n3-output-0\"],\n  \"table_attrs\": [{\n    \"table_id\": \"wocqofoj\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"score\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"label\",\n      \"col_type\": \"feature\"\n    }]\n  }, {\n    \"table_id\": \"cavosnpl\",\n    \"column_attrs\": [{\n      \"col_name\": \"id\",\n      \"col_type\": \"id\"\n    }, {\n      \"col_name\": \"age\",\n      \"col_type\": \"feature\"\n    }, {\n      \"col_name\": \"income\",\n      \"col_type\": \"feature\"\n    }]\n  }]\n}",
+              "tolerable": false
+            }
+          ]
+        }
+      }
+    ],
+    "kind": "List",
+    "metadata": {
+      "resourceVersion": ""
+    }
+  }
+}

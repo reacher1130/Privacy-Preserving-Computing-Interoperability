@@ -1,0 +1,7 @@
+{
+  "status": {
+    "code": 202011101,
+    "msg": "\u7cfb\u7edf\u672a\u77e5\u9519\u8bef: PaddleDTX requester failed: 2026/09/08 10:12:03.501 \u001b[1;33m[W]\u001b[0m init global config instance failed. If you donot use this, just ignore it. open conf/app.conf: no such file or directory StartTask failed\uff1a{\"code\":\"10001\",\"message\":\"failed to PreInvokeNativeContract: rpc error: code = Unavailable desc = all SubConns are in TransientFailure, latest connection error: connection error: desc = \\\"transport: Error while dialing dial tcp 127.0.0.1:44549: connect: connection refused\\\"\"}"
+  },
+  "data": null
+}

@@ -1,0 +1,9 @@
+{
+  "name": "optimization-predict-20260908",
+  "type": "predict",
+  "algorithm": "linear-vl",
+  "files": "5fa408b8-ff1a-458e-93b4-0fa60f97aff8,e093c830-3a7b-4e9c-a557-572336fcb4f5",
+  "executors": "executor1,executor2",
+  "psiLabel": "id,id",
+  "modelTaskId": "7109ac57-fdaf-4a2e-a98a-5c09a97542b1"
+}

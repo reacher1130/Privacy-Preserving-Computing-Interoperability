@@ -1,0 +1,28 @@
+{
+  "status": {
+    "code": 0,
+    "msg": "success"
+  },
+  "data": [
+    {
+      "clusterId": "fate-demo",
+      "name": "FATE Demo",
+      "nodeId": "alice",
+      "flowAddress": "http://host.docker.internal:19380",
+      "version": "2.0",
+      "description": "mock",
+      "status": "ACTIVE",
+      "gmtCreate": 1784655904000
+    },
+    {
+      "clusterId": "fc-4ed3f690c2cc409f",
+      "name": "FATE-2.2-local-e2e",
+      "nodeId": "alice",
+      "flowAddress": "http://host.docker.internal:19381",
+      "version": "2.2.0",
+      "description": "\u771f\u5b9e standalone_fate 2.2.0 \u672c\u5730\u5bb9\u5668",
+      "status": "ACTIVE",
+      "gmtCreate": 1788571614000
+    }
+  ]
+}

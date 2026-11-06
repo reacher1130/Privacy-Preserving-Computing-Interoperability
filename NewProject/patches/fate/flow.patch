@@ -1,0 +1,14 @@
+diff --git a/python/fate_flow/controller/parser.py b/python/fate_flow/controller/parser.py
+index 3208247a..2c95ab8e 100644
+--- a/python/fate_flow/controller/parser.py
++++ b/python/fate_flow/controller/parser.py
+@@ -232,7 +232,8 @@ class TaskParser(object):
+             from fate_flow.runtime.system_settings import STANDALONE_DATA_HOME
+             return StandaloneComputingSpec(
+                 type=ENGINES.get(EngineType.COMPUTING).lower(),
+-                metadata={"computing_id": self.computing_id, "options": {"data_dir": STANDALONE_DATA_HOME}}
++                metadata={"computing_id": self.computing_id, "options": {"data_dir": STANDALONE_DATA_HOME,
++                    "task_cores": max(1, int(self.engine_run.get("cores") or 1))}}
+             )
+ 
+         if ENGINES.get(EngineType.COMPUTING).lower() == ComputingEngine.EGGROLL:

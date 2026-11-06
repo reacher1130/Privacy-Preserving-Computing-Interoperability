@@ -1,0 +1,1 @@
+{"status":{"code":0,"msg":"success"},"data":{"defaultProtocol":"secretflow","canSwitch":true,"activeProtocol":"fate","supportedProtocols":["secretflow","bfia","fate","paddledtx"],"engineByProtocol":{"bfia":"BFIA interconnect adapter","fate":"FATE-Flow / fate2-adapter","secretflow":"SecretFlow / Kuscia","paddledtx":"PaddleDTX / paddlempc"}}}

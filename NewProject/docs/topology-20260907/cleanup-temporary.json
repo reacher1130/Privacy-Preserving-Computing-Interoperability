@@ -1,0 +1,20 @@
+[
+  {
+    "path": "/tmp/topology-node18",
+    "bytes": 185525001,
+    "removed": true,
+    "reason": "completed task temporary build/runtime/cache"
+  },
+  {
+    "path": "/tmp/topology-native-adapter",
+    "bytes": 8171836,
+    "removed": true,
+    "reason": "completed task temporary build/runtime/cache"
+  },
+  {
+    "path": "/tmp/topology-go-cache",
+    "bytes": 232650238,
+    "removed": true,
+    "reason": "completed task temporary build/runtime/cache"
+  }
+]

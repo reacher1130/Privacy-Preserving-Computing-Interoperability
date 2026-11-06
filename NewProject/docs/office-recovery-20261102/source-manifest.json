@@ -1,0 +1,402 @@
+{
+  "heads": {
+    ".": "6a27686d107393ccd6bc35b266db2e70a4e69c53",
+    "NewProject/secretflow": "32c83ef56ffbc29cba86ad5af6b755a040020eb1",
+    "NewProject/secretpad-frontend": "90a05a7a80aff19d37c4d93162ca1d1f26c20cf7",
+    "NewProject/kuscia": "e37e63b8710a869116a8af8b46900ecaf598bbd2"
+  },
+  "files": [
+    {
+      "path": "NewProject/scripts/environment.py",
+      "sha256": "3b7e120ff479eb402f6a8778e3b0e32d5d136ff534b12d732f0310be7ccef6d4",
+      "size": 2943,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/scripts/environments/README.md",
+      "sha256": "aeed93b0d5e08df03c12f4cc987e713fac905fd99aff7e47b08f27cc06d1eccb",
+      "size": 11242,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/scripts/environments/bfia-partners.py",
+      "sha256": "cdaa593fd2ab007d56834e990343c38a3f00a551612a02c0e78aa4d81c90277d",
+      "size": 2680,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/scripts/environments/bfia-smoke.py",
+      "sha256": "c6558a8d974717107de084137e4f4d3e9c6d878dcc17f3ecf3c71fa878acf0b0",
+      "size": 3468,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/scripts/environments/build-bfia.py",
+      "sha256": "fc4e5e96380e4ed812549b5e545e0b0e17114278ef6a6c3511576b5cdf847850",
+      "size": 6972,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/scripts/environments/build-runtime.sh",
+      "sha256": "bf27703417d52364ad6d552c7ae2ca9027710d26a3c3fb650aca7fe6ebc045cd",
+      "size": 1878,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/scripts/environments/export-release.py",
+      "sha256": "abaec86ea39fe7f8cf285bd03c60bcce203e5bc56b612bec692d6fd51b71786e",
+      "size": 4105,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/scripts/environments/home.json",
+      "sha256": "ccaa1279f2f149fb39e3f63c54acd2c506085c03b98450d0109e46f0337f7476",
+      "size": 224,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/scripts/environments/native-fate-entrypoint.sh",
+      "sha256": "e03699017814917609d87ba1a03f73b3ff2a63461d2cb5975f1e400c1966b347",
+      "size": 2193,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/scripts/environments/native-smoke.py",
+      "sha256": "9d4b406aadf3157169f32184217056f71e8866fbd064a658b21c203c599e03bf",
+      "size": 5017,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/scripts/environments/office.json",
+      "sha256": "b7e94aa91d3ea818936744f11ee7d3cd0d669d7b8c9229732338161da4295520",
+      "size": 229,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/scripts/environments/paddle-demo-data.py",
+      "sha256": "b1fb7e856520575a20341c4f157a9fb37e022f3f2c0f985d4f8351b574a06573",
+      "size": 2137,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/scripts/environments/paddle-provision.py",
+      "sha256": "e3507b917acc3f4fb76fdf741de430519df3b409fbdb679fb597c57c58c0ab3d",
+      "size": 6427,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/scripts/environments/portablectl.py",
+      "sha256": "3e5691fc077bc85a8e7930bc15a46e84ca31e3b51e186085c63e1a640b339c2a",
+      "size": 4539,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/scripts/environments/provision.py",
+      "sha256": "849783cfc27c4aa97c4c0d76ca3c669a1d18ab2a770403cc7b80044364a9d32a",
+      "size": 15505,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/scripts/environments/secretflow-smoke.py",
+      "sha256": "f089e3fdb1a834adf022535a1d5e9bd8098e154e345cbff68b18a63b3d6bb031",
+      "size": 5109,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/scripts/linux-migration/algorithms.sh",
+      "sha256": "9a235050931575e05601269865cbd86987de011534642c13680ff4066137b3cf",
+      "size": 2325,
+      "mode": 493
+    },
+    {
+      "path": "NewProject/scripts/linux-migration/build-platform.sh",
+      "sha256": "3e7be9837335f926b65ebcf9cf897a3e16cea1896ad2c167448ba44b61ef715d",
+      "size": 1572,
+      "mode": 493
+    },
+    {
+      "path": "NewProject/secretflow/bfia/PROTOCOL_LOGGING.md",
+      "sha256": "1f9f95c02145ac5ce2ae45d485c0e7ffb06478ec08425d73a9a532e08f50a0c5",
+      "size": 4180,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/bfia/collect_protocol_audit.py",
+      "sha256": "37f3ac74d640a7c9ef21a3fb8ad56772f11e0fbc5b24157c6bd996478b50e833",
+      "size": 4458,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/bfia/run_audited_cpp_tests.sh",
+      "sha256": "00fd44c7c70c2a695ed9b62a68e763e197743f82f82b09d464326261c1af8726",
+      "size": 823,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/bfia/run_cpp_tests.sh",
+      "sha256": "80d806bdc069e0f96fb480cde1fa83bf29c9b63b7ab06ee16cf62a5c3a11b04f",
+      "size": 24413,
+      "mode": 493
+    },
+    {
+      "path": "NewProject/secretflow/bfia/run_python_tests.sh",
+      "sha256": "546a72c536aa1072bea6e164ba90de366e125100dacf1f55f2a3cd1d5bcedf0f",
+      "size": 8660,
+      "mode": 493
+    },
+    {
+      "path": "NewProject/secretflow/bfia/test_audit_validation.py",
+      "sha256": "94d852925c40d20ed60e9b752301c4613fc090450ee3c069b6c73cfbb520dbef",
+      "size": 2492,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/bfia/validate_boundary_cases.py",
+      "sha256": "20ffaaf81ce748e15b23da852c65c82289a66fa2884ec7f97538caf197699e66",
+      "size": 2879,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/bfia/validate_numerics.py",
+      "sha256": "0d1d979ab4451f7268a89f4b26055b252099076b15681da96d7e789920995172",
+      "size": 7932,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/bfia/validate_python_outputs.py",
+      "sha256": "0712b50f105312559ba89c52ad4079be31584b59a712ab5739b707f6048797cf",
+      "size": 2156,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/BUILD.bazel",
+      "sha256": "681ac9f4ad089e27595f95c93f0f7c8bdfbdb27d314eff9139e2227a21a61c6c",
+      "size": 3292,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/algo/lr/BUILD.bazel",
+      "sha256": "c2a36d9f9d4b582415a0010d9b773133470f52d939da2d89372682de1825d3af",
+      "size": 1697,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/algo/lr/lr_context.cc",
+      "sha256": "9985c632c1fe8c99a757583c6155ea1ceb3b7d152e8721c6b0d1dc689707b2d2",
+      "size": 6530,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/algo/lr/lr_handler.cc",
+      "sha256": "6403aaf476ef3917c1694cfd7c06448e2221d7ecd2517965f71d8e1a8ee5783b",
+      "size": 37979,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/algo/ss_compare/BUILD.bazel",
+      "sha256": "882d4c0a9f315d93a4c2ace16f68d6f55c96527d2ebffe21fd2e88f4bb6358bd",
+      "size": 1045,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/algo/ss_compare/ss_compare_context.cc",
+      "sha256": "80d02fa23304d488acea49cbed1c582168b07c76028639bcdef7e73d2f3d0e9c",
+      "size": 2287,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/algo/ss_compare/ss_compare_handler.cc",
+      "sha256": "a9cd7e8095edb000e6a129dc4940412ab57344cf6bf9b37d217cedab224ad267",
+      "size": 26401,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/algo/ss_compare/ss_compare_handler.h",
+      "sha256": "304ec1b915f92e9fdd482497bbe383ecbb37b37ffb7b994fb3c71cc21314f3fe",
+      "size": 1574,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/algo/ss_pearson/BUILD.bazel",
+      "sha256": "b7a7ffa83234021126ce20e09608b3864722b898344c5a0b4ee605547801b4d8",
+      "size": 1046,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/algo/ss_pearson/ss_pearson_context.cc",
+      "sha256": "1988a651b4e8a089028331fcb3355fefbf7de13ce28e6201a5e416869e0ca79d",
+      "size": 2724,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/algo/ss_pearson/ss_pearson_handler.cc",
+      "sha256": "8df931cee2ddcdf677cb34a6ca714a0c6b9a036d007ce86d89912cddd503059b",
+      "size": 16341,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/algo/ss_vif/BUILD.bazel",
+      "sha256": "9cfb7aab1b4da1006f226c1327fc4c8d4f9d40fc5fa14bb37621a9fb8b3a2a29",
+      "size": 1017,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/algo/ss_vif/ss_vif_context.cc",
+      "sha256": "84b32c92e22c5ea110be45b17a37d7bf8fc898aefcdca91e45e4abfd628d8e78",
+      "size": 2699,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/algo/ss_vif/ss_vif_handler.cc",
+      "sha256": "b3087e1f7063d7686a7a6036726915bb40e51020d14c1fa24202199a4b437b51",
+      "size": 17867,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/algo/ss_xgb/BUILD.bazel",
+      "sha256": "050928649c107b9a4a172cecc6f425449da6ef137cb185851ca0ac92eca4a9df",
+      "size": 1157,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/algo/ss_xgb/ss_xgb_context.cc",
+      "sha256": "e204b7bb73e7a97cb3c70b7eec4572a95fe68119c7d8e950dd65b62592d63ce5",
+      "size": 6194,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/algo/ss_xgb/ss_xgb_handler.cc",
+      "sha256": "f6d18e3e160f8bc0bb7cde837697b84dabf10f7033d61b3d7464a970a3234426",
+      "size": 33177,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/algo/ss_xgb/ss_xgb_handler.h",
+      "sha256": "5c66334423bfc4b2bd56b85c5ce4d7122d8ab65943ce624213fc257bd788ed48",
+      "size": 2049,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/audit.h",
+      "sha256": "bd64bccd458d91aae688f3504d811f9567a81123ac7f464913cbc93541449247",
+      "size": 876,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/handler.cc",
+      "sha256": "2b7e4749490791f7f6409889a60d239edfd69977829c891df3cc627a2ce5f8be",
+      "size": 8812,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/ic_main.cc",
+      "sha256": "f927b6d3011b7ff56e392cd8612297e6e1588bc3ff09c102c0cfcc1a3e744efa",
+      "size": 4367,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/numeric_output.h",
+      "sha256": "fabd89caf61d83fae9cc2440302a439085779674b6e0fb0ad8ae056e1955422b",
+      "size": 5111,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/util.cc",
+      "sha256": "3528d14056b55becbb4d46f02e8f21e710d07eaa00ea15c5dbbbafbdff1f1436",
+      "size": 7959,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/secretflow/ic/audit.py",
+      "sha256": "c98ece6130984a271f4dddf396bb93ba79500011430d19342bc42da3fc78631e",
+      "size": 1116,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/secretflow/ic/handler/handler.py",
+      "sha256": "6c9131abf87f0bb6a1441e4f2b1915805dbffae28def09169f6751cf4dda6843",
+      "size": 5672,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/secretflow/ic/handler/sgb_handler.py",
+      "sha256": "97c9c09e63772fcc579413f54cf79f33bbfa5e08b060f3bca15fc1379dd9bf32",
+      "size": 13736,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretflow/secretflow/ic/proxy/link_proxy.py",
+      "sha256": "a12849078198d3f195ade0c2782fd7b0369b6bde4f8368b8f7c620934df73c8f",
+      "size": 4942,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretpad-frontend/apps/platform/src/modules/fate-management/fate-canvas.tsx",
+      "sha256": "537fa78565cfca6329a0ab005a3ebcdad9dab13868d46f63361b26b565422db9",
+      "size": 32703,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretpad-frontend/apps/platform/src/modules/fate-management/fate-management.service.ts",
+      "sha256": "7a939438657a49cccf425f1bfa9d494008663b5c9290caf0953b3b87e385ead7",
+      "size": 7290,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretpad-frontend/apps/platform/src/modules/fate-management/fate-management.view.tsx",
+      "sha256": "4f26b152b5a4330bb75bcec8b58d0147e5053802c76d430e10e9baa78111df2c",
+      "size": 28555,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretpad-frontend/apps/platform/src/modules/fate-management/index.less",
+      "sha256": "405040b9b7b3164ad24bdf1e6a7b15c864e7dd1c0453a6c7a508847082498e3c",
+      "size": 5982,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretpad-frontend/apps/platform/src/modules/fate-management/job-templates.ts",
+      "sha256": "20a61ca78eed8b7fb523fb1d8c120e26239ffddf4b9ccb256065d2781ffd0436",
+      "size": 4104,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretpad-frontend/apps/platform/src/modules/fate-management/template-picker.tsx",
+      "sha256": "c3c39dc358c625d415e9485e17ff3442d3d8028277a0e1b60276ac9e0c0f0c1a",
+      "size": 7175,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretpad-frontend/apps/platform/src/modules/paddledtx-management/task-wizard.tsx",
+      "sha256": "703c3ab6650d503c58938d88d4bacd504fb7d0f20ebfcbe1af6626a9e9597652",
+      "size": 9265,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretpad-frontend/apps/platform/src/modules/protocol-navigation/workspace.tsx",
+      "sha256": "f83a84a074cdd7ae6f2b1a60ea5966fd03cbd2c80568a822cca7d385a99eaed2",
+      "size": 9455,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/secretpad-frontend/apps/platform/tests/fate-templates.test.js",
+      "sha256": "78d0919c8af9e63325f1ea682c52f1c48f51f1e6df0b25c4a4ee109037a6ce3f",
+      "size": 2969,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/kuscia/pkg/controllers/domainroute/controller.go",
+      "sha256": "299f2a9dca2fd5cc57153db96c043fa6fcf3eabb1ac21c6bddeaf619b9bf8412",
+      "size": 10347,
+      "mode": 420
+    },
+    {
+      "path": "NewProject/kuscia/pkg/controllers/domainroute/controller_test.go",
+      "sha256": "2dea7216c5442fb16955187bf60da0dfb88621434f1e5f1f4547cf06baa905fc",
+      "size": 12907,
+      "mode": 420
+    }
+  ],
+  "source_archive_sha256": "02cb63c88d2eb73fa3f38dc9b90360e97ef2c28f2090ca082b200a47b7001b77",
+  "evidence_archive_sha256": "99539482153c6261fa23a62214c8e6e95f19061fa99643b3ef44a0627f4f508d"
+}

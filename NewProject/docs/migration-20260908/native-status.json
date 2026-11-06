@@ -1,0 +1,54 @@
+{
+  "status": {
+    "code": 0,
+    "msg": "success"
+  },
+  "data": {
+    "finished": true,
+    "nodes": [
+      {
+        "graphNodeId": "new-n1",
+        "taskId": "shkm-new-n1",
+        "jobId": "shkm",
+        "status": "SUCCEED",
+        "progress": null,
+        "parties": [
+          {
+            "nodeId": "alice",
+            "nodeName": "alice"
+          }
+        ]
+      },
+      {
+        "graphNodeId": "new-n2",
+        "taskId": "shkm-new-n2",
+        "jobId": "shkm",
+        "status": "SUCCEED",
+        "progress": null,
+        "parties": [
+          {
+            "nodeId": "kimi",
+            "nodeName": "kimi"
+          }
+        ]
+      },
+      {
+        "graphNodeId": "new-n3",
+        "taskId": "shkm-new-n3",
+        "jobId": "shkm",
+        "status": "SUCCEED",
+        "progress": 1.0,
+        "parties": [
+          {
+            "nodeId": "alice",
+            "nodeName": "alice"
+          },
+          {
+            "nodeId": "kimi",
+            "nodeName": "kimi"
+          }
+        ]
+      }
+    ]
+  }
+}

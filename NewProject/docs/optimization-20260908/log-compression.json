@@ -1,0 +1,30 @@
+[
+  {
+    "node": "alice",
+    "files": [
+      {
+        "source": "/home/kuscia/var/logs/envoy/envoy.log-20260906-07",
+        "archive": "/home/kuscia/var/logs/envoy/envoy.log-20260906-07.gz",
+        "beforeBytes": 578213469,
+        "afterBytes": 15527078,
+        "sha256": "7788a47fc44779c8066d1108acdc123cca01df2e26299e386b8f422b770f5e6c"
+      }
+    ]
+  },
+  {
+    "node": "bob",
+    "files": [
+      {
+        "source": "/home/kuscia/var/logs/envoy/envoy.log-20260906-11",
+        "archive": "/home/kuscia/var/logs/envoy/envoy.log-20260906-11.gz",
+        "beforeBytes": 549046634,
+        "afterBytes": 14024265,
+        "sha256": "b874582e3ab9a7eb10d64d69d76e388cec78044c5bb41133aa52d8e933dbbe53"
+      }
+    ]
+  },
+  {
+    "node": "kimi",
+    "files": []
+  }
+]

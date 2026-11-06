@@ -1,0 +1,7 @@
+appimage.kuscia.secretflow/ic-ecdh
+appimage.kuscia.secretflow/ic-ecdh-psi
+appimage.kuscia.secretflow/ic-ss-compare
+appimage.kuscia.secretflow/ic-ss-lr
+appimage.kuscia.secretflow/ic-ss-pearson
+appimage.kuscia.secretflow/ic-ss-vif
+appimage.kuscia.secretflow/ic-ss-xgb

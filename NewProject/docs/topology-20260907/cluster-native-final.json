@@ -1,0 +1,16 @@
+{
+  "status": {
+    "code": 0,
+    "msg": "success"
+  },
+  "data": {
+    "clusterId": "fc-4ed3f690c2cc409f",
+    "name": "FATE 原生双端",
+    "nodeId": "alice",
+    "flowAddress": "http://host.docker.internal:19381",
+    "version": "2.2.0",
+    "description": "独立 Guest/Host，经原生 OSX 联邦通信；Alice 本地适配器，Bob 仅 BFIA，Kimi 仅隐语。",
+    "status": "ACTIVE",
+    "gmtCreate": 1788571614000
+  }
+}

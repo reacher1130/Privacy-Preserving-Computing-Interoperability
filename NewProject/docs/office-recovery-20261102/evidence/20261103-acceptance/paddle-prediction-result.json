@@ -1,0 +1,36 @@
+{
+  "scope": "Real company intranet browser submit, scoped approval, same-ID browser continuation and signed prediction result readback using public independent fixtures",
+  "host": "192.168.45.101",
+  "modelTaskId": "7c442cd7-2d64-4dd7-98ec-5a0a2df700d7",
+  "predictionTaskId": "6a7fd227-7525-4c63-ba11-f56c530951a2",
+  "trainingFileIds": ["6a27937f-d798-4759-bb4d-7a9e14d998ca", "292a32cd-ca6f-445c-9340-6e7e3fb05911"],
+  "predictionFileIds": ["179596af-97d6-439e-9909-ea25cc4357d3", "fd2e97dd-c25f-4a96-9b7c-ef9a8232d755"],
+  "trainingRowsPerParty": 456,
+  "predictionRowsPerParty": 50,
+  "browser": {
+    "engine": "Ego Lite",
+    "trainingReload": {"status": "Confirming", "sameId": true, "matchingNameCount": 1, "totalTasks": 23},
+    "predictionReload": {"status": "Confirming", "sameId": true, "matchingNameCount": 1, "totalTasks": 24},
+    "trainingContinuedFromReady": true,
+    "predictionContinuedFromReady": true,
+    "trainingFinishedAt": "2026-11-03T09:32:32+08:00",
+    "predictionFinishedAt": "2026-11-03T09:54:12+08:00"
+  },
+  "signedResultReadback": {
+    "taskStatus": "Finished",
+    "modelTaskIdVerified": true,
+    "inputFileIdsVerified": true,
+    "columns": ["id", "value"],
+    "bytes": 1080,
+    "rows": 50,
+    "uniqueIds": 50,
+    "idsEqualInputIntersection": true,
+    "allValuesFinite": true,
+    "sha256": "ecfbc37ffea7d8fd65c65f66448319499a36a60441fb505364a67095b60d68c9",
+    "idSetSha256": "eb8be47b2c1f23123a5e1db1191431167ed68d7a496ca6b296d33e0c0aefb107"
+  },
+  "finishedStartIdempotency": {"existingResultReturned": true, "cliStartReturned": false, "taskSnapshotUnchanged": true, "taskIdsUnchanged": true, "count": 24},
+  "serverEvidence": "/var/log/ppci/regression-20261102/20261103-acceptance/prediction-result-6a7fd227-7525-4c63-ba11-f56c530951a2.json",
+  "rawModelResultAndApprovalLogsRetainedOnServer": true,
+  "pass": true
+}

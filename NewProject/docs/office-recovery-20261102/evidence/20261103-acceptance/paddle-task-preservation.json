@@ -1,0 +1,120 @@
+{
+  "startedAt": "2026-11-03T09:50:08.966929+08:00",
+  "endedAt": "2026-11-03T09:50:10.539284+08:00",
+  "totalTaskCount": 24,
+  "uniqueTaskCount": 24,
+  "originalCount": 22,
+  "missingHistoricalIds": [],
+  "unexpectedTaskIds": [],
+  "missingExpectedIds": [],
+  "exactOriginalPlusExpectedTwo": true,
+  "expectedNewTasks": [
+    {
+      "taskId": "6a7fd227-7525-4c63-ba11-f56c530951a2",
+      "status": "Confirming",
+      "type": "PREDICT"
+    },
+    {
+      "taskId": "7c442cd7-2d64-4dd7-98ec-5a0a2df700d7",
+      "status": "Finished",
+      "type": "LEARN"
+    }
+  ],
+  "originalFailedTaskId": "7c9f47bd-65f3-4a61-874d-c5dc8ba7c5ac",
+  "originalFailedStatus": "Failed",
+  "originalFailedSnapshotUnchanged": true,
+  "allInspectedBinaryHashesUnchanged": true,
+  "inspectedBinaryHashes": [
+    {
+      "container": "executor1.node.com",
+      "path": "/home/executor",
+      "sha256": "69fbca80188cf31c637904823d00c6a8e3a7ba621eccf05738e2b01390ad5723",
+      "matchesRecordedSha256": true
+    },
+    {
+      "container": "executor1.node.com",
+      "path": "/home/requester-cli-demo",
+      "sha256": "ed8b6d1e474d06360ad35f778293e8e803eb444baaad6ba891f288e267a92064",
+      "matchesRecordedSha256": true
+    },
+    {
+      "container": "dataowner1.node.com",
+      "path": "/home/xdb-cli",
+      "sha256": "c75bca62c339d7e0ba34233c22dd34f6dc39cb3897753bd63a11ef17bd5469f2",
+      "matchesRecordedSha256": true
+    },
+    {
+      "container": "executor2.node.com",
+      "path": "/home/executor",
+      "sha256": "69fbca80188cf31c637904823d00c6a8e3a7ba621eccf05738e2b01390ad5723",
+      "matchesRecordedSha256": true
+    },
+    {
+      "container": "executor2.node.com",
+      "path": "/home/requester-cli-demo",
+      "sha256": "ed8b6d1e474d06360ad35f778293e8e803eb444baaad6ba891f288e267a92064",
+      "matchesRecordedSha256": true
+    },
+    {
+      "container": "dataowner2.node.com",
+      "path": "/home/xdb-cli",
+      "sha256": "c75bca62c339d7e0ba34233c22dd34f6dc39cb3897753bd63a11ef17bd5469f2",
+      "matchesRecordedSha256": true
+    },
+    {
+      "service": "ppci-alice",
+      "path": "/opt/ppci/NewProject/secretpad/target/secretpad.jar",
+      "sha256": "ddbe001ccb978e2ce36f0c6bcc9bd37d9291cc6b476227ebb72d8f1431262c00",
+      "matchesRecordedSha256": true
+    }
+  ],
+  "platform": {
+    "exitCode": 0,
+    "healthy": true,
+    "runtimeHealthy": true,
+    "errorsCount": 0,
+    "runningContainers": 29,
+    "expectedContainers": 29,
+    "backends": [
+      {
+        "role": "alice",
+        "apiResponded": true,
+        "systemdActive": true
+      },
+      {
+        "role": "bob",
+        "apiResponded": true,
+        "systemdActive": true
+      },
+      {
+        "role": "kimi",
+        "apiResponded": true,
+        "systemdActive": true
+      }
+    ],
+    "managerAnonymousRejected": true,
+    "paddleReady": true,
+    "storageReady": true,
+    "storage": [
+      {
+        "address": "http://127.0.0.1:8441/v1/file/getns?name=paddlempc",
+        "namespace": "paddlempc",
+        "checked": true,
+        "eligibleNodes": 2,
+        "replica": 2,
+        "totalNodes": 3,
+        "ready": true
+      },
+      {
+        "address": "http://127.0.0.1:8442/v1/file/getns?name=paddlempc",
+        "namespace": "paddlempc",
+        "checked": true,
+        "eligibleNodes": 2,
+        "replica": 2,
+        "totalNodes": 3,
+        "ready": true
+      }
+    ]
+  },
+  "scope": "Read-only point-in-time preservation and health check; prediction terminal result is not accepted here."
+}

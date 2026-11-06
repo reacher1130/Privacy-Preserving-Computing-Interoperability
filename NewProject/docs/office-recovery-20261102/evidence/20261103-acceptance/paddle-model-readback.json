@@ -1,0 +1,53 @@
+{
+  "taskId": "7c442cd7-2d64-4dd7-98ec-5a0a2df700d7",
+  "taskStatus": "Finished",
+  "serverEvidence": "/var/log/ppci/regression-20261102/20261103-acceptance/paddle-model-readback-diagnostic-7c442cd7-2d64-4dd7-98ec-5a0a2df700d7.json",
+  "serverEvidenceSha256": "506cd2e8233ba86be3563a3e2c2bbb63f6cd7db91ac9fafaf7c040e212354254",
+  "ownerReadbackPassed": true,
+  "executorIdentityDiagnosticPassed": true,
+  "models": [
+    {
+      "executor": "executor1.node.com",
+      "modelUuid": "9d5f10f5-5fc9-40cb-abbe-1126dcc89fd8",
+      "namespace": "paddlempc",
+      "name": "7c442cd7-2d64-4dd7-98ec-5a0a2df700d7",
+      "bytes": 631,
+      "sha256": "3d7120da21b7f4afe0c5f60483c44d5f4a8dde9d22e7b53fac0c84a6c309f203",
+      "ownerIdAndNameReadbacksIdentical": true,
+      "metadataLengthMatched": true,
+      "trainResultJsonWithoutBusinessCode": true,
+      "realErrorEnvelopeControl": {
+        "nonemptyBusinessErrorRejected": true,
+        "businessErrorCode": "10004",
+        "noFileCreated": true
+      },
+      "executorIdentityDiagnosticMatchedOwnerBytes": true
+    },
+    {
+      "executor": "executor2.node.com",
+      "modelUuid": "d268ae35-455b-429b-bfb7-dfb5643b92a3",
+      "namespace": "paddlempc",
+      "name": "7c442cd7-2d64-4dd7-98ec-5a0a2df700d7",
+      "bytes": 912,
+      "sha256": "3777ac659079e4fddd58d94fed1963c09195a752e20d0b007ff18715b71d150c",
+      "ownerIdAndNameReadbacksIdentical": true,
+      "metadataLengthMatched": true,
+      "trainResultJsonWithoutBusinessCode": true,
+      "realErrorEnvelopeControl": {
+        "nonemptyBusinessErrorRejected": true,
+        "businessErrorCode": "10004",
+        "noFileCreated": true
+      },
+      "executorIdentityDiagnosticMatchedOwnerBytes": true
+    }
+  ],
+  "decoderEvidence": {
+    "activeExecutorSha256": "69fbca80188cf31c637904823d00c6a8e3a7ba621eccf05738e2b01390ad5723",
+    "bothActiveExecutorsMatchReadOnlyInspectedBackup": true,
+    "activeExecutorHasNonemptyCodeGuard": true,
+    "installedAuxiliaryXdbCliSha256": "c75bca62c339d7e0ba34233c22dd34f6dc39cb3897753bd63a11ef17bd5469f2",
+    "installedAuxiliaryCliReturnedEmptyCodeErrorForModelJson": true,
+    "conclusion": "The active executors already contain the nonempty code guard. The older auxiliary CLI's parser and actual read behavior differ; no runtime executable was replaced."
+  },
+  "scope": "Actual XDB signed reads through a temporary diagnostic CLI using existing owner and executor identities. Model bytes and keys were retained on the server. No active binary changed. Not proof of active executor inference."
+}

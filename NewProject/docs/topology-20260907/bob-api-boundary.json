@@ -1,0 +1,32 @@
+[
+  {
+    "path": "/api/v1alpha1/fate/cluster/list",
+    "httpStatus": 403,
+    "response": {
+      "status": {
+        "code": 403,
+        "msg": "Protocol is disabled on this node"
+      }
+    }
+  },
+  {
+    "path": "/api/v1alpha1/paddledtx/status",
+    "httpStatus": 403,
+    "response": {
+      "status": {
+        "code": 403,
+        "msg": "Protocol is disabled on this node"
+      }
+    }
+  },
+  {
+    "path": "/api/v1alpha1/graph/start",
+    "httpStatus": 403,
+    "response": {
+      "status": {
+        "code": 403,
+        "msg": "Protocol is disabled on this node"
+      }
+    }
+  }
+]

@@ -1,0 +1,54 @@
+{
+  "blockchains": [
+    {
+      "name": "xuper",
+      "ledger": {
+        "rootBlockid": "474ee4112925b6a1bd7053e4d33d50dcd3e9c7f2760b8b229d32617a56562632",
+        "tipBlockid": "59541758e88a9218f90f6c9d02c9e70ec3eea816f70aee84697634afdbba7a69",
+        "trunkHeight": 15795
+      },
+      "utxo": {
+        "latestBlockid": "59541758e88a9218f90f6c9d02c9e70ec3eea816f70aee84697634afdbba7a69",
+        "lockKeyList": null,
+        "utxoTotal": "300000000015795000000",
+        "avgDelay": 1200,
+        "unconfirmed": 0,
+        "maxBlockSize": 134217728,
+        "reservedContracts": [],
+        "forbiddenContract": {
+          "moduleName": "",
+          "contractName": "",
+          "methodName": "",
+          "args": {},
+          "resource_limits": null
+        },
+        "newAccountResourceAmount": 1000,
+        "irreversibleBlockHeight": 0,
+        "irreversibleSlideWindow": 0,
+        "gasPrice": {
+          "cpu_rate": 1000,
+          "mem_rate": 1000000,
+          "disk_rate": 1,
+          "xfee_rate": 1
+        }
+      },
+      "branchBlockid": [
+        "59541758e88a9218f90f6c9d02c9e70ec3eea816f70aee84697634afdbba7a69"
+      ]
+    }
+  ],
+  "peers": [
+    "xchain2.node.com:47101",
+    "xchain3.node.com:47101",
+    "xchain1.node.com:47101"
+  ],
+  "speeds": {
+    "BcSpeeds": {
+      "xuper": {
+        "BcSpeed": {
+          "PostTx": 3.3424973468927313
+        }
+      }
+    }
+  }
+}

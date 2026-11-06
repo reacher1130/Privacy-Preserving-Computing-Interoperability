@@ -1,0 +1,1 @@
+{"status": {"code": 0, "msg": "success"}, "data": {"jobId": "fj-129373369bbd4ace", "clusterId": "fc-4ed3f690c2cc409f", "projectId": "", "graphId": "", "name": "linux-migration-native-fate-20260908", "initiatorNodeId": "alice", "status": "SUCCESS", "errMsg": "", "gmtCreate": 1788830910000, "gmtModified": 1788830910000}}

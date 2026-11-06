@@ -1,0 +1,17 @@
+[
+  {
+    "node": "kimi",
+    "exit": 0,
+    "result": "16384:\nCommand executed successfully\n"
+  },
+  {
+    "node": "alice",
+    "exit": 0,
+    "result": "40244:\nCommand executed successfully\n"
+  },
+  {
+    "node": "bob",
+    "exit": 0,
+    "result": "41095:\nCommand executed successfully\n"
+  }
+]

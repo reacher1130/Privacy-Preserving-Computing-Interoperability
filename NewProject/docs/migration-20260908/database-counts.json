@@ -1,0 +1,320 @@
+{
+  "alice": {
+    "project": {
+      "before": 1,
+      "after": 1
+    },
+    "project_inst": {
+      "before": 2,
+      "after": 2
+    },
+    "project_node": {
+      "before": 7,
+      "after": 7
+    },
+    "project_datatable": {
+      "before": 9,
+      "after": 10
+    },
+    "project_fed_table": {
+      "before": 5,
+      "after": 6
+    },
+    "project_model": {
+      "before": 0,
+      "after": 0
+    },
+    "project_rule": {
+      "before": 0,
+      "after": 0
+    },
+    "project_report": {
+      "before": 5,
+      "after": 6
+    },
+    "project_read_data": {
+      "before": 0,
+      "after": 0
+    },
+    "project_result": {
+      "before": 10,
+      "after": 12
+    },
+    "project_job": {
+      "before": 16,
+      "after": 17
+    },
+    "project_job_task": {
+      "before": 40,
+      "after": 43
+    },
+    "project_graph": {
+      "before": 7,
+      "after": 7
+    },
+    "project_graph_node": {
+      "before": 21,
+      "after": 21
+    },
+    "project_job_task_log": {
+      "before": 70,
+      "after": 77
+    },
+    "tee_node_datatable_management": {
+      "before": 0,
+      "after": 0
+    },
+    "project_approval_config": {
+      "before": 1,
+      "after": 1
+    },
+    "project_model_pack": {
+      "before": 0,
+      "after": 0
+    },
+    "project_model_serving": {
+      "before": 0,
+      "after": 0
+    },
+    "project_feature_table_backup": {
+      "before": 0,
+      "after": 0
+    },
+    "project_graph_node_kuscia_params": {
+      "before": 6,
+      "after": 6
+    },
+    "project_graph_domain_datasource": {
+      "before": 13,
+      "after": 13
+    },
+    "project_feature_table": {
+      "before": 0,
+      "after": 0
+    },
+    "project_schedule": {
+      "before": 0,
+      "after": 0
+    },
+    "project_schedule_task": {
+      "before": 0,
+      "after": 0
+    },
+    "project_schedule_job": {
+      "before": 0,
+      "after": 0
+    }
+  },
+  "bob": {
+    "project": {
+      "before": 0,
+      "after": 0
+    },
+    "project_inst": {
+      "before": 0,
+      "after": 0
+    },
+    "project_node": {
+      "before": 0,
+      "after": 0
+    },
+    "project_datatable": {
+      "before": 0,
+      "after": 0
+    },
+    "project_fed_table": {
+      "before": 0,
+      "after": 0
+    },
+    "project_model": {
+      "before": 0,
+      "after": 0
+    },
+    "project_rule": {
+      "before": 0,
+      "after": 0
+    },
+    "project_report": {
+      "before": 0,
+      "after": 0
+    },
+    "project_read_data": {
+      "before": 0,
+      "after": 0
+    },
+    "project_result": {
+      "before": 0,
+      "after": 0
+    },
+    "project_job": {
+      "before": 0,
+      "after": 0
+    },
+    "project_job_task": {
+      "before": 0,
+      "after": 0
+    },
+    "project_graph": {
+      "before": 0,
+      "after": 0
+    },
+    "project_graph_node": {
+      "before": 0,
+      "after": 0
+    },
+    "project_job_task_log": {
+      "before": 0,
+      "after": 0
+    },
+    "tee_node_datatable_management": {
+      "before": 0,
+      "after": 0
+    },
+    "project_approval_config": {
+      "before": 0,
+      "after": 0
+    },
+    "project_model_pack": {
+      "before": 0,
+      "after": 0
+    },
+    "project_model_serving": {
+      "before": 0,
+      "after": 0
+    },
+    "project_feature_table_backup": {
+      "before": 0,
+      "after": 0
+    },
+    "project_graph_node_kuscia_params": {
+      "before": 0,
+      "after": 0
+    },
+    "project_graph_domain_datasource": {
+      "before": 0,
+      "after": 0
+    },
+    "project_feature_table": {
+      "before": 0,
+      "after": 0
+    },
+    "project_schedule": {
+      "before": 0,
+      "after": 0
+    },
+    "project_schedule_task": {
+      "before": 0,
+      "after": 0
+    },
+    "project_schedule_job": {
+      "before": 0,
+      "after": 0
+    }
+  },
+  "kimi": {
+    "project": {
+      "before": 1,
+      "after": 1
+    },
+    "project_inst": {
+      "before": 0,
+      "after": 0
+    },
+    "project_node": {
+      "before": 0,
+      "after": 0
+    },
+    "project_datatable": {
+      "before": 9,
+      "after": 10
+    },
+    "project_fed_table": {
+      "before": 5,
+      "after": 6
+    },
+    "project_model": {
+      "before": 0,
+      "after": 0
+    },
+    "project_rule": {
+      "before": 0,
+      "after": 0
+    },
+    "project_report": {
+      "before": 5,
+      "after": 6
+    },
+    "project_read_data": {
+      "before": 0,
+      "after": 0
+    },
+    "project_result": {
+      "before": 10,
+      "after": 12
+    },
+    "project_job": {
+      "before": 12,
+      "after": 13
+    },
+    "project_job_task": {
+      "before": 24,
+      "after": 27
+    },
+    "project_graph": {
+      "before": 1,
+      "after": 1
+    },
+    "project_graph_node": {
+      "before": 4,
+      "after": 4
+    },
+    "project_job_task_log": {
+      "before": 18,
+      "after": 20
+    },
+    "tee_node_datatable_management": {
+      "before": 0,
+      "after": 0
+    },
+    "project_approval_config": {
+      "before": 1,
+      "after": 1
+    },
+    "project_model_pack": {
+      "before": 0,
+      "after": 0
+    },
+    "project_model_serving": {
+      "before": 0,
+      "after": 0
+    },
+    "project_feature_table_backup": {
+      "before": 0,
+      "after": 0
+    },
+    "project_graph_node_kuscia_params": {
+      "before": 1,
+      "after": 1
+    },
+    "project_graph_domain_datasource": {
+      "before": 0,
+      "after": 0
+    },
+    "project_feature_table": {
+      "before": 0,
+      "after": 0
+    },
+    "project_schedule": {
+      "before": 0,
+      "after": 0
+    },
+    "project_schedule_task": {
+      "before": 0,
+      "after": 0
+    },
+    "project_schedule_job": {
+      "before": 0,
+      "after": 0
+    }
+  }
+}

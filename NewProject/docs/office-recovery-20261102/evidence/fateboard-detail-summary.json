@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-11-02T11:15:15.015016+00:00",
+  "component_parameters_epochs": 2,
+  "ws_status": "success",
+  "ws_dag_components": 3,
+  "ws_summary": true,
+  "pass": true,
+  "http_summary": true,
+  "job_id": "202611020945328298380",
+  "party_id": "JG0100001100000010",
+  "http_dag_components": 3,
+  "jar_sha256": "fa5a5a0aa9047cd9cd89d5396a2e0808d157fd5effe6fc929b14367a2a9bd1ea",
+  "backup_jar_sha256": "59d767ef11c069f9bbf5c909c2276aac9cfa5f4f5efbbc9ec615b63fd71fef51",
+  "backup_jar": "/data/projects/fate/fateboard/fateboard-2.1.0.jar.before-string-party-id-20261102",
+  "anonymous_rejected": true,
+  "anonymous_code": 10015
+}

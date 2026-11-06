@@ -1,0 +1,10 @@
+{
+  "name": "home",
+  "host": "192.168.31.49",
+  "ssh_port": 22,
+  "ssh_user": "root",
+  "source_root": "/opt/ppci-source",
+  "build_root": "/opt/ppci-build",
+  "runtime_root": "/opt/ppci",
+  "lan_cidr": "192.168.31.0/24"
+}

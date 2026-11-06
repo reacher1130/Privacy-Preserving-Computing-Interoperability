@@ -1,0 +1,165 @@
+--- a/requester/client/client.go
++++ b/requester/client/client.go
+@@ -24,7 +24,6 @@
+ 	"time"
+ 
+ 	dtxmb "baidu/blockchain/dtx-manager/blockchain"
+-	"baidu/blockchain/dtx-manager/models"
+ 	"github.com/PaddlePaddle/PaddleDTX/crypto/core/ecdsa"
+ 	"github.com/PaddlePaddle/PaddleDTX/crypto/core/hash"
+ 	xdbchain "github.com/PaddlePaddle/PaddleDTX/xdb/blockchain"
+@@ -42,6 +41,7 @@
+ 	"github.com/PaddlePaddle/PaddleDTX/dai/crypto/vl/feat_eng"
+ 	pbCom "github.com/PaddlePaddle/PaddleDTX/dai/protos/common"
+ 	pbTask "github.com/PaddlePaddle/PaddleDTX/dai/protos/task"
++	"github.com/PaddlePaddle/PaddleDTX/dai/util/filemeta"
+ 	utilNode "github.com/PaddlePaddle/PaddleDTX/dai/util/node"
+ )
+ 
+@@ -181,13 +181,9 @@
+ 			return nil, err
+ 		}
+ 
+-		fileExtra := []*models.MetaInfo{}
+-		if err := json.Unmarshal(file.Ext, &fileExtra); err != nil {
++		fileFeatures, err := filemeta.Features(file.Ext)
++		if err != nil {
+ 			return nil, errorx.New(errorx.ErrCodeInternal, "failed to get file extra info: %v", err)
+-		}
+-		fileFeatures := make([]string, 0, len(fileExtra))
+-		for _, meta := range fileExtra {
+-			fileFeatures = append(fileFeatures, meta.Name)
+ 		}
+ 		// check if psiLabel exists in feature list
+ 		if !util.IsContain(fileFeatures, psiLabels[index]) {
+--- a/executor/handler/mpc.go
++++ b/executor/handler/mpc.go
+@@ -25,7 +25,6 @@
+ 	"time"
+ 
+ 	dtxmb "baidu/blockchain/dtx-manager/blockchain"
+-	"baidu/blockchain/dtx-manager/models"
+ 	"github.com/PaddlePaddle/PaddleDTX/crypto/core/ecdsa"
+ 	"github.com/PaddlePaddle/PaddleDTX/crypto/core/hash"
+ 	"github.com/PaddlePaddle/PaddleDTX/xdb/errorx"
+@@ -39,6 +38,7 @@
+ 	"github.com/PaddlePaddle/PaddleDTX/dai/p2p"
+ 	pbCom "github.com/PaddlePaddle/PaddleDTX/dai/protos/common"
+ 	pbTask "github.com/PaddlePaddle/PaddleDTX/dai/protos/task"
++	"github.com/PaddlePaddle/PaddleDTX/dai/util/filemeta"
+ 	util "github.com/PaddlePaddle/PaddleDTX/xdb/pkgs/strings"
+ )
+ 
+@@ -692,13 +692,9 @@
+ 	}
+ 
+ 	// parse features info
+-	fileExtra := []*models.MetaInfo{}
+-	if err := json.Unmarshal(xdbFile.Ext, &fileExtra); err != nil {
++	fileFeatures, err := filemeta.Features(xdbFile.Ext)
++	if err != nil {
+ 		return false, dtxmb.CatalogFile{}, errorx.New(errorx.ErrCodeInternal, "failed to get file extra info: %v", err)
+-	}
+-	fileFeatures := make([]string, 0, len(fileExtra))
+-	for _, meta := range fileExtra {
+-		fileFeatures = append(fileFeatures, meta.Name)
+ 	}
+ 	isTagPart := util.IsContain(fileFeatures, labelName)
+ 
+--- /dev/null
++++ b/util/filemeta/features.go
+@@ -0,0 +1,58 @@
++package filemeta
++
++import (
++	"bytes"
++	"encoding/json"
++	"fmt"
++	"strings"
++)
++
++// Features reads the ordered column names used by both supported file metadata formats.
++func Features(extra []byte) ([]string, error) {
++	extra = bytes.TrimSpace(extra)
++	if len(extra) == 0 {
++		return nil, fmt.Errorf("missing file metadata")
++	}
++	var features []string
++	switch extra[0] {
++	case '[':
++		var columns []struct {
++			Name string `json:"name"`
++		}
++		if err := json.Unmarshal(extra, &columns); err != nil {
++			return nil, fmt.Errorf("invalid column metadata: %w", err)
++		}
++		for _, column := range columns {
++			features = append(features, column.Name)
++		}
++	case '{':
++		var info struct {
++			Features string `json:"features"`
++		}
++		if err := json.Unmarshal(extra, &info); err != nil {
++			return nil, fmt.Errorf("invalid file metadata: %w", err)
++		}
++		features = strings.Split(info.Features, ",")
++	default:
++		return nil, fmt.Errorf("unsupported file metadata format")
++	}
++	if len(features) == 0 {
++		return nil, fmt.Errorf("missing file features")
++	}
++	seen := make(map[string]bool, len(features))
++	for i, feature := range features {
++		if strings.ContainsAny(feature, ",\x00\r\n") {
++			return nil, fmt.Errorf("invalid file feature name")
++		}
++		feature = strings.TrimSpace(feature)
++		if feature == "" {
++			return nil, fmt.Errorf("invalid file feature name")
++		}
++		if seen[feature] {
++			return nil, fmt.Errorf("duplicate file feature name")
++		}
++		seen[feature] = true
++		features[i] = feature
++	}
++	return features, nil
++}
+--- /dev/null
++++ b/util/filemeta/features_test.go
+@@ -0,0 +1,33 @@
++package filemeta
++
++import (
++	"reflect"
++	"testing"
++)
++
++func TestFeaturesMetadataCompatibility(t *testing.T) {
++	for _, input := range []string{
++		`[{"name":"id","type":"int","description":"identifier"},{"name":"CRIM","type":"float"},{"name":"MEDV","type":"float"}]`,
++		`{"fileType":"csv","features":"id,CRIM,MEDV","totalRows":506}`,
++		` {"features":" id, CRIM,MEDV "} `,
++	} {
++		got, err := Features([]byte(input))
++		if err != nil || !reflect.DeepEqual(got, []string{"id", "CRIM", "MEDV"}) {
++			t.Fatalf("column names/order changed: %v, %v", got, err)
++		}
++	}
++}
++
++func TestFeaturesRejectsInvalidMetadata(t *testing.T) {
++	for _, input := range []string{
++		``, `null`, `true`, `"id,x"`, `[]`, `[null]`, `[1]`, `[{}]`, `[{"name":12}]`,
++		`{}`, `{"features":null}`, `{"features":[]}`, `{"features":1}`, `{"features":""}`,
++		`{"features":"id,,x"}`, `{"features":"id, "}`, `{"features":"id,id"}`,
++		`{"features":"id, id "}`, `[{"name":"id"},{"name":"id"}]`, `[{"name":" "}]`,
++		`[{"name":"id,x"}]`, `[{"name":"id\n"}]`, `{"features":"id\u0000,x"}`, `{"features":"id,x"`,
++	} {
++		if got, err := Features([]byte(input)); err == nil {
++			t.Fatalf("invalid metadata accepted: %q -> %v", input, got)
++		}
++	}
++}

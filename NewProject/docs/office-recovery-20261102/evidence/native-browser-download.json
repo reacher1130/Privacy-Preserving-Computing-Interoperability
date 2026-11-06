@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-11-02T19:31:56.269661+08:00",
+  "browser": "Ego Lite",
+  "url": "http://192.168.45.101:18511/dtx/console/dataset/detail/1",
+  "resourceId": "31745fce-d08e-4b8a-ba91-9f52a22147d6",
+  "realLogin": true,
+  "files": [
+    {
+      "name": "public-four-rows.csv",
+      "bytes": 25,
+      "sha256": "bc2c9101b48d26cae3359863833f4dfac47d7ab73cc1f34dddf502c7976dd2ef",
+      "browserDownloadEvent": true,
+      "downloadFailure": null
+    },
+    {
+      "name": "public-four-rows.meta",
+      "bytes": 48,
+      "sha256": "494964f11e41ee05f92b77c18fada3f76dd3ef45cdf976c55d60cf9122ad8633",
+      "browserDownloadEvent": true,
+      "downloadFailure": null
+    }
+  ],
+  "csvRows": 4,
+  "matchesOriginalPublicFixture": true,
+  "metaColumns": [
+    "id:int",
+    "x:float"
+  ],
+  "pass": true,
+  "scope": "Actual signed browser CSV/meta downloads only. No live task-result or algorithm download record was available for browser acceptance."
+}

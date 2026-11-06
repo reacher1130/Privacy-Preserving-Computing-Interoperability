@@ -1,0 +1,99 @@
+{
+  "clusterId": "fc-4ed3f690c2cc409f",
+  "initiatorNodeId": "alice",
+  "name": "topology-independent-fate-20260907",
+  "dag": {
+    "components": [
+      {
+        "componentName": "psi",
+        "input": [],
+        "name": "psi_0",
+        "output": [
+          {
+            "key": "data",
+            "type": "dataset"
+          }
+        ],
+        "parameter": {
+          "__guestDatasetId": "fd-ca0126808eba4d50",
+          "__guestDatasetRef": "experiment#breast_hetero_guest",
+          "__hostDatasetId": "fd-660b51f067024173",
+          "__hostDatasetRef": "experiment#breast_hetero_host",
+          "curve_type": "curve25519",
+          "protocol": "ecdh_psi"
+        },
+        "provider": "fate",
+        "version": "2.0.0"
+      },
+      {
+        "componentName": "coordinated_lr",
+        "input": [
+          {
+            "key": "psi_0.data",
+            "type": "dataset"
+          }
+        ],
+        "name": "coordinated_lr_1",
+        "output": [
+          {
+            "key": "data",
+            "type": "dataset"
+          }
+        ],
+        "parameter": {
+          "epochs": 20
+        },
+        "provider": "fate",
+        "version": "2.0.0"
+      }
+    ],
+    "version": "2.0"
+  },
+  "config": {
+    "initiator": {
+      "node_id": "JG0100001100000010",
+      "party_id": "JG0100001100000010",
+      "role": "guest"
+    },
+    "job_params": {
+      "common": {
+        "sync_type": "poll"
+      }
+    },
+    "role": {
+      "guest": [
+        "JG0100001100000010"
+      ],
+      "host": [
+        "JG0100001100000000"
+      ],
+      "arbiter": []
+    },
+    "task_params": {
+      "common": {
+        "coordinated_lr_1": {
+          "epochs": 20
+        },
+        "psi_0": {
+          "curve_type": "curve25519",
+          "protocol": "ecdh_psi"
+        }
+      },
+      "guest": {
+        "0": {
+          "psi_0": {
+            "dataset_id": "experiment#breast_hetero_guest"
+          }
+        }
+      },
+      "host": {
+        "0": {
+          "psi_0": {
+            "dataset_id": "experiment#breast_hetero_host"
+          }
+        }
+      }
+    },
+    "version": "2.0"
+  }
+}

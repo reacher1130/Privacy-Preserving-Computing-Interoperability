@@ -1,0 +1,270 @@
+{
+  "apply": false,
+  "containers": [
+    "secretpad-frontend-e2e-broken-20260906",
+    "fate2-standalone-e2e"
+  ],
+  "images": [
+    {
+      "tag": "paddledtx-dai:2.1-local-20260905",
+      "id": "sha256:10743853ae144561f1c0bcde7c8d58d14cfd4aec974d5f73e7c02800cfac2293",
+      "bytes": 284325361
+    },
+    {
+      "tag": "paddledtx-dai:2.1-local-20260905-cgo",
+      "id": "sha256:b8998519143905d7562e861b18c0ec7e1150386e04bdc44a9be6c14c75973db1",
+      "bytes": 289710745
+    },
+    {
+      "tag": "paddledtx-dai:2.1-local-20260905-static-cgo",
+      "id": "sha256:6e223e076f2d4b03f046168f6c37b64192a02f58150b358865197282dce52ca0",
+      "bytes": 291959081
+    }
+  ],
+  "files": [
+    {
+      "path": "NewProject/secretpad-frontend/apps/platform/dist",
+      "bytes": 22256988
+    },
+    {
+      "path": "NewProject/secretpad-frontend/apps/platform/src/.umi",
+      "bytes": 83030
+    },
+    {
+      "path": "NewProject/secretpad-frontend/apps/platform/src/.umi-production",
+      "bytes": 82977
+    },
+    {
+      "path": "NewProject/secretpad-frontend/typing-errors.log",
+      "bytes": 157399
+    },
+    {
+      "path": "NewProject/secretpad-frontend/typing-errors2.log",
+      "bytes": 107255
+    },
+    {
+      "path": ".DS_Store",
+      "bytes": 12292
+    },
+    {
+      "path": "kuscia-node-bob/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "NewProject/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "NewProject/InterOp/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "NewProject/InterOp/互联互通API接口规范/.DS_Store",
+      "bytes": 8196
+    },
+    {
+      "path": "NewProject/secretflow/.DS_Store",
+      "bytes": 8196
+    },
+    {
+      "path": "NewProject/secretflow/interconnection-impl/ic_impl/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "NewProject/secretflow/interconnection/.DS_Store",
+      "bytes": 10244
+    },
+    {
+      "path": "NewProject/secretpad/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "PaddleDTX/.DS_Store",
+      "bytes": 8196
+    },
+    {
+      "path": "PaddleDTX/testdata/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "PaddleDTX/crypto/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "PaddleDTX/dai/.DS_Store",
+      "bytes": 8196
+    },
+    {
+      "path": "PaddleDTX/xdb/.DS_Store",
+      "bytes": 8196
+    },
+    {
+      "path": "PaddleDTX/testdatatmp/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/.DS_Store",
+      "bytes": 10244
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/.DS_Store",
+      "bytes": 8196
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/hlht-chaincode/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/BaaS-Backend/.DS_Store",
+      "bytes": 10244
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/BaaS-Backend/internal/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/BaaS-Backend/internal/generator/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/dtx-fe/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/dtx-manager/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/dtx-manager/blockchain/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/dtx-manager/static/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/dtx-manager/conf/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/dtx-manager/handlers/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/dtx-manager/pkg/.DS_Store",
+      "bytes": 8196
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/testdata/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/testdata/executor/node3/conf/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/testdata/executor/node2/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/crypto/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/dai/.DS_Store",
+      "bytes": 10244
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/dai/protos/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/dai/protos/mpc/learners/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/dai/protos/googleapis/google/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/dai/tee_publisher/cmd/cli/files/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/dai/blockchain/fabric/chaincode/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/dai/tee-manager/types/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/dai/tee-manager/errpkg/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/dai/tee-manager/third_party/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/dai/tee-manager/gotee/types/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/dai/tee-manager/gotee/types/task/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/dai/tee-manager/gotee/encoding/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/dai/mpc/learners/decision_tree_class_vl/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/xdb/.DS_Store",
+      "bytes": 10244
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/chaincode/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "privacy-computing-interconnectivity/shared-exchange-Connectivity/PaddleDTX/deployment/.DS_Store",
+      "bytes": 6148
+    },
+    {
+      "path": "gaofeng-kuscia-autonomy-alice/images/fate2-adapter-0.1.0.tar",
+      "bytes": 15559168
+    },
+    {
+      "path": "gaofeng-kuscia-autonomy-alice/images/image_ZJ2gKE2Z.tar",
+      "bytes": 15559168
+    },
+    {
+      "path": "gaofeng-kuscia-autonomy-alice/images/fate2-adapter-0.1.1-e2e.tar",
+      "bytes": 15425024
+    },
+    {
+      "path": "gaofeng-kuscia-autonomy-alice/images/fate2-adapter-0.1.1-e2e-current.tar",
+      "bytes": 15425024
+    },
+    {
+      "path": "kuscia-node-bob/images/fate2-adapter-0.1.1-e2e.tar",
+      "bytes": 15425024
+    },
+    {
+      "path": "kuscia-node-bob/images/fate2-adapter-0.1.1-e2e-current.tar",
+      "bytes": 15425024
+    }
+  ],
+  "skippedRunning": [],
+  "fileBytes": 115848293,
+  "imageLogicalBytes": 865995187,
+  "note": "Image logical sizes include shared layers; not a claim about physical bytes freed. No volumes, ledgers, databases, source repositories, node_modules, or compiler caches are removed."
+}

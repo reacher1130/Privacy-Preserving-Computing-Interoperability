@@ -1,0 +1,11 @@
+{
+  "code": 0,
+  "data": {
+    "job_status": "FINISHED",
+    "status": {
+      "coordinated_lr_1": "READY",
+      "psi_0": "READY"
+    }
+  },
+  "msg": "success"
+}

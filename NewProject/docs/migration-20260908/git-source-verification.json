@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-09-09T12:19:24.063121+08:00",
+  "sourceCommitAtCheck": "4c97bf86b23274e18e00ad615cc1a61f55729fcb",
+  "sourceDirectory": "/opt/ppci-source",
+  "runtimeDirectory": "/opt/ppci",
+  "containers": 28,
+  "backends": [
+    "alice",
+    "bob",
+    "kimi"
+  ],
+  "healthErrors": [],
+  "pythonTests": [
+    "PYTHON_TEST_RESULT algorithm=sgb status=PASS alice_exit=0 bob_exit=0",
+    "PYTHON_TEST_RESULT algorithm=he_woe status=PASS alice_exit=0 bob_exit=0"
+  ],
+  "cppTests": [
+    "CPP_TEST_RESULT algorithm=ecdh-psi status=PASS alice_exit=0 bob_exit=0",
+    "CPP_TEST_RESULT algorithm=ss-lr status=PASS alice_exit=0 bob_exit=0",
+    "CPP_TEST_RESULT algorithm=ss-xgb status=PASS alice_exit=0 bob_exit=0",
+    "CPP_TEST_RESULT algorithm=ss-pearson status=PASS alice_exit=0 bob_exit=0",
+    "CPP_TEST_RESULT algorithm=ss-vif status=PASS alice_exit=0 bob_exit=0",
+    "CPP_TEST_RESULT algorithm=ss-compare status=PASS alice_exit=0 bob_exit=0"
+  ],
+  "backendBuildLog": "/var/log/ppci/github-source-backend-build-v2.log",
+  "backendDeployLog": "/var/log/ppci/github-source-backend-deploy.log",
+  "frontendLintErrors": 23,
+  "legacyModulesUploaded": false,
+  "rawCsvRestore": "awaiting explicit approval; synthetic fixtures used"
+}

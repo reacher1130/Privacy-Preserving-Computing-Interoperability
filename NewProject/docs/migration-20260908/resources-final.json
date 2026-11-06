@@ -1,0 +1,343 @@
+{
+  "time": "2026-09-08T18:52:36.244283+08:00",
+  "containers": [
+    {
+      "BlockIO": "1.27GB / 49.8GB",
+      "CPUPerc": "383.04%",
+      "Container": "gaofeng-kuscia-autonomy-alice",
+      "ID": "cfe34f06b53d",
+      "MemPerc": "5.13%",
+      "MemUsage": "1.588GiB / 30.98GiB",
+      "Name": "gaofeng-kuscia-autonomy-alice",
+      "NetIO": "4.1MB / 6.52MB",
+      "PIDs": "177"
+    },
+    {
+      "BlockIO": "1.24GB / 49.5GB",
+      "CPUPerc": "327.49%",
+      "Container": "gaofeng-kuscia-autonomy-bob",
+      "ID": "941217ba1043",
+      "MemPerc": "4.79%",
+      "MemUsage": "1.483GiB / 30.98GiB",
+      "Name": "gaofeng-kuscia-autonomy-bob",
+      "NetIO": "448kB / 682kB",
+      "PIDs": "167"
+    },
+    {
+      "BlockIO": "33.1MB / 223MB",
+      "CPUPerc": "11.11%",
+      "Container": "gaofeng-kuscia-autonomy-kimi",
+      "ID": "9f80c4c97dc7",
+      "MemPerc": "2.00%",
+      "MemUsage": "634.2MiB / 30.98GiB",
+      "Name": "gaofeng-kuscia-autonomy-kimi",
+      "NetIO": "5.5MB / 3.34MB",
+      "PIDs": "132"
+    },
+    {
+      "BlockIO": "57.3kB / 0B",
+      "CPUPerc": "0.00%",
+      "Container": "kusciaapi-alice-proxy",
+      "ID": "8015563a0cd6",
+      "MemPerc": "0.00%",
+      "MemUsage": "1.219MiB / 30.98GiB",
+      "Name": "kusciaapi-alice-proxy",
+      "NetIO": "490kB / 484kB",
+      "PIDs": "2"
+    },
+    {
+      "BlockIO": "0B / 0B",
+      "CPUPerc": "0.00%",
+      "Container": "kusciaapi-bob-proxy",
+      "ID": "cdd5832c223b",
+      "MemPerc": "0.00%",
+      "MemUsage": "1.195MiB / 30.98GiB",
+      "Name": "kusciaapi-bob-proxy",
+      "NetIO": "328kB / 320kB",
+      "PIDs": "2"
+    },
+    {
+      "BlockIO": "270kB / 0B",
+      "CPUPerc": "0.00%",
+      "Container": "kusciaapi-kimi-proxy",
+      "ID": "b52dd1e89804",
+      "MemPerc": "0.00%",
+      "MemUsage": "1.434MiB / 30.98GiB",
+      "Name": "kusciaapi-kimi-proxy",
+      "NetIO": "417kB / 410kB",
+      "PIDs": "3"
+    },
+    {
+      "BlockIO": "3.6MB / 0B",
+      "CPUPerc": "0.00%",
+      "Container": "bfia-alice-proxy",
+      "ID": "1a5c7ddc1b56",
+      "MemPerc": "0.01%",
+      "MemUsage": "2.695MiB / 30.98GiB",
+      "Name": "bfia-alice-proxy",
+      "NetIO": "633kB / 626kB",
+      "PIDs": "1"
+    },
+    {
+      "BlockIO": "0B / 0B",
+      "CPUPerc": "0.00%",
+      "Container": "bfia-bob-proxy",
+      "ID": "251ef8c275b0",
+      "MemPerc": "0.00%",
+      "MemUsage": "1.035MiB / 30.98GiB",
+      "Name": "bfia-bob-proxy",
+      "NetIO": "6.37kB / 0B",
+      "PIDs": "1"
+    },
+    {
+      "BlockIO": "486MB / 454MB",
+      "CPUPerc": "2.76%",
+      "Container": "xchain1.node.com",
+      "ID": "753d688d8cbc",
+      "MemPerc": "0.88%",
+      "MemUsage": "279MiB / 30.98GiB",
+      "Name": "xchain1.node.com",
+      "NetIO": "16.5MB / 259MB",
+      "PIDs": "30"
+    },
+    {
+      "BlockIO": "494MB / 603MB",
+      "CPUPerc": "2.73%",
+      "Container": "xchain2.node.com",
+      "ID": "21e0a663ef33",
+      "MemPerc": "0.83%",
+      "MemUsage": "264.6MiB / 30.98GiB",
+      "Name": "xchain2.node.com",
+      "NetIO": "7.65MB / 7.61MB",
+      "PIDs": "28"
+    },
+    {
+      "BlockIO": "486MB / 605MB",
+      "CPUPerc": "2.81%",
+      "Container": "xchain3.node.com",
+      "ID": "1d428979a71a",
+      "MemPerc": "0.87%",
+      "MemUsage": "274.6MiB / 30.98GiB",
+      "Name": "xchain3.node.com",
+      "NetIO": "7.65MB / 7.62MB",
+      "PIDs": "29"
+    },
+    {
+      "BlockIO": "62.7MB / 101kB",
+      "CPUPerc": "0.00%",
+      "Container": "dataowner1.node.com",
+      "ID": "d9f1cbdee624",
+      "MemPerc": "0.11%",
+      "MemUsage": "33.48MiB / 30.98GiB",
+      "Name": "dataowner1.node.com",
+      "NetIO": "8.55MB / 111kB",
+      "PIDs": "27"
+    },
+    {
+      "BlockIO": "64.5MB / 121kB",
+      "CPUPerc": "0.00%",
+      "Container": "dataowner2.node.com",
+      "ID": "fc06a1cf5c7c",
+      "MemPerc": "0.12%",
+      "MemUsage": "37.36MiB / 30.98GiB",
+      "Name": "dataowner2.node.com",
+      "NetIO": "4.34MB / 88.2kB",
+      "PIDs": "26"
+    },
+    {
+      "BlockIO": "67.9MB / 97.8kB",
+      "CPUPerc": "0.00%",
+      "Container": "dataowner3.node.com",
+      "ID": "a57686274615",
+      "MemPerc": "0.11%",
+      "MemUsage": "36.26MiB / 30.98GiB",
+      "Name": "dataowner3.node.com",
+      "NetIO": "59.9kB / 66.4kB",
+      "PIDs": "25"
+    },
+    {
+      "BlockIO": "77.8MB / 0B",
+      "CPUPerc": "0.00%",
+      "Container": "storage1.node.com",
+      "ID": "b63b4893d2b4",
+      "MemPerc": "0.12%",
+      "MemUsage": "36.98MiB / 30.98GiB",
+      "Name": "storage1.node.com",
+      "NetIO": "539kB / 601kB",
+      "PIDs": "23"
+    },
+    {
+      "BlockIO": "58.6MB / 0B",
+      "CPUPerc": "0.00%",
+      "Container": "storage2.node.com",
+      "ID": "c83b4452e7ae",
+      "MemPerc": "0.12%",
+      "MemUsage": "36.63MiB / 30.98GiB",
+      "Name": "storage2.node.com",
+      "NetIO": "523kB / 581kB",
+      "PIDs": "24"
+    },
+    {
+      "BlockIO": "92.2MB / 0B",
+      "CPUPerc": "0.00%",
+      "Container": "storage3.node.com",
+      "ID": "4059e9f0c9cf",
+      "MemPerc": "0.12%",
+      "MemUsage": "39.64MiB / 30.98GiB",
+      "Name": "storage3.node.com",
+      "NetIO": "610kB / 17.5MB",
+      "PIDs": "22"
+    },
+    {
+      "BlockIO": "93.8MB / 0B",
+      "CPUPerc": "0.00%",
+      "Container": "executor1.node.com",
+      "ID": "9623fb9fa360",
+      "MemPerc": "0.23%",
+      "MemUsage": "74.45MiB / 30.98GiB",
+      "Name": "executor1.node.com",
+      "NetIO": "125MB / 3.59MB",
+      "PIDs": "13"
+    },
+    {
+      "BlockIO": "43.2MB / 0B",
+      "CPUPerc": "0.00%",
+      "Container": "executor2.node.com",
+      "ID": "d041b25e01d3",
+      "MemPerc": "0.21%",
+      "MemUsage": "66.99MiB / 30.98GiB",
+      "Name": "executor2.node.com",
+      "NetIO": "129MB / 3.62MB",
+      "PIDs": "13"
+    },
+    {
+      "BlockIO": "55.1MB / 2.74MB",
+      "CPUPerc": "1.35%",
+      "Container": "fate2-flow-e2e",
+      "ID": "55f3b50bfd59",
+      "MemPerc": "0.30%",
+      "MemUsage": "96.69MiB / 30.98GiB",
+      "Name": "fate2-flow-e2e",
+      "NetIO": "7.32kB / 0B",
+      "PIDs": "27"
+    },
+    {
+      "BlockIO": "35.9MB / 212MB",
+      "CPUPerc": "9.21%",
+      "Container": "fate2-flow-guest-e2e",
+      "ID": "582eac058695",
+      "MemPerc": "1.78%",
+      "MemUsage": "565.6MiB / 30.98GiB",
+      "Name": "fate2-flow-guest-e2e",
+      "NetIO": "1.85MB / 1.96MB",
+      "PIDs": "108"
+    },
+    {
+      "BlockIO": "37.1MB / 120MB",
+      "CPUPerc": "4.83%",
+      "Container": "fate2-flow-host-e2e",
+      "ID": "d31076362c94",
+      "MemPerc": "1.76%",
+      "MemUsage": "559.1MiB / 30.98GiB",
+      "Name": "fate2-flow-host-e2e",
+      "NetIO": "1.82MB / 1.86MB",
+      "PIDs": "100"
+    },
+    {
+      "BlockIO": "24.9MB / 0B",
+      "CPUPerc": "0.00%",
+      "Container": "secretpad-frontend-multiparty-e2e",
+      "ID": "d7f323363a4d",
+      "MemPerc": "0.05%",
+      "MemUsage": "14.46MiB / 30.98GiB",
+      "Name": "secretpad-frontend-multiparty-e2e",
+      "NetIO": "664kB / 62.2MB",
+      "PIDs": "17"
+    },
+    {
+      "BlockIO": "0B / 0B",
+      "CPUPerc": "0.00%",
+      "Container": "secretpad-frontend-e2e",
+      "ID": "0456aab0c0c0",
+      "MemPerc": "0.04%",
+      "MemUsage": "12.83MiB / 30.98GiB",
+      "Name": "secretpad-frontend-e2e",
+      "NetIO": "7.06kB / 0B",
+      "PIDs": "17"
+    },
+    {
+      "BlockIO": "8.19kB / 0B",
+      "CPUPerc": "0.00%",
+      "Container": "secretpad-native-e2e",
+      "ID": "9da3c05b8663",
+      "MemPerc": "0.04%",
+      "MemUsage": "13.3MiB / 30.98GiB",
+      "Name": "secretpad-native-e2e",
+      "NetIO": "9.61kB / 5.12kB",
+      "PIDs": "17"
+    },
+    {
+      "BlockIO": "19.8MB / 0B",
+      "CPUPerc": "0.00%",
+      "Container": "secretpad-native-kimi-e2e",
+      "ID": "873b69a6d739",
+      "MemPerc": "0.05%",
+      "MemUsage": "15.56MiB / 30.98GiB",
+      "Name": "secretpad-native-kimi-e2e",
+      "NetIO": "148kB / 10.3MB",
+      "PIDs": "17"
+    },
+    {
+      "BlockIO": "729kB / 2.59MB",
+      "CPUPerc": "3.09%",
+      "Container": "fateboard-native-e2e",
+      "ID": "97343fba9a68",
+      "MemPerc": "1.12%",
+      "MemUsage": "356.3MiB / 30.98GiB",
+      "Name": "fateboard-native-e2e",
+      "NetIO": "48.7kB / 5.52MB",
+      "PIDs": "66"
+    },
+    {
+      "BlockIO": "47.5MB / 0B",
+      "CPUPerc": "0.00%",
+      "Container": "paddledtx-native-e2e",
+      "ID": "3c54485d1f77",
+      "MemPerc": "0.07%",
+      "MemUsage": "22.06MiB / 30.98GiB",
+      "Name": "paddledtx-native-e2e",
+      "NetIO": "127kB / 42.2MB",
+      "PIDs": "17"
+    }
+  ],
+  "backends": [
+    {
+      "node": "alice",
+      "pid": 2133559,
+      "rssBytes": 832360448
+    },
+    {
+      "node": "bob",
+      "pid": 2136356,
+      "rssBytes": 777920512
+    },
+    {
+      "node": "kimi",
+      "pid": 2158897,
+      "rssBytes": 757182464
+    }
+  ],
+  "containerWorkingSetBytes": 6944060328,
+  "backendRssBytes": 2367463424,
+  "directoriesBytes": {
+    "/opt/ppci": 12088143872,
+    "/opt/ppci-build": 5345370112,
+    "/opt/ppci-tools": 646909952,
+    "/srv/ppci": 4859121664,
+    "/var/backups/ppci": 14083792896,
+    "/var/log/ppci": 14622720
+  },
+  "serverMemory": "total        used        free      shared  buff/cache   available\nMem:           30Gi        13Gi       4.6Gi       478Mi        12Gi        16Gi\nSwap:          15Gi       2.3Gi        13Gi",
+  "serverDisk": "Filesystem           Size  Used Avail Use% Mounted on\n/dev/mapper/ao-root  270G  108G  162G  40% /",
+  "projectMemoryEstimateBytes": 9311523752
+}
