@@ -454,6 +454,17 @@ class PaddleTests(unittest.TestCase):
             else:
                 self.assertEqual(args[-2:], ('--keyPath', './reqkeys'))
 
+    def test_owner_auth_queries_omit_signing_flags_unsupported_by_the_cli(self):
+        for operation in ('listauth', 'addns', 'upload', 'confirmauth'):
+            with self.subTest(operation=operation), patch.object(self.smoke, 'command', return_value='result') as command:
+                self.assertEqual(self.smoke.owner(1, operation), 'result')
+            args = command.call_args.args
+            self.assertIn('--host', args)
+            if operation == 'listauth':
+                self.assertNotIn('--keyPath', args)
+            else:
+                self.assertEqual(args[-2:], ('--keyPath', './ukeys'))
+
     def test_authorization_is_bound_to_this_task_file_executor(self):
         task = 'a' * 8 + '-1111-1111-1111-' + 'a' * 12
         auth = 'b' * 8 + '-2222-2222-2222-' + 'b' * 12

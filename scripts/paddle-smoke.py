@@ -26,8 +26,9 @@ def command(*args):
 
 
 def owner(node, *args):
+    keys = ('--keyPath', './ukeys') if args[0] in ('addns', 'upload', 'confirmauth') else ()
     return command('docker', 'exec', f'dataowner{node}.node.com', './xdb-cli', 'files', *args,
-                   '--host', f'http://dataowner{node}.node.com:80', '--keyPath', './ukeys')
+                   '--host', f'http://dataowner{node}.node.com:80', *keys)
 
 
 def requester(*args):
