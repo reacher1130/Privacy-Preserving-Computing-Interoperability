@@ -2,7 +2,7 @@
 
 Alice（隐语、BFIA、FATE、PaddleDTX）、Bob（BFIA）、Kimi（隐语），包含统一前端、原生链桨管理台、FATE Guest/Host Board、算法回归和迁移打包。
 
-当前交付状态（2026-11-09）：BFIA suite 镜像已公开，公司网页八算法运行、刷新和报告导出已验收。完整平台发布仍待 Paddle 执行器的 CGO/存储修复验收和最终清单；当前源码尚无 `releases/runtime.json`，默认 `all` 会在发布清单检查处停止。以下为完整发布就绪后的入口用法。
+当前交付状态（2026-11-09）：程序包和全部 14 个运行镜像已[公开发布](https://github.com/reacher1130/Privacy-Preserving-Computing-Interoperability/releases/tag/runtime-20261109-0daa7a3)，`releases/runtime.json` 已固定完整清单。公司网页八算法运行、刷新和报告导出已验收；全量部署仍在隔离 VM 验证，本轮工作分支尚未更新到 main。以下是验收完成并同步 main 后的正式入口。
 
 ## 新机器一键部署
 
@@ -44,7 +44,7 @@ bash deploy.sh clean --apply
 | `PaddleDTX/` | 链桨上游基础源码子模块；定制构建源码位于 `platform/thirdparty/` |
 | `scripts/` | 根部署入口使用的构建、运行、打包及校验程序 |
 | `images/bfia-suite/` | 八算法自包含镜像、受控构建上下文与运行入口 |
-| `releases/runtime.json`（待生成） | 完整发布验收后封存的程序和镜像清单入口 |
+| `releases/runtime.json` | 固定公开程序包和运行镜像的完整清单及摘要 |
 | `specs/` | 功能设计与实施记录 |
 | `dist/` | 本地导出的源码包，不纳入 Git |
 | `.local-backups/` | 私有历史归档、节点身份和备份，不纳入 Git |
@@ -67,4 +67,4 @@ bash deploy.sh clean --apply
 
 此前办公实机验收：[2026-11-02 恢复记录](platform/docs/office-recovery-20261102/README.md)、[链桨模型保存与预测](platform/docs/office-recovery-20261102/paddledtx-crossday-acceptance.md)、[BFIA 八算法数值和协议](platform/docs/bfia-eight-algorithms-numerical-protocol-20260914.md)。这些历史结果不代表新的一键部署已完成所有发行版/ARM 实机验收。当前脚本验证范围见 [部署说明](DEPLOYMENT.md)。
 
-2026-11-09，C4 源码 `0daa7a361ecb9c68636048cf3145810db38bb52f` 的 104 项轻量检查通过。公司浏览器运行 `2604c8e1…` 的八项数值/协议检查、刷新恢复及导出与 API 一致性已通过；完整镜像层匿名拉取、修复后的空白 VM 全量 `all` 和最终发布清单仍待完成。
+2026-11-09，C4 源码 `0daa7a361ecb9c68636048cf3145810db38bb52f` 的 104 项轻量检查通过。公司浏览器运行 `2604c8e1…` 的八项数值/协议检查、刷新恢复及导出与 API 一致性已通过；suite 的全部 19 个镜像层已匿名下载并校验。修复后的空白 VM 全量 `all` 和整个平台最终发布清单仍待完成。

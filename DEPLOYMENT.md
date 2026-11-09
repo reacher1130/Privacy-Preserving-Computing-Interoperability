@@ -2,7 +2,7 @@
 
 根目录 `deploy.sh` 是统一入口。目标是独立开发/演示环境；复用既有业务库、链或办公节点的升级，应沿用相应备份/升级流程。
 
-当前交付状态（2026-11-09）：BFIA suite 镜像已公开并完成公司网页八算法验收；完整平台发布尚未完成。当前源码没有 `releases/runtime.json`，默认 `all` 会在发布清单检查处停止。空白 Ubuntu VM 的全量验收仍待 Paddle 执行器 CGO/存储修复验证及最终清单封存。
+当前交付状态（2026-11-09）：程序包和 14 个运行镜像已公开，根目录已固定发布清单；网页八算法运行、刷新和报告导出已验收。全量部署仍在隔离 VM 验证，本轮工作分支尚未同步 main。
 
 核心集成源码现位于 `platform/`（原 `NewProject/`）。部署入口、子模块版本和外部接口保持不变；现有服务器的运行数据路径仍兼容 `/opt/ppci/NewProject/`。不要因源码目录改名而手动移动数据库、身份或容器挂载目录。
 
@@ -141,6 +141,8 @@ sudo bash deploy.sh all --offline /mnt/usb/ppci-release \
 
 报告 SHA256 为 `5c5e7266868ef7a4f1aa50ef33277592c708215be4b39674148558221f630283`。服务器私有验收目录为 `/opt/ppci-build/bfia-suite-release-20261109/web-api-integration/`；旧执行器及配置备份在 `/var/backups/ppci/releases/bfia-suite-20261109/`，不放入公开程序包。
 
-随后公司平台已使用公开 suite 摘要 `sha256:fa639734c9bc5b7d778c1289a2ed13ef5661a01edf2133bbb67b52e02a159d7c`。浏览器运行 `2604c8e1…` 的八项数值/协议标志全部通过，重新加载保留同一运行；导出的 JSON 与该运行 API 报告一致，SHA256 为 `31ac0e08b0c2b6be3c8d7fb5825683db1c98ed46d99eef1c56d670499bfa76db`。该 suite 摘要的 manifest/config 已无仓库凭据验证，完整镜像层匿名拉取仍待完成。
+随后公司平台已使用公开 suite 摘要 `sha256:fa639734c9bc5b7d778c1289a2ed13ef5661a01edf2133bbb67b52e02a159d7c`。浏览器运行 `2604c8e1…` 的八项数值/协议标志全部通过，重新加载保留同一运行；导出的 JSON 与该运行 API 报告一致，SHA256 为 `31ac0e08b0c2b6be3c8d7fb5825683db1c98ed46d99eef1c56d670499bfa76db`。
+
+该 suite 摘要的 19 个压缩镜像层已全部匿名下载并逐层核对 SHA256，总载荷 780,833,522 字节；使用空认证目录，不登录仓库、不读取 Docker 缓存。网络中断后采用匿名 Range 续传，保留失败记录，不宣称单次无中断冷拉取。最终归档通过完整 `crane validate --tarball`，精确匹配上述镜像 ID 和 linux/amd64；归档 SHA256 为 `0bc46dfe2e5b1a69739fd2ad67c218b58898e1c601b0e78a4d1b8a9c19547bbb`。
 
 空白 Ubuntu 24.04 VM 已完成运行依赖/JRE 安装、Docker 29 空存储自动配置和离线包生成/摘要校验，安装前后没有 Go/Maven/Node/Bazel/C++/javac 编译工具。首次全量部署暴露的 FATEBoard 地址冲突已修复；三套网页/Java 健康端点、双 FATEBoard 和原生管理台可访问，但 Paddle 执行器仍待 CGO1 镜像和存储配置修复后的完整运行验收。首轮 C2 中间离线包保留作失败记录，最终离线包将在修正源码和镜像验收后重新生成；CentOS 新机和 ARM 实机完整部署仍未验收。
