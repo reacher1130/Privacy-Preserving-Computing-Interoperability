@@ -17,6 +17,8 @@ import time
 import urllib.request
 import uuid
 
+from portable import runtime_identity, store_runtime_identity
+
 SOURCE = Path(os.environ.get('PPCI_SOURCE_ROOT', Path(__file__).resolve().parents[1])).resolve()
 ROOT = Path(os.environ.get('PPCI_ROOT', '/opt/ppci')).resolve()
 BUILD = Path(os.environ.get('PPCI_BUILD_ROOT', '/opt/ppci-build')).resolve()
@@ -201,6 +203,12 @@ def build():
             run('docker', 'pull', tag)
     (BUILD / 'release-images.json').write_text(json.dumps([*IMAGES, suite_tag], indent=2) + '\n')
     (BUILD / '.ppci-prebuilt-artifacts').write_text('PPCI prebuilt artifacts\n')
+    suite = json.loads(subprocess.check_output(['docker', 'image', 'inspect', suite_tag], text=True))[0]
+    if suite['Architecture'] != 'amd64':
+        raise RuntimeError('Local suite build has an unexpected architecture')
+    store_runtime_identity(BUILD, {'format': 1, 'kind': 'local-build', 'platform': 'linux/amd64',
+        'runtime_data_included': False, 'source_revision': revision,
+        'images': [{'component': 'bfia-suite', 'reference': suite['Id'], 'tag': suite_tag, 'id': suite['Id']}]}, local=True)
 
 
 def provisioner():
@@ -272,7 +280,7 @@ def import_engines():
     shared.mkdir(parents=True, exist_ok=True)
     groups = [('native.tar', [SF_IMAGE], ('alice', 'kimi')),
               ('fate-adapter.tar', ['secretflow/fate2-adapter:0.2.0-native'], ('alice',)),
-              ('bfia-cpp.tar', [CPP_IMAGE, *ALIASES], ('alice', 'bob'))]
+              ('bfia-cpp.tar', ALIASES, ('alice', 'bob'))]
     for filename, tags, nodes in groups:
         archive = shared / filename
         run('docker', 'save', '-o', archive, *tags)
@@ -311,17 +319,8 @@ def selinux():
 
 def deploy(env, offline):
     preflight(offline)
-    metadata = BUILD / 'runtime-release.json'
-    if not metadata.is_file():
-        raise RuntimeError('Missing runtime release metadata; run deploy.sh all or restore a published release package')
-    release = json.loads(metadata.read_text())
-    if not isinstance(release, dict) or release.get('format') != 2 or not isinstance(release.get('images'), list):
-        raise RuntimeError('Unsupported runtime release metadata')
-    suites = [image for image in release['images']
-              if isinstance(image, dict) and image.get('component') == 'bfia-suite']
-    if len(suites) != 1 or not all(isinstance(suites[0].get(key), str) for key in ('reference', 'tag', 'id')):
-        raise RuntimeError('Runtime release must identify one pinned BFIA suite image')
-    suite = suites[0]
+    release, local = runtime_identity(BUILD)
+    suite = next(image for image in release['images'] if image.get('component') == 'bfia-suite')
     actual = json.loads(subprocess.check_output(['docker', 'image', 'inspect', suite['tag']], text=True))[0]
     if actual['Architecture'] != 'amd64' or actual['Id'] != suite['id']:
         raise RuntimeError('Runtime BFIA suite image does not match the release')
@@ -344,7 +343,8 @@ def deploy(env, offline):
     else:
         p.kuscia()
     run(sys.executable, SOURCE / 'scripts/bfia-suite-kuscia.py', 'install', '--runtime-root', ROOT,
-        '--image-ref', suite['reference'], '--image-tag', suite['tag'], '--image-id', suite['id'])
+        '--image-ref', suite['reference'], '--image-tag', suite['tag'], '--image-id', suite['id'],
+        *(['--local-build'] if local else []))
     import_engines()
     run(sys.executable, ENVIRONMENTS / 'paddle-provision.py', 'all')
     run(sys.executable, SOURCE / 'scripts/deploy-paddledtx-full.py', 'deploy')

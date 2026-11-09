@@ -66,10 +66,17 @@ def private_write(path, data):
             temporary.unlink(missing_ok=True)
 
 
-def config_values(image_ref, image_tag, image_id, container='gaofeng-kuscia-autonomy-alice', domain='alice'):
-    repository, separator, digest = image_ref.partition('@')
-    if not separator or not DIGEST.fullmatch(digest) or not re.fullmatch(r'[a-z0-9][a-z0-9./:_-]*', repository):
-        raise ValueError('The suite image must be pinned by its registry sha256 digest')
+def config_values(image_ref, image_tag, image_id, container='gaofeng-kuscia-autonomy-alice', domain='alice', local_build=False):
+    if local_build is True:
+        if image_ref != image_id or not DIGEST.fullmatch(image_id):
+            raise ValueError('A local build reference must equal its Docker config image ID')
+        repository = image_tag.rsplit(':', 1)[0]
+    else:
+        repository, separator, digest = image_ref.partition('@')
+        if not separator or not DIGEST.fullmatch(digest):
+            raise ValueError('The suite image must be pinned by its registry sha256 digest')
+    if not re.fullmatch(r'[a-z0-9][a-z0-9./:_-]*', repository):
+        raise ValueError('Invalid suite image repository')
     if not image_tag.startswith(repository + ':') or not re.fullmatch(r'[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}', image_tag[len(repository) + 1:]):
         raise ValueError('The suite image tag must name the same repository and a fixed release')
     if image_tag.rsplit(':', 1)[1] == 'latest' or not DIGEST.fullmatch(image_id):
@@ -77,7 +84,8 @@ def config_values(image_ref, image_tag, image_id, container='gaofeng-kuscia-auto
     if not NAME.fullmatch(container) or not NAME.fullmatch(domain):
         raise ValueError('Invalid Kuscia container or domain')
     return {'image_ref': image_ref, 'image_tag': image_tag, 'image_id': image_id,
-            'container': container, 'domain': domain, 'app_image': APP_IMAGE, 'timeout_seconds': 900}
+            'container': container, 'domain': domain, 'app_image': APP_IMAGE, 'timeout_seconds': 900,
+            'local_build': local_build is True}
 
 
 def app_image(config):
@@ -114,7 +122,7 @@ def read_config(runtime):
         raise RuntimeError('The fixed suite configuration is not protected')
     config = json.loads(path.read_text())
     return config_values(config['image_ref'], config['image_tag'], config['image_id'],
-                         config['container'], config['domain'])
+                         config['container'], config['domain'], config.get('local_build', False))
 
 
 def safe_relative(name, run_id, live=False):
@@ -287,14 +295,15 @@ def import_image(config):
 
 def install_locked(args):
     runtime = args.runtime_root.resolve()
-    config = config_values(args.image_ref, args.image_tag, args.image_id, args.container, args.domain)
+    config = config_values(args.image_ref, args.image_tag, args.image_id, args.container, args.domain, args.local_build)
     inspected = json.loads(command('docker', 'image', 'inspect', config['image_tag']).stdout)[0]
     if inspected['Id'] != config['image_id'] or inspected['Architecture'] != 'amd64':
         raise RuntimeError('The pulled suite image does not match the release or architecture')
     # Offline docker save/load retains tags and content IDs, but may omit RepoDigests.
-    by_digest = command('docker', 'image', 'inspect', config['image_ref'], check=False)
-    if by_digest.returncode == 0 and json.loads(by_digest.stdout)[0]['Id'] != config['image_id']:
-        raise RuntimeError('The suite registry digest resolves to another image')
+    if not config['local_build']:
+        by_digest = command('docker', 'image', 'inspect', config['image_ref'], check=False)
+        if by_digest.returncode == 0 and json.loads(by_digest.stdout)[0]['Id'] != config['image_id']:
+            raise RuntimeError('The suite registry digest resolves to another image')
     previous = object_json(config, 'get', 'appimage', APP_IMAGE, check=False)
     if previous and previous.get('metadata', {}).get('labels', {}).get(LABEL) != COMPONENT:
         raise RuntimeError('Refuse to replace an unrelated Kuscia AppImage')
@@ -319,7 +328,7 @@ def install(args):
     root.mkdir(parents=True, exist_ok=True, mode=0o700)
     with (root / 'runner.lock').open('a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        config = config_values(args.image_ref, args.image_tag, args.image_id, args.container, args.domain)
+        config = config_values(args.image_ref, args.image_tag, args.image_id, args.container, args.domain, args.local_build)
         existing = object_json(config, 'get', 'kusciajobs', '-n', 'cross-domain', '-l', LABEL + '=' + COMPONENT)
         if any(item.get('status', {}).get('phase') not in ('Succeeded', 'Failed', 'Cancelled', 'ApprovalReject')
                for item in existing.get('items', [])):
@@ -417,6 +426,7 @@ def main():
     setup.add_argument('--image-ref', required=True)
     setup.add_argument('--image-tag', required=True)
     setup.add_argument('--image-id', required=True)
+    setup.add_argument('--local-build', action='store_true', help='Use a local Docker config ID as the image reference')
     setup.add_argument('--container', default='gaofeng-kuscia-autonomy-alice')
     setup.add_argument('--domain', default='alice')
     run = subparsers.add_parser('run')

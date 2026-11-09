@@ -219,6 +219,7 @@ def package(args):
         target.with_name(target.name + '.sha256').write_text(digest(target) + '  ' + target.name + '\n')
         print(target.resolve())
         return
+    identity, local = runtime_identity(BUILD, required=False)
     target = Path(args.output or str(SOURCE / 'dist' / time.strftime('%Y%m%d-%H%M%S'))).resolve()
     target.mkdir(parents=True, exist_ok=False)
     source_package(target / 'source.tar.gz')
@@ -254,8 +255,8 @@ def package(args):
             saved = save.wait()
             if compressed or saved:
                 raise RuntimeError('Docker image export failed')
-    if (BUILD / 'runtime-release.json').is_file():
-        manifest['runtime_release'] = validate_prebuilt(json.loads((BUILD / 'runtime-release.json').read_text()))
+    if identity:
+        manifest['local_build' if local else 'runtime_release'] = identity
     manifest['sha256'] = {p.name: digest(p) for p in target.iterdir() if p.is_file()}
     (target / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
     (target / 'SHA256SUMS').write_text(''.join(f'{sha}  {name}\n' for name, sha in manifest['sha256'].items()))
@@ -267,7 +268,10 @@ def restore(directory):
     manifest = json.loads((directory / 'manifest.json').read_text())
     if manifest.get('format') != 1 or manifest.get('platform') != 'linux/amd64':
         raise RuntimeError('Unsupported release format/platform')
+    if 'runtime_release' in manifest and 'local_build' in manifest:
+        raise RuntimeError('Conflicting runtime identities in release package')
     runtime = validate_prebuilt(manifest['runtime_release']) if 'runtime_release' in manifest else None
+    local = validate_local_build(manifest['local_build']) if 'local_build' in manifest else None
     required = {'source.tar.gz', 'artifacts.tar.gz', 'images.tar.gz'}
     if not required.issubset(manifest.get('sha256', {})):
         raise RuntimeError('Release checksum inventory is incomplete')
@@ -296,8 +300,68 @@ def restore(directory):
             raise RuntimeError('Imported image mismatch: ' + image['tag'])
     (BUILD / 'release-images.json').write_text(json.dumps([i['tag'] for i in manifest['images']]))
     (BUILD / '.ppci-prebuilt-artifacts').write_text('PPCI prebuilt artifacts\n')
-    if runtime:
-        (BUILD / 'runtime-release.json').write_text(json.dumps(runtime, indent=2) + '\n')
+    if runtime or local:
+        store_runtime_identity(BUILD, local or runtime, local=bool(local))
+
+
+def validate_local_build(record):
+    """A local Docker config ID is an identity, never a registry digest."""
+    if (not isinstance(record, dict) or set(record) != {'format', 'kind', 'platform', 'runtime_data_included', 'source_revision', 'images'}
+            or record.get('format') != 1 or record.get('kind') != 'local-build'
+            or record.get('platform') != 'linux/amd64' or record.get('runtime_data_included') is not False
+            or not isinstance(record.get('source_revision'), str) or not re.fullmatch('[0-9a-f]{40}', record['source_revision'])
+            or not isinstance(record.get('images'), list) or len(record['images']) != 1):
+        raise RuntimeError('Invalid local build identity')
+    image = record['images'][0]
+    if (not isinstance(image, dict) or set(image) != {'component', 'reference', 'tag', 'id'}
+            or image.get('component') != 'bfia-suite' or not isinstance(image.get('id'), str)
+            or not re.fullmatch('sha256:[0-9a-f]{64}', image['id']) or image.get('reference') != image['id']
+            or not isinstance(image.get('tag'), str)
+            or not re.fullmatch(r'[a-z0-9][a-z0-9._:/-]*:[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}', image['tag'])
+            or image['tag'].rsplit(':', 1)[1] == 'latest'):
+        raise RuntimeError('Invalid local build image identity')
+    return record
+
+
+def runtime_identity(directory, required=True):
+    values = []
+    for name, local, validator in (('runtime-release.json', False, validate_prebuilt),
+                                   ('runtime-local-build.json', True, validate_local_build)):
+        path = Path(directory) / name
+        if path.is_symlink():
+            raise RuntimeError('Runtime identity symbolic link retained')
+        if path.exists():
+            values.append((validator(json.loads(path.read_text())), local))
+    if len(values) > 1:
+        raise RuntimeError('Conflicting runtime release and local build identities')
+    if not values and required:
+        raise RuntimeError('Missing runtime release metadata; run deploy.sh all or build on a maintainer host')
+    return values[0] if values else (None, False)
+
+
+def store_runtime_identity(directory, record, local=False):
+    """Switch only validated owned identity records after successful build/restore."""
+    directory = Path(directory)
+    (validate_local_build if local else validate_prebuilt)(record)
+    for name, validator in (('runtime-release.json', validate_prebuilt),
+                            ('runtime-local-build.json', validate_local_build)):
+        path = directory / name
+        if path.is_symlink():
+            raise RuntimeError('Runtime identity symbolic link retained')
+        if path.exists():
+            validator(json.loads(path.read_text()))
+    name = 'runtime-local-build.json' if local else 'runtime-release.json'
+    with tempfile.NamedTemporaryFile(mode='w', dir=directory, prefix='.runtime-identity-', delete=False) as stream:
+        temporary = Path(stream.name)
+        try:
+            stream.write(json.dumps(record, indent=2) + '\n')
+            stream.flush()
+            os.fsync(stream.fileno())
+            temporary.replace(directory / name)
+        finally:
+            temporary.unlink(missing_ok=True)
+    other = directory / ('runtime-release.json' if local else 'runtime-local-build.json')
+    other.unlink(missing_ok=True)
 
 
 def validate_prebuilt(manifest):
@@ -384,7 +448,7 @@ def restore_prebuilt(directory, manifest):
                 dest = TOOLS / path.name
                 if not dest.exists():
                     path.rename(dest)
-    (BUILD / 'runtime-release.json').write_text(json.dumps(manifest, indent=2) + '\n')
+    store_runtime_identity(BUILD, manifest)
     (BUILD / 'release-images.json').write_text(json.dumps([image['tag'] for image in manifest['images']]))
 
 

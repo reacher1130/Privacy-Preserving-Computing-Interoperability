@@ -23,6 +23,61 @@ def load(name):
 
 
 class PortableTests(unittest.TestCase):
+    def test_local_identity_is_distinct_from_published_digest_and_switches_only_owned_metadata(self):
+        image_id = 'sha256:' + 'a' * 64
+        local = {'format': 1, 'kind': 'local-build', 'platform': 'linux/amd64',
+                 'runtime_data_included': False, 'source_revision': 'b' * 40,
+                 'images': [{'component': 'bfia-suite', 'reference': image_id,
+                             'tag': 'ppci/bfia-suite:source-' + 'b' * 12, 'id': image_id}]}
+        published = {'format': 2, 'platform': 'linux/amd64', 'runtime_data_included': False,
+                     'sha256': {'artifacts.tar.gz': 'c' * 64},
+                     'images': [dict(local['images'][0], reference='ghcr.io/example/suite@sha256:' + 'd' * 64)]}
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            portable.store_runtime_identity(directory, local, local=True)
+            self.assertEqual(portable.runtime_identity(directory), (local, True))
+            with self.assertRaisesRegex(RuntimeError, 'Unsupported prebuilt'):
+                portable.validate_prebuilt(local)
+            portable.store_runtime_identity(directory, published)
+            self.assertFalse((directory / 'runtime-local-build.json').exists())
+            self.assertEqual(portable.runtime_identity(directory), (published, False))
+            (directory / 'runtime-local-build.json').write_text(json.dumps(local))
+            with self.assertRaisesRegex(RuntimeError, 'Conflicting'):
+                portable.runtime_identity(directory)
+            (directory / 'runtime-local-build.json').write_text('{"owner":"someone-else"}')
+            with self.assertRaisesRegex(RuntimeError, 'Invalid local'):
+                portable.store_runtime_identity(directory, published)
+            self.assertEqual(json.loads((directory / 'runtime-local-build.json').read_text()), {'owner': 'someone-else'})
+        for field, value in [('source_revision', 'main'), ('kind', 'published')]:
+            with self.subTest(field=field), self.assertRaisesRegex(RuntimeError, 'Invalid local'):
+                portable.validate_local_build(dict(local, **{field: value}))
+        for field, value in [('reference', 'ghcr.io/example/suite@' + image_id), ('tag', 'ppci/bfia-suite:latest')]:
+            with self.subTest(field=field), self.assertRaisesRegex(RuntimeError, 'Invalid local'):
+                portable.validate_local_build(dict(local, images=[dict(local['images'][0], **{field: value})]))
+
+    def test_offline_local_build_identity_is_restored_without_a_fake_registry_digest(self):
+        image_id = 'sha256:' + 'a' * 64
+        local = {'format': 1, 'kind': 'local-build', 'platform': 'linux/amd64',
+                 'runtime_data_included': False, 'source_revision': 'b' * 40,
+                 'images': [{'component': 'bfia-suite', 'reference': image_id,
+                             'tag': 'ppci/bfia-suite:source-bbbbbbbbbbbb', 'id': image_id}]}
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            package, build = directory / 'package', directory / 'build'
+            package.mkdir()
+            for name in ('source.tar.gz', 'artifacts.tar.gz', 'images.tar.gz'):
+                with tarfile.open(package / name, 'w:gz'):
+                    pass
+            manifest = {'format': 1, 'platform': 'linux/amd64', 'runtime_data_included': False,
+                        'sha256': {p.name: portable.digest(p) for p in package.iterdir()},
+                        'images': [{'tag': local['images'][0]['tag'], 'id': image_id}], 'local_build': local}
+            (package / 'manifest.json').write_text(json.dumps(manifest))
+            with patch.object(portable, 'BUILD', build), patch.object(portable, 'run'), \
+                 patch.object(portable.subprocess, 'check_output', return_value=image_id):
+                portable.restore(package)
+            self.assertEqual(portable.runtime_identity(build), (local, True))
+            self.assertFalse((build / 'runtime-release.json').exists())
+
     def test_dnf_runtime_bootstrap_installs_yaml_for_the_selected_interpreter(self):
         with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary)
@@ -245,6 +300,10 @@ class PrebuiltReleaseTests(unittest.TestCase):
 
     def test_verified_release_pulls_by_digest_and_retains_required_local_tag(self):
         image = self.manifest['images'][0]
+        self.build.mkdir()
+        portable.store_runtime_identity(self.build, {'format': 1, 'kind': 'local-build', 'platform': 'linux/amd64',
+            'runtime_data_included': False, 'source_revision': 'c' * 40,
+            'images': [dict(image, reference=image['id'])]}, local=True)
         with patch.object(portable, 'run') as run, \
              patch.object(portable.subprocess, 'check_output', return_value=json.dumps([{'Architecture': 'amd64', 'Id': image['id']}]).encode()):
             self.restore()
@@ -252,6 +311,7 @@ class PrebuiltReleaseTests(unittest.TestCase):
         self.assertEqual(run.call_args_list[0].args, ('docker', 'pull', '--platform', 'linux/amd64', image['reference']))
         self.assertEqual(run.call_args_list[1].args, ('docker', 'tag', image['reference'], image['tag']))
         self.assertEqual(json.loads((self.build / 'runtime-release.json').read_text()), self.manifest)
+        self.assertFalse((self.build / 'runtime-local-build.json').exists())
 
     def test_bad_checksum_or_unpinned_image_never_imports_or_extracts(self):
         for field in ('checksum', 'reference'):

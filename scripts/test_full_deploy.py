@@ -1,5 +1,6 @@
 """Offline checks for deployment boundaries and generated native configuration."""
 import importlib.util
+import json
 import os
 from pathlib import Path
 import shutil
@@ -20,6 +21,61 @@ deploy = load('full_deploy', ROOT / 'scripts/full-deploy.py')
 
 
 class DeploymentTests(unittest.TestCase):
+    def test_fresh_engine_import_succeeds_with_only_published_images(self):
+        def docker(*args, **kwargs):
+            if args[:2] == ('docker', 'save'):
+                missing = set(args[4:]) - set(deploy.IMAGES)
+                if missing:
+                    raise RuntimeError('No such image on fresh host: ' + ','.join(missing))
+        with tempfile.TemporaryDirectory() as temporary, patch.object(deploy, 'ROOT', Path(temporary)), \
+             patch.object(deploy, 'run', side_effect=docker):
+            deploy.import_engines()
+
+    def test_successful_maintainer_build_records_config_id_without_a_registry_digest(self):
+        image_id, revision = 'sha256:' + 'a' * 64, 'b' * 40
+        with tempfile.TemporaryDirectory() as temporary:
+            build = Path(temporary)
+            (build / 'tools').mkdir()
+            (build / 'tools/bazel-6.5.0').touch()
+            def output(command, **kwargs):
+                return revision if command[0] == 'git' else json.dumps([{'Id': image_id, 'Architecture': 'amd64'}])
+            with patch.object(deploy, 'BUILD', build), patch.object(deploy, 'run'), \
+                 patch.object(deploy, 'build_fate'), patch.object(deploy, 'IMAGES', []), \
+                 patch.object(deploy.shutil, 'which', return_value='/bin/tool'), \
+                 patch.object(deploy.subprocess, 'check_output', side_effect=output):
+                deploy.build()
+            identity, local = deploy.runtime_identity(build)
+            self.assertTrue(local)
+            self.assertEqual(identity['source_revision'], revision)
+            self.assertEqual(identity['images'][0]['reference'], image_id)
+            self.assertFalse((build / 'runtime-release.json').exists())
+
+    def test_deploy_uses_explicit_local_build_flag_only_for_validated_local_image(self):
+        image_id = 'sha256:' + 'a' * 64
+        identity = {'format': 1, 'kind': 'local-build', 'platform': 'linux/amd64',
+                    'runtime_data_included': False, 'source_revision': 'b' * 40,
+                    'images': [{'component': 'bfia-suite', 'reference': image_id,
+                                'tag': 'ppci/bfia-suite:source-bbbbbbbbbbbb', 'id': image_id}]}
+        class HelperReached(Exception):
+            pass
+        calls = []
+        def run(*args, **kwargs):
+            calls.append(tuple(map(str, args)))
+            if 'scripts/bfia-suite-kuscia.py' in str(args[1]):
+                raise HelperReached()
+        with tempfile.TemporaryDirectory() as temporary:
+            build = Path(temporary)
+            deploy.store_runtime_identity(build, identity, local=True)
+            with patch.object(deploy, 'BUILD', build), patch.object(deploy, 'preflight'), \
+                 patch.object(deploy, 'provisioner'), patch.object(deploy, 'retain_previous_container'), \
+                 patch.object(deploy, 'wait_http'), patch.object(deploy, 'fateboards'), \
+                 patch.object(deploy, 'run', side_effect=run), patch.object(deploy.subprocess, 'run'), \
+                 patch.object(deploy.subprocess, 'check_output', return_value=json.dumps([{'Id': image_id, 'Architecture': 'amd64'}])), \
+                 self.assertRaises(HelperReached):
+                deploy.deploy({'host': '127.0.0.1', 'lan_cidr': '127.0.0.0/8'}, True)
+            self.assertIn('--local-build', calls[-1])
+            self.assertEqual(calls[-1][calls[-1].index('--image-ref') + 1], image_id)
+
     def test_missing_release_metadata_never_initializes_or_restarts_a_runtime(self):
         with tempfile.TemporaryDirectory() as temporary, patch.object(deploy, 'BUILD', Path(temporary)), \
              patch.object(deploy, 'preflight'), patch.object(deploy, 'provisioner') as provisioner, \

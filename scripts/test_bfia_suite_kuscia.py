@@ -131,7 +131,7 @@ class SuiteKusciaTests(unittest.TestCase):
                     {'Id': CONFIG['image_id'], 'Architecture': 'amd64'}]).encode(), stderr=b'')
             args = argparse.Namespace(runtime_root=root, image_ref=CONFIG['image_ref'],
                                       image_tag=CONFIG['image_tag'], image_id=CONFIG['image_id'],
-                                      container=CONFIG['container'], domain=CONFIG['domain'])
+                                      container=CONFIG['container'], domain=CONFIG['domain'], local_build=False)
             with patch.object(suite, 'command', side_effect=command), \
                  patch.object(suite, 'object_json', return_value=None), \
                  patch.object(suite, 'import_image') as imported, \
@@ -139,6 +139,33 @@ class SuiteKusciaTests(unittest.TestCase):
                 suite.install_locked(args)
             imported.assert_called_once_with(CONFIG)
             self.assertEqual(suite.read_config(root), CONFIG)
+
+    def test_local_build_requires_explicit_config_identity_and_persists_it(self):
+        local = suite.config_values(CONFIG['image_id'], 'ppci/bfia-suite:local-build',
+                                    CONFIG['image_id'], local_build=True)
+        for reference, tag, enabled in ((CONFIG['image_id'], local['image_tag'], False),
+                                        (CONFIG['image_ref'], local['image_tag'], True),
+                                        (CONFIG['image_id'], 'ppci/bfia-suite:latest', True)):
+            with self.subTest(reference=reference, enabled=enabled), self.assertRaises(ValueError):
+                suite.config_values(reference, tag, CONFIG['image_id'], local_build=enabled)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            args = argparse.Namespace(runtime_root=root, image_ref=local['image_ref'],
+                image_tag=local['image_tag'], image_id=local['image_id'], container=local['container'],
+                domain=local['domain'], local_build=True)
+            inspected = subprocess.CompletedProcess([], 0, stdout=json.dumps([
+                {'Id': local['image_id'], 'Architecture': 'amd64'}]).encode(), stderr=b'')
+            with patch.object(suite, 'command', return_value=inspected) as command, \
+                 patch.object(suite, 'object_json', return_value=None), \
+                 patch.object(suite, 'import_image'), patch.object(suite, 'kubectl'):
+                suite.install_locked(args)
+            command.assert_called_once_with('docker', 'image', 'inspect', local['image_tag'])
+            self.assertEqual(suite.read_config(root), local)
+            inspected.stdout = json.dumps([{'Id': 'sha256:' + 'c' * 64, 'Architecture': 'amd64'}]).encode()
+            with patch.object(suite, 'command', return_value=inspected), \
+                 patch.object(suite, 'import_image') as imported, self.assertRaisesRegex(RuntimeError, 'does not match'):
+                suite.install_locked(args)
+            imported.assert_not_called()
 
     def test_complete_reports_require_all_eight_actual_log_hashes(self):
         with tempfile.TemporaryDirectory() as temporary:
