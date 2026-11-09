@@ -2,19 +2,21 @@
 
 根目录 `deploy.sh` 是统一入口。目标是独立开发/演示环境；复用既有业务库、链或办公节点的升级，应沿用相应备份/升级流程。
 
+当前交付状态（2026-11-09）：BFIA suite 镜像已公开并完成公司网页八算法验收；完整平台发布尚未完成。当前源码没有 `releases/runtime.json`，默认 `all` 会在发布清单检查处停止。空白 Ubuntu VM 的全量验收仍待 Paddle 执行器 CGO/存储修复验证及最终清单封存。
+
 核心集成源码现位于 `platform/`（原 `NewProject/`）。部署入口、子模块版本和外部接口保持不变；现有服务器的运行数据路径仍兼容 `/opt/ppci/NewProject/`。不要因源码目录改名而手动移动数据库、身份或容器挂载目录。
 
 ## 系统和资源
 
 | 主机 | 执行方式 | 验证边界 |
 | --- | --- | --- |
-| Ubuntu 22.04/24.04、Debian，amd64 | apt 安装系统依赖，隔离工具链，Docker + systemd | Ubuntu 22/24 CI 的匿名克隆、bootstrap/check 通过；隔离 Ubuntu 24 同样通过；Debian 与完整 all 未验收 |
-| CentOS Stream 9/10、兼容的 RHEL/Rocky/Alma/Anolis，amd64 | dnf；Java/Node/Go/Maven 使用独立目录；保留 SELinux | 仓库已有 Anolis 历史运行证据；新入口未逐系统实测 |
+| Ubuntu 22.04/24.04、Debian，amd64 | apt 安装运行依赖、JRE，拉取已编译程序和镜像 | Ubuntu 22/24 历史 CI 的匿名克隆、bootstrap/check 通过；本轮 Ubuntu 24.04 新 VM 的免编译 bootstrap 通过，完整 all 尚未通过；Debian 未实测 |
+| CentOS Stream 9/10、兼容的 RHEL/Rocky/Alma/Anolis，amd64 | dnf 安装运行依赖；拉取相同 amd64 镜像，保留 SELinux | 本轮公司服务器为 Anolis 8.10；不能据此宣称所有 CentOS 版本均已实测 |
 | 上述 Linux arm64/aarch64 | Ubuntu amd64 cloud image + QEMU TCG 整机模拟 | 已做配置/命令/安全边界测试，未做 ARM 实机部署验收；明显慢于原生 |
 | macOS | 本地缓存清理、完整源码导出 | 不在 macOS 原生安装 Linux 服务 |
 | CentOS 7/8 等已停止维护系统、32 位 ARM、其他 CPU | 不承诺自动安装；先准备受支持的 Linux 主机/虚拟机 | 不把架构检测通过视为全栈兼容 |
 
-建议至少 8 个逻辑核、24GB 内存、100GB 可用磁盘；ARM 宿主机还需给模拟 VM 预留资源。默认 VM 分配 4 vCPU、16GB 内存。首次编译和拉镜像需要网络；下载失败会退出，可以处理网络后重试。旧系统缺 Python3.9+ 时应先升级运行宿主。
+建议至少 8 个逻辑核、24GB 内存、100GB 可用磁盘；ARM 宿主机还需给模拟 VM 预留资源。默认 VM 分配 4 vCPU、16GB 内存。首次拉取程序、运行依赖和镜像需要网络；下载失败会退出，可以处理网络后重试。默认部署无需编译。旧系统缺 Python3.9+ 时应先升级运行宿主；Anolis 8 的入口会选用已有的 Python3.11。
 
 ## 一键执行及拆分阶段
 
@@ -22,9 +24,9 @@
 sudo bash deploy.sh all --host 192.168.1.100 --lan-cidr 192.168.1.0/24
 ```
 
-将 IP/CIDR 改为目标机器实际地址和允许访问的内网。无参数时默认 `all`，网页仅开放 `127.0.0.1`。安装器安装 Docker、nginx、系统包和独立工具链，启用对应服务；不卸载已有 Docker，不删除已有卷，不关闭 SELinux/防火墙。与现有环境冲突时停止，避免把已有环境当作空机器。
+将 IP/CIDR 改为目标机器实际地址和允许访问的内网。无参数时默认 `all`，网页仅开放 `127.0.0.1`。完整发布配置就绪后，安装器安装 Docker、nginx、Python、JRE 等运行依赖，启用对应服务，然后核对 `releases/runtime.json` 指定清单的 SHA256、程序包 SHA256、镜像仓库摘要和 Docker image ID，再部署。默认流程不安装或调用 Go/Maven/Node/Bazel/C++ 编译器。不卸载已有 Docker，不删除已有卷，不关闭 SELinux/防火墙。与现有环境冲突时停止，避免把已有环境当作空机器。
 
-`--no-tests` 只跳过部署后的新样例执行，仍进行构建及健康检查。`up` 使用已有构建/镜像；`build` 不发布；`sync` 拉取当前 Git 分支并同步固定子模块。源码包没有 `.git` 时，`sync` 只验证源码清单。
+`--no-tests` 只跳过部署后的新样例执行，仍拉取发布程序并进行健康检查。`up` 使用已有程序/镜像；维护者显式执行 `build` 才安装编译工具并从源码构建，构建结果不自动公开发布。`sync` 拉取当前 Git 分支并同步固定子模块。源码包没有 `.git` 时，`sync` 只验证源码清单。
 
 源码、构建目录、运行目录不能互相包含。默认使用当前仓库、`/opt/ppci-build`、`/opt/ppci`；可用 `PPCI_BUILD_ROOT` / `PPCI_ROOT` 设置独立绝对路径：
 
@@ -35,6 +37,8 @@ sudo env PPCI_BUILD_ROOT=/data/ppci-build PPCI_ROOT=/data/ppci \
 
 内部 Docker 网络为 `192.168.117.0/24` 和 `172.31.1.0/24`。目标网段冲突必须先解决。VM 内使用私有 NAT，外部网页端口映射到宿主机；非回环映射由专用 iptables 规则限制来源 CIDR，不刷新其他防火墙规则。
 
+Kuscia 的固定镜像身份使用 Docker classic 镜像存储。Docker 29 新安装默认使用 containerd 存储；`bootstrap` 仅在该存储下没有任何容器或镜像时，备份原 daemon.json、保留其他配置并自动启用 classic。已有数据时停止并保留原存储，应使用独立新主机或虚拟机。预检、离线导入和镜像打包也检查这一条件，不通过放宽镜像校验来兼容。公司 Docker 26 classic 和空白 Ubuntu 的 Docker 29 自动配置均已验证。
+
 ## 全量覆盖和入口
 
 | 内容 | 入口/行为 |
@@ -43,7 +47,7 @@ sudo env PPCI_BUILD_ROOT=/data/ppci-build PPCI_ROOT=/data/ppci \
 | Bob / Kimi | `http://目标机IP:28101` / `http://目标机IP:38101` |
 | FATE Guest / Host Board | `http://目标机IP:19383` / `http://目标机IP:19384`；独立会话和目标机生成的账号 |
 | 链桨原生管理台 | `http://目标机IP:18511/dtx/console/`；签名登录、管理库、上传/下载、只读链上 UUID 查询 |
-| BFIA | 当前 C++ 引擎、七个组件镜像别名、Python 引擎、合作目录、统一平台八算法中心 |
+| BFIA | 七个组件镜像别名、合作目录、统一平台八算法中心；八算法使用独立自包含镜像 |
 | 原生隐语 | Alice/Kimi Kuscia、SecretFlow 计算镜像、公开 PSI 样例 |
 | FATE | 双 Flow、字符串 party ID 兼容、适配器与 Kuscia AppImage、双 Board |
 | PaddleDTX | 三链、三个数据拥有方、三个存储、三个执行器、定制计算/管理合约、MySQL、原生管理台 |
@@ -58,7 +62,11 @@ sudo env PPCI_BUILD_ROOT=/data/ppci-build PPCI_ROOT=/data/ppci \
 sudo bash deploy.sh run
 ```
 
-依次运行：BFIA 的 SGB、HE-WOE、ECDH-PSI、SS-LR、SS-XGB、SS-Pearson、SS-VIF、SS-Compare；FATE PSI 和 PSI+联合逻辑回归；隐语 Alice/Kimi PSI；BFIA Alice/Bob Kuscia PSI；链桨公开 Boston 纵向线性训练、模型读回和预测。BFIA 使用带数值/通信检查的 runner。任一失败返回非零状态。
+依次运行：BFIA 的 SGB、HE-WOE、ECDH-PSI、SS-LR、SS-XGB、SS-Pearson、SS-VIF、SS-Compare；FATE PSI 和 PSI+联合逻辑回归；隐语 Alice/Kimi PSI；BFIA Alice/Bob Kuscia PSI；链桨公开 Boston 纵向线性训练、模型读回和预测。任一失败返回非零状态。
+
+网页八算法按钮和 CLI 共用固定执行器：创建一项 Alice Kuscia 任务，在镜像内启动双方公开样本，数值和协议校验后取回报告及 16 份日志。镜像已经包含 Python 依赖、C++ 引擎、公开数据和校验器，不挂载宿主源码或 Docker socket。任务 ID 与网页运行 ID 相同，可刷新查看状态、双方日志和下载报告。这个样本入口验证双方协议与数值，不等同于跨机构独立部署验收。
+
+镜像构建方法、独立 `docker run` 和输出结构见 [镜像说明](images/bfia-suite/README.md)。发布清单记录不可变仓库摘要和本地别名；部署后固定配置位于 `/opt/ppci/etc/bfia-suite.json`，结果位于 `/var/log/ppci/bfia-suite/runs/运行UUID/`。自定义运行目录时相应路径随之变化。
 
 链桨只批准**本轮 task UUID + 本轮文件 + 对应执行器公钥**的公开样例申请，有效期两小时，保留其他申请；核对双方非空本地模型、预测 ID 交集/唯一性及有限数值。摘要写在 `/var/log/ppci/paddle-smoke-*`。超时后用原输出目录恢复同一任务：
 
@@ -83,7 +91,7 @@ sudo bash deploy.sh all --host 192.168.1.100 --lan-cidr 192.168.1.0/24
 
 只分发从当前公开历史生成的包。2026-11-05 的私有旧源码包包含原历史快照，仅保留备份，不能作为公开发布包。
 
-在已成功构建全栈的 Linux 环境生成程序/镜像发布包：
+在已成功部署或构建全栈的 Linux 环境生成程序/镜像离线包，无需重新编译：
 
 ```bash
 sudo bash deploy.sh package --with-images --output /mnt/usb/ppci-release
@@ -112,4 +120,27 @@ sudo bash deploy.sh all --offline /mnt/usb/ppci-release \
 
 公开快照 `274c831` 的本地源码包已生成，16,436 个文件逐项匹配校验清单；不含 Git 元数据，已核对 10 处令牌字段脱敏及两份敏感文件移除。该包没有全栈构建产物或运行镜像。
 
-隔离 Ubuntu 使用 amd64 用户空间，不代表 QEMU TCG 的 ARM 整机验收。尚未在新 Ubuntu/CentOS/ARM 整机执行完整 `all`，未下载全套镜像、生成已验收的运行镜像包或触发办公任务。以目标机真实退出状态、任务输出和浏览器验收为准。
+以上为 2026-11-06 的源码交付记录，不代表新版镜像交付或 QEMU TCG 的 ARM 实机验收。以目标机真实退出状态、任务输出和浏览器验收为准。
+
+2026-11-09，本轮构建、镜像下载和运行全部在公司服务器进行。首轮 C2 脚本版本为 `d25e976`；除补齐 Kimi 必需源码的构建外，该轮组件构建收据保留实际版本 `8196539`，不改写为交付脚本版本。Kimi 使用公开子模块 `00cda30`；算法使用 SecretFlow 固定版本 `3b2793a`。C++ 引擎复用已验收二进制 `bae5160e4f794a9ec0337e707efae327d0354e0be235b8ebe67ec439251c7e00`，本轮没有重新编译该二进制。
+
+当前 C4 源码为 `0daa7a361ecb9c68636048cf3145810db38bb52f`，104 项轻量检查通过，已加入原生 Paddle 存储配置兼容及 executor 的 CGO/SQLite 构建修复。新 executor 的 SHA256 为 `dea11378edb3a853bf714d07b3aeaed8a5c10271c59cc732b7ec60e9e562b859`；公司主机和新 DAI 镜像内均通过动态链接检查、实际项目 DAO 建表及 SQL 插入/查询，确认使用真实 SQLite 驱动。空白 VM 的完整运行仍待核验。
+
+最终 suite 镜像 ID 为 `sha256:b5288bc2a7fe025838c10af392f9dbfba0841bc2a14a0ea8f046f6d594ed9a26`。公司平台同一网页 API 新建运行 `e325aff5-d13e-4565-9eb7-010846453f4e`，对应真实 KusciaJob 同 UUID，约 93 秒完成；33 次刷新保持同一运行，8 项数值和协议校验通过，服务器保留 16 份完整双方日志及协议报告中的 SHA256。API 可读取日志；超过 512KiB 时返回带提示的尾部。此次验证没有重启服务或容器，原有 31 个业务容器 ID 保持不变。下述数值和报告摘要仅属于这次 API 运行。
+
+| 算法 | 本次数值结果 |
+| --- | --- |
+| SGB | 569 条公开训练样本，重算 AUC 0.9942920564；不代表泛化能力 |
+| HE-WOE | 30 特征、300 个分箱，最大绝对误差 0 |
+| ECDH-PSI | 交集 128 条，与预期 ID 完全一致 |
+| SS-LR | 最大误差约 0.00001295，小于 0.00002 |
+| SS-XGB | 最大误差约 0.00067664，小于 0.004 |
+| SS-Pearson | 最大误差约 0.00030899，小于 0.01 |
+| SS-VIF | 最大误差约 0.00164063，小于 0.03 |
+| SS-Compare | 核验 256 项双方列比较 |
+
+报告 SHA256 为 `5c5e7266868ef7a4f1aa50ef33277592c708215be4b39674148558221f630283`。服务器私有验收目录为 `/opt/ppci-build/bfia-suite-release-20261109/web-api-integration/`；旧执行器及配置备份在 `/var/backups/ppci/releases/bfia-suite-20261109/`，不放入公开程序包。
+
+随后公司平台已使用公开 suite 摘要 `sha256:fa639734c9bc5b7d778c1289a2ed13ef5661a01edf2133bbb67b52e02a159d7c`。浏览器运行 `2604c8e1…` 的八项数值/协议标志全部通过，重新加载保留同一运行；导出的 JSON 与该运行 API 报告一致，SHA256 为 `31ac0e08b0c2b6be3c8d7fb5825683db1c98ed46d99eef1c56d670499bfa76db`。该 suite 摘要的 manifest/config 已无仓库凭据验证，完整镜像层匿名拉取仍待完成。
+
+空白 Ubuntu 24.04 VM 已完成运行依赖/JRE 安装、Docker 29 空存储自动配置和离线包生成/摘要校验，安装前后没有 Go/Maven/Node/Bazel/C++/javac 编译工具。首次全量部署暴露的 FATEBoard 地址冲突已修复；三套网页/Java 健康端点、双 FATEBoard 和原生管理台可访问，但 Paddle 执行器仍待 CGO1 镜像和存储配置修复后的完整运行验收。首轮 C2 中间离线包保留作失败记录，最终离线包将在修正源码和镜像验收后重新生成；CentOS 新机和 ARM 实机完整部署仍未验收。

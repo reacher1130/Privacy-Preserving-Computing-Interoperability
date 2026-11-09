@@ -2,6 +2,8 @@
 
 Alice（隐语、BFIA、FATE、PaddleDTX）、Bob（BFIA）、Kimi（隐语），包含统一前端、原生链桨管理台、FATE Guest/Host Board、算法回归和迁移打包。
 
+当前交付状态（2026-11-09）：BFIA suite 镜像已公开，公司网页八算法运行、刷新和报告导出已验收。完整平台发布仍待 Paddle 执行器的 CGO/存储修复验收和最终清单；当前源码尚无 `releases/runtime.json`，默认 `all` 会在发布清单检查处停止。以下为完整发布就绪后的入口用法。
+
 ## 新机器一键部署
 
 在 **Linux + systemd** 主机执行。amd64 原生部署；arm64 自动创建 Ubuntu amd64 QEMU 虚拟机并执行相同流程（模拟运行较慢）。默认网页仅绑定本机回环地址；局域网使用下面的目标机实际地址和允许访问的网段。
@@ -12,13 +14,13 @@ cd Privacy-Preserving-Computing-Interoperability
 sudo bash deploy.sh all --host 192.168.1.100 --lan-cidr 192.168.1.0/24
 ```
 
-`all` 自动安装依赖、校验源码、编译、初始化独立节点和数据库、启动服务，并运行真实公开样例。任何阶段失败会停止并返回非零状态。不要在现有办公部署上运行首次安装；脚本会拒绝接管未受本工具管理的容器/服务。
+完整发布配置就绪后，`all` 安装运行依赖，按根目录 `releases/runtime.json` 的固定校验和下载已发布程序和镜像，初始化独立节点和数据库、启动服务，并运行真实公开样例。新机器不编译算法或平台，也不安装 Go/Maven/Node/Bazel。任何阶段失败会停止并返回非零状态。不要在现有办公部署上运行首次安装；脚本会拒绝接管未受本工具管理的容器/服务。
 
 ```bash
 bash deploy.sh --help
 bash deploy.sh sync                              # 更新当前 Git 分支和固定子模块
 sudo bash deploy.sh check                        # 检查目标机依赖、目录和网络
-sudo bash deploy.sh build                        # 仅构建
+sudo bash deploy.sh build                        # 维护者显式源码构建，需编译工具和资源
 sudo bash deploy.sh up --no-tests                 # 部署已有构建，不运行新样例
 sudo bash deploy.sh run                          # BFIA 八算法、FATE、隐语、链桨训练/预测
 sudo bash deploy.sh status
@@ -28,7 +30,9 @@ bash deploy.sh clean                             # 查看可清理缓存
 bash deploy.sh clean --apply
 ```
 
-源码包命令也可在 macOS 使用。完整发布包需在已成功构建的 Linux amd64 环境中生成，ARM 会转交虚拟机打包并取回。详细参数、迁移、账号位置和平台边界见根目录 [DEPLOYMENT.md](DEPLOYMENT.md)。
+源码包命令也可在 macOS 使用。完整离线包可在已完成部署或构建的 Linux amd64 环境生成，ARM 会转交虚拟机打包并取回。详细参数、迁移、账号位置和平台边界见根目录 [DEPLOYMENT.md](DEPLOYMENT.md)。
+
+网页 BFIA 算法中心的“一键运行 8 个算法”通过 Kuscia 启动同一个固定版本镜像，镜像内运行双方公开样本，返回真实数值结果、协议校验和 Alice/Bob 日志。它不挂载宿主源码、不调用容器内 Docker，也不在点击时编译。镜像包含 SGB、HE-WOE、ECDH-PSI、SS-LR、SS-XGB、SS-Pearson、SS-VIF、SS-Compare；这是公开样本验证，真实机构分布式任务仍使用平台各组件的任务入口。
 
 ## 项目目录
 
@@ -39,6 +43,8 @@ bash deploy.sh clean --apply
 | `platform/` | 隐语、BFIA、FATE、统一前后端、集成脚本、补丁、样例和验证文档 |
 | `PaddleDTX/` | 链桨上游基础源码子模块；定制构建源码位于 `platform/thirdparty/` |
 | `scripts/` | 根部署入口使用的构建、运行、打包及校验程序 |
+| `images/bfia-suite/` | 八算法自包含镜像、受控构建上下文与运行入口 |
+| `releases/runtime.json`（待生成） | 完整发布验收后封存的程序和镜像清单入口 |
 | `specs/` | 功能设计与实施记录 |
 | `dist/` | 本地导出的源码包，不纳入 Git |
 | `.local-backups/` | 私有历史归档、节点身份和备份，不纳入 Git |
@@ -60,3 +66,5 @@ bash deploy.sh clean --apply
 2026-11-06，[Ubuntu 22.04 / 24.04 公开 CI](https://github.com/reacher1130/Privacy-Preserving-Computing-Interoperability/actions/runs/42202219257) 均通过匿名递归克隆、固定源码检查、49 项部署测试、3 项运行状态测试及 `bootstrap --native` / `check --native`。另在隔离 Ubuntu 24.04 amd64 环境完成相同克隆、测试和预检；这些检查不包含完整平台构建与算法运行。
 
 此前办公实机验收：[2026-11-02 恢复记录](platform/docs/office-recovery-20261102/README.md)、[链桨模型保存与预测](platform/docs/office-recovery-20261102/paddledtx-crossday-acceptance.md)、[BFIA 八算法数值和协议](platform/docs/bfia-eight-algorithms-numerical-protocol-20260914.md)。这些历史结果不代表新的一键部署已完成所有发行版/ARM 实机验收。当前脚本验证范围见 [部署说明](DEPLOYMENT.md)。
+
+2026-11-09，C4 源码 `0daa7a361ecb9c68636048cf3145810db38bb52f` 的 104 项轻量检查通过。公司浏览器运行 `2604c8e1…` 的八项数值/协议检查、刷新恢复及导出与 API 一致性已通过；完整镜像层匿名拉取、修复后的空白 VM 全量 `all` 和最终发布清单仍待完成。
