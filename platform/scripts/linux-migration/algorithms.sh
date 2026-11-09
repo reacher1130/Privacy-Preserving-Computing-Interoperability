@@ -5,18 +5,18 @@ SF="$ROOT/NewProject/secretflow"
 MODE="${1:-all}"
 SOURCE="${PPCI_SOURCE_ROOT:-/opt/ppci-source}"
 # Materialize source beside the existing Linux caches. Never touch platform data.
-if [[ -d "$SOURCE/NewProject/secretflow" && "$SOURCE" != "$ROOT" ]]; then
+if [[ -d "$SOURCE/platform/secretflow" && "$SOURCE" != "$ROOT" ]]; then
   for file in secretflow/bfia/run_all_tests.sh secretflow/interconnection-impl/.cache/patch_all_bzl.py yacl/WORKSPACE; do
-    [[ -f "$SOURCE/NewProject/$file" ]] || { echo "Incomplete Git source checkout: $file" >&2; exit 2; }
+    [[ -f "$SOURCE/platform/$file" ]] || { echo "Incomplete Git source checkout: $file" >&2; exit 2; }
   done
-  [[ -d "$SOURCE/NewProject/secretflow/interconnection-impl/.cache/overridden" ]] || { echo 'Missing C++ source overrides' >&2; exit 2; }
+  [[ -d "$SOURCE/platform/secretflow/interconnection-impl/.cache/overridden" ]] || { echo 'Missing C++ source overrides' >&2; exit 2; }
   rsync -a --delete --exclude=.git --exclude=.cache --exclude=__pycache__ \
     --exclude=/bfia/results/ --exclude=/interconnection-impl/ic_impl/data/ --exclude='/interconnection-impl/bazel-*' \
-    "$SOURCE/NewProject/secretflow/" "$SF/"
+    "$SOURCE/platform/secretflow/" "$SF/"
   rsync -a --delete --exclude=/bazel-home --exclude=/bazelisk --exclude=/deps \
-    "$SOURCE/NewProject/secretflow/interconnection-impl/.cache/" "$SF/interconnection-impl/.cache/"
+    "$SOURCE/platform/secretflow/interconnection-impl/.cache/" "$SF/interconnection-impl/.cache/"
   rsync -a --delete --exclude=.git --exclude='.cache' --exclude='bazel-*' \
-    "$SOURCE/NewProject/yacl/" "$ROOT/NewProject/yacl/"
+    "$SOURCE/platform/yacl/" "$ROOT/NewProject/yacl/"
 fi
 export BFIA_RUN_ID="${BFIA_RUN_ID:-remote-$(date +%Y%m%d-%H%M%S)}"
 python_tests() {

@@ -85,5 +85,5 @@ docker exec ${USER}-kuscia-autonomy-alice \
 
 - Supports one native Guest and one native Host for the three canvas components listed above.
 - Both native FATE sites must be reachable through OSX. Their native data tables must already exist.
-- For the installed local pair, run `NewProject/scripts/configure_native_fate.py` from the workspace to configure OSX routes, startup recovery, and bounded worker pools. Existing configurations are backed up before the first change.
+- For the installed local pair, run `platform/scripts/configure_native_fate.py` from the workspace to configure OSX routes, startup recovery, and bounded worker pools. Existing configurations are backed up before the first change.
 - Historical jobs from the old BFIA adapter are not native execution proof: `FINISHED` could be returned with failed or unstarted tasks. The platform labels their former successes `UNVERIFIED`.

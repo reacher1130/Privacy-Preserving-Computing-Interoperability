@@ -1,29 +1,30 @@
+# Keep stable module names for existing Git caches; source paths use platform/.
 [submodule "NewProject/secretflow"]
-	path = NewProject/secretflow
+	path = platform/secretflow
 	url = https://github.com/reacher1130/secretflow-ppc.git
 [submodule "NewProject/secretpad"]
-	path = NewProject/secretpad
+	path = platform/secretpad
 	url = https://github.com/reacher1130/secretpad-ppc.git
 [submodule "NewProject/secretpad-frontend"]
-	path = NewProject/secretpad-frontend
+	path = platform/secretpad-frontend
 	url = https://github.com/reacher1130/secretpad-frontend-ppc.git
 [submodule "NewProject/kuscia"]
-	path = NewProject/kuscia
+	path = platform/kuscia
 	url = https://github.com/reacher1130/kuscia-ppc.git
 [submodule "NewProject/yacl"]
-	path = NewProject/yacl
+	path = platform/yacl
 	url = https://github.com/reacher1130/yacl-ppc.git
 [submodule "NewProject/spu"]
-	path = NewProject/spu
+	path = platform/spu
 	url = https://github.com/reacher1130/spu-ppc.git
 [submodule "NewProject/secretpad-kimi-upstream"]
-	path = NewProject/secretpad-kimi-upstream
+	path = platform/secretpad-kimi-upstream
 	url = https://github.com/reacher1130/secretpad-kimi-upstream.git
 [submodule "NewProject/InterOp"]
-	path = NewProject/InterOp
+	path = platform/InterOp
 	url = https://github.com/secretflow/InterOp.git
 [submodule "NewProject/fate"]
-	path = NewProject/fate
+	path = platform/fate
 	url = https://github.com/FederatedAI/FATE.git
 [submodule "PaddleDTX"]
 	path = PaddleDTX

@@ -10,7 +10,7 @@ import re
 import tarfile
 
 ROOT = Path(__file__).resolve().parents[1]
-ARCHIVE = ROOT / 'NewProject/thirdparty/paddledtx-source.tar.gz'
+ARCHIVE = ROOT / 'platform/thirdparty/paddledtx-source.tar.gz'
 MANIFEST = ARCHIVE.with_name('paddledtx-source.json')
 PARTS = {
     'dtx-manager': ('blockchain', 'cmd', 'config', 'controllers', 'handlers', 'models', 'pkg', 'routers', 'vendor', 'go.mod', 'go.sum', 'main.go'),

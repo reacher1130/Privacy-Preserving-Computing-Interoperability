@@ -30,6 +30,21 @@ bash deploy.sh clean --apply
 
 源码包命令也可在 macOS 使用。完整发布包需在已成功构建的 Linux amd64 环境中生成，ARM 会转交虚拟机打包并取回。详细参数、迁移、账号位置和平台边界见根目录 [DEPLOYMENT.md](DEPLOYMENT.md)。
 
+## 项目目录
+
+`platform/` 是原来的 `NewProject/`，名称来自早期集成目录，现已改为明确的核心平台目录。
+
+| 目录 | 内容 |
+| --- | --- |
+| `platform/` | 隐语、BFIA、FATE、统一前后端、集成脚本、补丁、样例和验证文档 |
+| `PaddleDTX/` | 链桨上游基础源码子模块；定制构建源码位于 `platform/thirdparty/` |
+| `scripts/` | 根部署入口使用的构建、运行、打包及校验程序 |
+| `specs/` | 功能设计与实施记录 |
+| `dist/` | 本地导出的源码包，不纳入 Git |
+| `.local-backups/` | 私有历史归档、节点身份和备份，不纳入 Git |
+
+源码目录改名不迁移已部署服务器的运行数据；`/opt/ppci/NewProject/` 等历史运行路径保持兼容。旧验收证据中的原始路径保留原样。
+
 ## 源码和数据
 
 主仓和全部 15 个递归子模块均可匿名克隆。2026-11-06，主仓、SecretFlow 定制仓和前端定制仓从脱敏快照建立公开历史；各自原库改名为 `原名-private-archive-20261106` 并保持私有。旧克隆应重新克隆公开版本，避免把原历史推回公开库。此前私有源码包保留且不公开分发；迁移使用当前公开源码重新打包。
@@ -38,10 +53,10 @@ bash deploy.sh clean --apply
 
 部署默认隔离三个目录：仓库源码、`/opt/ppci-build` 构建产物、`/opt/ppci` 运行数据。打包只导出受控源码、程序和镜像，不复制实际数据库、私钥、上传文件、账本、模型或任务结果。上游仓库自带的公开演示身份/样本属于源码示例，不能用于生产。
 
-本地 `privacy-computing-interconnectivity/` 有尚未合并的历史定制源码，`.local-backups/` 有原文件和验收证据，节点目录保存身份配置；它们保留原位，不纳入发布包。`clean` 仅清理明确可再生成且未被 Git 跟踪的依赖/构建缓存，保留构建必需的已跟踪 `.cache`。
+原 `privacy-computing-interconnectivity/` 的未合并定制源码及旧节点目录已移入 `.local-backups/layout-20261109/` 的私有归档，原有源码包保留在 `dist/`。`clean` 仅清理明确可再生成且未被 Git 跟踪的依赖/构建缓存，保留构建必需的已跟踪 `.cache`。
 
 ## 验证记录
 
 2026-11-06，[Ubuntu 22.04 / 24.04 公开 CI](https://github.com/reacher1130/Privacy-Preserving-Computing-Interoperability/actions/runs/42202219257) 均通过匿名递归克隆、固定源码检查、49 项部署测试、3 项运行状态测试及 `bootstrap --native` / `check --native`。另在隔离 Ubuntu 24.04 amd64 环境完成相同克隆、测试和预检；这些检查不包含完整平台构建与算法运行。
 
-此前办公实机验收：[2026-11-02 恢复记录](NewProject/docs/office-recovery-20261102/README.md)、[链桨模型保存与预测](NewProject/docs/office-recovery-20261102/paddledtx-crossday-acceptance.md)、[BFIA 八算法数值和协议](NewProject/docs/bfia-eight-algorithms-numerical-protocol-20260914.md)。这些历史结果不代表新的一键部署已完成所有发行版/ARM 实机验收。当前脚本验证范围见 [部署说明](DEPLOYMENT.md)。
+此前办公实机验收：[2026-11-02 恢复记录](platform/docs/office-recovery-20261102/README.md)、[链桨模型保存与预测](platform/docs/office-recovery-20261102/paddledtx-crossday-acceptance.md)、[BFIA 八算法数值和协议](platform/docs/bfia-eight-algorithms-numerical-protocol-20260914.md)。这些历史结果不代表新的一键部署已完成所有发行版/ARM 实机验收。当前脚本验证范围见 [部署说明](DEPLOYMENT.md)。

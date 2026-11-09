@@ -35,7 +35,7 @@ def build():
         run('rsync', '-a', '--exclude=.git', '--exclude=__pycache__', '--exclude=bazel-*',
             '--exclude=results', '--exclude=/interconnection-impl/.cache/bazel-home',
             '--exclude=/interconnection-impl/.cache/deps',
-            str(SOURCE / 'NewProject' / repo) + '/', str(work / repo) + '/')
+            str(SOURCE / 'platform' / repo) + '/', str(work / repo) + '/')
     spu = pinned_spu(work)
     # codeload URLs end in a commit; Bazel needs the archive type explicitly.
     bzl = work / 'yacl/bazel/repositories.bzl'
@@ -62,7 +62,7 @@ def build():
 
 
 def pinned_spu(work):
-    archive = SOURCE / 'NewProject/thirdparty/spu-build-source.tar.gz'
+    archive = SOURCE / 'platform/thirdparty/spu-build-source.tar.gz'
     manifest = json.loads(archive.with_suffix('').with_suffix('.json').read_text())
     if manifest['commit'] != SPU_PIN or hashlib.sha256(archive.read_bytes()).hexdigest() != manifest['sha256']:
         raise RuntimeError('Pinned BFIA SPU source checksum or commit mismatch')
@@ -88,7 +88,7 @@ def image():
         '--entrypoint', 'bash', BASE, '-c',
         'set -eu; files=(/cache/_bazel_root/*/execroot/interconnection-impl/bazel-out/k8-opt/bin/ic_impl/ic_main); '
         'test "${#files[@]}" -eq 1; test -x "${files[0]}"; cp "${files[0]}" /out/ic_main; strip --strip-unneeded /out/ic_main')
-    shutil.copyfile(SOURCE / 'NewProject/secretflow/interconnection-impl/docker/docker-conf/entrypoint-slim.sh',
+    shutil.copyfile(SOURCE / 'platform/secretflow/interconnection-impl/docker/docker-conf/entrypoint-slim.sh',
                     context / 'entrypoint.sh')
     (context / 'Dockerfile').write_text('''FROM ppci/bfia-runtime-base:bookworm-20260912
 WORKDIR /app
@@ -106,7 +106,7 @@ ENTRYPOINT ["/bin/bash", "/app/entrypoint.sh"]
 def python_image():
     context = BUILD / 'bfia-python-image'
     context.mkdir(exist_ok=True)
-    recipe = (SOURCE / 'NewProject/scripts/linux-migration/Dockerfile.bfia-python').read_text()
+    recipe = (SOURCE / 'platform/scripts/linux-migration/Dockerfile.bfia-python').read_text()
     recipe = recipe.replace('RUN pip install --no-cache-dir',
                             'ARG HTTPS_PROXY\nARG HTTP_PROXY\nCOPY ca-bundle.crt /tmp/ppci-ca-bundle.crt\n'
                             'RUN PIP_CERT=/tmp/ppci-ca-bundle.crt pip install --index-url https://pypi.org/simple --no-cache-dir')

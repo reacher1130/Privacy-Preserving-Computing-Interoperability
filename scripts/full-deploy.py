@@ -20,7 +20,7 @@ import uuid
 SOURCE = Path(os.environ.get('PPCI_SOURCE_ROOT', Path(__file__).resolve().parents[1])).resolve()
 ROOT = Path(os.environ.get('PPCI_ROOT', '/opt/ppci')).resolve()
 BUILD = Path(os.environ.get('PPCI_BUILD_ROOT', '/opt/ppci-build')).resolve()
-ENVIRONMENTS = SOURCE / 'NewProject/scripts/environments'
+ENVIRONMENTS = SOURCE / 'platform/scripts/environments'
 REGISTRY = 'secretflow-registry.cn-hangzhou.cr.aliyuncs.com/secretflow/'
 SF_IMAGE = REGISTRY + 'secretflow-lite-anolis8:1.11.0b1'
 FATE_IMAGE = 'ppci/fate:portable'
@@ -120,7 +120,7 @@ def build_fate():
     """Compile the reviewed compatibility classes against the official distribution."""
     context = BUILD / 'fate-image'
     context.mkdir(parents=True, exist_ok=True)
-    board = SOURCE / 'NewProject/fate/fate_board/src/main/java/org/fedai/fate/board'
+    board = SOURCE / 'platform/fate/fate_board/src/main/java/org/fedai/fate/board'
     files = ('websocket/JobWebSocketController.java', 'services/JobWebSocketService.java',
              'controller/JobManagerController.java', 'services/JobDetailService.java',
              'websocket/LogWebSocketController.java', 'controller/JobDetailController.java')
@@ -133,9 +133,9 @@ def build_fate():
     staged_flow = reviewed / 'flow'
     parser = staged_flow / 'python/fate_flow/controller/parser.py'
     parser.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(SOURCE / 'NewProject/fate/fate_flow/python/fate_flow/controller/parser.py', parser)
+    shutil.copy2(SOURCE / 'platform/fate/fate_flow/python/fate_flow/controller/parser.py', parser)
     for directory, name in ((staged_flow, 'flow.patch'), (staged_board, 'board-string-party-id.patch')):
-        patch = SOURCE / 'NewProject/patches/fate' / name
+        patch = SOURCE / 'platform/patches/fate' / name
         check = subprocess.run(['git', '-C', str(directory), 'apply', '--reverse', '--check', str(patch)],
                                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if check.returncode:
@@ -166,7 +166,7 @@ def build():
             raise RuntimeError('Missing build tool: ' + command)
     BUILD.mkdir(parents=True, exist_ok=True)
     for component in ('backend', 'kimi', 'frontend'):
-        run('bash', SOURCE / 'NewProject/scripts/linux-migration/build-platform.sh', component)
+        run('bash', SOURCE / 'platform/scripts/linux-migration/build-platform.sh', component)
     for component in ('kuscia', 'adapter'):
         run('bash', ENVIRONMENTS / 'build-runtime.sh', component)
     run(sys.executable, SOURCE / 'scripts/deploy-paddledtx-full.py', 'build')
@@ -269,7 +269,7 @@ def import_engines():
             run('docker', 'exec', container, 'kuscia', 'image', 'load', '-i', '/home/kuscia/var/images/' + filename)
     container = 'gaofeng-kuscia-autonomy-alice'
     run('docker', 'exec', '-i', container, 'kubectl', 'apply', '-f', '-',
-        input=(SOURCE / 'NewProject/thirdparty/fate2-adapter/scripts/app_image.fate2.yaml').read_text(), text=True)
+        input=(SOURCE / 'platform/thirdparty/fate2-adapter/scripts/app_image.fate2.yaml').read_text(), text=True)
 
 
 def selinux():
@@ -308,7 +308,7 @@ def deploy(env, offline):
     target.mkdir(parents=True, exist_ok=True)
     run('rsync', '-a', '--exclude=.git', '--exclude=__pycache__', '--exclude=results',
         '--exclude=interconnection-impl/.cache', '--exclude=bazel-*',
-        str(SOURCE / 'NewProject/secretflow') + '/', str(target) + '/')
+        str(SOURCE / 'platform/secretflow') + '/', str(target) + '/')
     for name in ('fate2-flow-guest-e2e', 'fate2-flow-host-e2e', 'fateboard-native-e2e', 'fateboard-host-native-e2e'):
         retain_previous_container(name, FATE_IMAGE)
     p.fate()
@@ -354,7 +354,7 @@ def algorithms():
     result = Path('/var/log/ppci/bfia-suite')
     identifier = str(uuid.uuid4())
     (result / 'runs' / identifier).mkdir(parents=True, mode=0o700)
-    run('bash', SOURCE / 'NewProject/scripts/linux-migration/run-bfia-suite.sh', identifier,
+    run('bash', SOURCE / 'platform/scripts/linux-migration/run-bfia-suite.sh', identifier,
         env=dict(os.environ, PPCI_BFIA_SUITE_ROOT=str(result)))
     for name in ('native-smoke.py', 'secretflow-smoke.py', 'bfia-smoke.py'):
         run(sys.executable, ENVIRONMENTS / name)

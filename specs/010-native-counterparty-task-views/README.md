@@ -42,6 +42,6 @@ FATE 保留 19383 Guest Board，新增只接 Host Flow 的 19384 Board。两个�
 
 ## Deploy and rollback
 
-[链桨跨环境部署](../../NewProject/docs/paddledtx-chain-task-deployment.md) · [FATE Host 接线与部署](../../NewProject/docs/office-recovery-20261102/FATEBoard.md)。
+[链桨跨环境部署](../../platform/docs/paddledtx-chain-task-deployment.md) · [FATE Host 接线与部署](../../platform/docs/office-recovery-20261102/FATEBoard.md)。
 
 链桨办公回退与核对摘要在 `/var/backups/ppci/releases/20261103-194243-dtx-chain-task.vE4DN68a/`。该目录也含当前管理端挂载的只读配置，须保留。旧容器和旧静态入口保留，候选关闭 schema 同步。旧版两个全量签名单测的编码错误在修改前已复现；本轮有针对性的权限测试和线上签名 API 均通过。跨环境脚本尚未在第二套真实环境部署。

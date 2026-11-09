@@ -50,7 +50,7 @@ def main():
                      'spec': {'author': node, 'domainDataID': dataset_id, 'grantDomain': peer,
                               'limit': {'expirationTime': (datetime.datetime.now(datetime.timezone.utc) +
                                        datetime.timedelta(hours=1)).isoformat()}}})
-    cfg = json.loads((SOURCE / 'NewProject/kuscia/scripts/templates/task_input_config.2pc_balanced_psi.json')
+    cfg = json.loads((SOURCE / 'platform/kuscia/scripts/templates/task_input_config.2pc_balanced_psi.json')
                      .read_text().replace('bob', 'kimi'))
     cfg['sf_input_ids'] = ids
     cfg['sf_output_ids'] = [job_id + '-output', job_id + '-report']

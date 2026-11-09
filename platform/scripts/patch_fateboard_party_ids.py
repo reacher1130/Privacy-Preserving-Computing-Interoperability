@@ -13,8 +13,8 @@ import tarfile
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
-BOARD = ROOT / 'NewProject/fate/fate_board'
-PATCH = ROOT / 'NewProject/patches/fate/board-string-party-id.patch'
+BOARD = ROOT / 'platform/fate/fate_board'
+PATCH = ROOT / 'platform/patches/fate/board-string-party-id.patch'
 CONTAINER = 'fateboard-native-e2e'
 BASE = '/data/projects/fate/fateboard'
 JDK = '/data/projects/fate/env/jdk/jdk-8u345'

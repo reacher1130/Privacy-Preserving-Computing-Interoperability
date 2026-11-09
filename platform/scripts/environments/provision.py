@@ -12,6 +12,7 @@ import urllib.request
 SOURCE = Path(os.environ.get('PPCI_SOURCE_ROOT', '/opt/ppci-source'))
 ROOT = Path(os.environ.get('PPCI_ROOT', '/opt/ppci'))
 BUILD = Path(os.environ.get('PPCI_BUILD_ROOT', '/opt/ppci-build'))
+# Preserve deployed identities and databases when the source layout changes.
 SCRIPTS = ROOT / 'NewProject/scripts'
 LABEL = 'io.ppci.environment'
 
@@ -51,7 +52,7 @@ def prepare():
     for path in ('/srv/ppci', '/var/log/ppci', '/var/backups/ppci/releases'):
         Path(path).mkdir(parents=True, exist_ok=True)
     SCRIPTS.mkdir(parents=True, exist_ok=True)
-    run('rsync', '-a', '--no-owner', '--no-group', str(SOURCE / 'NewProject/scripts') + '/', str(SCRIPTS) + '/')
+    run('rsync', '-a', '--no-owner', '--no-group', str(SOURCE / 'platform/scripts') + '/', str(SCRIPTS) + '/')
     for repo in ('secretpad', 'secretpad-kimi-upstream'):
         target = ROOT / 'NewProject' / repo
         target.mkdir(parents=True, exist_ok=True)
@@ -60,7 +61,7 @@ def prepare():
             (target / 'data').mkdir(exist_ok=True)
         # Only absent configuration files are initialized; identities stay local.
         run('rsync', '-a', '--ignore-existing', '--exclude=certs', '--exclude=server.jks',
-            str(SOURCE / 'NewProject' / repo / 'config') + '/', str(target / 'config') + '/')
+            str(SOURCE / 'platform' / repo / 'config') + '/', str(target / 'config') + '/')
         (target / 'target').mkdir(exist_ok=True)
     bob = ROOT / 'NewProject/secretpad-bob'
     bob.mkdir(exist_ok=True)
@@ -144,7 +145,7 @@ def kuscia():
             '-v', f'{shared}:/home/kuscia/var/images', image, 'bin/kuscia', 'start', '-c', 'etc/conf/kuscia.yaml'])
     target = ROOT / 'NewProject/kuscia/scripts'
     target.mkdir(parents=True, exist_ok=True)
-    run('rsync', '-a', str(SOURCE / 'NewProject/kuscia/scripts') + '/', str(target) + '/')
+    run('rsync', '-a', str(SOURCE / 'platform/kuscia/scripts') + '/', str(target) + '/')
     run('bash', SCRIPTS / 'deploy_three_nodes.sh', env=dict(os.environ, USER='gaofeng', KUSCIA_IMAGE=image))
 
 
@@ -354,7 +355,7 @@ def main():
     p.add_argument('stage', choices=('prepare', 'kuscia', 'upgrade-kuscia', 'fate', 'platform', 'gateway'))
     p.add_argument('--environment', choices=('home', 'office'), default='home')
     a = p.parse_args()
-    env = json.loads((SOURCE / 'NewProject/scripts/environments' / (a.environment + '.json')).read_text())
+    env = json.loads((SOURCE / 'platform/scripts/environments' / (a.environment + '.json')).read_text())
     env['host'] = os.environ.get('PPCI_PUBLIC_HOST', env['host'])
     env['lan_cidr'] = os.environ.get('PPCI_LAN_CIDR', env['lan_cidr'])
     if a.stage == 'prepare': prepare()

@@ -24,7 +24,7 @@ def main():
     task_id = name + '-psi'
     out = Path('/var/log/ppci') / ('acceptance-bfia-' + stamp)
     out.mkdir()
-    template = SOURCE / 'NewProject/kuscia/scripts/user/bfia/job-ecdh-psi.yaml'
+    template = SOURCE / 'platform/kuscia/scripts/user/bfia/job-ecdh-psi.yaml'
     job = yaml.safe_load(template.read_text())
     job['metadata']['name'] = name
     task = job['spec']['tasks'][0]

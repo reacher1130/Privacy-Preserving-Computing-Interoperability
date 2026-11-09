@@ -5,8 +5,8 @@ import subprocess
 root=Path(__file__).resolve().parents[1]
 for module,patch in [('fate_flow','flow.patch'),('fate_board','board.patch'),
                      ('fate_board','board-string-party-id.patch')]:
-    repo=root/'NewProject/fate'/module
-    file=root/'NewProject/patches/fate'/patch
+    repo=root/'platform/fate'/module
+    file=root/'platform/patches/fate'/patch
     check=subprocess.run(['git','-C',str(repo),'apply','--reverse','--check',str(file)],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     if check.returncode==0:
         print(module+': patch already applied');continue

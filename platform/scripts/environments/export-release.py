@@ -37,7 +37,7 @@ def main():
              (BUILD / 'secretpad-frontend/apps/platform/dist', 'secretpad-frontend/apps/platform/dist'),
              (BUILD / 'paddle/paddlempc', 'paddle/paddlempc'),
              (BUILD / 'paddle/requester-cli-current', 'paddle/requester-cli-current'),
-             (SOURCE / 'NewProject/scripts', 'scripts')]
+             (SOURCE / 'platform/scripts', 'scripts')]
     for path, _ in files:
         if not path.exists(): raise FileNotFoundError(path)
     with tarfile.open(dest / 'artifacts.tar.gz', 'w:gz') as archive:
@@ -45,8 +45,8 @@ def main():
             archive.add(path, arcname=name, filter=lambda item: None if '__pycache__' in item.name else item)
     manifest = {'created_utc': stamp, 'platform': 'linux/amd64', 'runtime_data_included': False,
                 'source': {}, 'images': [], 'sha256': {}}
-    for repo in ['.', 'NewProject/secretpad', 'NewProject/secretpad-kimi-upstream',
-                 'NewProject/secretpad-frontend', 'NewProject/kuscia', 'NewProject/secretflow', 'NewProject/yacl',
+    for repo in ['.', 'platform/secretpad', 'platform/secretpad-kimi-upstream',
+                 'platform/secretpad-frontend', 'platform/kuscia', 'platform/secretflow', 'platform/yacl',
                  'PaddleDTX']:
         path = SOURCE / repo
         manifest['source'][repo] = {

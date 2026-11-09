@@ -287,11 +287,11 @@ def clean(apply=False):
     candidates = []
     # Exact known disposable outputs only. Never recursively remove directories named .cache.
     for repo, paths in (
-        ('NewProject/secretpad-frontend', ['node_modules', 'tooling/tsup/node_modules', 'tooling/stylelint/node_modules',
+        ('platform/secretpad-frontend', ['node_modules', 'tooling/tsup/node_modules', 'tooling/stylelint/node_modules',
          'tooling/eslint/node_modules', 'tooling/jest/node_modules', 'packages/dag/node_modules', 'packages/utils/node_modules',
          'apps/platform/node_modules', 'apps/docs/node_modules', 'packages/dag/dist', 'packages/utils/dist']),
-        ('NewProject/secretpad', ['secretpad-common/target']),
-        ('.', ['scripts/__pycache__', 'NewProject/scripts/__pycache__', 'NewProject/scripts/environments/__pycache__'])):
+        ('platform/secretpad', ['secretpad-common/target']),
+        ('.', ['scripts/__pycache__', 'platform/scripts/__pycache__', 'platform/scripts/environments/__pycache__'])):
         base = SOURCE / repo
         for name in paths:
             path = base / name

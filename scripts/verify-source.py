@@ -3,7 +3,7 @@
 from pathlib import Path
 import subprocess
 root=Path(__file__).resolve().parents[1]
-markers={'NewProject/InterOp':'README.md','NewProject/fate':'README.md','NewProject/kuscia':'go.mod','NewProject/secretflow':'bfia/run_all_tests.sh','NewProject/secretpad':'pom.xml','NewProject/secretpad-frontend':'package.json','NewProject/secretpad-kimi-upstream':'pom.xml','NewProject/spu':'README.md','NewProject/yacl':'WORKSPACE','PaddleDTX':'README.md'}
+markers={'platform/InterOp':'README.md','platform/fate':'README.md','platform/kuscia':'go.mod','platform/secretflow':'bfia/run_all_tests.sh','platform/secretpad':'pom.xml','platform/secretpad-frontend':'package.json','platform/secretpad-kimi-upstream':'pom.xml','platform/spu':'README.md','platform/yacl':'WORKSPACE','PaddleDTX':'README.md'}
 for module,marker in markers.items():
     expected=subprocess.check_output(['git','-C',str(root),'rev-parse','HEAD:'+module]).decode().strip()
     actual=subprocess.check_output(['git','-C',str(root/module),'rev-parse','HEAD']).decode().strip()

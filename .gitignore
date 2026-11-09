@@ -18,7 +18,7 @@
 *.sqlite*
 *.mv.db
 *.trace.db
-# The legacy collection is retained locally; it is not published by this workspace.
+# Private legacy archives live under .local-backups and are never published.
 
 *.jar
 *.tar.gz
@@ -27,10 +27,10 @@
 *.class
 
 *.tar
-/NewProject/thirdparty/fate2-adapter/adapter
-/NewProject/thirdparty/fate2-adapter/fate2-adapter-local
+/platform/thirdparty/fate2-adapter/adapter
+/platform/thirdparty/fate2-adapter/fate2-adapter-local
 
 # Reviewed build-source snapshots required by clean and offline checkouts.
-!/NewProject/thirdparty/paddledtx-source.tar.gz
-!/NewProject/thirdparty/spu-build-source.tar.gz
+!/platform/thirdparty/paddledtx-source.tar.gz
+!/platform/thirdparty/spu-build-source.tar.gz
 /dist/

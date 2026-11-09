@@ -15,12 +15,12 @@ case "$MODE" in
 esac
 MARKER=pom.xml
 [[ "$MODE" != frontend ]] || MARKER=package.json
-[[ -f "$ROOT/NewProject/$SOURCE/$MARKER" ]] || { echo "Incomplete Git source checkout: $SOURCE/$MARKER" >&2; exit 2; }
+[[ -f "$ROOT/platform/$SOURCE/$MARKER" ]] || { echo "Incomplete Git source checkout: $SOURCE/$MARKER" >&2; exit 2; }
 mkdir -p "$BUILD/$SOURCE"
 rsync -a --delete --no-owner --no-group --exclude=node_modules --exclude=target \
   --exclude=/logs --exclude=/log --exclude='/db*' --exclude='/data*' \
   --exclude=dist --exclude=.cache --exclude=.local-backups \
-  "$ROOT/NewProject/$SOURCE/" "$BUILD/$SOURCE/"
+  "$ROOT/platform/$SOURCE/" "$BUILD/$SOURCE/"
 cd "$BUILD/$SOURCE"
 if [[ "$MODE" == frontend ]]; then
   export NODE_OPTIONS=--max-old-space-size=3072

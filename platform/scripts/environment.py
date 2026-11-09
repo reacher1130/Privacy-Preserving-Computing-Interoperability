@@ -51,7 +51,7 @@ def main():
         script = 'build-platform.sh' if a.action == 'build' else 'deploy-built.sh'
         command = ['env', 'PPCI_SOURCE_ROOT=' + source, 'PPCI_BUILD_ROOT=' + env['build_root'],
                    'PPCI_ROOT=' + env['runtime_root'],
-                   'bash', source + '/NewProject/scripts/linux-migration/' + script, a.component]
+                   'bash', source + '/platform/scripts/linux-migration/' + script, a.component]
         cmd = ssh + [target, shlex.join(command)]
     else:
         cmd = ssh + [target, 'ppci-platform status']

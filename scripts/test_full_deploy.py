@@ -60,20 +60,20 @@ class DeploymentTests(unittest.TestCase):
     def test_fate_build_includes_reviewed_parser_and_six_classes(self):
         with tempfile.TemporaryDirectory() as temporary:
             source, build = Path(temporary) / 'source', Path(temporary) / 'build'
-            board = source / 'NewProject/fate/fate_board/src/main/java/org/fedai/fate/board'
+            board = source / 'platform/fate/fate_board/src/main/java/org/fedai/fate/board'
             for name in ('websocket/JobWebSocketController.java', 'services/JobWebSocketService.java',
                          'controller/JobManagerController.java', 'services/JobDetailService.java',
                          'websocket/LogWebSocketController.java', 'controller/JobDetailController.java'):
                 target = board / name
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(ROOT / target.relative_to(source), target)
-            parser = source / 'NewProject/fate/fate_flow/python/fate_flow/controller/parser.py'
+            parser = source / 'platform/fate/fate_flow/python/fate_flow/controller/parser.py'
             parser.parent.mkdir(parents=True)
             shutil.copy2(ROOT / parser.relative_to(source), parser)
-            patches = source / 'NewProject/patches/fate'
+            patches = source / 'platform/patches/fate'
             patches.mkdir(parents=True)
             for name in ('flow.patch', 'board-string-party-id.patch'):
-                shutil.copy2(ROOT / 'NewProject/patches/fate' / name, patches / name)
+                shutil.copy2(ROOT / 'platform/patches/fate' / name, patches / name)
             original_parser = parser.read_bytes()
             original_board = {path: path.read_bytes() for path in board.rglob('*.java')}
             with patch.object(deploy, 'SOURCE', source), patch.object(deploy, 'BUILD', build), \
@@ -100,7 +100,7 @@ class DeploymentTests(unittest.TestCase):
             self.assertEqual(parser.read_bytes(), patched_parser)
 
     def test_gateway_acl_boards_websocket_and_native_routes(self):
-        provision = load('provision_test', ROOT / 'NewProject/scripts/environments/provision.py')
+        provision = load('provision_test', ROOT / 'platform/scripts/environments/provision.py')
         original_path = Path
         with tempfile.TemporaryDirectory() as temporary:
             directory = Path(temporary)
@@ -121,9 +121,10 @@ class DeploymentTests(unittest.TestCase):
             self.assertIn('127.0.0.1:19484', text)
             self.assertEqual(text.count('proxy_set_header Upgrade $http_upgrade;'), 2)
             self.assertIn('location /dtx/v1/ { proxy_pass http://127.0.0.1:18088;', text)
+            self.assertIn(str(directory / 'runtime/NewProject/secretpad-frontend-dist-e2e'), text)
 
     def test_pinned_spu_exports_without_git_history(self):
-        builder = load('bfia_builder', ROOT / 'NewProject/scripts/environments/build-bfia.py')
+        builder = load('bfia_builder', ROOT / 'platform/scripts/environments/build-bfia.py')
         with tempfile.TemporaryDirectory() as temporary, patch.object(builder, 'SOURCE', ROOT):
             destination = builder.pinned_spu(Path(temporary))
             self.assertTrue((destination / 'WORKSPACE').is_file())

@@ -19,7 +19,7 @@ ROOT = Path(os.environ.get('PPCI_ROOT', '/opt/ppci')).resolve()
 BUILD = Path(os.environ.get('PPCI_BUILD_ROOT', '/opt/ppci-build')).resolve()
 STAGE = BUILD / 'paddle-native'
 STATE = Path(os.environ.get('PPCI_DTX_STATE_ROOT', ROOT / 'native/dtx-manager'))
-PATCHES = SOURCE / 'NewProject/scripts/patches'
+PATCHES = SOURCE / 'platform/scripts/patches'
 NETWORK = 'blockchain_network'
 LABEL = 'io.ppci.environment=portable'
 IMAGE_PREFIX = 'ppci/paddledtx-'
@@ -51,7 +51,7 @@ def patch(directory, name):
 def sources():
     STAGE.mkdir(parents=True, exist_ok=True)
     destination = STAGE / 'source'
-    manifest = json.loads((SOURCE / 'NewProject/thirdparty/paddledtx-source.json').read_text())
+    manifest = json.loads((SOURCE / 'platform/thirdparty/paddledtx-source.json').read_text())
     marker = STAGE / 'source.json'
     if marker.exists():
         if json.loads(marker.read_text())['sha256'] != manifest['sha256']:
@@ -100,7 +100,7 @@ def build():
                                         ('xdb', paddle / 'xdb', '.'), ('xdb-cli', paddle / 'xdb', './cmd/client')]:
         print('Building native ' + output, flush=True)
         call('go', 'build', '-p', '2', '-ldflags=-s -w', '-o', binary / output, package, cwd=directory, env=env)
-    call('go', 'build', '-p', '2', '-o', binary / 'check-manager', SOURCE / 'NewProject/scripts/check_paddledtx_manager.go', cwd=manager, env=env)
+    call('go', 'build', '-p', '2', '-o', binary / 'check-manager', SOURCE / 'platform/scripts/check_paddledtx_manager.go', cwd=manager, env=env)
     # Tests execute on the build host; cross-built binaries are checked by target deployment.
     if arch == {'x86_64': 'amd64', 'aarch64': 'arm64'}.get(platform.machine(), platform.machine()) and sys.platform.startswith('linux'):
         call('go', 'test', '-p', '2', './pkg/auth', './pkg/filesafe', './controllers', '-run',

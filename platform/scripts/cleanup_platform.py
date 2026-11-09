@@ -5,7 +5,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 STALE_CONTAINERS=['secretpad-frontend-e2e-broken-20260906','secretpad-frontend-dev-e2e','fate2-standalone-e2e']
 STALE_IMAGES=['paddledtx-dai:2.1-local-20260905','paddledtx-dai:2.1-local-20260905-cgo','paddledtx-dai:2.1-local-20260905-static-cgo']
-GENERATED=['NewProject/secretpad-frontend/apps/platform/dist','NewProject/secretpad-frontend/apps/platform/src/.umi','NewProject/secretpad-frontend/apps/platform/src/.umi-production','NewProject/secretpad-frontend/typing-errors.log','NewProject/secretpad-frontend/typing-errors2.log']
+GENERATED=['platform/secretpad-frontend/apps/platform/dist','platform/secretpad-frontend/apps/platform/src/.umi','platform/secretpad-frontend/apps/platform/src/.umi-production','platform/secretpad-frontend/typing-errors.log','platform/secretpad-frontend/typing-errors2.log']
 TARS=['gaofeng-kuscia-autonomy-alice/images/fate2-adapter-0.1.0.tar','gaofeng-kuscia-autonomy-alice/images/image_ZJ2gKE2Z.tar','gaofeng-kuscia-autonomy-alice/images/fate2-adapter-0.1.1-e2e.tar','gaofeng-kuscia-autonomy-alice/images/fate2-adapter-0.1.1-e2e-current.tar','kuscia-node-bob/images/fate2-adapter-0.1.1-e2e.tar','kuscia-node-bob/images/fate2-adapter-0.1.1-e2e-current.tar']
 def cmd(args): return subprocess.check_output(args,text=True,timeout=45).strip()
 def size(p):
@@ -29,7 +29,7 @@ def main():
             p=Path(directory)/'.DS_Store'
             if not protected(p): files.append(p)
     # Retain one current FATE adapter export plus both locally tagged Docker images.
-    canonical=ROOT/'NewProject/thirdparty/fate2-adapter/fate2-adapter-0.1.1-e2e-current.tar'
+    canonical=ROOT/'platform/thirdparty/fate2-adapter/fate2-adapter-0.1.1-e2e-current.tar'
     if canonical.is_file():
         cmd(['docker','image','inspect','secretflow/fate2-adapter:0.1.0','secretflow/fate2-adapter:0.1.1-e2e'])
         files += [ROOT/p for p in TARS if (ROOT/p).is_file() and (ROOT/p).resolve() not in mounts]
@@ -44,7 +44,7 @@ def main():
     report['fileBytes']=sum(x['bytes'] for x in report['files'])
     report['imageLogicalBytes']=sum(x['bytes'] for x in images)
     report['note']='Image logical sizes include shared layers; not a claim about physical bytes freed. No volumes, ledgers, databases, source repositories, node_modules, or compiler caches are removed.'
-    evidence=ROOT/'NewProject/docs/acceptance-20260907';evidence.mkdir(parents=True,exist_ok=True)
+    evidence=ROOT/'platform/docs/acceptance-20260907';evidence.mkdir(parents=True,exist_ok=True)
     if args.apply:
         for name in removable:
             current=json.loads(cmd(['docker','inspect',name]))[0]

@@ -16,7 +16,7 @@ case "${1:-}" in
   kuscia)
     CONTEXT="$BUILD/kuscia-image"
     mkdir -p "$CONTEXT"
-    cd "$SOURCE/NewProject/kuscia"
+    cd "$SOURCE/platform/kuscia"
     go build -p 2 -ldflags='-s -w' -o "$CONTEXT/kuscia" ./cmd/kuscia
     rsync -a scripts crds "$CONTEXT/"
     cat > "$CONTEXT/Dockerfile" <<'EOF'
@@ -30,7 +30,7 @@ EOF
   adapter)
     CONTEXT="$BUILD/fate-adapter"
     mkdir -p "$CONTEXT"
-    cd "$SOURCE/NewProject/thirdparty/fate2-adapter"
+    cd "$SOURCE/platform/thirdparty/fate2-adapter"
     go test -p 2 ./...
     go build -p 2 -ldflags='-s -w' -o "$CONTEXT/adapter" ./cmd/adapter
     mkdir -p "$CONTEXT/certs"
