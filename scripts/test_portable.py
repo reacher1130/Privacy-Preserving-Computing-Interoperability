@@ -307,6 +307,12 @@ class PortableTests(unittest.TestCase):
             self.assertFalse((export / '.git').exists())
             with patch.object(portable, 'SOURCE', export):
                 self.assertEqual(len(list(portable.source_files(export))), 2)
+                repacked = Path(tmp) / 'repacked.tar.gz'
+                portable.source_package(repacked)
+                with tarfile.open(repacked) as stream:
+                    marker = json.load(stream.extractfile('ppci-source/.ppci-source.json'))
+                for field in ('revision', 'dirty', 'files'):
+                    self.assertEqual(marker[field], manifest[field])
                 (export / 'source.py').write_text('tampered')
                 with self.assertRaisesRegex(RuntimeError, 'changed'):
                     list(portable.source_files(export))

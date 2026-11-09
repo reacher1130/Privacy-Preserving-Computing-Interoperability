@@ -225,6 +225,11 @@ def source_package(output):
     if (SOURCE / '.git').exists():
         manifest['revision'] = subprocess.check_output(['git', '-C', str(SOURCE), 'rev-parse', 'HEAD'], text=True).strip()
         manifest['dirty'] = bool(subprocess.check_output(['git', '-C', str(SOURCE), 'status', '--porcelain']))
+    else:
+        previous = json.loads((SOURCE / '.ppci-source.json').read_text())
+        for field in ('revision', 'dirty'):
+            if field in previous:
+                manifest[field] = previous[field]
     with tarfile.open(output, 'w:gz') as archive:
         for path, relative in source_files():
             if path.is_symlink() and (Path(os.readlink(path)).is_absolute() or not path.resolve().is_relative_to(SOURCE)):
