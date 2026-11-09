@@ -14,6 +14,7 @@ import unittest
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
+TEMP_ROOT = Path(tempfile.gettempdir()).resolve()
 RUN_ID = '01234567-89ab-cdef-0123-456789abcdef'
 
 
@@ -37,7 +38,7 @@ class SuiteImageTests(unittest.TestCase):
                     entry.arguments([value])
 
     def test_output_rejects_traversal_symlinks_and_reused_results(self):
-        with tempfile.TemporaryDirectory(dir='/private/tmp') as temporary:
+        with tempfile.TemporaryDirectory(dir=TEMP_ROOT) as temporary:
             directory = Path(temporary)
             for value in ('/', 'relative', str(directory / '../other')):
                 with self.subTest(path=value), self.assertRaises(ValueError):
@@ -51,7 +52,7 @@ class SuiteImageTests(unittest.TestCase):
                 entry.output_directory(str(output), RUN_ID)
 
     def test_success_requires_all_eight_numerical_and_protocol_results(self):
-        with tempfile.TemporaryDirectory(dir='/private/tmp') as temporary:
+        with tempfile.TemporaryDirectory(dir=TEMP_ROOT) as temporary:
             output = Path(temporary)
             for language, names in (('python', entry.PYTHON), ('cpp', entry.CPP)):
                 directory = output / language / RUN_ID
@@ -73,7 +74,7 @@ class SuiteImageTests(unittest.TestCase):
             self.assertEqual(entry.report(output, RUN_ID, {'python': 0, 'cpp': 0})['status'], 'PASSED')
 
     def test_bundle_preserves_public_results_but_excludes_links_and_environment(self):
-        with tempfile.TemporaryDirectory(dir='/private/tmp') as temporary:
+        with tempfile.TemporaryDirectory(dir=TEMP_ROOT) as temporary:
             output = Path(temporary)
             directory = output / 'cpp' / RUN_ID / 'ss-lr'
             directory.mkdir(parents=True)
@@ -101,7 +102,7 @@ class SuiteImageTests(unittest.TestCase):
                 entry.bundle(output, RUN_ID)
 
     def test_atomic_report_does_not_follow_an_existing_temporary_symlink(self):
-        with tempfile.TemporaryDirectory(dir='/private/tmp') as temporary:
+        with tempfile.TemporaryDirectory(dir=TEMP_ROOT) as temporary:
             directory = Path(temporary)
             victim = directory / 'preserved'; victim.write_text('keep')
             (directory / 'report.json.tmp').symlink_to(victim)
@@ -110,7 +111,7 @@ class SuiteImageTests(unittest.TestCase):
             self.assertEqual(victim.read_text(), 'keep')
 
     def test_live_log_snapshot_is_bounded_and_only_sent_when_changed(self):
-        with tempfile.TemporaryDirectory(dir='/private/tmp') as temporary:
+        with tempfile.TemporaryDirectory(dir=TEMP_ROOT) as temporary:
             output = Path(temporary)
             directory = output / 'python' / RUN_ID / 'sgb'; directory.mkdir(parents=True)
             log = directory / 'alice.stdout.log'; log.write_bytes(b'x' * (70 * 1024))
@@ -125,7 +126,7 @@ class SuiteImageTests(unittest.TestCase):
             self.assertEqual(base64.b64decode(encoded), b'x' * 65536)
 
     def test_group_preserves_python_libraries_but_cannot_use_a_host_docker_daemon(self):
-        with tempfile.TemporaryDirectory(dir='/private/tmp') as temporary, \
+        with tempfile.TemporaryDirectory(dir=TEMP_ROOT) as temporary, \
              patch.dict(os.environ, {'LD_LIBRARY_PATH': '/tested-python-libraries', 'DOCKER_HOST': 'ssh://not-used',
                                      'BFIA_CPP_ALGOS': 'one-algorithm'}, clear=True), \
              patch.object(entry.subprocess, 'Popen') as launch, contextlib.redirect_stdout(io.StringIO()):
@@ -140,7 +141,7 @@ class SuiteImageTests(unittest.TestCase):
     def test_context_includes_only_pinned_source_and_required_licenses(self):
         def git(directory, *args):
             return subprocess.check_output(['git', '-C', str(directory), *args], stderr=subprocess.DEVNULL)
-        with tempfile.TemporaryDirectory(dir='/private/tmp') as temporary:
+        with tempfile.TemporaryDirectory(dir=TEMP_ROOT) as temporary:
             source = Path(temporary) / 'checkout'; source.mkdir()
             repo = source / 'platform/secretflow'; repo.mkdir(parents=True)
             git(source, 'init'); git(repo, 'init')
