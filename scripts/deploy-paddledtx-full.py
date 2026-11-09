@@ -65,6 +65,7 @@ def sources():
     for name in ('auth', 'upload', 'sdk-log', 'chain-task'):
         patch(manager, 'paddledtx-manager-' + name + '.patch')
     patch(paddle / 'dai', 'paddledtx-file-metadata.patch')
+    patch(paddle / 'dai', 'paddledtx-xdb-routing.patch')
     for name in ('login', 'download', 'chain-task'):
         patch(frontend, 'paddledtx-native-' + name + '.patch')
     # The native contract is a nested module; build in GOPATH with the exact vendored SDK.
@@ -108,6 +109,8 @@ def build():
         call('go', 'test', '-p', '2', './pkg/auth', './pkg/filesafe', './controllers', '-run',
              'Test(AuthorizationRecoveryBoundary|UploadRecoveryBoundary|RecoveryAuthorityPolicy|ChainTask)', '-count=1', cwd=manager, env=env)
         call('go', 'test', '-p', '2', './util/filemeta', '-count=1', cwd=paddle / 'dai', env=env)
+        call('go', 'test', '-p', '2', './blockchain/xchain', '-run', 'TestCatalogQueriesUseDtxContract',
+             '-count=1', cwd=paddle / 'dai', env=env)
     gopath = STAGE / 'gopath'
     link = gopath / 'src/baidu/blockchain/dtx-manager'
     link.parent.mkdir(parents=True, exist_ok=True)

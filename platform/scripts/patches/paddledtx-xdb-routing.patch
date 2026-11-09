@@ -1,0 +1,162 @@
+--- a/blockchain/xchain/catalog.go
++++ b/blockchain/xchain/catalog.go
+@@ -36,7 +36,7 @@
+ 		"id":          id,
+ 		"currentTime": strconv.FormatInt(time.Now().UnixNano(), 10),
+ 	}
+-	s, err := x.QueryManagerContract(args, "GetFileByID")
++	s, err := x.QueryDtxContract(args, "GetFileByID")
+ 	if err != nil {
+ 		return f, err
+ 	}
+@@ -93,7 +93,7 @@
+ 	args := map[string]string{
+ 		"opt": string(opts),
+ 	}
+-	resp, err := x.QueryManagerContract(args, "ListFileAuthApplications")
++	resp, err := x.QueryDtxContract(args, "ListFileAuthApplications")
+ 	if err != nil {
+ 		return f, err
+ 	}
+--- a/blockchain/xchain/xchain.go
++++ b/blockchain/xchain/xchain.go
+@@ -58,12 +58,12 @@
+ 	acc, err := account.RetrieveAccount(conf.Mnemonic, 1)
+ 	if err != nil {
+-		return nil, errorx.Wrap(err, errorx.ErrCodeInternal,
++		return nil, errorx.NewCode(err, errorx.ErrCodeInternal,
+ 			"RetrieveAccount failed, err: %v", err)
+ 	}
+ 	// create xchain client
+ 	xuperClient, err := xchain.NewXuperClient(conf.ChainAddress)
+ 	if err != nil {
+-		return nil, errorx.Wrap(err, errorx.ErrCodeInternal,
++		return nil, errorx.NewCode(err, errorx.ErrCodeInternal,
+ 			"NewXuperClient failed, err: %v", err)
+ 	}
+ 	return &XChain{
+@@ -128,7 +128,7 @@
+ 	}
+ 	// invoke contract
+ 	if _, err := nativeContract.PostNativeContract(preSelectUTXOResponse); err != nil {
+-		return nil, errorx.Wrap(err, errorx.ErrCodeInternal,
++		return nil, errorx.NewCode(err, errorx.ErrCodeInternal,
+ 			"PostNativeContract failed, err: %v", err)
+ 	}
+ 	return preSelectUTXOResponse.GetResponse().GetResponses()[0].GetBody(), nil
+--- /dev/null
++++ b/blockchain/xchain/catalog_routing_test.go
+@@ -0,0 +1,113 @@
++package xchain
++
++import (
++	"context"
++	"encoding/json"
++	"reflect"
++	"strconv"
++	"strings"
++	"testing"
++
++	dtxmb "baidu/blockchain/dtx-manager/blockchain"
++	xdbchain "github.com/PaddlePaddle/PaddleDTX/xdb/blockchain"
++	"github.com/PaddlePaddle/PaddleDTX/xdb/errorx"
++	"github.com/xuperchain/xuper-sdk-go/account"
++	"github.com/xuperchain/xuper-sdk-go/pb"
++	sdkxchain "github.com/xuperchain/xuper-sdk-go/xchain"
++	"google.golang.org/grpc"
++)
++
++type catalogQueryRPC struct {
++	pb.XchainClient
++	requests []*pb.InvokeRPCRequest
++	body     []byte
++	status   int32
++}
++
++func (rpc *catalogQueryRPC) PreExec(_ context.Context, req *pb.InvokeRPCRequest, _ ...grpc.CallOption) (*pb.InvokeRPCResponse, error) {
++	rpc.requests = append(rpc.requests, req)
++	return &pb.InvokeRPCResponse{Response: &pb.InvokeResponse{
++		Responses: []*pb.ContractResponse{{Status: rpc.status, Message: "authorization query denied", Body: rpc.body}},
++	}}, nil
++}
++
++func TestCatalogQueriesUseDtxContract(t *testing.T) {
++	rpc := &catalogQueryRPC{status: 200}
++	chain := &XChain{
++		DtxContractName: "paddlempc", ManagerContractName: "data", ChainName: "xuper",
++		Account: &account.Account{Address: "test-requester"}, ContractAccount: "test-contract-account",
++		XchainClient: &sdkxchain.XuperClient{XchainClient: rpc},
++	}
++	rpc.body = []byte(`{"id":"file-1","name":"sample","description":"fixture","namespace":"demo","owner":"AQI=","merkleRoot":"AwQ=","length":42,"publishTime":11,"expireTime":22,"ext":"W10="}`)
++	file, err := chain.GetCatalogFileDetailByID("file-1")
++	if err != nil {
++		t.Fatal(err)
++	}
++	wantFile := dtxmb.CatalogFile{
++		FileID: "file-1", StorageType: dtxmb.StorageTypeXdb, Name: "sample", Description: "fixture",
++		Namespace: "demo", Owner: []byte{1, 2}, MerkleRoot: []byte{3, 4}, Length: 42,
++		Status: dtxmb.CatalogFileOnlineStatus, PublishTime: 11, ExpireTime: 22, Ext: []byte("[]"),
++	}
++	if !reflect.DeepEqual(file, wantFile) {
++		t.Fatalf("XDB file projection changed: got %#v, want %#v", file, wantFile)
++	}
++	opt := &dtxmb.ListCatalogFileAuthOptions{
++		Applier: []byte{1, 2}, Authorizer: []byte{3, 4}, FileID: "file-1",
++		Status: dtxmb.CatalogFileAuthApproved, TimeStart: 10, TimeEnd: 20, Limit: 3,
++	}
++	rpc.body = []byte(`[{"id":"auth-1","fileID":"file-1","applier":"AQI=","authorizer":"AwQ=","authKey":"BQY=","status":"Approved","expireTime":99}]`)
++	auths, err := chain.ListCatalogFileAuth(opt)
++	if err != nil {
++		t.Fatal(err)
++	}
++	wantAuths := dtxmb.CatalogFileAuthList{{
++		ID: "auth-1", FileID: "file-1", Applier: []byte{1, 2}, Authorizer: []byte{3, 4},
++		AuthKey: []byte{5, 6}, Status: dtxmb.CatalogFileAuthApproved, ExpireTime: 99,
++	}}
++	if !reflect.DeepEqual(auths, wantAuths) {
++		t.Fatalf("Authorization fields changed: got %#v, want %#v", auths, wantAuths)
++	}
++	if len(rpc.requests) != 2 {
++		t.Fatalf("got %d RPCs, want 2", len(rpc.requests))
++	}
++	for i, method := range []string{"GetFileByID", "ListFileAuthApplications"} {
++		req := rpc.requests[i]
++		if req.Bcname != "xuper" || req.Initiator != "test-requester" || len(req.Requests) != 1 {
++			t.Fatalf("RPC envelope changed: %#v", req)
++		}
++		call := req.Requests[0]
++		if call.ModuleName != "native" || call.ContractName != "paddlempc" || call.MethodName != method {
++			t.Fatalf("wrong XDB contract routing: %#v", call)
++		}
++	}
++	fileArgs := rpc.requests[0].Requests[0].Args
++	currentTime, parseErr := strconv.ParseInt(string(fileArgs["currentTime"]), 10, 64)
++	if len(fileArgs) != 2 || string(fileArgs["id"]) != "file-1" || parseErr != nil || currentTime <= 0 {
++		t.Fatalf("file query arguments changed: %#v", fileArgs)
++	}
++	authArgs := rpc.requests[1].Requests[0].Args
++	var gotOpt xdbchain.ListFileAuthOptions
++	if err := json.Unmarshal(authArgs["opt"], &gotOpt); err != nil {
++		t.Fatal(err)
++	}
++	wantOpt := xdbchain.ListFileAuthOptions{
++		Applier: opt.Applier, Authorizer: opt.Authorizer, FileID: opt.FileID,
++		Status: opt.Status, TimeStart: opt.TimeStart, TimeEnd: opt.TimeEnd, Limit: opt.Limit,
++	}
++	if len(authArgs) != 1 || !reflect.DeepEqual(gotOpt, wantOpt) {
++		t.Fatalf("authorization filters changed: got %#v, want %#v", gotOpt, wantOpt)
++	}
++	rpc.status = 500
++	rpc.body = nil
++	_, err = chain.ListCatalogFileAuth(opt)
++	if err == nil {
++		t.Fatal("failed authorization query must remain an error")
++	}
++	code, message := errorx.Parse(err)
++	if code != errorx.ErrCodeInternal || !strings.Contains(message, "authorization query denied") {
++		t.Fatalf("authorization error code/cause changed: %v", err)
++	}
++	if len(rpc.requests) != 3 || rpc.requests[2].Requests[0].ContractName != "paddlempc" {
++		t.Fatal("authorization failure must not fall back to the manager contract")
++	}
++}

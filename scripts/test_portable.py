@@ -434,6 +434,15 @@ class PaddleTests(unittest.TestCase):
     def setUpClass(cls):
         cls.smoke = load('paddle-smoke')
 
+    def test_command_keeps_application_errors_even_when_the_cli_exits_zero(self):
+        for code, stdout, stderr in ((0, 'Publish task failed: bad method ListFileAuthApplications', ''),
+                                      (1, '', 'x' * 5000 + 'bad method ListFileAuthApplications')):
+            result = subprocess.CompletedProcess([], code, stdout=stdout, stderr=stderr)
+            with patch.object(self.smoke.subprocess, 'run', return_value=result), \
+                 self.assertRaisesRegex(RuntimeError, 'bad method ListFileAuthApplications') as raised:
+                self.smoke.command('docker', 'exec', 'executor1.node.com', '/home/requester-cli-current')
+            self.assertLess(len(str(raised.exception)), 4200)
+
     def test_authorization_is_bound_to_this_task_file_executor(self):
         task = 'a' * 8 + '-1111-1111-1111-' + 'a' * 12
         auth = 'b' * 8 + '-2222-2222-2222-' + 'b' * 12

@@ -21,7 +21,7 @@ def command(*args):
     text = result.stdout + result.stderr
     # Several historical Go CLIs report application errors with exit status zero.
     if result.returncode or re.search(r'(?im)^(?:err(?:or)?[：:]|.*\bfailed[：:]|Error:)', text):
-        raise RuntimeError('PaddleDTX command failed; inspect the node logs: ' + ' '.join(map(str, args[:4])))
+        raise RuntimeError('PaddleDTX command failed: ' + ' '.join(map(str, args[:4])) + '\n' + text[-4000:].strip())
     return result.stdout
 
 
