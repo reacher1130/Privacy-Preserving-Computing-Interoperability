@@ -260,8 +260,15 @@ def pod_logs(config, pod, run_id):
             or metadata.get('annotations', {}).get('kuscia.secretflow/image-id') != config['image_id']):
         raise RuntimeError('Kuscia did not select the owned pod and pinned suite image')
     for status in pod.get('status', {}).get('containerStatuses', []):
-        if status.get('name') == 'suite' and (status.get('restartCount', 0) != 0
-                or status.get('imageID', config['image_id']) != config['image_id']):
+        if status.get('name') != 'suite':
+            continue
+        if status.get('restartCount', 0) != 0:
+            raise RuntimeError('The suite container image or restart identity changed')
+        if (pod['status'].get('phase') == 'Pending' and status.get('imageID', '') == ''
+                and not status.get('containerID') and not status.get('lastState')
+                and status.get('state', {}).get('waiting', {}).get('reason') == 'ContainerCreating'):
+            return None
+        if status.get('imageID') != config['image_id']:
             raise RuntimeError('The suite container image or restart identity changed')
     logs = kubectl(config, 'logs', '-n', config['domain'], metadata['name'], '-c', 'suite',
                    '--limit-bytes=' + str(MAX_LOG_RESPONSE), check=False)

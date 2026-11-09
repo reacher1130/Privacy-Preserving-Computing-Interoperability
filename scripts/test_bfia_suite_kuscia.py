@@ -211,6 +211,45 @@ class SuiteKusciaTests(unittest.TestCase):
             suite.pod_logs(CONFIG, pod, RUN)
         kubectl.assert_not_called()
 
+    def test_first_pending_container_waits_then_reads_the_pinned_image_logs(self):
+        pod = owned_pod()
+        status = {'name': 'suite', 'imageID': '', 'containerID': None, 'restartCount': 0,
+                  'lastState': {}, 'state': {'waiting': {'reason': 'ContainerCreating'}}}
+        pod['status'] = {'phase': 'Pending', 'containerStatuses': [status]}
+        with patch.object(suite, 'kubectl') as kubectl, patch.object(suite, 'command') as command:
+            self.assertIsNone(suite.pod_logs(CONFIG, pod, RUN))
+        kubectl.assert_not_called()
+        command.assert_not_called()
+        pod['status']['phase'] = 'Running'
+        status.update(imageID=CONFIG['image_id'], containerID='containerd://actual-container',
+                      state={'running': {'startedAt': '2026-11-09T12:00:00Z'}})
+        logs = subprocess.CompletedProcess([], 0, stdout=b'actual pinned task output\n', stderr=b'')
+        with patch.object(suite, 'kubectl', return_value=logs):
+            self.assertEqual(suite.pod_logs(CONFIG, pod, RUN), (logs.stdout, 'kubectl'))
+
+    def test_pending_wait_never_accepts_restarts_started_or_different_images(self):
+        cases = [
+            ('Pending', {'restartCount': 1}),
+            ('Pending', {'imageID': 'sha256:' + 'c' * 64}),
+            ('Pending', {'containerID': 'containerd://already-created'}),
+            ('Pending', {'lastState': {'terminated': {'exitCode': 1}}}),
+            ('Pending', {'state': {'waiting': {'reason': 'ImagePullBackOff'}}}),
+            ('Running', {'state': {'running': {}}}),
+            ('Succeeded', {'state': {'terminated': {'exitCode': 0}}}),
+        ]
+        for phase, changed in cases:
+            with self.subTest(phase=phase, changed=changed):
+                pod = owned_pod()
+                status = {'name': 'suite', 'imageID': '', 'containerID': None, 'restartCount': 0,
+                          'lastState': {}, 'state': {'waiting': {'reason': 'ContainerCreating'}}}
+                status.update(changed)
+                pod['status'] = {'phase': phase, 'containerStatuses': [status]}
+                with patch.object(suite, 'kubectl') as kubectl, patch.object(suite, 'command') as command, \
+                     self.assertRaisesRegex(RuntimeError, 'image or restart'):
+                    suite.pod_logs(CONFIG, pod, RUN)
+                kubectl.assert_not_called()
+                command.assert_not_called()
+
     def test_output_parent_symlinks_cannot_redirect_a_result(self):
         with tempfile.TemporaryDirectory() as temporary:
             dest, outside = Path(temporary).resolve() / 'run', Path(temporary).resolve() / 'outside'
