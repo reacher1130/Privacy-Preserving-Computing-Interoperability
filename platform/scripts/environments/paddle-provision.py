@@ -40,6 +40,64 @@ def prepare():
         if not target.exists():
             target.write_text((conf / 'config.toml').read_text())
             target.chmod(0o600)
+        # The bundled native DAI fork reads these names; upstream samples use contractName.
+        for config in (conf / 'config.toml', target):
+            text = config.read_text()
+            original = text
+            section = re.search(r'(?ms)^[ \t]*\[executor\.blockchain\.xchain\][ \t]*\n(.*?)(?=^[ \t]*\[|\Z)', text)
+            if section is None:
+                raise RuntimeError('Missing executor xchain configuration: ' + str(config))
+            body = section.group(1)
+            additions = []
+            if not re.search(r'(?m)^[ \t]*dtxContractName[ \t]*=', body):
+                legacy = re.search(r'(?m)^[ \t]*contractName[ \t]*=[ \t]*(.+)$', body)
+                if legacy is None:
+                    raise RuntimeError('Missing executor contractName: ' + str(config))
+                additions.append('        dtxContractName = ' + legacy.group(1))
+            if not re.search(r'(?m)^[ \t]*managerContractName[ \t]*=', body):
+                additions.append('        managerContractName = "data"')
+            if additions:
+                text = text[:section.end()] + '\n' + '\n'.join(additions) + '\n' + text[section.end():]
+            section = re.search(r'(?ms)^[ \t]*\[executor\.storage\][ \t]*\n(.*?)(?=^[ \t]*\[|\Z)', text)
+            if section is None:
+                raise RuntimeError('Missing executor storage configuration: ' + str(config))
+            body = section.group(1)
+            legacy_type = re.search(r'(?m)^[ \t]*type[ \t]*=[ \t]*(.+)$', body)
+            predict_type = re.search(r'(?m)^[ \t]*predictStorageType[ \t]*=[ \t]*(.+)$', body)
+            predict_type = predict_type or legacy_type
+            local = re.search(r'(?ms)^[ \t]*\[executor\.storage\.Local\][ \t]*\n(.*?)(?=^[ \t]*\[|\Z)', text)
+            predict_path = re.search(r'(?m)^[ \t]*localPredictStoragePath[ \t]*=[ \t]*(.+)$', local.group(1)) if local else None
+            defaults = {
+                'modelStorageType': '"Local"',
+                'predictStorageType': predict_type.group(1) if predict_type else '"Local"',
+                'psiStorageType': predict_type.group(1) if predict_type else '"Local"',
+                'localPredictStoragePath': predict_path.group(1) if predict_path else '"./predictions"',
+                'localPsiStoragePath': '"./predictions/psi"',
+                'liveEvaluationStoragePath': '"./evalus/live"',
+            }
+            additions = [key + ' = ' + value for key, value in defaults.items()
+                         if not re.search(r'(?m)^[ \t]*' + key + r'[ \t]*=', body)]
+            if additions:
+                text = text[:section.end()] + '\n' + '\n'.join(additions) + '\n' + text[section.end():]
+                body += '\n' + '\n'.join(additions)
+            local_only = all(re.search(r'(?m)^[ \t]*' + key + r'''[ \t]*=[ \t]*["']Local["'][ \t]*(?:#.*)?$''', body)
+                             for key in ('modelStorageType', 'predictStorageType', 'psiStorageType'))
+            executor = re.search(r'(?ms)^[ \t]*\[executor\][ \t]*\n(.*?)(?=^[ \t]*\[|\Z)', text)
+            xdb = re.search(r'(?ms)^[ \t]*\[executor\.storage\.XuperDB\][ \t]*\n(.*?)(?=^[ \t]*\[|\Z)', text)
+            key_pattern = r'''(?m)^[ \t]*keyPath[ \t]*=[ \t]*(["'])([^"']+)\1'''
+            executor_key = re.search(key_pattern, executor.group(1)) if executor else None
+            xdb_key = re.search(key_pattern, xdb.group(1)) if xdb else None
+            # Native DAI initializes an unused XDB client even for Local; both clients parse the same ECDSA key format.
+            if (local_only and executor_key and xdb_key and xdb_key.group(2) == './ukeys'
+                    and not re.search(r'(?m)^[ \t]*privateKey[ \t]*=', xdb.group(1))
+                    and not (conf.parent / xdb_key.group(2) / 'private.key').exists()
+                    and not Path(executor_key.group(2)).is_absolute()
+                    and (conf.parent / executor_key.group(2) / 'private.key').is_file()):
+                xdb_body = xdb.group(1)
+                xdb_body = xdb_body[:xdb_key.start(2)] + executor_key.group(2) + xdb_body[xdb_key.end(2):]
+                text = text[:xdb.start(1)] + xdb_body + text[xdb.end(1):]
+            if text != original:
+                config.write_text(text)
     network = subprocess.run(['docker', 'network', 'inspect', 'blockchain_network'], capture_output=True, text=True)
     if network.returncode:
         run('docker', 'network', 'create', '--subnet', '172.31.1.0/24', 'blockchain_network')

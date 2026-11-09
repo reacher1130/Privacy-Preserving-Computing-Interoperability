@@ -11,6 +11,7 @@ export DEBIAN_FRONTEND=noninteractive
 if command -v apt-get >/dev/null; then
   apt-get update
   apt-get install -y --no-install-recommends ca-certificates curl git rsync tar gzip xz-utils unzip openssl nginx python3-yaml python3-pip ripgrep iproute2 util-linux
+  [[ "$mode" != build ]] || apt-get install -y --no-install-recommends gcc libc6-dev
   if ! command -v docker >/dev/null; then
     [[ "$ID" == ubuntu || "$ID" == debian ]] || { echo 'Install Docker for this distribution first.' >&2; exit 2; }
     install -m 0755 -d /etc/apt/keyrings
@@ -22,6 +23,7 @@ if command -v apt-get >/dev/null; then
   fi
 elif command -v dnf >/dev/null; then
   dnf install -y ca-certificates curl git rsync tar gzip xz unzip openssl nginx iproute util-linux policycoreutils-python-utils python3-pip python3-pyyaml
+  [[ "$mode" != build ]] || dnf install -y gcc glibc-devel
   # EPEL is not enabled automatically; a small rg release is installed below if needed.
   if ! command -v docker >/dev/null; then
     curl -fsSL https://download.docker.com/linux/centos/docker-ce.repo -o /etc/yum.repos.d/ppci-docker.repo

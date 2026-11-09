@@ -21,6 +21,31 @@ deploy = load('full_deploy', ROOT / 'scripts/full-deploy.py')
 
 
 class DeploymentTests(unittest.TestCase):
+    def test_native_executor_build_enables_sqlite_cgo_without_changing_other_binaries(self):
+        native = load('native_sqlite_build', ROOT / 'scripts/deploy-paddledtx-full.py')
+        environments = {}
+        class BuildsCaptured(Exception):
+            pass
+        def call(*args, **kwargs):
+            if args[:2] == ('go', 'build'):
+                output = Path(args[args.index('-o') + 1]).name
+                if output == 'check-manager':
+                    raise BuildsCaptured()
+                environments[output] = kwargs['env']['CGO_ENABLED']
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            manager = root / 'manager'
+            (manager / 'vendor').mkdir(parents=True)
+            (manager / 'go.mod').write_text('module baidu/blockchain/dtx-manager\n')
+            (manager / 'vendor/modules.txt').write_text('')
+            with patch.object(native, 'STAGE', root), patch.object(native, 'sources', return_value=(manager, root / 'frontend', root / 'PaddleDTX')), \
+                 patch.object(native, 'call', side_effect=call), patch.dict(os.environ, PPCI_TARGET_ARCH='amd64'), \
+                 self.assertRaises(BuildsCaptured):
+                native.build()
+        self.assertEqual(environments.pop('executor'), '1', 'SQLite must use its real CGO driver')
+        self.assertTrue(environments)
+        self.assertEqual(set(environments.values()), {'0'})
+
     def test_fresh_fateboards_leave_the_fixed_kuscia_node_addresses_available(self):
         allocated = {'192.168.117.20', '192.168.117.21'}
         def ensure(name, arguments):

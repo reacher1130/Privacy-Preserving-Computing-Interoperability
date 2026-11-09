@@ -99,7 +99,9 @@ def build():
                                         ('paddlempc', paddle / 'dai', './blockchain/xchain/contract'),
                                         ('xdb', paddle / 'xdb', '.'), ('xdb-cli', paddle / 'xdb', './cmd/client')]:
         print('Building native ' + output, flush=True)
-        call('go', 'build', '-p', '2', '-ldflags=-s -w', '-o', binary / output, package, cwd=directory, env=env)
+        # The executor opens SQLite unconditionally; CGO=0 builds a driver stub.
+        call('go', 'build', '-p', '2', '-ldflags=-s -w', '-o', binary / output, package, cwd=directory,
+             env=dict(env, CGO_ENABLED='1') if output == 'executor' else env)
     call('go', 'build', '-p', '2', '-o', binary / 'check-manager', SOURCE / 'platform/scripts/check_paddledtx_manager.go', cwd=manager, env=env)
     # Tests execute on the build host; cross-built binaries are checked by target deployment.
     if arch == {'x86_64': 'amd64', 'aarch64': 'arm64'}.get(platform.machine(), platform.machine()) and sys.platform.startswith('linux'):
