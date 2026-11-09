@@ -23,6 +23,39 @@ def load(name):
 
 
 class PortableTests(unittest.TestCase):
+    def test_dnf_runtime_bootstrap_installs_yaml_for_the_selected_interpreter(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            binary = base / 'bin'
+            binary.mkdir()
+            log = base / 'commands.log'
+            def executable(name, body):
+                path = binary / name
+                path.write_text('#!/bin/sh\n' + body)
+                path.chmod(0o755)
+                return path
+            executable('id', 'printf "0\\n"\n')
+            for name in ('dnf', 'docker', 'systemctl'):
+                executable(name, 'printf "%s %s\\n" "' + name + '" "$*" >> "$PPCI_INSTALL_TEST_LOG"\n')
+            executable('dirname', 'value=$1; [ "$value" != -- ] || value=$2; printf "%s\\n" "${value%/*}"\n')
+            python = executable('python3.9', 'printf "python3.9 %s\\n" "$*" >> "$PPCI_INSTALL_TEST_LOG"\n'
+                                '[ "$1" != -c ] || exit 1\n'
+                                'if [ "$1" = -m ] && [ "$2" = pip ] && [ "$3" = --version ]; then exit 1; fi\n')
+            (base / 'systemd').mkdir()
+            release = base / 'os-release'
+            release.write_text('ID=anolis\n')
+            script = base / 'install-deps.sh'
+            text = (Path(portable.SOURCE) / 'scripts/install-deps.sh').read_text()
+            script.write_text(text.replace('/run/systemd/system', str(base / 'systemd'))
+                              .replace('. /etc/os-release', '. ' + str(release)))
+            subprocess.run(['/bin/bash', str(script)], check=True,
+                           env=dict(os.environ, PATH=str(binary), PPCI_PYTHON=str(python), PPCI_INSTALL_TEST_LOG=str(log)))
+            commands = log.read_text()
+            self.assertIn('python3-pip python3-pyyaml', commands)
+            self.assertIn('python3.9 -m ensurepip --upgrade', commands)
+            self.assertIn('python3.9 -m pip install --only-binary=:all: PyYAML==6.0.3', commands)
+            self.assertIn('portable.py install-runtime --native', commands)
+
     def test_runtime_bootstrap_downloads_only_java_runtime_when_system_rg_exists(self):
         with tempfile.TemporaryDirectory() as temporary:
             tools = Path(temporary) / 'tools'

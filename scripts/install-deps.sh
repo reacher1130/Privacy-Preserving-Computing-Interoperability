@@ -21,7 +21,7 @@ if command -v apt-get >/dev/null; then
     apt-get install -y docker-ce docker-ce-cli containerd.io
   fi
 elif command -v dnf >/dev/null; then
-  dnf install -y ca-certificates curl git rsync tar gzip xz unzip openssl nginx iproute util-linux policycoreutils-python-utils python3.11 python3.11-pip
+  dnf install -y ca-certificates curl git rsync tar gzip xz unzip openssl nginx iproute util-linux policycoreutils-python-utils python3-pip python3-pyyaml python3.11 python3.11-pip
   python="${PPCI_PYTHON:-python3.11}"
   # EPEL is not enabled automatically; a small rg release is installed below if needed.
   if ! command -v docker >/dev/null; then
@@ -34,7 +34,10 @@ else
 fi
 systemctl enable --now docker
 if ! "$python" -c 'import yaml' >/dev/null 2>&1; then
-  "$python" -m pip install --only-binary=:all: 'PyYAML==6.0.2'
+  if ! "$python" -m pip --version >/dev/null 2>&1; then
+    "$python" -m ensurepip --upgrade
+  fi
+  "$python" -m pip install --only-binary=:all: 'PyYAML==6.0.3'
 fi
 tool_action=install-runtime
 [[ "$mode" != build ]] || tool_action=install-tools

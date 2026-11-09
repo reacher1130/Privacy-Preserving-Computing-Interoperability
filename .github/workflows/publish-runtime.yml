@@ -16,6 +16,10 @@ permissions:
   contents: write
   packages: write
 
+concurrency:
+  group: runtime-release-${{ inputs.release_tag }}
+  cancel-in-progress: false
+
 jobs:
   publish:
     runs-on: [self-hosted, linux, x64, ppci-release]
