@@ -443,6 +443,17 @@ class PaddleTests(unittest.TestCase):
                 self.smoke.command('docker', 'exec', 'executor1.node.com', '/home/requester-cli-current')
             self.assertLess(len(str(raised.exception)), 4200)
 
+    def test_requester_queries_omit_signing_flags_unsupported_by_the_cli(self):
+        for operation in ('getbyid', 'publish', 'start', 'result'):
+            with self.subTest(operation=operation), patch.object(self.smoke, 'command', return_value='result') as command:
+                self.assertEqual(self.smoke.requester(operation), 'result')
+            args = command.call_args.args
+            self.assertIn('--conf', args)
+            if operation == 'getbyid':
+                self.assertNotIn('--keyPath', args)
+            else:
+                self.assertEqual(args[-2:], ('--keyPath', './reqkeys'))
+
     def test_authorization_is_bound_to_this_task_file_executor(self):
         task = 'a' * 8 + '-1111-1111-1111-' + 'a' * 12
         auth = 'b' * 8 + '-2222-2222-2222-' + 'b' * 12

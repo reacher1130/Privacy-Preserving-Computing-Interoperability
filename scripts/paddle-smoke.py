@@ -31,8 +31,9 @@ def owner(node, *args):
 
 
 def requester(*args):
+    keys = ('--keyPath', './reqkeys') if args[0] in ('publish', 'start', 'result') else ()
     return command('docker', 'exec', 'executor1.node.com', '/home/requester-cli-current', 'task', *args,
-                   '--conf', './conf/requester-config.toml', '--keyPath', './reqkeys')
+                   '--conf', './conf/requester-config.toml', *keys)
 
 
 def field(text, key):
