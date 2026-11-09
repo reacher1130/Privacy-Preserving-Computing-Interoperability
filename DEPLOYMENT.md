@@ -2,7 +2,7 @@
 
 根目录 `deploy.sh` 是统一入口。目标是独立开发/演示环境；复用既有业务库、链或办公节点的升级，应沿用相应备份/升级流程。
 
-当前交付状态（2026-11-09）：程序包和 14 个运行镜像已公开，根目录已固定发布清单；网页八算法运行、刷新和报告导出已验收。全量部署仍在隔离 VM 验证，本轮工作分支尚未同步 main。
+程序包和 14 个运行镜像已公开，根目录已固定发布清单；公司网页八算法运行、刷新和报告导出已验收。公司服务器内的新 Ubuntu 24.04 VM 已连续完成完整 `all`，全量流程不编译平台或算法。发行版、镜像缓存及浏览器/API 的证据范围分别记录如下。
 
 核心集成源码现位于 `platform/`（原 `NewProject/`）。部署入口、子模块版本和外部接口保持不变；现有服务器的运行数据路径仍兼容 `/opt/ppci/NewProject/`。不要因源码目录改名而手动移动数据库、身份或容器挂载目录。
 
@@ -10,7 +10,7 @@
 
 | 主机 | 执行方式 | 验证边界 |
 | --- | --- | --- |
-| Ubuntu 22.04/24.04、Debian，amd64 | apt 安装运行依赖、JRE，拉取已编译程序和镜像 | Ubuntu 22/24 历史 CI 的匿名克隆、bootstrap/check 通过；本轮 Ubuntu 24.04 新 VM 的免编译 bootstrap 通过，完整 all 尚未通过；Debian 未实测 |
+| Ubuntu 22.04/24.04、Debian，amd64 | apt 安装运行依赖、JRE，拉取已编译程序和镜像 | Ubuntu 22/24 CI 匿名递归克隆、bootstrap/check 通过；Ubuntu 24.04 新 VM 完整 all 连续通过（使用已验证镜像缓存及已有测试状态）；Debian 未实测 |
 | CentOS Stream 9/10、兼容的 RHEL/Rocky/Alma/Anolis，amd64 | dnf 安装运行依赖；拉取相同 amd64 镜像，保留 SELinux | 本轮公司服务器为 Anolis 8.10；不能据此宣称所有 CentOS 版本均已实测 |
 | 上述 Linux arm64/aarch64 | Ubuntu amd64 cloud image + QEMU TCG 整机模拟 | 已做配置/命令/安全边界测试，未做 ARM 实机部署验收；明显慢于原生 |
 | macOS | 本地缓存清理、完整源码导出 | 不在 macOS 原生安装 Linux 服务 |
@@ -68,10 +68,10 @@ sudo bash deploy.sh run
 
 镜像构建方法、独立 `docker run` 和输出结构见 [镜像说明](images/bfia-suite/README.md)。发布清单记录不可变仓库摘要和本地别名；部署后固定配置位于 `/opt/ppci/etc/bfia-suite.json`，结果位于 `/var/log/ppci/bfia-suite/runs/运行UUID/`。自定义运行目录时相应路径随之变化。
 
-链桨只批准**本轮 task UUID + 本轮文件 + 对应执行器公钥**的公开样例申请，有效期两小时，保留其他申请；核对双方非空本地模型、预测 ID 交集/唯一性及有限数值。摘要写在 `/var/log/ppci/paddle-smoke-*`。超时后用原输出目录恢复同一任务：
+链桨只批准**本轮 task UUID + 本轮文件 + 对应执行器公钥**的公开样例申请，有效期两小时，保留其他申请；核对双方非空本地模型、预测 ID 交集/唯一性及有限数值。摘要写在 `/var/log/ppci/paddle-smoke-*`。超时后用原输出目录恢复同一任务；将示例中的 `python3.11` 换成目标机的 Python3.9+ 命令，Anolis 8 的默认 `python3` 可能仍为 3.6：
 
 ```bash
-sudo python3 scripts/paddle-smoke.py --output /var/log/ppci/paddle-smoke-实际目录
+sudo python3.11 scripts/paddle-smoke.py --output /var/log/ppci/paddle-smoke-实际目录
 ```
 
 统一平台两个链桨算法说明条目仍是说明性演示，不计入 BFIA 八算法报告。CLI 原生样例、健康通过和本次自动化测试不替代完整浏览器业务、真实机构互联或生产模型质量验收。
@@ -124,7 +124,7 @@ sudo bash deploy.sh all --offline /mnt/usb/ppci-release \
 
 2026-11-09，本轮构建、镜像下载和运行全部在公司服务器进行。首轮 C2 脚本版本为 `d25e976`；除补齐 Kimi 必需源码的构建外，该轮组件构建收据保留实际版本 `8196539`，不改写为交付脚本版本。Kimi 使用公开子模块 `00cda30`；算法使用 SecretFlow 固定版本 `3b2793a`。C++ 引擎复用已验收二进制 `bae5160e4f794a9ec0337e707efae327d0354e0be235b8ebe67ec439251c7e00`，本轮没有重新编译该二进制。
 
-当前 C4 源码为 `0daa7a361ecb9c68636048cf3145810db38bb52f`，104 项轻量检查通过，已加入原生 Paddle 存储配置兼容及 executor 的 CGO/SQLite 构建修复。新 executor 的 SHA256 为 `dea11378edb3a853bf714d07b3aeaed8a5c10271c59cc732b7ec60e9e562b859`；公司主机和新 DAI 镜像内均通过动态链接检查、实际项目 DAO 建表及 SQL 插入/查询，确认使用真实 SQLite 驱动。空白 VM 的完整运行仍待核验。
+C4 构建源码为 `0daa7a361ecb9c68636048cf3145810db38bb52f`，已加入原生 Paddle 存储配置兼容及 executor 的 CGO/SQLite 构建修复。新 executor 的 SHA256 为 `dea11378edb3a853bf714d07b3aeaed8a5c10271c59cc732b7ec60e9e562b859`；公司主机和新 DAI 镜像内均通过动态链接检查、实际项目 DAO 建表及 SQL 插入/查询，确认使用真实 SQLite 驱动。后续部署脚本修复不改写这些构建收据。
 
 最终 suite 镜像 ID 为 `sha256:b5288bc2a7fe025838c10af392f9dbfba0841bc2a14a0ea8f046f6d594ed9a26`。公司平台同一网页 API 新建运行 `e325aff5-d13e-4565-9eb7-010846453f4e`，对应真实 KusciaJob 同 UUID，约 93 秒完成；33 次刷新保持同一运行，8 项数值和协议校验通过，服务器保留 16 份完整双方日志及协议报告中的 SHA256。API 可读取日志；超过 512KiB 时返回带提示的尾部。此次验证没有重启服务或容器，原有 31 个业务容器 ID 保持不变。下述数值和报告摘要仅属于这次 API 运行。
 
@@ -145,4 +145,14 @@ sudo bash deploy.sh all --offline /mnt/usb/ppci-release \
 
 该 suite 摘要的 19 个压缩镜像层已全部匿名下载并逐层核对 SHA256，总载荷 780,833,522 字节；使用空认证目录，不登录仓库、不读取 Docker 缓存。网络中断后采用匿名 Range 续传，保留失败记录，不宣称单次无中断冷拉取。最终归档通过完整 `crane validate --tarball`，精确匹配上述镜像 ID 和 linux/amd64；归档 SHA256 为 `0bc46dfe2e5b1a69739fd2ad67c218b58898e1c601b0e78a4d1b8a9c19547bbb`。
 
-空白 Ubuntu 24.04 VM 已完成运行依赖/JRE 安装、Docker 29 空存储自动配置和离线包生成/摘要校验，安装前后没有 Go/Maven/Node/Bazel/C++/javac 编译工具。首次全量部署暴露的 FATEBoard 地址冲突已修复；三套网页/Java 健康端点、双 FATEBoard 和原生管理台可访问，但 Paddle 执行器仍待 CGO1 镜像和存储配置修复后的完整运行验收。首轮 C2 中间离线包保留作失败记录，最终离线包将在修正源码和镜像验收后重新生成；CentOS 新机和 ARM 实机完整部署仍未验收。
+本轮[Ubuntu 22.04 / 24.04 公开 CI](https://github.com/reacher1130/Privacy-Preserving-Computing-Interoperability/actions/runs/42628281508) 均通过固定提交 `e6866ff` 的匿名递归克隆、115 项轻量检查、3 项运行状态检查和 runtime bootstrap/check。首次 Pending/ContainerCreating 空镜像 ID 的等待修复保留了运行后的固定镜像身份及零重启要求。
+
+最终公开运行版本为 `runtime-20261109-50f40e9`，清单 SHA256 为 `12e20f183c250d5ec0bf2080ca8fa142711fb8a8db4f855cfcc9ab08edd871cf`，程序包 409,996,490 字节、SHA256 为 `52f9427de3d5e41d56b60f55a9c187a7124a22f70b38846f9ecafc969e577fcc`。其余组件保留实际 B/C4 构建收据；本次只修正业务 C++ 入口及链桨 SDK，未重编译 C++ 算法。C++ 镜像 `9aa7aec3…` 在双节点真实握手后输出交集 `2,3`；新 DAI 镜像 `dd243f53…` 包含 CGO1 executor（`1646ad74…`）和 CGO0 requester（`0aebfd7d…`），executor 的动态链接和真实 SQLite DAO 检查通过，两程序镜像内哈希匹配。SDK 两处 XDB 查询改发 `paddlempc` 合约，管理合约 `data`、签名、审批、到期和解密检查不变；真实 SDK RPC 回归及正常静态检查通过。
+
+新 Ubuntu 24.04 VM 已完成运行依赖/JRE 安装、Docker 29 空存储自动配置、部署及分项样例，安装前后没有 Go/Maven/Node/Bazel/C++/javac 编译工具。八算法 `b2ccf1c6…` 的数值/协议和 16 份日志通过；FATE PSI/LR、隐语 PSI、BFIA 双节点 PSI 通过。链桨原训练任务 `31901c69…`、预测任务 `bc3d2833…` 均 Finished，双方模型 683/912 字节，签名读回 50 行预测，ID 等于输入交集且数值有限；四份授权均限定对应 task/file/executor。
+
+suite 使用上述完整匿名归档，其余运行镜像在公司网络连续 EOF 后预载与公开清单相符的内容缓存；两个修复镜像也先在公司构建并验证。最终发布清单及 14 个镜像/20 个别名的 registry 元数据已匿名校验。测试 VM 使用 `4a9be60` 源码连续执行原样 `bash deploy.sh all --native`，929.17 秒退出 0：全新公开程序完整无凭据下载并匹配 `52f9427d…`，部署和服务检查、八算法 `f1720602…`、FATE PSI/LR、隐语/BFIA PSI及链桨训练/预测均通过，前后宿主编译器均不存在。最后一轮模型 683/920 字节，预测 50 行且 ID 交集/有限数值检查通过。该次保留既有测试应用状态并使用已验证镜像缓存，不计作一次零应用、零镜像状态的冷启动。
+
+完整 all 后通过正常协议接口切换 BFIA，再由新后端 JAR（SHA256 `029f5eca7db64b223da8f8c8e36277972b3042a6e38830ce75ca51587983fdbb`）唯一发起 API 运行 `5fd526cc-60e1-4e20-b584-839ca0d2317d`。29 次刷新保持同一运行，8 项数值/协议、16 份双方日志通过，对应 KusciaJob UID `391eab62-4d49-43e8-be5f-def6af6a8072` 为 Succeeded，固定 fa639/b528，`local_build=false`。API 验收报告 JSON 的 SHA256 为 `21551155faab148e8e9c011682e58a51ca8e7855999590863215ddab09552b54`；这次是新 VM 的 API 验收，不冒称浏览器点击或混用前述公司浏览器 `2604c8e1…` 的导出报告。
+
+早期失败 VM、日志和中间离线包私有保留。生成源码/程序/镜像离线包时，使用上述官方命令，并逐项核对清单、源文件及镜像身份；旧中间包不能替代本轮最终版本。CentOS 新机、ARM 实机和新空白目标的完整离线恢复仍未验收。

@@ -2,7 +2,7 @@
 
 Alice（隐语、BFIA、FATE、PaddleDTX）、Bob（BFIA）、Kimi（隐语），包含统一前端、原生链桨管理台、FATE Guest/Host Board、算法回归和迁移打包。
 
-当前交付状态（2026-11-09）：程序包和全部 14 个运行镜像已[公开发布](https://github.com/reacher1130/Privacy-Preserving-Computing-Interoperability/releases/tag/runtime-20261109-0daa7a3)，`releases/runtime.json` 已固定完整清单。公司网页八算法运行、刷新和报告导出已验收；全量部署仍在隔离 VM 验证，本轮工作分支尚未更新到 main。以下是验收完成并同步 main 后的正式入口。
+程序包和全部 14 个运行镜像已[公开发布](https://github.com/reacher1130/Privacy-Preserving-Computing-Interoperability/releases/tag/runtime-20261109-50f40e9)，`releases/runtime.json` 已固定完整清单。公司网页八算法运行、刷新和报告导出已验收；新 Ubuntu 24.04 VM 的完整 `all` 已连续运行通过，包含八算法、FATE、隐语、BFIA 双节点 PSI 和链桨训练/预测，正常协议切换后的新后端八算法 API 也通过。镜像缓存、发行版及 ARM 验证边界见 [部署说明](DEPLOYMENT.md)。
 
 ## 新机器一键部署
 
@@ -14,7 +14,7 @@ cd Privacy-Preserving-Computing-Interoperability
 sudo bash deploy.sh all --host 192.168.1.100 --lan-cidr 192.168.1.0/24
 ```
 
-完整发布配置就绪后，`all` 安装运行依赖，按根目录 `releases/runtime.json` 的固定校验和下载已发布程序和镜像，初始化独立节点和数据库、启动服务，并运行真实公开样例。新机器不编译算法或平台，也不安装 Go/Maven/Node/Bazel。任何阶段失败会停止并返回非零状态。不要在现有办公部署上运行首次安装；脚本会拒绝接管未受本工具管理的容器/服务。
+`all` 安装运行依赖，按根目录 `releases/runtime.json` 的固定校验和下载已发布程序和镜像，初始化独立节点和数据库、启动服务，并运行真实公开样例。新机器不编译算法或平台，也不安装 Go/Maven/Node/Bazel。任何阶段失败会停止并返回非零状态。不要在现有办公部署上运行首次安装；脚本会拒绝接管未受本工具管理的容器/服务。
 
 ```bash
 bash deploy.sh --help
@@ -67,4 +67,4 @@ bash deploy.sh clean --apply
 
 此前办公实机验收：[2026-11-02 恢复记录](platform/docs/office-recovery-20261102/README.md)、[链桨模型保存与预测](platform/docs/office-recovery-20261102/paddledtx-crossday-acceptance.md)、[BFIA 八算法数值和协议](platform/docs/bfia-eight-algorithms-numerical-protocol-20260914.md)。这些历史结果不代表新的一键部署已完成所有发行版/ARM 实机验收。当前脚本验证范围见 [部署说明](DEPLOYMENT.md)。
 
-2026-11-09，C4 源码 `0daa7a361ecb9c68636048cf3145810db38bb52f` 的 104 项轻量检查通过。公司浏览器运行 `2604c8e1…` 的八项数值/协议检查、刷新恢复及导出与 API 一致性已通过；suite 的全部 19 个镜像层已匿名下载并校验。修复后的空白 VM 全量 `all` 和整个平台最终发布清单仍待完成。
+2026-11-09，[本轮 Ubuntu 22.04 / 24.04 CI](https://github.com/reacher1130/Privacy-Preserving-Computing-Interoperability/actions/runs/42628281508) 均通过固定提交 `e6866ff` 的匿名递归克隆、115 项轻量检查、3 项运行状态检查及 runtime bootstrap/check；链桨 SDK 的真实 RPC 回归另在公司服务器通过正常静态检查。公司浏览器运行 `2604c8e1…` 的八项数值/协议检查、刷新恢复及导出与 API 一致性已通过；suite 的全部 19 个镜像层已匿名下载并校验。新 Ubuntu VM 使用 `4a9be60` 源码和公开清单完成连续 `all --native`，929.17 秒退出 0，新程序完整匿名下载及全部样例通过，安装前后均无宿主编译器；随后正常切换 BFIA，新后端 API 运行 `5fd526cc…` 的八项、29 次同 ID 刷新和 16 份双方日志通过。该次使用已验证镜像缓存及已有测试应用状态，不计作一次零镜像、零应用状态的冷启动验收；新 VM 的 API 验收与原公司平台的浏览器点击证据分别记录。
