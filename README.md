@@ -32,6 +32,8 @@ bash deploy.sh clean --apply
 
 ## 源码和数据
 
+主仓和全部 15 个递归子模块均可匿名克隆。2026-11-06，主仓、SecretFlow 定制仓和前端定制仓从脱敏快照建立公开历史；各自原库改名为 `原名-private-archive-20261106` 并保持私有。旧克隆应重新克隆公开版本，避免把原历史推回公开库。此前私有源码包保留且不公开分发；迁移使用当前公开源码重新打包。
+
 子模块固定到已归档的工作版本；`sync` 使用当前分支的 fast-forward 更新，不擅自升级各上游主线。FATE 的兼容修改由 `scripts/apply-source-patches.py` 幂等应用。干净 clone 同样包含经筛选的链桨历史构建源码及其校验清单，无需访问原办公目录。
 
 部署默认隔离三个目录：仓库源码、`/opt/ppci-build` 构建产物、`/opt/ppci` 运行数据。打包只导出受控源码、程序和镜像，不复制实际数据库、私钥、上传文件、账本、模型或任务结果。上游仓库自带的公开演示身份/样本属于源码示例，不能用于生产。
@@ -39,5 +41,7 @@ bash deploy.sh clean --apply
 本地 `privacy-computing-interconnectivity/` 有尚未合并的历史定制源码，`.local-backups/` 有原文件和验收证据，节点目录保存身份配置；它们保留原位，不纳入发布包。`clean` 仅清理明确可再生成且未被 Git 跟踪的依赖/构建缓存，保留构建必需的已跟踪 `.cache`。
 
 ## 验证记录
+
+2026-11-06，[Ubuntu 22.04 / 24.04 公开 CI](https://github.com/reacher1130/Privacy-Preserving-Computing-Interoperability/actions/runs/42202219257) 均通过匿名递归克隆、固定源码检查、49 项部署测试、3 项运行状态测试及 `bootstrap --native` / `check --native`。另在隔离 Ubuntu 24.04 amd64 环境完成相同克隆、测试和预检；这些检查不包含完整平台构建与算法运行。
 
 此前办公实机验收：[2026-11-02 恢复记录](NewProject/docs/office-recovery-20261102/README.md)、[链桨模型保存与预测](NewProject/docs/office-recovery-20261102/paddledtx-crossday-acceptance.md)、[BFIA 八算法数值和协议](NewProject/docs/bfia-eight-algorithms-numerical-protocol-20260914.md)。这些历史结果不代表新的一键部署已完成所有发行版/ARM 实机验收。当前脚本验证范围见 [部署说明](DEPLOYMENT.md)。

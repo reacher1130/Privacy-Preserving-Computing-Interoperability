@@ -6,7 +6,7 @@
 
 | 主机 | 执行方式 | 验证边界 |
 | --- | --- | --- |
-| Ubuntu 22.04/24.04、Debian，amd64 | apt 安装系统依赖，隔离工具链，Docker + systemd | 已编写部署路径，未逐发行版实机验收 |
+| Ubuntu 22.04/24.04、Debian，amd64 | apt 安装系统依赖，隔离工具链，Docker + systemd | Ubuntu 22/24 CI 的匿名克隆、bootstrap/check 通过；隔离 Ubuntu 24 同样通过；Debian 与完整 all 未验收 |
 | CentOS Stream 9/10、兼容的 RHEL/Rocky/Alma/Anolis，amd64 | dnf；Java/Node/Go/Maven 使用独立目录；保留 SELinux | 仓库已有 Anolis 历史运行证据；新入口未逐系统实测 |
 | 上述 Linux arm64/aarch64 | Ubuntu amd64 cloud image + QEMU TCG 整机模拟 | 已做配置/命令/安全边界测试，未做 ARM 实机部署验收；明显慢于原生 |
 | macOS | 本地缓存清理、完整源码导出 | 不在 macOS 原生安装 Linux 服务 |
@@ -79,6 +79,8 @@ sudo bash deploy.sh all --host 192.168.1.100 --lan-cidr 192.168.1.0/24
 
 `.ppci-source.json` 记录文件校验、Git 版本和是否有未提交修改。历史证据的外部绝对软链接会剔除，正常相对源码链接保留。新文件应先审查并纳入 Git，再制作包。
 
+只分发从当前公开历史生成的包。2026-11-05 的私有旧源码包包含原历史快照，仅保留备份，不能作为公开发布包。
+
 在已成功构建全栈的 Linux 环境生成程序/镜像发布包：
 
 ```bash
@@ -102,6 +104,10 @@ sudo bash deploy.sh all --offline /mnt/usb/ppci-release \
 
 ## 本次验证
 
-本机清理约 1GB 已忽略依赖/构建缓存，保留历史定制集合、备份、节点身份和已跟踪的 Bazel 覆盖源码；同步当前工作分支及固定子模块。47 项部署/打包/VM/授权自动化测试和既有 3 项运行状态测试通过；完整源码包已实际生成、解包、验证清单，并在无 `.git` 的导出副本中运行测试。8 个定制链桨 Go 程序完成 Linux amd64 交叉编译；管理端安全回归、元数据兼容及原生前端测试和生产构建通过。
+2026-11-05 本机清理约 1GB 已忽略依赖/构建缓存，保留历史定制集合、备份、节点身份和已跟踪的 Bazel 覆盖源码；原完整源码包已生成、解包、校验并在无 `.git` 的副本中测试。8 个定制链桨 Go 程序完成 Linux amd64 交叉编译；管理端安全回归、元数据兼容及原生前端测试和生产构建通过。该旧源码包现在仅作私有备份。
 
-本次工作机为 macOS，未在新 Ubuntu/CentOS/ARM 整机执行 `all`，未下载全套镜像或生成已验收的运行镜像包，也未触发办公任务。以目标机真实退出状态、任务输出和浏览器验收为准。
+2026-11-06，主仓及两个含旧凭据历史的定制仓以独立脱敏快照公开，原历史留在私有归档；另外五个自有模块公开。独立 Ubuntu 24.04 amd64 环境无凭据克隆全部 15 个递归子模块，固定版本匹配；49 项部署/打包/VM/授权测试及 3 项运行状态测试通过，`bootstrap --native` 和 `check --native` 成功。[公开 CI](https://github.com/reacher1130/Privacy-Preserving-Computing-Interoperability/actions/runs/42202219257) 在 Ubuntu 22.04、24.04 分别完成相同克隆、测试和引导检查。修复了独立 JDK 未加入 PATH 以及新机下载请求失败的问题。
+
+公开快照 `274c831` 的本地源码包已生成，16,436 个文件逐项匹配校验清单；不含 Git 元数据，已核对 10 处令牌字段脱敏及两份敏感文件移除。该包没有全栈构建产物或运行镜像。
+
+隔离 Ubuntu 使用 amd64 用户空间，不代表 QEMU TCG 的 ARM 整机验收。尚未在新 Ubuntu/CentOS/ARM 整机执行完整 `all`，未下载全套镜像、生成已验收的运行镜像包或触发办公任务。以目标机真实退出状态、任务输出和浏览器验收为准。
