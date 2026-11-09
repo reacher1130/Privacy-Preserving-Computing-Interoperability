@@ -20,6 +20,14 @@ deploy = load('full_deploy', ROOT / 'scripts/full-deploy.py')
 
 
 class DeploymentTests(unittest.TestCase):
+    def test_missing_release_metadata_never_initializes_or_restarts_a_runtime(self):
+        with tempfile.TemporaryDirectory() as temporary, patch.object(deploy, 'BUILD', Path(temporary)), \
+             patch.object(deploy, 'preflight'), patch.object(deploy, 'provisioner') as provisioner, \
+             patch.object(deploy, 'run') as run, self.assertRaisesRegex(RuntimeError, 'release metadata'):
+            deploy.deploy({'host': '127.0.0.1', 'lan_cidr': '127.0.0.0/8'}, False)
+        provisioner.assert_not_called()
+        run.assert_not_called()
+
     def test_fixed_subnets_reject_lan_or_other_docker_routes(self):
         deploy.validate_routes([{'dst': 'default', 'dev': 'eth0'}, {'dst': '0.0.0.0/0', 'dev': 'eth0'},
                                 {'dst': '192.168.45.0/24', 'dev': 'eth0'}], [])

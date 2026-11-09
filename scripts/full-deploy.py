@@ -28,7 +28,7 @@ CPP_IMAGE = 'ppci/bfia-cpp:numerics-20260914-v2'
 ALIASES = [REGISTRY + name + ':latest' for name in
            ('ecdh', 'ecdh-psi', 'ss-compare', 'ss-lr', 'ss-pearson', 'ss-vif', 'ss-xgb')]
 IMAGES = ['ppci/kuscia:home-20260912', 'secretflow/fate2-adapter:0.2.0-native',
-          FATE_IMAGE, SF_IMAGE, CPP_IMAGE, 'ppci/bfia-python:amd64-20260908', *ALIASES,
+          FATE_IMAGE, SF_IMAGE, *ALIASES,
           'registry.baidubce.com/paddledtx/xchain:v3.9',
           'registry.baidubce.com/paddledtx/xdb-storage:2.1',
           'registry.baidubce.com/paddledtx/paddledtx-visual:1.0',
@@ -184,11 +184,23 @@ def build():
         temporary.rename(bazel)
     for stage in ('build', 'base', 'image', 'python'):
         run(sys.executable, ENVIRONMENTS / 'build-bfia.py', stage)
+    context = BUILD / 'bfia-suite-image'
+    run(sys.executable, SOURCE / 'images/bfia-suite/prepare-context.py', '--output', context,
+        '--rg', '/opt/ppci-tools/rg/rg')
+    if (SOURCE / '.git').exists():
+        revision = subprocess.check_output(['git', '-C', str(SOURCE), 'rev-parse', 'HEAD'], text=True).strip()
+    else:
+        revision = json.loads((SOURCE / '.ppci-source.json').read_text())['revision']
+    suite_tag = 'ppci/bfia-suite:source-' + revision[:12]
+    run('docker', 'build', '--build-arg', 'SOURCE_REVISION=' + revision,
+        '--build-arg', 'BFIA_CPP_IMAGE=' + CPP_IMAGE,
+        '--build-arg', 'BFIA_PYTHON_BASE=ppci/bfia-python:amd64-20260908', '-t', suite_tag, context)
     build_fate()
     for tag in IMAGES:
         if subprocess.run(['docker', 'image', 'inspect', tag], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode:
             run('docker', 'pull', tag)
-    (BUILD / 'release-images.json').write_text(json.dumps(IMAGES, indent=2) + '\n')
+    (BUILD / 'release-images.json').write_text(json.dumps([*IMAGES, suite_tag], indent=2) + '\n')
+    (BUILD / '.ppci-prebuilt-artifacts').write_text('PPCI prebuilt artifacts\n')
 
 
 def provisioner():
@@ -299,16 +311,25 @@ def selinux():
 
 def deploy(env, offline):
     preflight(offline)
+    metadata = BUILD / 'runtime-release.json'
+    if not metadata.is_file():
+        raise RuntimeError('Missing runtime release metadata; run deploy.sh all or restore a published release package')
+    release = json.loads(metadata.read_text())
+    if not isinstance(release, dict) or release.get('format') != 2 or not isinstance(release.get('images'), list):
+        raise RuntimeError('Unsupported runtime release metadata')
+    suites = [image for image in release['images']
+              if isinstance(image, dict) and image.get('component') == 'bfia-suite']
+    if len(suites) != 1 or not all(isinstance(suites[0].get(key), str) for key in ('reference', 'tag', 'id')):
+        raise RuntimeError('Runtime release must identify one pinned BFIA suite image')
+    suite = suites[0]
+    actual = json.loads(subprocess.check_output(['docker', 'image', 'inspect', suite['tag']], text=True))[0]
+    if actual['Architecture'] != 'amd64' or actual['Id'] != suite['id']:
+        raise RuntimeError('Runtime BFIA suite image does not match the release')
     if not offline:
         for tag in IMAGES:
             run('docker', 'image', 'inspect', tag, stdout=subprocess.DEVNULL)
     p = provisioner()
     p.prepare()
-    target = ROOT / 'NewProject/secretflow'
-    target.mkdir(parents=True, exist_ok=True)
-    run('rsync', '-a', '--exclude=.git', '--exclude=__pycache__', '--exclude=results',
-        '--exclude=interconnection-impl/.cache', '--exclude=bazel-*',
-        str(SOURCE / 'platform/secretflow') + '/', str(target) + '/')
     for name in ('fate2-flow-guest-e2e', 'fate2-flow-host-e2e', 'fateboard-native-e2e', 'fateboard-host-native-e2e'):
         retain_previous_container(name, FATE_IMAGE)
     p.fate()
@@ -322,6 +343,8 @@ def deploy(env, offline):
         p.upgrade_kuscia()
     else:
         p.kuscia()
+    run(sys.executable, SOURCE / 'scripts/bfia-suite-kuscia.py', 'install', '--runtime-root', ROOT,
+        '--image-ref', suite['reference'], '--image-tag', suite['tag'], '--image-id', suite['id'])
     import_engines()
     run(sys.executable, ENVIRONMENTS / 'paddle-provision.py', 'all')
     run(sys.executable, SOURCE / 'scripts/deploy-paddledtx-full.py', 'deploy')

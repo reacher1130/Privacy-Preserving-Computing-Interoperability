@@ -14,6 +14,7 @@ import sys
 import tarfile
 import tempfile
 import time
+from urllib.parse import urljoin, urlparse
 
 SOURCE = Path(__file__).resolve().parents[1]
 TOOLS = Path('/opt/ppci-tools')
@@ -76,7 +77,7 @@ def url_text(url):
         '--user-agent', 'ppci-deploy/1.0', '--header', 'Accept: application/json,text/plain,*/*', url], text=True)
 
 
-def install_tools():
+def install_tools(runtime_only=False):
     if platform.machine() not in ('x86_64', 'amd64'):
         raise RuntimeError('Install native build tools inside the amd64 VM.')
     TOOLS.mkdir(parents=True, exist_ok=True)
@@ -84,19 +85,22 @@ def install_tools():
     cache.mkdir(exist_ok=True)
     # These tool versions match the project build; do not replace system toolchains.
     items = []
-    go_name = 'go1.24.13.linux-amd64.tar.gz'
-    # Official go.dev/dl JSON publishes this digest; .tar.gz.sha256 returns HTML.
-    items.append(('https://go.dev/dl/' + go_name, '1fc94b57134d51669c72173ad5d49fd62afb0f1db9bf3f798fd98ee423f8d730', 'sha256', 'go124', 'go'))
-    node_name = 'node-v22.14.0-linux-x64.tar.xz'
-    sums = url_text('https://nodejs.org/dist/v22.14.0/SHASUMS256.txt')
-    node_sha = next(line.split()[0] for line in sums.splitlines() if line.split()[-1] == node_name)
-    items.append(('https://nodejs.org/dist/v22.14.0/' + node_name, node_sha, 'sha256', 'node20', 'node-v22.14.0-linux-x64'))
-    mvn_name = 'apache-maven-3.9.9-bin.tar.gz'
-    mvn_url = 'https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.9/' + mvn_name
-    items.append((mvn_url, url_text(mvn_url + '.sha512').split()[0], 'sha512', 'maven', 'apache-maven-3.9.9'))
-    assets = json.loads(url_text('https://api.adoptium.net/v3/assets/latest/21/hotspot?architecture=x64&image_type=jdk&os=linux&vendor=eclipse'))
+    if not runtime_only:
+        go_name = 'go1.24.13.linux-amd64.tar.gz'
+        # Official go.dev/dl JSON publishes this digest; .tar.gz.sha256 returns HTML.
+        items.append(('https://go.dev/dl/' + go_name, '1fc94b57134d51669c72173ad5d49fd62afb0f1db9bf3f798fd98ee423f8d730', 'sha256', 'go124', 'go'))
+        node_name = 'node-v22.14.0-linux-x64.tar.xz'
+        sums = url_text('https://nodejs.org/dist/v22.14.0/SHASUMS256.txt')
+        node_sha = next(line.split()[0] for line in sums.splitlines() if line.split()[-1] == node_name)
+        items.append(('https://nodejs.org/dist/v22.14.0/' + node_name, node_sha, 'sha256', 'node20', 'node-v22.14.0-linux-x64'))
+        mvn_name = 'apache-maven-3.9.9-bin.tar.gz'
+        mvn_url = 'https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.9/' + mvn_name
+        items.append((mvn_url, url_text(mvn_url + '.sha512').split()[0], 'sha512', 'maven', 'apache-maven-3.9.9'))
+    image_type = 'jre' if runtime_only else 'jdk'
+    assets = json.loads(url_text('https://api.adoptium.net/v3/assets/latest/21/hotspot?architecture=x64&image_type=' + image_type + '&os=linux&vendor=eclipse'))
     jdk = assets[0]['binary']['package']
-    items.append((jdk['link'], jdk['checksum'], 'sha256', 'jdk21', None))
+    java_directory = 'jdk21' if runtime_only or (TOOLS / 'jdk21/bin/javac').is_file() else 'jdk21-build'
+    items.append((jdk['link'], jdk['checksum'], 'sha256', java_directory, None))
     for url, checksum, algorithm, target_name, prefix in items:
         target = TOOLS / target_name
         marker = target / '.ppci-checksum'
@@ -112,14 +116,16 @@ def install_tools():
             content = Path(stage) / prefix if prefix else roots[0]
             content.rename(target)
         marker.write_text(checksum + '\n')
-    bazel = BUILD / 'tools/bazel-6.5.0'
-    fetch('https://github.com/bazelbuild/bazel/releases/download/6.5.0/bazel-6.5.0-linux-x86_64', bazel,
-          'a40ac69263440761199fcb8da47ad4e3f328cbe79ffbf4ecc14e5ba252857307')
-    bazel.chmod(0o755)
-    env = environment()
-    if not (TOOLS / 'pnpm8/node_modules/.bin/pnpm').exists():
-        run(TOOLS / 'node20/bin/npm', 'install', '--prefix', TOOLS / 'pnpm8', 'pnpm@8.8.0', env=env)
-    if not (TOOLS / 'rg/rg').is_file():
+    if not runtime_only:
+        bazel = BUILD / 'tools/bazel-6.5.0'
+        fetch('https://github.com/bazelbuild/bazel/releases/download/6.5.0/bazel-6.5.0-linux-x86_64', bazel,
+              'a40ac69263440761199fcb8da47ad4e3f328cbe79ffbf4ecc14e5ba252857307')
+        bazel.chmod(0o755)
+        env = environment()
+        if not (TOOLS / 'pnpm8/node_modules/.bin/pnpm').exists():
+            run(TOOLS / 'node20/bin/npm', 'install', '--prefix', TOOLS / 'pnpm8', 'pnpm@8.8.0', env=env)
+    rg_files = ('rg', 'LICENSE-MIT', 'UNLICENSE')
+    if not all((TOOLS / 'rg' / name).is_file() for name in rg_files) and (not runtime_only or not shutil.which('rg')):
         name = 'ripgrep-14.1.1-x86_64-unknown-linux-musl.tar.gz'
         url = 'https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/' + name
         checksum = url_text(url + '.sha256').split()[0]
@@ -127,12 +133,15 @@ def install_tools():
         (TOOLS / 'rg').mkdir(exist_ok=True)
         with tempfile.TemporaryDirectory() as stage:
             unpack(cache / name, stage)
-            shutil.copy2(Path(stage) / name.removesuffix('.tar.gz') / 'rg', TOOLS / 'rg/rg')
+            for filename in rg_files:
+                shutil.copy2(Path(stage) / name.removesuffix('.tar.gz') / filename, TOOLS / 'rg' / filename)
 
 
 def environment():
     env = dict(os.environ, PPCI_SOURCE_ROOT=str(SOURCE), PPCI_BUILD_ROOT=str(BUILD))
-    if (TOOLS / 'jdk21/bin/java').is_file():
+    if (TOOLS / 'jdk21-build/bin/java').is_file():
+        env['JAVA_HOME'] = str(TOOLS / 'jdk21-build')
+    elif (TOOLS / 'jdk21/bin/java').is_file():
         env['JAVA_HOME'] = str(TOOLS / 'jdk21')
     elif 'JAVA_HOME' not in env and shutil.which('java'):
         env['JAVA_HOME'] = str(Path(shutil.which('java')).resolve().parents[1])
@@ -221,10 +230,12 @@ def package(args):
     with tarfile.open(target / 'artifacts.tar.gz', 'w:gz') as archive:
         for name in ARTIFACTS:
             archive.add(BUILD / name, arcname=name)
-    if (TOOLS / 'jdk21/bin/java').is_file():
+    java = TOOLS / ('jdk21' if (TOOLS / 'jdk21/bin/java').is_file() else 'jdk21-build')
+    if (java / 'bin/java').is_file():
         with tarfile.open(target / 'tools.tar.gz', 'w:gz') as archive:
-            for name in ('jdk21', 'rg'):
-                archive.add(TOOLS / name, arcname=name)
+            archive.add(java, arcname='jdk21')
+            if (TOOLS / 'rg').exists():
+                archive.add(TOOLS / 'rg', arcname='rg')
     if args.with_images:
         images = json.loads((BUILD / 'release-images.json').read_text())
         if not images:
@@ -243,6 +254,8 @@ def package(args):
             saved = save.wait()
             if compressed or saved:
                 raise RuntimeError('Docker image export failed')
+    if (BUILD / 'runtime-release.json').is_file():
+        manifest['runtime_release'] = validate_prebuilt(json.loads((BUILD / 'runtime-release.json').read_text()))
     manifest['sha256'] = {p.name: digest(p) for p in target.iterdir() if p.is_file()}
     (target / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
     (target / 'SHA256SUMS').write_text(''.join(f'{sha}  {name}\n' for name, sha in manifest['sha256'].items()))
@@ -254,6 +267,7 @@ def restore(directory):
     manifest = json.loads((directory / 'manifest.json').read_text())
     if manifest.get('format') != 1 or manifest.get('platform') != 'linux/amd64':
         raise RuntimeError('Unsupported release format/platform')
+    runtime = validate_prebuilt(manifest['runtime_release']) if 'runtime_release' in manifest else None
     required = {'source.tar.gz', 'artifacts.tar.gz', 'images.tar.gz'}
     if not required.issubset(manifest.get('sha256', {})):
         raise RuntimeError('Release checksum inventory is incomplete')
@@ -281,6 +295,119 @@ def restore(directory):
         if actual != image['id']:
             raise RuntimeError('Imported image mismatch: ' + image['tag'])
     (BUILD / 'release-images.json').write_text(json.dumps([i['tag'] for i in manifest['images']]))
+    (BUILD / '.ppci-prebuilt-artifacts').write_text('PPCI prebuilt artifacts\n')
+    if runtime:
+        (BUILD / 'runtime-release.json').write_text(json.dumps(runtime, indent=2) + '\n')
+
+
+def validate_prebuilt(manifest):
+    if (not isinstance(manifest, dict) or manifest.get('format') != 2 or manifest.get('platform') != 'linux/amd64'
+            or manifest.get('runtime_data_included') is not False):
+        raise RuntimeError('Unsupported prebuilt release format/platform')
+    hashes = manifest.get('sha256', {})
+    if (not isinstance(hashes, dict) or 'artifacts.tar.gz' not in hashes
+            or set(hashes) - {'artifacts.tar.gz', 'tools.tar.gz'}
+            or any(not isinstance(value, str) or not re.fullmatch('[0-9a-f]{64}', value) for value in hashes.values())):
+        raise RuntimeError('Invalid prebuilt release checksum inventory')
+    images = manifest.get('images')
+    if not isinstance(images, list) or not images:
+        raise RuntimeError('No prebuilt release image inventory')
+    tags = set()
+    for image in images:
+        if (not isinstance(image, dict)
+                or not isinstance(image.get('reference'), str)
+                or not isinstance(image.get('tag'), str) or not isinstance(image.get('id'), str)
+                or not re.fullmatch(r'[a-z0-9][a-z0-9._:/-]*@sha256:[0-9a-f]{64}', image['reference'])
+                or not re.fullmatch(r'[a-z0-9][a-z0-9._:/-]*', image['tag'])
+                or not re.fullmatch('sha256:[0-9a-f]{64}', image['id'])
+                or image['tag'] in tags):
+            raise RuntimeError('Invalid or duplicate prebuilt image reference')
+        tags.add(image['tag'])
+    if sum(image.get('component') == 'bfia-suite' for image in images) != 1:
+        raise RuntimeError('Release must contain exactly one BFIA suite image')
+    return manifest
+
+
+def restore_prebuilt(directory, manifest):
+    """Install verified build outputs and immutable registry images; never compile."""
+    directory = Path(directory)
+    validate_prebuilt(manifest)
+    for name, expected in manifest['sha256'].items():
+        if digest(directory / name) != expected:
+            raise RuntimeError('Release checksum mismatch: ' + name)
+    BUILD.mkdir(parents=True, exist_ok=True)
+    managed = BUILD / '.ppci-prebuilt-artifacts'
+    owned = managed.is_file() and not managed.is_symlink() and managed.read_text() == 'PPCI prebuilt artifacts\n'
+    if managed.is_symlink() or managed.exists() and not owned:
+        raise RuntimeError('Unrecognized build ownership marker retained')
+    if any((BUILD / name).exists() for name in ARTIFACTS) and not owned:
+        raise RuntimeError('Existing unmanaged build artifacts retained; choose a new PPCI_BUILD_ROOT')
+    for name in ARTIFACTS:
+        path = BUILD / name
+        while path != BUILD:
+            if path.is_symlink():
+                raise RuntimeError('Refusing artifact symbolic-link path: ' + str(path))
+            path = path.parent
+    with tempfile.TemporaryDirectory(dir=BUILD.parent) as temporary:
+        stage = Path(temporary)
+        unpack(directory / 'artifacts.tar.gz', stage)
+        if any(not (stage / name).exists() for name in ARTIFACTS):
+            raise RuntimeError('Prebuilt artifact archive is incomplete')
+        allowed = [Path(name) for name in ARTIFACTS]
+        for path in stage.rglob('*'):
+            relative = path.relative_to(stage)
+            if not any(relative == name or name in relative.parents or relative in name.parents for name in allowed):
+                raise RuntimeError('Unexpected prebuilt artifact: ' + str(relative))
+        for image in manifest['images']:
+            run('docker', 'pull', '--platform', 'linux/amd64', image['reference'])
+            actual = json.loads(subprocess.check_output(['docker', 'image', 'inspect', image['reference']]))[0]
+            if actual['Architecture'] != 'amd64' or actual['Id'] != image['id']:
+                raise RuntimeError('Pulled image mismatch: ' + image['reference'])
+            run('docker', 'tag', image['reference'], image['tag'])
+        # Mark ownership before promotion so an interrupted first install can be retried.
+        managed.write_text('PPCI prebuilt artifacts\n')
+        for name in ARTIFACTS:
+            target = BUILD / name
+            if target.is_symlink():
+                raise RuntimeError('Refusing to replace artifact symbolic link: ' + str(target))
+            if target.is_dir():
+                shutil.rmtree(target)
+            elif target.exists():
+                target.unlink()
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(stage / name), target)
+    if 'tools.tar.gz' in manifest['sha256']:
+        TOOLS.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=TOOLS) as temporary:
+            unpack(directory / 'tools.tar.gz', temporary, allow_links=True)
+            for path in Path(temporary).iterdir():
+                dest = TOOLS / path.name
+                if not dest.exists():
+                    path.rename(dest)
+    (BUILD / 'runtime-release.json').write_text(json.dumps(manifest, indent=2) + '\n')
+    (BUILD / 'release-images.json').write_text(json.dumps([image['tag'] for image in manifest['images']]))
+
+
+def prebuilt_release():
+    pin = SOURCE / 'releases/runtime.json'
+    if not pin.is_file():
+        raise RuntimeError('No published runtime release pin; use build only on a maintainer build host')
+    record = json.loads(pin.read_text())
+    if not isinstance(record, dict):
+        raise RuntimeError('Invalid published runtime release pin')
+    url = record.get('manifest_url', '')
+    address = urlparse(url)
+    checksum = record.get('sha256', '')
+    if (record.get('format') != 1 or address.scheme != 'https' or not address.hostname
+            or address.username is not None or address.password is not None or address.query or address.fragment
+            or not isinstance(checksum, str) or not re.fullmatch('[0-9a-f]{64}', checksum)):
+        raise RuntimeError('Invalid published runtime release pin')
+    directory = BUILD / 'releases' / checksum
+    fetch(url, directory / 'manifest.json', checksum)
+    manifest = validate_prebuilt(json.loads((directory / 'manifest.json').read_text()))
+    for name, expected in manifest['sha256'].items():
+        fetch(urljoin(url, name), directory / name, expected)
+    restore_prebuilt(directory, manifest)
 
 
 def clean(apply=False):
@@ -311,7 +438,7 @@ def clean(apply=False):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', nargs='?', default='all', choices=('all', 'check', 'bootstrap', 'install-tools', 'sync', 'build', 'up', 'status', 'run', 'package', 'clean'))
+    parser.add_argument('command', nargs='?', default='all', choices=('all', 'check', 'bootstrap', 'install-runtime', 'install-tools', 'sync', 'build', 'up', 'status', 'run', 'package', 'clean'))
     parser.add_argument('--host', default='127.0.0.1', help='IPv4 address bound by public web gateways (default localhost)')
     parser.add_argument('--lan-cidr', default='127.0.0.0/8', help='Allowed IPv4 source network for web access')
     parser.add_argument('--native', action='store_true', help='Run directly; ARM normally uses an amd64 VM')
@@ -367,21 +494,25 @@ def main(argv=None):
         return
     if platform.machine() not in ('x86_64', 'amd64'):
         parser.error('Full native stack requires amd64; arm64 uses the default amd64 VM fallback')
-    if args.command == 'install-tools':
-        install_tools()
+    if args.command in ('install-tools', 'install-runtime'):
+        if os.geteuid() != 0:
+            parser.error('Install managed tools with sudo')
+        install_tools(runtime_only=args.command == 'install-runtime')
         return
     if args.command == 'package':
         package(args)
         return
     if args.command not in ('check', 'status', 'sync') and os.geteuid() != 0:
         parser.error('Run deployment/build/run/bootstrap with sudo; package/source export needs read access only')
-    if args.command in ('all', 'bootstrap') and not args.offline:
-        run('bash', SOURCE / 'scripts/install-deps.sh')
+    if args.command in ('all', 'bootstrap', 'build') and not args.offline:
+        run('bash', SOURCE / 'scripts/install-deps.sh', 'build' if args.command == 'build' else 'runtime', env=environment())
     if args.command == 'bootstrap':
         return
     env = environment()
     backend = [sys.executable, SOURCE / 'scripts/full-deploy.py']
     options = ['--host', args.host, '--lan-cidr', args.lan_cidr]
+    if args.offline:
+        options.append('--offline')
     def stage(name):
         run(*backend, name, *options, env=env)
     if args.command == 'check':
@@ -394,10 +525,14 @@ def main(argv=None):
         if args.offline:
             restore(args.offline)
             env = environment()
+        elif args.command == 'all':
+            stage('preflight')
+            prebuilt_release()
+            env = environment()
         stage('preflight')
         if args.offline:
             pass
-        elif args.command in ('all', 'build'):
+        elif args.command == 'build':
             if (SOURCE / '.git').exists():
                 run('git', '-C', SOURCE, 'submodule', 'update', '--init', '--recursive', env=env)
             else:

@@ -3,6 +3,7 @@
 import importlib.util
 import io
 import json
+import os
 from pathlib import Path
 import subprocess
 import tarfile
@@ -22,6 +23,63 @@ def load(name):
 
 
 class PortableTests(unittest.TestCase):
+    def test_runtime_bootstrap_downloads_only_java_runtime_when_system_rg_exists(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            tools = Path(temporary) / 'tools'
+            requests = []
+            def metadata(url):
+                requests.append(url)
+                return json.dumps([{'binary': {'package': {'link': 'https://example.invalid/jre.tar.gz', 'checksum': 'a' * 64}}}])
+            def download(url, target, checksum, algorithm):
+                self.assertEqual(url, 'https://example.invalid/jre.tar.gz')
+                self.assertEqual(checksum, 'a' * 64)
+                with tarfile.open(target, 'w:gz') as stream:
+                    for name in ('java', 'keytool'):
+                        item = tarfile.TarInfo('jre21/bin/' + name)
+                        item.size = 1
+                        item.mode = 0o755
+                        stream.addfile(item, io.BytesIO(b'x'))
+            with patch.object(portable, 'TOOLS', tools), patch.object(portable.platform, 'machine', return_value='x86_64'), \
+                 patch.object(portable, 'url_text', side_effect=metadata), patch.object(portable, 'fetch', side_effect=download), \
+                 patch.object(portable.shutil, 'which', return_value='/usr/bin/rg'), patch.object(portable, 'run') as run:
+                portable.install_tools(runtime_only=True)
+            self.assertEqual(len(requests), 1)
+            self.assertIn('image_type=jre', requests[0])
+            self.assertTrue((tools / 'jdk21/bin/keytool').is_file())
+            self.assertFalse((tools / 'jdk21/bin/javac').exists())
+            self.assertFalse(any((tools / name).exists() for name in ('go124', 'node20', 'maven', 'pnpm8')))
+            run.assert_not_called()
+
+    def test_default_all_restores_prebuilt_release_and_never_builds(self):
+        with patch.object(portable.platform, 'system', return_value='Linux'), \
+             patch.object(portable.platform, 'machine', return_value='x86_64'), \
+             patch.object(portable.os, 'geteuid', return_value=0), \
+             patch.object(portable, 'environment', return_value={}), \
+             patch.object(portable, 'prebuilt_release') as release, patch.object(portable, 'run') as run:
+            portable.main(['all', '--no-tests'])
+        release.assert_called_once()
+        calls = [list(map(str, call.args)) for call in run.call_args_list]
+        self.assertEqual(calls[0][-1], 'runtime')
+        self.assertFalse(any('build' in call for call in calls))
+        self.assertFalse(any('submodule' in call for call in calls))
+        self.assertEqual([call[2] for call in calls[1:]], ['preflight', 'preflight', 'deploy', 'status'])
+
+    def test_launcher_ignores_old_system_python_when_supported_python_is_available(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            old = base / 'python3'
+            old.write_text('#!/bin/sh\nexit 1\n')
+            unsupported = base / 'python3.12'
+            unsupported.write_text('#!/bin/sh\nexit 1\n')
+            selected = base / 'python3.11'
+            selected.write_text('#!/bin/sh\n[ "$1" != -c ] || exit 0\nprintf "%s\\n" "$PPCI_PYTHON"\n')
+            for path in (old, unsupported, selected):
+                path.chmod(0o755)
+            environment = dict(os.environ, PATH=str(base) + ':' + os.environ.get('PATH', ''), PPCI_PYTHON=str(old))
+            result = subprocess.check_output(['/bin/bash', str(Path(portable.SOURCE) / 'deploy.sh'), '--help'],
+                                             env=environment, text=True)
+            self.assertEqual(result.strip(), str(selected))
+
     def test_bad_download_never_replaces_previous_file(self):
         with tempfile.TemporaryDirectory() as tmp:
             dest = Path(tmp) / 'tool.tar.gz'
@@ -129,6 +187,93 @@ class PortableTests(unittest.TestCase):
     def test_cidr_must_contain_host(self):
         with self.assertRaises(SystemExit):
             portable.main(['check', '--host', '192.168.1.2', '--lan-cidr', '10.0.0.0/8'])
+
+
+class PrebuiltReleaseTests(unittest.TestCase):
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        self.base = Path(self.temporary.name)
+        self.archive = self.base / 'artifacts.tar.gz'
+        self.build = self.base / 'build'
+        self.artifacts = ('component/program',)
+        with tarfile.open(self.archive, 'w:gz') as stream:
+            entry = tarfile.TarInfo(self.artifacts[0])
+            entry.size = 2
+            stream.addfile(entry, io.BytesIO(b'ok'))
+        self.manifest = {'format': 2, 'platform': 'linux/amd64', 'runtime_data_included': False,
+                         'sha256': {'artifacts.tar.gz': portable.digest(self.archive)},
+                         'images': [{'component': 'bfia-suite', 'reference': 'ghcr.io/example/suite@sha256:' + 'a' * 64,
+                                     'tag': 'ghcr.io/example/suite:v1', 'id': 'sha256:' + 'b' * 64}]}
+
+    def restore(self):
+        with patch.object(portable, 'BUILD', self.build), patch.object(portable, 'ARTIFACTS', self.artifacts):
+            portable.restore_prebuilt(self.base, self.manifest)
+
+    def test_verified_release_pulls_by_digest_and_retains_required_local_tag(self):
+        image = self.manifest['images'][0]
+        with patch.object(portable, 'run') as run, \
+             patch.object(portable.subprocess, 'check_output', return_value=json.dumps([{'Architecture': 'amd64', 'Id': image['id']}]).encode()):
+            self.restore()
+        self.assertEqual((self.build / self.artifacts[0]).read_bytes(), b'ok')
+        self.assertEqual(run.call_args_list[0].args, ('docker', 'pull', '--platform', 'linux/amd64', image['reference']))
+        self.assertEqual(run.call_args_list[1].args, ('docker', 'tag', image['reference'], image['tag']))
+        self.assertEqual(json.loads((self.build / 'runtime-release.json').read_text()), self.manifest)
+
+    def test_bad_checksum_or_unpinned_image_never_imports_or_extracts(self):
+        for field in ('checksum', 'reference'):
+            with self.subTest(field=field):
+                value = json.loads(json.dumps(self.manifest))
+                if field == 'checksum':
+                    value['sha256']['artifacts.tar.gz'] = '0' * 64
+                else:
+                    value['images'][0]['reference'] = 'ghcr.io/example/suite:latest'
+                with patch.object(portable, 'run') as run, patch.object(portable, 'unpack') as unpack, \
+                     patch.object(portable, 'BUILD', self.build), self.assertRaises(RuntimeError):
+                    portable.restore_prebuilt(self.base, value)
+                run.assert_not_called()
+                unpack.assert_not_called()
+
+    def test_unmanaged_existing_artifact_is_not_replaced(self):
+        target = self.build / self.artifacts[0]
+        target.parent.mkdir(parents=True)
+        target.write_bytes(b'keep local build')
+        with patch.object(portable, 'run') as run, self.assertRaisesRegex(RuntimeError, 'unmanaged'):
+            self.restore()
+        self.assertEqual(target.read_bytes(), b'keep local build')
+        run.assert_not_called()
+
+    def test_parent_symlink_does_not_redirect_promotion_outside_build(self):
+        self.build.mkdir()
+        outside = self.base / 'outside'
+        outside.mkdir()
+        (self.build / 'component').symlink_to(outside, target_is_directory=True)
+        (self.build / '.ppci-prebuilt-artifacts').write_text('PPCI prebuilt artifacts\n')
+        with patch.object(portable, 'run') as run, self.assertRaisesRegex(RuntimeError, 'symbolic-link'):
+            self.restore()
+        run.assert_not_called()
+        self.assertFalse((outside / 'program').exists())
+
+    def test_release_pin_and_artifact_hashes_are_used_for_download(self):
+        source = self.base / 'source'
+        (source / 'releases').mkdir(parents=True)
+        manifest_bytes = json.dumps(self.manifest).encode()
+        checksum = portable.hashlib.sha256(manifest_bytes).hexdigest()
+        url = 'https://example.invalid/releases/v1/manifest.json'
+        (source / 'releases/runtime.json').write_text(json.dumps({'format': 1, 'manifest_url': url, 'sha256': checksum}))
+        def download(address, target, expected):
+            target.parent.mkdir(parents=True, exist_ok=True)
+            if target.name == 'manifest.json':
+                self.assertEqual((address, expected), (url, checksum))
+                target.write_bytes(manifest_bytes)
+            else:
+                self.assertEqual((address, expected), ('https://example.invalid/releases/v1/artifacts.tar.gz', self.manifest['sha256']['artifacts.tar.gz']))
+                target.write_bytes(self.archive.read_bytes())
+        with patch.object(portable, 'SOURCE', source), patch.object(portable, 'BUILD', self.build), \
+             patch.object(portable, 'fetch', side_effect=download) as fetch, patch.object(portable, 'restore_prebuilt') as restore:
+            portable.prebuilt_release()
+        self.assertEqual(fetch.call_count, 2)
+        restore.assert_called_once_with(self.build / 'releases' / checksum, self.manifest)
 
 
 class PaddleTests(unittest.TestCase):
