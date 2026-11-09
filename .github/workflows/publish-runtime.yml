@@ -29,6 +29,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+          sparse-checkout: scripts
       - name: Publish reviewed clean images and runtime artifacts
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

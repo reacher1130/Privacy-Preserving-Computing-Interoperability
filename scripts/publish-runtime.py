@@ -230,16 +230,25 @@ def reviewed_images(images, tag):
 
 
 def remote_image(item, settings):
-    image_digest = command(CRANE, 'digest', item['target'], env=settings)
-    if not re.fullmatch(r'sha256:[0-9a-f]{64}', image_digest):
-        raise ValueError('Invalid published image digest')
-    registry = item['target'].rsplit(':', 1)[0]
-    reference = registry + '@' + image_digest
-    manifest = json.loads(command(CRANE, 'manifest', reference, env=settings))
-    config = json.loads(command(CRANE, 'config', reference, env=settings))
-    if manifest.get('config', {}).get('digest') != item['id'] or config.get('architecture') != 'amd64' or config.get('os') != 'linux':
-        raise ValueError('Published image does not match the reviewed content ID and platform')
-    return reference
+    for attempt in range(3):
+        try:
+            image_digest = command(CRANE, 'digest', item['target'], env=settings)
+            if not re.fullmatch(r'sha256:[0-9a-f]{64}', image_digest):
+                raise ValueError('Invalid published image digest')
+            registry = item['target'].rsplit(':', 1)[0]
+            reference = registry + '@' + image_digest
+            manifest = json.loads(command(CRANE, 'manifest', reference, env=settings))
+            config = json.loads(command(CRANE, 'config', reference, env=settings))
+            if manifest.get('config', {}).get('digest') != item['id'] or config.get('architecture') != 'amd64' or config.get('os') != 'linux':
+                raise ValueError('Published image does not match the reviewed content ID and platform')
+            return reference
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as error:
+            if attempt == 2:
+                detail = (error.stderr or str(error).encode()).decode(errors='replace')
+                detail = re.sub(r'(?i)(authorization:\s*(?:bearer|basic)\s+)\S+', r'\1[redacted]', detail)
+                detail = re.sub(r'(https?://[^\s?]+)\?\S+', r'\1?[redacted]', detail)
+                raise RuntimeError('Registry metadata read failed after 3 attempts: ' + detail[-2000:]) from None
+            time.sleep(2 ** (attempt + 1))
 
 
 def publish_images(images, staging, identity, token, immutable):

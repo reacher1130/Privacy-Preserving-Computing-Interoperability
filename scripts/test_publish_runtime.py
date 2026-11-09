@@ -201,8 +201,39 @@ class PublisherTests(unittest.TestCase):
     def test_published_image_config_must_match_the_reviewed_id(self):
         responses = [IMAGE_DIGEST, json.dumps({'config': {'digest': 'sha256:' + 'e' * 64}}),
                      '{"architecture":"amd64","os":"linux"}']
-        with patch.object(publisher, 'command', side_effect=responses), self.assertRaisesRegex(ValueError, 'content ID'):
+        with patch.object(publisher, 'command', side_effect=responses) as command, \
+             patch.object(publisher.time, 'sleep') as sleep:
+            with self.assertRaisesRegex(ValueError, 'content ID'):
+                publisher.remote_image(item(), {})
+            self.assertEqual(command.call_count, 3)
+            sleep.assert_not_called()
+
+    def test_registry_metadata_retries_a_transient_manifest_read(self):
+        for error in (subprocess.CalledProcessError(1, ['crane', 'manifest'], stderr=b'temporary TLS failure'),
+                      subprocess.TimeoutExpired(['crane', 'manifest'], 60)):
+            responses = [IMAGE_DIGEST, error, IMAGE_DIGEST, json.dumps({'config': {'digest': IMAGE_ID}}),
+                         '{"architecture":"amd64","os":"linux"}']
+            with self.subTest(error=type(error).__name__), \
+                 patch.object(publisher, 'command', side_effect=responses) as command, \
+                 patch.object(publisher.time, 'sleep') as sleep:
+                self.assertEqual(publisher.remote_image(item(), {}),
+                                 item()['target'].rsplit(':', 1)[0] + '@' + IMAGE_DIGEST)
+                self.assertEqual(command.call_count, 5)
+                sleep.assert_called_once_with(2)
+
+    def test_final_metadata_failure_reports_bounded_redacted_stderr(self):
+        stderr = b'x' * 2200 + b'\nAuthorization: Bearer private-value\nGET https://ghcr.io/v2/x?signature=private-query'
+        error = subprocess.CalledProcessError(1, ['crane', 'digest'], stderr=stderr)
+        with patch.object(publisher, 'command', side_effect=error) as command, \
+             patch.object(publisher.time, 'sleep') as sleep, self.assertRaises(RuntimeError) as raised:
             publisher.remote_image(item(), {})
+        self.assertEqual(command.call_count, 3)
+        self.assertEqual([call.args[0] for call in sleep.call_args_list], [2, 4])
+        message = str(raised.exception)
+        self.assertLessEqual(len(message), 2050)
+        self.assertIn('[redacted]', message)
+        self.assertNotIn('private-value', message)
+        self.assertNotIn('private-query', message)
 
     def test_docker_and_registry_commands_have_a_default_metadata_timeout(self):
         result = subprocess.CompletedProcess([], 0, stdout=b'ok', stderr=b'')

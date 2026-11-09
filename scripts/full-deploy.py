@@ -17,7 +17,7 @@ import time
 import urllib.request
 import uuid
 
-from portable import runtime_identity, store_runtime_identity
+from portable import require_classic_docker, runtime_identity, store_runtime_identity
 
 SOURCE = Path(os.environ.get('PPCI_SOURCE_ROOT', Path(__file__).resolve().parents[1])).resolve()
 ROOT = Path(os.environ.get('PPCI_ROOT', '/opt/ppci')).resolve()
@@ -100,7 +100,7 @@ def preflight(offline=False):
     missing = [name for name in required if not shutil.which(name)]
     if missing:
         raise RuntimeError('Missing dependencies; run ./deploy.sh bootstrap: ' + ', '.join(missing))
-    run('docker', 'info', stdout=subprocess.DEVNULL)
+    require_classic_docker()
     identifiers = subprocess.check_output(['docker', 'network', 'ls', '--quiet'], text=True).split()
     networks = json.loads(subprocess.check_output(['docker', 'network', 'inspect', *identifiers], text=True)) if identifiers else []
     routes = json.loads(subprocess.check_output(['ip', '-j', 'route', 'show'], text=True))
@@ -234,7 +234,7 @@ def wait_http(url, seconds=180):
 
 
 def fateboards(p):
-    for role, port in [('guest', 19483), ('host', 19484)]:
+    for role, port, suffix in [('guest', 19483, 22), ('host', 19484, 23)]:
         state = ROOT / 'fateboard' / role
         state.mkdir(parents=True, exist_ok=True, mode=0o700)
         credentials = state / 'credentials.properties'
@@ -250,7 +250,7 @@ cat /run/ppci-credentials.properties >> /tmp/ppci-board.properties
 exec /data/projects/fate/env/jdk/jdk-8u345/bin/java -Xms128m -Xmx512m -XX:ActiveProcessorCount=2 -Dspring.config.location=/tmp/ppci-board.properties -Dssh_config_file=/data/projects/fate/fateboard/ssh/ -cp 'lib/*:fateboard.jar' org.fedai.fate.board.bootstrap.Bootstrap
 '''
         name = 'fateboard-native-e2e' if role == 'guest' else 'fateboard-host-native-e2e'
-        p.ensure_container(name, ['--network', 'kuscia-exchange', '--cpus', '2', '--memory', '1g',
+        p.ensure_container(name, ['--network', 'kuscia-exchange', '--ip', f'192.168.117.{suffix}', '--cpus', '2', '--memory', '1g',
             '-p', f'127.0.0.1:{port}:8080', '-e', 'PPCI_FATE_ROLE=' + role,
             '-v', f'{credentials}:/run/ppci-credentials.properties:ro',
             '--entrypoint', '/bin/bash', FATE_IMAGE, '-c', command])

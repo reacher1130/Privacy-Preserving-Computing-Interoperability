@@ -6,7 +6,7 @@ from pathlib import Path
 import shutil
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 
 def load(name, path):
@@ -21,6 +21,21 @@ deploy = load('full_deploy', ROOT / 'scripts/full-deploy.py')
 
 
 class DeploymentTests(unittest.TestCase):
+    def test_fresh_fateboards_leave_the_fixed_kuscia_node_addresses_available(self):
+        allocated = {'192.168.117.20', '192.168.117.21'}
+        def ensure(name, arguments):
+            address = arguments[arguments.index('--ip') + 1] if '--ip' in arguments else next(
+                '192.168.117.' + str(i) for i in range(2, 255) if '192.168.117.' + str(i) not in allocated)
+            self.assertNotIn(address, allocated)
+            allocated.add(address)
+        provisioner = Mock()
+        provisioner.ensure_container.side_effect = ensure
+        with tempfile.TemporaryDirectory() as temporary, patch.object(deploy, 'ROOT', Path(temporary)), \
+             patch.object(deploy, 'wait_http'):
+            deploy.fateboards(provisioner)
+        for address in ('192.168.117.2', '192.168.117.3', '192.168.117.4'):
+            self.assertNotIn(address, allocated, 'FATEBoard consumed a later fixed Kuscia node address')
+
     def test_fresh_engine_import_succeeds_with_only_published_images(self):
         def docker(*args, **kwargs):
             if args[:2] == ('docker', 'save'):

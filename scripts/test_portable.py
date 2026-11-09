@@ -23,6 +23,38 @@ def load(name):
 
 
 class PortableTests(unittest.TestCase):
+    def test_only_an_empty_containerd_daemon_is_switched_with_configuration_backed_up(self):
+        containerd = {'DriverStatus': [['driver-type', 'io.containerd.snapshotter.v1']], 'Containers': 0, 'Images': 0}
+        classic = {'DriverStatus': [['Backing Filesystem', 'extfs']], 'Containers': 0, 'Images': 0}
+        with tempfile.TemporaryDirectory() as temporary:
+            config = Path(temporary) / 'daemon.json'
+            original = b'{"log-driver":"local","features":{"buildkit":true,"containerd-snapshotter":true}}\n'
+            config.write_bytes(original)
+            with patch.object(portable, 'DOCKER_DAEMON', config), \
+                 patch.object(portable.subprocess, 'check_output', side_effect=[json.dumps(containerd), json.dumps(classic)]), \
+                 patch.object(portable, 'run') as run:
+                portable.require_classic_docker(prepare_empty=True)
+            self.assertEqual(json.loads(config.read_text()), {'log-driver': 'local', 'features': {'buildkit': True, 'containerd-snapshotter': False}})
+            backups = list(config.parent.glob('daemon.json.ppci-before-classic-*'))
+            self.assertEqual(len(backups), 1)
+            self.assertEqual(backups[0].read_bytes(), original)
+            run.assert_called_once_with('systemctl', 'restart', 'docker')
+
+    def test_existing_containerd_data_and_readonly_preflight_never_change_the_daemon(self):
+        for containers, images, prepare in ((1, 0, True), (0, 1, True), (0, 0, False)):
+            with self.subTest(containers=containers, images=images, prepare=prepare), tempfile.TemporaryDirectory() as temporary:
+                config = Path(temporary) / 'daemon.json'
+                original = b'{"features":{"containerd-snapshotter":true},"log-driver":"local"}'
+                config.write_bytes(original)
+                info = {'DriverStatus': [['driver-type', 'io.containerd.snapshotter.v1']], 'Containers': containers, 'Images': images}
+                with patch.object(portable, 'DOCKER_DAEMON', config), \
+                     patch.object(portable.subprocess, 'check_output', return_value=json.dumps(info)), \
+                     patch.object(portable, 'run') as run, self.assertRaisesRegex(RuntimeError, 'data is retained'):
+                    portable.require_classic_docker(prepare_empty=prepare)
+                self.assertEqual(config.read_bytes(), original)
+                self.assertEqual(list(config.parent.iterdir()), [config])
+                run.assert_not_called()
+
     def test_local_identity_is_distinct_from_published_digest_and_switches_only_owned_metadata(self):
         image_id = 'sha256:' + 'a' * 64
         local = {'format': 1, 'kind': 'local-build', 'platform': 'linux/amd64',
@@ -73,43 +105,47 @@ class PortableTests(unittest.TestCase):
                         'images': [{'tag': local['images'][0]['tag'], 'id': image_id}], 'local_build': local}
             (package / 'manifest.json').write_text(json.dumps(manifest))
             with patch.object(portable, 'BUILD', build), patch.object(portable, 'run'), \
+                 patch.object(portable, 'require_classic_docker'), \
                  patch.object(portable.subprocess, 'check_output', return_value=image_id):
                 portable.restore(package)
             self.assertEqual(portable.runtime_identity(build), (local, True))
             self.assertFalse((build / 'runtime-release.json').exists())
 
     def test_dnf_runtime_bootstrap_installs_yaml_for_the_selected_interpreter(self):
-        with tempfile.TemporaryDirectory() as temporary:
-            base = Path(temporary)
-            binary = base / 'bin'
-            binary.mkdir()
-            log = base / 'commands.log'
-            def executable(name, body):
-                path = binary / name
-                path.write_text('#!/bin/sh\n' + body)
-                path.chmod(0o755)
-                return path
-            executable('id', 'printf "0\\n"\n')
-            for name in ('dnf', 'docker', 'systemctl'):
-                executable(name, 'printf "%s %s\\n" "' + name + '" "$*" >> "$PPCI_INSTALL_TEST_LOG"\n')
-            executable('dirname', 'value=$1; [ "$value" != -- ] || value=$2; printf "%s\\n" "${value%/*}"\n')
-            python = executable('python3.9', 'printf "python3.9 %s\\n" "$*" >> "$PPCI_INSTALL_TEST_LOG"\n'
-                                '[ "$1" != -c ] || exit 1\n'
-                                'if [ "$1" = -m ] && [ "$2" = pip ] && [ "$3" = --version ]; then exit 1; fi\n')
-            (base / 'systemd').mkdir()
-            release = base / 'os-release'
-            release.write_text('ID=anolis\n')
-            script = base / 'install-deps.sh'
-            text = (Path(portable.SOURCE) / 'scripts/install-deps.sh').read_text()
-            script.write_text(text.replace('/run/systemd/system', str(base / 'systemd'))
-                              .replace('. /etc/os-release', '. ' + str(release)))
-            subprocess.run(['/bin/bash', str(script)], check=True,
-                           env=dict(os.environ, PATH=str(binary), PPCI_PYTHON=str(python), PPCI_INSTALL_TEST_LOG=str(log)))
-            commands = log.read_text()
-            self.assertIn('python3-pip python3-pyyaml', commands)
-            self.assertIn('python3.9 -m ensurepip --upgrade', commands)
-            self.assertIn('python3.9 -m pip install --only-binary=:all: PyYAML==6.0.3', commands)
-            self.assertIn('portable.py install-runtime --native', commands)
+        for python_name, distro in (('python3.9', 'anolis'), ('python3.11', 'anolis'), ('python3.12', 'rhel')):
+            with self.subTest(python=python_name), tempfile.TemporaryDirectory() as temporary:
+                base = Path(temporary)
+                binary = base / 'bin'
+                binary.mkdir()
+                log = base / 'commands.log'
+                def executable(name, body):
+                    path = binary / name
+                    path.write_text('#!/bin/sh\n' + body)
+                    path.chmod(0o755)
+                    return path
+                executable('id', 'printf "0\\n"\n')
+                executable('dnf', 'printf "dnf %s\\n" "$*" >> "$PPCI_INSTALL_TEST_LOG"\n'
+                           'case "$*" in *python3.11*) exit 71;; esac\n')
+                for name in ('docker', 'systemctl'):
+                    executable(name, 'printf "%s %s\\n" "' + name + '" "$*" >> "$PPCI_INSTALL_TEST_LOG"\n')
+                executable('dirname', 'value=$1; [ "$value" != -- ] || value=$2; printf "%s\\n" "${value%/*}"\n')
+                python = executable(python_name, 'printf "' + python_name + ' %s\\n" "$*" >> "$PPCI_INSTALL_TEST_LOG"\n'
+                                    '[ "$1" != -c ] || exit 1\n'
+                                    'if [ "$1" = -m ] && [ "$2" = pip ] && [ "$3" = --version ]; then exit 1; fi\n')
+                (base / 'systemd').mkdir()
+                release = base / 'os-release'
+                release.write_text('ID=' + distro + '\nVERSION_ID=' + ('10' if distro == 'rhel' else '8.10') + '\n')
+                script = base / 'install-deps.sh'
+                text = (Path(portable.SOURCE) / 'scripts/install-deps.sh').read_text()
+                script.write_text(text.replace('/run/systemd/system', str(base / 'systemd'))
+                                  .replace('. /etc/os-release', '. ' + str(release)))
+                subprocess.run(['/bin/bash', str(script)], check=True,
+                               env=dict(os.environ, PATH=str(binary), PPCI_PYTHON=str(python), PPCI_INSTALL_TEST_LOG=str(log)))
+                commands = log.read_text()
+                self.assertIn('python3-pip python3-pyyaml', commands)
+                self.assertIn(python_name + ' -m ensurepip --upgrade', commands)
+                self.assertIn(python_name + ' -m pip install --only-binary=:all: PyYAML==6.0.3', commands)
+                self.assertIn('portable.py install-runtime --native', commands)
 
     def test_runtime_bootstrap_downloads_only_java_runtime_when_system_rg_exists(self):
         with tempfile.TemporaryDirectory() as temporary:

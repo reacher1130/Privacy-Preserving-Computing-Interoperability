@@ -10,7 +10,7 @@ python="${PPCI_PYTHON:-python3}"
 export DEBIAN_FRONTEND=noninteractive
 if command -v apt-get >/dev/null; then
   apt-get update
-  apt-get install -y ca-certificates curl git rsync tar gzip xz-utils unzip openssl nginx python3-yaml python3-pip ripgrep iproute2 util-linux
+  apt-get install -y --no-install-recommends ca-certificates curl git rsync tar gzip xz-utils unzip openssl nginx python3-yaml python3-pip ripgrep iproute2 util-linux
   if ! command -v docker >/dev/null; then
     [[ "$ID" == ubuntu || "$ID" == debian ]] || { echo 'Install Docker for this distribution first.' >&2; exit 2; }
     install -m 0755 -d /etc/apt/keyrings
@@ -18,11 +18,10 @@ if command -v apt-get >/dev/null; then
     chmod a+r /etc/apt/keyrings/docker.asc
     printf 'deb [arch=%s signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/%s %s stable\n' "$(dpkg --print-architecture)" "$ID" "${UBUNTU_CODENAME:-$VERSION_CODENAME}" > /etc/apt/sources.list.d/ppci-docker.list
     apt-get update
-    apt-get install -y docker-ce docker-ce-cli containerd.io
+    apt-get install -y --no-install-recommends docker-ce docker-ce-cli containerd.io
   fi
 elif command -v dnf >/dev/null; then
-  dnf install -y ca-certificates curl git rsync tar gzip xz unzip openssl nginx iproute util-linux policycoreutils-python-utils python3-pip python3-pyyaml python3.11 python3.11-pip
-  python="${PPCI_PYTHON:-python3.11}"
+  dnf install -y ca-certificates curl git rsync tar gzip xz unzip openssl nginx iproute util-linux policycoreutils-python-utils python3-pip python3-pyyaml
   # EPEL is not enabled automatically; a small rg release is installed below if needed.
   if ! command -v docker >/dev/null; then
     curl -fsSL https://download.docker.com/linux/centos/docker-ce.repo -o /etc/yum.repos.d/ppci-docker.repo

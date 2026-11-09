@@ -19,6 +19,7 @@ from urllib.parse import urljoin, urlparse
 SOURCE = Path(__file__).resolve().parents[1]
 TOOLS = Path('/opt/ppci-tools')
 BUILD = Path(os.environ.get('PPCI_BUILD_ROOT', '/opt/ppci-build'))
+DOCKER_DAEMON = Path('/etc/docker/daemon.json')
 ARTIFACTS = ('secretpad/target/secretpad.jar', 'secretpad-kimi-upstream/target/secretpad.jar',
              'secretpad-frontend/apps/platform/dist', 'paddle', 'paddle-native/bin',
              'paddle-native/built.json', 'paddle-native/source.json')
@@ -27,6 +28,35 @@ ARTIFACTS = ('secretpad/target/secretpad.jar', 'secretpad-kimi-upstream/target/s
 def run(*args, **kw):
     print('+ ' + ' '.join(map(str, args)), flush=True)
     return subprocess.run([str(x) for x in args], check=True, **kw)
+
+
+def require_classic_docker(prepare_empty=False):
+    """Kuscia's config-ID image contract requires Docker's classic image store."""
+    info = json.loads(subprocess.check_output(['docker', 'info', '--format', '{{json .}}'], text=True))
+    if dict(info['DriverStatus'] or ()).get('driver-type') != 'io.containerd.snapshotter.v1':
+        return
+    if not prepare_empty or info['Containers'] != 0 or info['Images'] != 0:
+        raise RuntimeError('PPCI requires Docker classic image store. Existing containerd-store data is retained; '
+                           'use a fresh host/VM, or run deploy.sh bootstrap on a daemon with 0 containers and 0 images.')
+    if DOCKER_DAEMON.is_symlink():
+        raise RuntimeError('Docker daemon configuration is a symbolic link; retain it and use a dedicated host/VM')
+    original = DOCKER_DAEMON.read_bytes() if DOCKER_DAEMON.exists() else None
+    settings = json.loads(original) if original is not None else {}
+    if not isinstance(settings, dict) or not isinstance(settings.setdefault('features', {}), dict):
+        raise RuntimeError('Docker daemon configuration must contain a features object; existing configuration retained')
+    settings['features']['containerd-snapshotter'] = False
+    DOCKER_DAEMON.parent.mkdir(parents=True, exist_ok=True)
+    if original is not None:
+        with tempfile.NamedTemporaryFile(dir=DOCKER_DAEMON.parent, prefix='daemon.json.ppci-before-classic-', delete=False) as backup:
+            backup.write(original)
+        print('Previous empty-daemon configuration retained: ' + backup.name)
+    with tempfile.NamedTemporaryFile(mode='w', dir=DOCKER_DAEMON.parent, prefix='.ppci-daemon-', delete=False) as output:
+        json.dump(settings, output, indent=2)
+        output.write('\n')
+        temporary = Path(output.name)
+    temporary.replace(DOCKER_DAEMON)
+    run('systemctl', 'restart', 'docker')
+    require_classic_docker()
 
 
 def digest(path, algorithm='sha256'):
@@ -219,6 +249,8 @@ def package(args):
         target.with_name(target.name + '.sha256').write_text(digest(target) + '  ' + target.name + '\n')
         print(target.resolve())
         return
+    if args.with_images:
+        require_classic_docker()
     identity, local = runtime_identity(BUILD, required=False)
     target = Path(args.output or str(SOURCE / 'dist' / time.strftime('%Y%m%d-%H%M%S'))).resolve()
     target.mkdir(parents=True, exist_ok=False)
@@ -280,6 +312,7 @@ def restore(directory):
     for name, expected in manifest['sha256'].items():
         if Path(name).name != name or digest(directory / name) != expected:
             raise RuntimeError('Release checksum mismatch: ' + name)
+    require_classic_docker()
     if not (directory / 'images.tar.gz').is_file():
         raise RuntimeError('Offline deployment requires package --with-images')
     BUILD.mkdir(parents=True, exist_ok=True)
@@ -561,6 +594,7 @@ def main(argv=None):
     if args.command in ('install-tools', 'install-runtime'):
         if os.geteuid() != 0:
             parser.error('Install managed tools with sudo')
+        require_classic_docker(prepare_empty=True)
         install_tools(runtime_only=args.command == 'install-runtime')
         return
     if args.command == 'package':
