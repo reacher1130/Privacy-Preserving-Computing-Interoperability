@@ -4,6 +4,8 @@ import json
 import os
 from pathlib import Path
 import shutil
+import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import Mock, patch
@@ -21,6 +23,32 @@ deploy = load('full_deploy', ROOT / 'scripts/full-deploy.py')
 
 
 class DeploymentTests(unittest.TestCase):
+    def test_bfia_slim_entrypoint_keeps_real_handshake_and_dotted_environment(self):
+        entrypoint = ROOT / 'platform/secretflow/interconnection-impl/docker/docker-conf/entrypoint-slim.sh'
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            binary = base / 'ic_main'
+            binary.write_text('#!' + sys.executable + '\nimport json, os, sys\n'
+                'print(json.dumps({"args": sys.argv[1:], "role": os.environ.get("config.self_role"), '
+                '"fields": os.environ.get("runtime.component.parameter.field_names")}))\n'
+                'sys.exit(int(os.environ["PPCI_TEST_EXIT"]))\n')
+            binary.chmod(0o755)
+            wrapper = base / 'entrypoint.sh'
+            wrapper.write_text(entrypoint.read_text().replace('/app/ic_main', str(binary)))
+            for fields, role, code in [('id', 'host', 0), ('', 'guest', 7)]:
+                with self.subTest(fields=fields, role=role):
+                    result = subprocess.run(['/bin/bash', str(wrapper)], capture_output=True, text=True,
+                        env=dict(os.environ, **{'runtime.component.parameter.algo': 'ecdh_psi',
+                            'config.self_role': role, 'runtime.component.parameter.label_owner': 'host',
+                            'runtime.component.parameter.field_names': fields, 'system.callback': '',
+                            'PPCI_TEST_EXIT': str(code)}))
+                    self.assertEqual(result.returncode, code, result.stderr)
+                    recorded = json.loads(result.stdout)
+                    self.assertEqual(recorded['args'], ['-disable_handshake=0',
+                        '-has_label=' + ('true' if role == 'host' else 'false')])
+                    self.assertEqual(recorded['role'], role)
+                    self.assertEqual(recorded['fields'], '{"host.0":"id","guest.0":"id"}' if fields else '')
+
     def test_platform_keeps_one_private_signing_key_for_alice_and_bob_across_retries(self):
         provision = load('provision_peer_key', ROOT / 'platform/scripts/environments/provision.py')
         with tempfile.TemporaryDirectory() as temporary:
