@@ -225,6 +225,50 @@ def verified_reports(destination, run_id):
     return True
 
 
+def cri_logs(raw):
+    """Strip CRI envelopes, retaining complete records and joining partial lines."""
+    output, partial = [], b''
+    for line in raw.splitlines(keepends=True):
+        if not line.endswith(b'\n'):
+            break  # The running container may still be writing its last record.
+        parts = line[:-1].split(b' ', 3)
+        if len(parts) != 4 or parts[1] not in (b'stdout', b'stderr') or parts[2] not in (b'P', b'F'):
+            raise ValueError('Invalid node-local CRI log record')
+        partial += parts[3]
+        if len(partial) > 256 * 1024:
+            raise ValueError('Node-local CRI log line exceeds its read limit')
+        if parts[2] == b'F':
+            output.append(partial + b'\n')
+            partial = b''
+    return b''.join(output)
+
+
+def pod_logs(config, pod, run_id):
+    metadata = pod['metadata']
+    if (metadata.get('namespace') != config['domain'] or metadata.get('name') != run_id + '-runner-0'
+            or not UUID.fullmatch(metadata.get('uid', ''))
+            or metadata.get('annotations', {}).get('kuscia.secretflow/task-id') != run_id
+            or metadata.get('annotations', {}).get('kuscia.secretflow/image-id') != config['image_id']):
+        raise RuntimeError('Kuscia did not select the owned pod and pinned suite image')
+    for status in pod.get('status', {}).get('containerStatuses', []):
+        if status.get('name') == 'suite' and (status.get('restartCount', 0) != 0
+                or status.get('imageID', config['image_id']) != config['image_id']):
+            raise RuntimeError('The suite container image or restart identity changed')
+    logs = kubectl(config, 'logs', '-n', config['domain'], metadata['name'], '-c', 'suite',
+                   '--limit-bytes=' + str(MAX_LOG_RESPONSE), check=False)
+    transport = 'kubectl'
+    if logs.returncode:
+        # Kuscia CRIProvider uses this directory even when no kubelet log endpoint is exposed.
+        path = '/home/kuscia/var/stdout/pods/' + config['domain'] + '_' + metadata['name'] + '_' + metadata['uid'] + '/suite/0.log'
+        logs = command('docker', 'exec', config['container'], 'head', '-c', str(MAX_LOG_RESPONSE + 1), path, check=False)
+        transport = 'node-local-cri'
+    if logs.returncode:
+        return None
+    if len(logs.stdout) > MAX_LOG_RESPONSE:
+        raise RuntimeError('Suite logs exceeded their read limit')
+    return (cri_logs(logs.stdout) if transport == 'node-local-cri' else logs.stdout), transport
+
+
 def import_image(config):
     with tempfile.TemporaryFile() as errors:
         producer = subprocess.Popen(['docker', 'image', 'save', config['image_tag']], stdout=subprocess.PIPE, stderr=errors)
@@ -318,7 +362,7 @@ def execute(args):
             uid = created['metadata']['uid']
             private_write(destination / 'execution.json', (json.dumps(dict(config, job=name, job_uid=uid), indent=2) + '\n').encode())
             print('Kuscia job=' + name + ' image=' + config['image_ref'], flush=True)
-            deadline, bundle_code, last_bundle = time.monotonic() + config['timeout_seconds'], None, None
+            deadline, bundle_code, last_bundle, owned_pod = time.monotonic() + config['timeout_seconds'], None, None, None
             while time.monotonic() < deadline:
                 current = object_json(config, 'get', 'kusciajob', '-n', 'cross-domain', name)
                 if current['metadata']['uid'] != uid:
@@ -330,23 +374,25 @@ def execute(args):
                     if len(pods) > 1:
                         raise RuntimeError('Unexpected suite pod count')
                     if pods:
-                        pod = pods[0]
-                        if pod['metadata'].get('annotations', {}).get('kuscia.secretflow/image-id') != config['image_id']:
-                            raise RuntimeError('Kuscia did not select the pinned suite image')
-                        logs = kubectl(config, 'logs', '-n', config['domain'], pod['metadata']['name'], '-c', 'suite',
-                                       '--limit-bytes=' + str(MAX_LOG_RESPONSE), check=False)
-                        if len(logs.stdout) > MAX_LOG_RESPONSE:
-                            raise RuntimeError('Suite logs exceeded their read limit')
-                        if logs.returncode == 0:
-                            private_write(destination / 'task.log', logs.stdout)
-                            for kind, path, payload in frames(logs.stdout.decode(errors='replace'), run_id):
-                                if kind == 'FILE' and last_bundle is None:
-                                    private_write(destination / path, payload)
-                                elif kind == 'BUNDLE':
-                                    sha = hashlib.sha256(payload).hexdigest()
-                                    if sha != last_bundle:
-                                        bundle_code = unpack_bundle(payload, destination, run_id)
-                                        last_bundle = sha
+                        if owned_pod and owned_pod['metadata']['uid'] != pods[0]['metadata']['uid']:
+                            raise RuntimeError('The suite pod identity changed')
+                        owned_pod = pods[0]
+                if owned_pod:
+                    logs = pod_logs(config, owned_pod, run_id)
+                    if logs is not None:
+                        content, transport = logs
+                        private_write(destination / 'task.log', content)
+                        private_write(destination / 'log-transport.json', (json.dumps({
+                            'transport': transport, 'pod': owned_pod['metadata']['name'],
+                            'pod_uid': owned_pod['metadata']['uid']}) + '\n').encode())
+                        for kind, path, payload in frames(content.decode(errors='replace'), run_id):
+                            if kind == 'FILE' and last_bundle is None:
+                                private_write(destination / path, payload)
+                            elif kind == 'BUNDLE':
+                                sha = hashlib.sha256(payload).hexdigest()
+                                if sha != last_bundle:
+                                    bundle_code = unpack_bundle(payload, destination, run_id)
+                                    last_bundle = sha
                 phase = current.get('status', {}).get('phase')
                 if phase in terminal:
                     completed = True

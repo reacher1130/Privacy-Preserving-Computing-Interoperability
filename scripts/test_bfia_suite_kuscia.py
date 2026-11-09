@@ -20,6 +20,12 @@ CONFIG = suite.config_values('ghcr.io/reacher1130/bfia-suite@sha256:' + 'a' * 64
                              'ghcr.io/reacher1130/bfia-suite:20261109-test', 'sha256:' + 'b' * 64)
 
 
+def owned_pod():
+    return {'metadata': {'name': RUN + '-runner-0', 'namespace': 'alice', 'uid': RUN,
+                         'annotations': {'kuscia.secretflow/image-id': CONFIG['image_id'],
+                                         'kuscia.secretflow/task-id': RUN}}}
+
+
 def frame(payload, name=None):
     kind = 'FILE' if name else 'BUNDLE'
     tokens = [RUN] + ([name] if name else [])
@@ -142,6 +148,37 @@ class SuiteKusciaTests(unittest.TestCase):
             (dest / 'cpp' / RUN / 'ss-lr/alice.log').write_text('changed log')
             self.assertFalse(suite.verified_reports(dest, RUN))
 
+    def test_cri_fallback_reads_only_exact_owned_pod_with_a_byte_cap(self):
+        payload = b'actual task output\n'
+        raw = b'2026-11-09T04:00:00Z stdout F ' + payload
+        failed = subprocess.CompletedProcess([], 1, stdout=b'', stderr=b'proxy 502')
+        success = subprocess.CompletedProcess([], 0, stdout=raw, stderr=b'')
+        with patch.object(suite, 'kubectl', return_value=failed), \
+             patch.object(suite, 'command', return_value=success) as command:
+            self.assertEqual(suite.pod_logs(CONFIG, owned_pod(), RUN), (payload, 'node-local-cri'))
+        command.assert_called_once_with('docker', 'exec', CONFIG['container'], 'head', '-c',
+            str(suite.MAX_LOG_RESPONSE + 1),
+            '/home/kuscia/var/stdout/pods/alice_' + RUN + '-runner-0_' + RUN + '/suite/0.log', check=False)
+        for key, value in (('uid', '../../outside'), ('name', 'unrelated-pod'), ('namespace', 'bob')):
+            pod = owned_pod(); pod['metadata'][key] = value
+            with patch.object(suite, 'kubectl') as kubectl, self.assertRaises(RuntimeError):
+                suite.pod_logs(CONFIG, pod, RUN)
+            kubectl.assert_not_called()
+        with patch.object(suite, 'MAX_LOG_RESPONSE', 5), \
+             patch.object(suite, 'kubectl', return_value=failed), \
+             patch.object(suite, 'command', return_value=success), self.assertRaisesRegex(RuntimeError, 'read limit'):
+            suite.pod_logs(CONFIG, owned_pod(), RUN)
+
+    def test_cri_records_join_partials_and_ignore_incomplete_last_write(self):
+        self.assertEqual(suite.cri_logs(b't stdout P hello\nt stdout F  world\nt stdout F unfinished'), b'hello world\n')
+        with self.assertRaisesRegex(ValueError, 'CRI log record'):
+            suite.cri_logs(b'not a CRI log line\n')
+        pod = owned_pod()
+        pod['status'] = {'containerStatuses': [{'name': 'suite', 'imageID': 'sha256:' + 'c' * 64}]}
+        with patch.object(suite, 'kubectl') as kubectl, self.assertRaisesRegex(RuntimeError, 'image or restart'):
+            suite.pod_logs(CONFIG, pod, RUN)
+        kubectl.assert_not_called()
+
     def test_output_parent_symlinks_cannot_redirect_a_result(self):
         with tempfile.TemporaryDirectory() as temporary:
             dest, outside = Path(temporary).resolve() / 'run', Path(temporary).resolve() / 'outside'
@@ -158,13 +195,13 @@ class SuiteKusciaTests(unittest.TestCase):
             state = {'metadata': {'uid': 'job-uid'}, 'status': {'phase': 'Running'}}
             done = {'metadata': {'uid': 'job-uid'}, 'status': {'phase': 'Succeeded'}}
             task = {'metadata': {'uid': 'task-uid'}}
-            pods = {'items': [{'metadata': {'name': 'suite-pod', 'annotations': {'kuscia.secretflow/image-id': CONFIG['image_id']}}}]}
+            pods = {'items': [owned_pod()]}
             def kubectl(config, *args, **kwargs):
                 content = json.dumps({'metadata': {'uid': 'job-uid'}}).encode() if args[0] == 'create' else logs.encode()
                 return subprocess.CompletedProcess(args, 0, stdout=content, stderr=b'')
             with patch.dict('os.environ', {'PPCI_BFIA_SUITE_ROOT': str(root)}), \
                  patch.object(suite, 'read_config', return_value=CONFIG), \
-                 patch.object(suite, 'object_json', side_effect=[{'items': []}, state, task, pods, done, task, pods]), \
+                 patch.object(suite, 'object_json', side_effect=[{'items': []}, state, task, pods, done, task, {'items': []}]), \
                  patch.object(suite, 'kubectl', side_effect=kubectl), patch.object(suite.time, 'sleep'), \
                  patch.object(suite, 'cancel_own_job') as cancel:
                 suite.execute(argparse.Namespace(run_id=RUN, runtime_root=root))
