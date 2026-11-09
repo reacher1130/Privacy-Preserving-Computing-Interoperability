@@ -23,6 +23,24 @@ def load(name):
 
 
 class PortableTests(unittest.TestCase):
+    def test_metadata_and_verified_download_use_curl_761_compatible_options(self):
+        payload = b'verified prebuilt artifact'
+        def old_curl(*args, **kwargs):
+            command = args[0] if len(args) == 1 else args
+            if '--retry-all-errors' in command:
+                raise subprocess.CalledProcessError(2, command, stderr='curl: unknown option --retry-all-errors')
+            self.assertIn('--retry', command)
+            self.assertIn('--fail', command)
+            if '--output' in command:
+                Path(command[command.index('--output') + 1]).write_bytes(payload)
+            return '{"assets":[]}'
+        with tempfile.TemporaryDirectory() as temporary, patch.object(portable, 'run', side_effect=old_curl), \
+             patch.object(portable.subprocess, 'check_output', side_effect=old_curl):
+            self.assertEqual(portable.url_text('https://example.invalid/metadata'), '{"assets":[]}')
+            target = Path(temporary) / 'artifact'
+            portable.fetch('https://example.invalid/artifact', target, portable.hashlib.sha256(payload).hexdigest())
+            self.assertEqual(target.read_bytes(), payload)
+
     def test_only_an_empty_containerd_daemon_is_switched_with_configuration_backed_up(self):
         containerd = {'DriverStatus': [['driver-type', 'io.containerd.snapshotter.v1']], 'Containers': 0, 'Images': 0}
         classic = {'DriverStatus': [['Backing Filesystem', 'extfs']], 'Containers': 0, 'Images': 0}

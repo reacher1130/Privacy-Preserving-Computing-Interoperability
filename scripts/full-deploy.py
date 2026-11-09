@@ -378,7 +378,7 @@ def algorithms():
     identifier = str(uuid.uuid4())
     (result / 'runs' / identifier).mkdir(parents=True, mode=0o700)
     run('bash', SOURCE / 'platform/scripts/linux-migration/run-bfia-suite.sh', identifier,
-        env=dict(os.environ, PPCI_BFIA_SUITE_ROOT=str(result)))
+        env=dict(os.environ, PPCI_BFIA_SUITE_ROOT=str(result), PPCI_PYTHON=sys.executable))
     for name in ('native-smoke.py', 'secretflow-smoke.py', 'bfia-smoke.py'):
         run(sys.executable, ENVIRONMENTS / name)
     run(sys.executable, SOURCE / 'scripts/paddle-smoke.py')

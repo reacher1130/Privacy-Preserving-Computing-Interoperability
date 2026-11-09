@@ -9,6 +9,7 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import re
+import shlex
 import signal
 import subprocess
 import sys
@@ -316,7 +317,8 @@ def install_locked(args):
     source = Path(__file__).resolve().parents[1] / 'platform/scripts/linux-migration/run-bfia-suite.sh'
     if source.is_file():
         wrapper = runtime / 'NewProject/scripts/linux-migration/run-bfia-suite.sh'
-        private_write(wrapper, source.read_bytes())
+        text = source.read_text().replace('python="${PPCI_PYTHON:-python3}"', 'python=' + shlex.quote(sys.executable), 1)
+        private_write(wrapper, text.encode())
         wrapper.chmod(0o755)
     print('Registered pinned BFIA suite AppImage: ' + config['image_ref'])
 

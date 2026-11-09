@@ -17,6 +17,7 @@ import shlex
 import shutil
 import socket
 import subprocess
+import sys
 import tarfile
 import time
 import urllib.request
@@ -220,7 +221,7 @@ def qemu_command(config):
 def unit_text(config):
     quoted = ['"' + arg.replace('\\', '\\\\').replace('"', '\\"').replace('%', '%%') + '"'
               for arg in qemu_command(config)]
-    helper = [shutil.which('python3') or '/usr/bin/python3', str(Path(config['state_dir']) / 'helper.py'),
+    helper = [sys.executable, str(Path(config['state_dir']) / 'helper.py'),
               '--state-dir', config['state_dir'], 'firewall']
     before = ' '.join('"' + a.replace('\\', '\\\\').replace('"', '\\"').replace('%', '%%') + '"' for a in helper)
     return MARKER + '''[Unit]

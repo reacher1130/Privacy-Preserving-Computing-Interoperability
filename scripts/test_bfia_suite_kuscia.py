@@ -135,10 +135,15 @@ class SuiteKusciaTests(unittest.TestCase):
             with patch.object(suite, 'command', side_effect=command), \
                  patch.object(suite, 'object_json', return_value=None), \
                  patch.object(suite, 'import_image') as imported, \
+                 patch.object(suite.sys, 'executable', '/usr/bin/python3.9'), \
+                 patch.dict('os.environ', {'PPCI_PYTHON': '/usr/bin/python3.6'}), \
                  patch.object(suite, 'kubectl'):
                 suite.install_locked(args)
             imported.assert_called_once_with(CONFIG)
             self.assertEqual(suite.read_config(root), CONFIG)
+            wrapper = (root / 'NewProject/scripts/linux-migration/run-bfia-suite.sh').read_text()
+            self.assertIn('python=/usr/bin/python3.9\n', wrapper)
+            self.assertNotIn('python="${PPCI_PYTHON:-python3}"', wrapper)
 
     def test_local_build_requires_explicit_config_identity_and_persists_it(self):
         local = suite.config_values(CONFIG['image_id'], 'ppci/bfia-suite:local-build',

@@ -21,6 +21,13 @@ deploy = load('full_deploy', ROOT / 'scripts/full-deploy.py')
 
 
 class DeploymentTests(unittest.TestCase):
+    def test_source_suite_cli_uses_the_selected_python_instead_of_the_system_default(self):
+        with tempfile.TemporaryDirectory() as temporary, patch.object(deploy, 'Path', return_value=Path(temporary)), \
+             patch.object(deploy.sys, 'executable', '/usr/bin/python3.9'), \
+             patch.dict(os.environ, PPCI_PYTHON='/usr/bin/python3.6'), patch.object(deploy, 'run') as run:
+            deploy.algorithms()
+        self.assertEqual(run.call_args_list[0].kwargs['env']['PPCI_PYTHON'], '/usr/bin/python3.9')
+
     def test_native_executor_build_enables_sqlite_cgo_without_changing_other_binaries(self):
         native = load('native_sqlite_build', ROOT / 'scripts/deploy-paddledtx-full.py')
         environments = {}

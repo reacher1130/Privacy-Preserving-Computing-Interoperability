@@ -92,7 +92,7 @@ def fetch(url, destination, expected, algorithm='sha256'):
         return
     destination.parent.mkdir(parents=True, exist_ok=True)
     temporary = destination.with_name(destination.name + '.part')
-    run('curl', '--fail', '--location', '--retry', '2', '--retry-all-errors',
+    run('curl', '--fail', '--location', '--retry', '2',
         '--connect-timeout', '15', '--max-time', '900', '--user-agent', 'ppci-deploy/1.0',
         '--output', temporary, url)
     if digest(temporary, algorithm) != expected:
@@ -103,7 +103,7 @@ def fetch(url, destination, expected, algorithm='sha256'):
 
 def url_text(url):
     return subprocess.check_output(['curl', '--fail', '--silent', '--show-error', '--location',
-        '--retry', '2', '--retry-all-errors', '--connect-timeout', '15', '--max-time', '60',
+        '--retry', '2', '--connect-timeout', '15', '--max-time', '60',
         '--user-agent', 'ppci-deploy/1.0', '--header', 'Accept: application/json,text/plain,*/*', url], text=True)
 
 

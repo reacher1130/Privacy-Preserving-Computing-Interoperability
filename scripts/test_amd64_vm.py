@@ -93,6 +93,14 @@ class VmTests(unittest.TestCase):
         self.assertNotIn('19381', net)
         self.assertIn('Restart=on-failure', vm.unit_text(config))
 
+    def test_vm_service_keeps_selected_python_when_system_default_is_older(self):
+        config = vm.settings(self.options('--bind-address', '192.168.45.101', '--lan-cidr', '192.168.45.0/24', 'start'))
+        with patch.object(vm.sys, 'executable', '/usr/bin/python3.11'), \
+             patch.object(vm.shutil, 'which', side_effect=lambda name: '/usr/bin/python3' if name == 'python3' else '/usr/bin/' + name):
+            unit = vm.unit_text(config)
+        self.assertIn('ExecStartPre="/usr/bin/python3.11" ', unit)
+        self.assertNotIn('ExecStartPre="/usr/bin/python3" ', unit)
+
     def test_rpm_kvm_fallback_must_emulate_x86(self):
         with patch.object(vm.shutil, 'which', return_value=None), patch.object(Path, 'is_file', return_value=True), \
                 patch.object(vm.subprocess, 'run', return_value=subprocess.CompletedProcess([], 0, 'virt ARM Virtual Machine\n')):
