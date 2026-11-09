@@ -21,6 +21,20 @@ deploy = load('full_deploy', ROOT / 'scripts/full-deploy.py')
 
 
 class DeploymentTests(unittest.TestCase):
+    def test_native_container_reports_only_an_already_running_ui_for_dns_reload(self):
+        native = load('native_ui_reload', ROOT / 'scripts/deploy-paddledtx-full.py')
+        for running in (True, False):
+            info = {'Config': {'Labels': {'io.ppci.environment': 'portable'}},
+                    'Image': 'sha256:owned', 'State': {'Running': running}}
+            with patch.object(native, 'call', side_effect=[
+                    Mock(returncode=0, stdout=json.dumps([info])),
+                    Mock(stdout=json.dumps([{'Id': 'sha256:owned'}])), Mock()]) as call:
+                self.assertEqual(native.container('ui', ['image']), running)
+                if not running:
+                    call.assert_called_with('docker', 'start', 'ui')
+        with patch.object(native, 'call', side_effect=[Mock(returncode=1), Mock()]):
+            self.assertFalse(native.container('ui', ['image']))
+
     def test_source_suite_cli_uses_the_selected_python_instead_of_the_system_default(self):
         with tempfile.TemporaryDirectory() as temporary, patch.object(deploy, 'Path', return_value=Path(temporary)), \
              patch.object(deploy.sys, 'executable', '/usr/bin/python3.9'), \

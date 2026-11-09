@@ -168,9 +168,10 @@ def container(name, arguments):
             raise RuntimeError('Existing container uses another image and is retained: ' + name + '; back up its state and perform a reviewed upgrade before retrying')
         if not info['State']['Running']:
             call('docker', 'start', name)
-        return
+        return info['State']['Running']
     call('docker', 'run', '-d', '--name', name, '--label', LABEL, '--network', NETWORK,
          '--restart', 'unless-stopped', '--log-opt', 'max-size=20m', '--log-opt', 'max-file=3', *arguments)
+    return False
 
 
 def mysql(sql):
@@ -280,7 +281,9 @@ namespace = paddlempc
         configure(bootstrap=False)
         call('docker', 'start', 'ppci-dtx-manager')
         private_file(bootstrapped, json.dumps({'created': time.time(), 'requester': requester.lower()}))
-    container('ppci-dtx-native-ui', ['-p', '127.0.0.1:18088:80', IMAGE_PREFIX + 'dtx-ui:portable'])
+    if container('ppci-dtx-native-ui', ['-p', '127.0.0.1:18088:80', IMAGE_PREFIX + 'dtx-ui:portable']):
+        # A running nginx can still cache the manager's previous Docker address.
+        call('docker', 'exec', 'ppci-dtx-native-ui', 'nginx', '-s', 'reload')
     for _ in range(30):
         check = call(STAGE / 'bin/check-manager', '-chain-baseline', '-base-url', 'http://127.0.0.1:18088', '-credentials', credentials, check=False)
         if check.returncode == 0:
