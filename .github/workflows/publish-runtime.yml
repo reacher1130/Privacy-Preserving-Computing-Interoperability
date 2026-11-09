@@ -1,0 +1,33 @@
+name: Publish prebuilt runtime images
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Prepared immutable runtime release tag
+        required: true
+        type: string
+      input_sha256:
+        description: SHA256 of the reviewed server staging input.json
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  publish:
+    runs-on: [self-hosted, linux, x64, ppci-release]
+    timeout-minutes: 120
+    environment: runtime-release
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Publish reviewed clean images and runtime artifacts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          INPUT_SHA256: ${{ inputs.input_sha256 }}
+        run: python3.11 scripts/publish-runtime.py
