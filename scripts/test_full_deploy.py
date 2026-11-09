@@ -21,6 +21,54 @@ deploy = load('full_deploy', ROOT / 'scripts/full-deploy.py')
 
 
 class DeploymentTests(unittest.TestCase):
+    def test_platform_keeps_one_private_signing_key_for_alice_and_bob_across_retries(self):
+        provision = load('provision_peer_key', ROOT / 'platform/scripts/environments/provision.py')
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            runtime, units, scripts = base / 'runtime', base / 'units', base / 'runtime/NewProject/scripts'
+            units.mkdir()
+            java = base / 'jdk/bin/java'
+            java.parent.mkdir(parents=True)
+            java.touch()
+            for repo in ('secretpad', 'secretpad-kimi-upstream'):
+                pad = runtime / 'NewProject' / repo
+                (pad / 'target').mkdir(parents=True)
+                (pad / 'target/secretpad.jar').write_bytes(b'existing jar')
+                (pad / 'config').mkdir()
+                (pad / 'config/server.jks').write_bytes(b'existing identity')
+            for relative in ('secretpad/config/certs', 'secretpad/config/certs/bob-local',
+                             'secretpad/config/certs/kimi', 'secretpad-kimi-upstream/config/certs'):
+                folder = runtime / 'NewProject' / relative
+                folder.mkdir(parents=True, exist_ok=True)
+                for name in ('client.crt', 'client.pem', 'token'):
+                    (folder / name).write_bytes(b'existing certificate')
+            (scripts / 'environments').mkdir(parents=True)
+            (scripts / 'environments/portablectl.py').touch()
+            def path(value):
+                text = str(value)
+                if text.startswith('/etc/systemd/system/ppci-'):
+                    return units / Path(text).name
+                return base / 'ppci-platform' if text == '/usr/local/bin/ppci-platform' else Path(value)
+            with patch.object(provision, 'ROOT', runtime), patch.object(provision, 'SCRIPTS', scripts), \
+                 patch.object(provision, 'Path', side_effect=path), patch.object(provision, 'run'), \
+                 patch.dict(os.environ, {'JAVA_HOME': str(java.parent.parent)}, clear=True), \
+                 patch.object(provision.secrets, 'token_hex', return_value='public-unit-test-key') as generate:
+                provision.platform()
+                key = runtime / 'etc/bfia-peer.env'
+                before = key.read_bytes()
+                first_units = {p.name: p.read_bytes() for p in units.iterdir()}
+                provision.platform()
+            generate.assert_called_once_with(32)
+            self.assertEqual(key.read_bytes(), before)
+            self.assertEqual(key.stat().st_mode & 0o777, 0o600)
+            for node in ('alice', 'bob'):
+                unit = (units / f'ppci-{node}.service').read_text()
+                self.assertIn('EnvironmentFile=' + str(key) + '\n', unit)
+                self.assertNotIn('public-unit-test-key', unit)
+            self.assertNotIn('EnvironmentFile=', (units / 'ppci-kimi.service').read_text())
+            self.assertEqual({p.name: p.read_bytes() for p in units.iterdir()}, first_units)
+            self.assertEqual((runtime / 'NewProject/secretpad/config/server.jks').read_bytes(), b'existing identity')
+
     def test_native_container_reports_only_an_already_running_ui_for_dns_reload(self):
         native = load('native_ui_reload', ROOT / 'scripts/deploy-paddledtx-full.py')
         for running in (True, False):

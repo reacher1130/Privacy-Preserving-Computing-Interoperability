@@ -5,6 +5,7 @@ import datetime
 import json
 import os
 from pathlib import Path
+import secrets
 import shutil
 import subprocess
 import urllib.request
@@ -189,6 +190,18 @@ def platform():
     if not (jdk / 'bin/java').is_file():
         raise RuntimeError('Java 21 is required')
     for node in ('alice', 'bob', 'kimi'):
+        unit = Path('/etc/systemd/system/ppci-' + node + '.service')
+        if unit.exists() and not unit.read_text().startswith('# Managed by PPCI'):
+            raise RuntimeError('Unmanaged systemd service: ' + str(unit))
+    peer_env = ROOT / 'etc/bfia-peer.env'
+    peer_env.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+    if peer_env.is_symlink() or peer_env.exists() and not peer_env.is_file():
+        raise RuntimeError('BFIA signing environment must be a private regular file; existing path retained')
+    if not peer_env.exists():
+        with os.fdopen(os.open(peer_env, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), 'w') as output:
+            output.write('PPCI_BFIA_PEER_SIGN_KEY=' + secrets.token_hex(32) + '\n')
+    peer_env.chmod(0o600)
+    for node in ('alice', 'bob', 'kimi'):
         repo = 'secretpad-kimi-upstream' if node == 'kimi' else 'secretpad'
         pad = ROOT / 'NewProject' / repo
         sourcejar = BUILD / repo / 'target/secretpad.jar'
@@ -222,6 +235,7 @@ Environment=PPCI_BFIA_SUITE_ORIGIN=http://{os.environ['PPCI_PUBLIC_HOST']}:18101
 '''
             Path('/var/log/ppci/bfia-suite/runs').mkdir(parents=True, exist_ok=True, mode=0o700)
         unit = Path('/etc/systemd/system/ppci-' + node + '.service')
+        peer = f'EnvironmentFile={peer_env}\n' if node in ('alice', 'bob') else ''
         content = f'''# Managed by PPCI environments/provision.py
 [Unit]
 Description=PPCI {node}
@@ -231,7 +245,7 @@ Requires=docker.service
 Type=simple
 Environment=JAVA_HOME={jdk}
 Environment=USER=gaofeng
-Environment=SECRETPAD_JAVA_HEAP_MAX=512m
+{peer}Environment=SECRETPAD_JAVA_HEAP_MAX=512m
 Environment=PADDLEDTX_REQUESTER_CONFIG={ROOT}/PaddleDTX/testdatatmp/executor/node1/conf/requester-config.toml
 Environment=PADDLEDTX_REQUESTER_BINARY=/home/requester-cli-current
 Environment=PADDLEDTX_MODEL_STORAGE_TYPE=Local
@@ -246,8 +260,6 @@ UMask=0077
 [Install]
 WantedBy=multi-user.target
 '''
-        if unit.exists() and not unit.read_text().startswith('# Managed by PPCI'):
-            raise RuntimeError('Unmanaged systemd service: ' + str(unit))
         unit.write_text(content)
     run('systemctl', 'daemon-reload')
     cli = SCRIPTS / 'environments/portablectl.py'
